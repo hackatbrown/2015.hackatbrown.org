@@ -1,0 +1,6 @@
+{# a generic template for showing messages that wouldn't get no love otherwise #}
+{% extends "centered.html" %}
+
+{% block "centered_content" %}
+{{ message_html | safe }}
+{% endblock %}

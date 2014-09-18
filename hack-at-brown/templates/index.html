@@ -1,0 +1,19 @@
+{% extends "centered.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel='stylesheet' href='/static/index.css'/>
+{% endblock %}
+
+{% block centered_content %}
+
+<h1>Hi this is hack at brown</h1>
+<h2 style='font-family: cursive'>*~.*~ the most epic hackathon ever *~.*~</h2>
+
+<form action='/sign_up_for_updates' method='POST'>
+	<label for='email'>Sign up for email updates:</label>
+	<input id='email' type='email' name='email' placeholder='jcarberry@brown.edu'/>
+	<input type='submit' value='Keep me posted'/>
+</form>
+
+{% endblock %}

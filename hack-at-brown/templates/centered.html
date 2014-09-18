@@ -1,0 +1,49 @@
+{# a generic centered page #}
+
+{% extends "base.html" %}
+
+{% block head %}
+
+{{ super() }}
+
+<style>
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+body > div {
+	height: 100%;
+	width: 100%;
+	display: table;
+}
+body > div > div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+body > div > div > div {
+	padding: 1em;
+	max-width: 700px;
+	display: inline-block;
+	text-align: center;
+}
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div>
+	<div>
+		<div>
+			{% block centered_content %}
+			
+			{% endblock %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
