@@ -43,4 +43,12 @@ body {
 
 #email {
     border-radius: 0px;
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    text-align: center
+}
+
+#email:focus {
+    background-color: rgba(255,255,255,0.95);
+    color: black;
 }
