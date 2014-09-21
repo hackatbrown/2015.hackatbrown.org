@@ -34,7 +34,7 @@ body {
 }
 
 #submitbutton {
-    display: none;
+    border-radius: 0px;
 }
 
 #div_submit_button {
