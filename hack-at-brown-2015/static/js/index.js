@@ -10,7 +10,7 @@ $(document).ready(function() {
 			method: 'POST',
 			success: function() {
 				$signUpForUpdatesForm.removeClass('loading').addClass('signed-up');
-				$signUpForUpdatesForm.find('input[type=email]').attr('placeholder', "✓   we'll keep you posted")
+				$signUpForUpdatesForm.find('input[type=email]').attr('placeholder', "we'll keep you posted")
 			}
 		})
 		$signUpForUpdatesForm.find('input[type=email]').blur().val("");
