@@ -20,6 +20,7 @@ import config
 import email_list
 import registration
 from google.appengine.ext import blobstore
+import background_work
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -33,5 +34,6 @@ class IndexHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', IndexHandler),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
-		('/register', registration.RegistrationHandler)
+		('/register', registration.RegistrationHandler),
+		('/__background_work', background_work.BackgroundWorkHandler) # called by a background job set up in cron.yaml
 ], debug=True)

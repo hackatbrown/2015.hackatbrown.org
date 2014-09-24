@@ -3,6 +3,9 @@ from google.appengine.ext import ndb
 import json
 from send_email import send_email
 from template import template
+import hashlib
+import os
+import base64
 
 class Hacker(ndb.Model):
 	name = ndb.StringProperty()
@@ -14,11 +17,22 @@ class Hacker(ndb.Model):
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	
+	secret = ndb.StringProperty()
+	
 	admit_priority = ndb.FloatProperty(default=0)
 	admitted = ndb.BooleanProperty(default=False)
 	admitted_email_sent_date = ndb.DateTimeProperty()
 	
+	waitlist_email_sent_date = ndb.DateTimeProperty()
+	
 	rsvpd = ndb.BooleanProperty(default=False)
+
+def generate_secret_for_hacker_with_email(email):
+	hash = hashlib.md5()
+	hash.update(os.urandom(256))
+	hash.update(email)
+	b64 = base64.urlsafe_b64encode(hash.digest())
+	return b64[:min(30, len(b64))]
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
@@ -28,6 +42,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		resume_files = self.get_uploads('resume')
 		if len(resume_files) > 0:
 			hacker.resume = resume_files[0].key()
+		hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
 		hacker.put()
 		
 		email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0]})
