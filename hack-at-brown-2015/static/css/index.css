@@ -18,14 +18,8 @@ html, body {
 	padding: 20px;
 }
 
-@media screen and (max-height: 560px) {
-	#splash > div {
-		padding-bottom: 110px; /* make sure the #footer text doesn't overlap the form on wee little screens */
-	}
-}
-
 #logo {
-	width: 140px;
+	width: 250px;
 }
 
 #footer {
@@ -203,3 +197,18 @@ h1, h2, h3 {
 	font-family: "Raleway", sans-serif;
 	margin: 0px;
 }
+
+/* some mobile things to make it RESPONSIVE!!! */
+
+@media screen and (max-height: 560px) {
+	#splash > div {
+		padding-bottom: 110px; /* make sure the #footer text doesn't overlap the form on wee little screens */
+	}
+	#footer {
+		font-size: 0.7em;
+	}
+	#logo {
+		width: 125px;
+	}
+}
+
