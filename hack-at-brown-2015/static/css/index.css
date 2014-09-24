@@ -5,6 +5,10 @@ html, body {
 	height: 100%;
 }
 
+#splash-container {
+	height: 100%;
+	overflow-y: hidden;
+}
 #splash {
 	width: 100%;
 	height: 100%;
@@ -138,21 +142,17 @@ h1, h2, h3 {
 
 /* registration */
 #registration_form {
-	display: none;
+	height: 0;
+	overflow-y: hidden;
 	background-color: #222;
 	color: white;
-	margin-top: 0px;
-	padding: 2em 0;
-}
-
-#registration_form:target {
-	display: block;
 }
 
 #registration_form > div {
 	width: 90%;
 	margin: auto;
 	max-width: 700px;
+	padding: 0px 20px;
 }
 
 #registration_form input {
@@ -178,5 +178,23 @@ h1, h2, h3 {
 }
 #registration_form input[type=submit]:hover {
 	background-color: #f58;
+}
+
+#splash-container, #registration_form {
+	transition: height 1s, opacity 1s;
+	-webkit-transition: height 1s, opacity 1s;
+	-moz-transition: height 1s, opacity 1s;
+	-ms-transition: height 1s, opacity 1s;
+}
+
+/* show and hide the reg. form via CSS classes, so we can do the animation in pure css */
+
+body.register #splash-container {
+	height: 0;
+	opacity: 0;
+}
+
+body.register #registration_form {
+	height: auto;
 }
 
