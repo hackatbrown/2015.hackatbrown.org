@@ -19,12 +19,31 @@
 			<h3>Providence, RI | January 23-24</h3>
 		</div>
 		
-		<form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST' class='signed-up'>
-			<input type='email' name='email' id='email' placeholder='subscribe for updates'/>
+		{% if registration_status == "sign_up_for_updates" %}
+		<form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
+			<input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates'/>
 		</form>
+		{% endif %}
+		
+		{% if registration_status == "registration_open" %}
+		<div id='register-button' class='main_cta' onclick="register()">
+			Sign up now
+		</div>
+		{% endif %}
+		
+		{% if registration_status == "registration_closed" %}
+		<div class='main_cta'>
+			Registration is closed, sorry!
+		</div>
+		{% endif %}
+		
 	</div>
 	
 </div>
+
+{% if registration_status == "registration_open" %}
+	{% include "registration_form.html" %}
+{% endif %}
 
 <div id='rest'>
 	

@@ -1,0 +1,29 @@
+<form action='/{{ registration_post_url }}' id='registration_form' method='POST'>
+	<div>
+		<h2>Register for Hack@Brown</h2>
+		<input name="name" placeholder="Full name" />
+		<input name="email" placeholder="Email address" type="email" />
+		<input name="school" placeholder="College" />
+		<input name="year" placeholder="Expected graduation year" />
+		<input name="shirt_size" placeholder="T-shirt size" />
+		<input name="dietary_restrictions" placeholder="Any dietary restrictions?" />
+		<div>
+			Your resume:
+			<input name="resume" type="file" />
+		</div>
+		<p>We can't guarantee we'll have a spot for everyone — we'll email you with our decision as it gets closer to January.</p>
+		<input type='submit' />
+	</div>
+</form>
+
+<script>
+
+function register() {
+	$("#registration_form").slideDown(400);
+	$('html, body').animate({
+	        scrollTop: $("#registration_form").offset().top
+	    }, 400);
+	$("$registration_form input[name=name]").focus();
+}
+
+</script>

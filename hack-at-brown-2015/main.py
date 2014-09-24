@@ -16,13 +16,22 @@
 #
 import webapp2
 from template import template
+import config
 import email_list
+import registration
+from google.appengine.ext import blobstore
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write(template("index.html"))
+			variables = {
+				"registration_status": config.registration_status()
+			}
+			if config.registration_status() == config.REGISTRATION_OPEN:
+				variables['registration_post_url'] = blobstore.create_upload_url('/register')
+			self.response.write(template("index.html", variables))
 
 app = webapp2.WSGIApplication([
     ('/', IndexHandler),
-		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler)
+		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
+		('/register', registration.RegistrationHandler)
 ], debug=True)

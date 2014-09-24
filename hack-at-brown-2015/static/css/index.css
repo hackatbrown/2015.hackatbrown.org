@@ -47,21 +47,29 @@ h1, h2, h3 {
 	font-weight: normal;
 }
 
-#sign-up-for-updates input[type=email] {
+.main_cta {
+	/* this is the button or text field in the center of the splash. */
 	background-color: rgba(255,255,255,0.3);
 	border: none;
 	padding: 6px;
 	font-size: 16px;
 	text-align: center;
-	outline: none;
-	border-bottom: 3px solid transparent;
-	border-top: 3px solid transparent;
-	transition: background-color 0.3s, border-bottom-color 0.3s;
-	-webkit-transition: background-color 0.3s, border-bottom-color 0.3s;
-	-moz-transition: background-color 0.3s, border-bottom-color 0.6s;
-	-ms-transition: background-color 0.3s, border-bottom-color 0.3s;
 	width: 90%;
 	max-width: 290px;
+	border-radius: 3px;
+	display: inline-block;
+}
+
+#register-button {
+	cursor: pointer;
+}
+
+#sign-up-for-updates input[type=email] {
+	outline: none;
+	transition: background-color 0.3s, box-shadow 0.3s;
+	-webkit-transition: background-color 0.3s, box-shadow 0.3s;
+	-moz-transition: background-color 0.3s, box-shadow 0.3s;
+	-ms-transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 /* turn placeholder text white */
@@ -80,7 +88,7 @@ h1, h2, h3 {
 
 #sign-up-for-updates input[type=email]:focus {
 	background-color: white;
-	border-bottom: 3px solid #FF3057;
+	box-shadow: inset 0px -3px 0px #FF3057;
 }
 
 /* turn placeholder text gray on focus */
@@ -101,11 +109,18 @@ h1, h2, h3 {
 	
 }
 
-#sign-up-for-updates.signed-up {
-	
+#sign-up-for-updates.signed-up input[type=email] {
+	transition: background-color 0.3s, box-shadow 1.0s;
+	-webkit-transition: background-color 0.3s,box-shadow 1.0s;
+	-moz-transition: background-color 0.3s, box-shadow 1.0s;
+	-ms-transition: background-color 0.3s, box-shadow 1.0s;
+	box-shadow: inset 0px -100px 0px #6d7;
 }
 
 /* rest of the site */
+#rest {
+	margin-bottom: 40px;
+}
 #rest h2 {
 	text-align: center;
 	font-size: 24px;
@@ -118,5 +133,50 @@ h1, h2, h3 {
 	max-width: 700px;
 	margin: auto;
 	font-size: 14px;
+}
+
+
+/* registration */
+#registration_form {
+	display: none;
+	background-color: #222;
+	color: white;
+	margin-top: 0px;
+	padding: 2em 0;
+}
+
+#registration_form:target {
+	display: block;
+}
+
+#registration_form > div {
+	width: 90%;
+	margin: auto;
+	max-width: 700px;
+}
+
+#registration_form input {
+	display: block;
+	margin-bottom: 1em;
+	font-size: large;
+	border: none;
+	border-bottom: 3px solid white;
+	padding: 4px;
+	color: white;
+	outline: none;
+	background-color: transparent;
+	width: 90%;
+	max-width: 400px;
+}
+
+#registration_form input[type=submit] {
+	width: 200px;
+	color: #222;
+	background-color: white;
+	transition: background-color 0.125s;
+	border-bottom: none;
+}
+#registration_form input[type=submit]:hover {
+	background-color: #f58;
 }
 
