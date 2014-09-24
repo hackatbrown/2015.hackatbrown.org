@@ -5,18 +5,23 @@ html, body {
 	height: 100%;
 }
 
-body {
-	background-image: url('/static/img/background2.jpg');
-	background-size: cover;
-	background-position: center;
-}
-
 #splash {
 	width: 100%;
 	height: 100%;
 	color: white;
 	position: relative;
+	background-image: url('/static/img/background2.jpg');
+	background-size: cover;
+	background-position: center;
+}
+#splash > div {
 	padding: 20px;
+}
+
+@media screen and (max-height: 560px) {
+	#splash > div {
+		padding-bottom: 110px; /* make sure the #footer text doesn't overlap the form on wee little screens */
+	}
 }
 
 #logo {
@@ -99,3 +104,19 @@ h1, h2, h3 {
 #sign-up-for-updates.signed-up {
 	
 }
+
+/* rest of the site */
+#rest h2 {
+	text-align: center;
+	font-size: 24px;
+}
+
+/* faqs */
+
+#faq1, #faq2 {
+	width: 90%;
+	max-width: 700px;
+	margin: auto;
+	font-size: 14px;
+}
+
