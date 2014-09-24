@@ -9,12 +9,10 @@
 
 {% block content %}
 
+{% include "social.html" %} <!-- necessary to support like buttons, etc -->
+
 {% if registration_status == "registration_open" %}
-	<div id='thanks' class='toast'>
-		<h4>Thanks for registering!</h4>
-		<p>We'll get back to you after registrations close. Meanwhile, tell your friends?</p>
-		<button>FUCKING SHARE DAMMIT</button>
-	</div>
+	{% include "thanks_for_registering.html" %}
 	{% include "registration_form.html" %}
 {% endif %}
 

@@ -5,8 +5,22 @@
 		<input name="email" placeholder="Email address" type="email" />
 		<input name="school" placeholder="College" />
 		<input name="year" placeholder="Expected graduation year" />
-		<input name="shirt_size" placeholder="T-shirt size" />
 		<input name="dietary_restrictions" placeholder="Any dietary restrictions?" />
+		<div>
+			T-shirt size:
+			<select name='shirt_size' id='shirt_size'>
+           <option value='W-S' selected>Women's Small</option>
+           <option value='M-S'>Men's Small</option>
+           <option value='W-M'>Women's Medium</option>
+           <option value='M-M'>Men's Medium</option>
+           <option value='W-L'>Women's Large</option>
+           <option value='M-L'>Men's Large</option>
+           <option value='W-XL'>Womens's XL</option>
+           <option value='M-XL'>Men's XL</option>
+           <option value='W-XXL'>Women's XXL</option>
+           <option value='M-XXL'>Men's XXL</option>
+			</select>
+		</div>
 		<div>
 			Your resume:
 			<input name="resume" type="file" />
