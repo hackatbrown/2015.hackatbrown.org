@@ -12,14 +12,27 @@
 			<input name="resume" type="file" />
 		</div>
 		<p>We can't guarantee we'll have a spot for everyone — we'll email you with our decision as it gets closer to January.</p>
-		<input type='submit' />
+		<input type='submit' value='Register'/>
 	</div>
 </form>
 
 <script>
 
-function register() {
-	$(document.body).addClass('register');
-}
+$(document).ready(function() {
+	$("#registration_form").submit(function(e) {
+		e.preventDefault();
+		$("#registration_form input[type=submit]").val("Uploading...").attr({disabled: true});
+		$("#registration_form").ajaxSubmit({
+			success: function(response) {
+				if (JSON.parse(response).success) {
+					$("#registration_form input[type=submit]").val("Register");
+					$('#thanks').slideDown();
+					window.location.hash = "";
+				}
+			}
+		})
+		return false;
+	})
+})
 
 </script>

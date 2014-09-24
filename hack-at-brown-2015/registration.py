@@ -1,5 +1,6 @@
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
+import json
 
 class Hacker(ndb.Model):
 	name = ndb.StringProperty()
@@ -20,4 +21,4 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		if len(resume_files) > 0:
 			hacker.resume = resume_files[0].key()
 		hacker.put()
-		self.redirect('/#thanks')
+		self.response.write(json.dumps({"success": True}))
