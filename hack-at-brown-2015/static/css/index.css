@@ -13,13 +13,14 @@ html, body {
 	background-image: url('/static/img/background2.jpg');
 	background-size: cover;
 	background-position: center;
+	background-color: #222;
 }
 #splash > div {
 	padding: 20px;
 }
 
 #logo {
-	width: 250px;
+	height: 250px;
 }
 
 #footer {
@@ -208,7 +209,7 @@ h1, h2, h3 {
 		font-size: 0.7em;
 	}
 	#logo {
-		width: 125px;
+		height: 125px;
 	}
 }
 

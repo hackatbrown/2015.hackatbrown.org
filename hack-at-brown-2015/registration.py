@@ -13,6 +13,12 @@ class Hacker(ndb.Model):
 	dietary_restrictions = ndb.StringProperty()
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
+	
+	admit_priority = ndb.FloatPropery(default=0)
+	admitted = ndb.BooleanProperty(default=False)
+	admitted_email_sent_date = ndb.DateTimeProperty()
+	
+	rsvpd = ndb.BooleanProperty(default=False)
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
