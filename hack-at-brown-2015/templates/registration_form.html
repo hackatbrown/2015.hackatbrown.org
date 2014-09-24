@@ -26,7 +26,7 @@
 			<input name="resume" type="file" />
 		</div>
 		<p>We can't guarantee we'll have a spot for everyone — we'll email you with our decision as it gets closer to January.</p>
-		<input type='submit' value='Register'/>
+		<input type='submit' value='Apply'/>
 	</div>
 </form>
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$("#registration_form").ajaxSubmit({
 			success: function(response) {
 				if (JSON.parse(response).success) {
-					$("#registration_form input[type=submit]").val("Register");
+					$("#registration_form input[type=submit]").val("Apply");
 					$('#thanks').slideDown();
 					window.location.hash = "";
 				}

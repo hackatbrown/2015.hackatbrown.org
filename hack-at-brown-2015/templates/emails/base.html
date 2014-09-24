@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	* {
+		color: #111;
+		font-family: sans-serif;
+		line-height: 1.4;
+	}
+	a {
+		color: #FF3057;
+	}
+	h1, h2, h3, h4, h5 {
+		font-family: "HelveticaNeueLight", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+		font-weight: 200;
+	}
+	h1 {
+		border-bottom: 2px solid #FF3057;
+	}
+	</style>
+	<meta charset='utf-8'/>
+</head>
+<body>
+	{% block content %}
+	{% endblock %}
+	{% if dashboard_url %}
+	<p>
+		<a href='dashboard_url'>To cancel or make changes to your registration, visit your dashboard by clicking this link.</a>
+	</p>
+	{% endif %}
+</body>
+</html>
