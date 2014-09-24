@@ -14,7 +14,7 @@ class Hacker(ndb.Model):
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	
-	admit_priority = ndb.FloatPropery(default=0)
+	admit_priority = ndb.FloatProperty(default=0)
 	admitted = ndb.BooleanProperty(default=False)
 	admitted_email_sent_date = ndb.DateTimeProperty()
 	
