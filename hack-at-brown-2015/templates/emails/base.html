@@ -2,10 +2,13 @@
 <html>
 <head>
 	<style>
-	* {
+	#content {
 		color: #111;
 		font-family: sans-serif;
 		line-height: 1.4;
+		width: 90%;
+		max-width: 700px;
+		margin: auto;
 	}
 	a {
 		color: #FF3057;
@@ -16,17 +19,26 @@
 	}
 	h1 {
 		border-bottom: 2px solid #FF3057;
+		text-align: center;
+	}
+	#logo {
+		text-align: center;
 	}
 	</style>
 	<meta charset='utf-8'/>
 </head>
 <body>
-	{% block content %}
-	{% endblock %}
-	{% if dashboard_url %}
-	<p>
-		<a href='dashboard_url'>To cancel or make changes to your registration, visit your dashboard by clicking this link.</a>
-	</p>
-	{% endif %}
+	<div id='content'>
+		<div id='logo'>
+			<img src='http://2015.hackatbrown.org/static/img/logo-medium.png' style='width: 150px' />
+		</div>
+		{% block content %}
+		{% endblock %}
+		{% if dashboard_url %}
+		<p>
+			<a href='dashboard_url'>To cancel or make changes to your registration, visit your dashboard by clicking this link.</a>
+		</p>
+		{% endif %}
+	</div>
 </body>
 </html>

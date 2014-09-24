@@ -36,7 +36,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 1/23-24
 		{% endif %}
 	
 		{% if registration_status == "registration_open" %}
-		<div id='register-button' class='main_cta' onclick="window.location = '#registration_form'">
+		<div id='register-button' class='main_cta' onclick="window.location = '#registration_form'; $('#registration_form input[name=name]').focus()">
 			Sign up now
 		</div>
 		{% endif %}
