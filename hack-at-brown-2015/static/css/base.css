@@ -1,0 +1,16 @@
+body {
+	color: #111;
+	line-height: 1.4;
+	font-family: sans-serif;
+}
+
+.vertically-centered {
+	display: table;
+}
+
+.vertically-centered-content {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+

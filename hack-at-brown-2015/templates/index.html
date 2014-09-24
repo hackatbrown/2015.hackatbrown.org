@@ -1,28 +1,29 @@
-{% extends "centered.html" %}
+{% extends "base.html" %}
 
 {% block head %}
 {{ super() }}
-
+<title>Hack@Brown 2015 — come build stuff with us in Providence, 1/23-24</title>
+<link rel='stylesheet' href='/static/css/index.css'/>
+<script src='/static/js/index.js'></script>
 {% endblock %}
 
-{% block centered_content %}
+{% block content %}
 
-<!--<h1>Hi this is hack at brown</h1>!-->
-<!--<h2 style='font-family: cursive'>*~.*~ the most epic hackathon ever *~.*~</h2>!-->
-
-<div id='mailingformcontainer'>
-    <form action='/sign_up_for_updates' method='POST' id='mailingform' class="ui form">
-        <div class="field">
-            <div class="ui left action input">
-                <input id='email' type='email' name='email' placeholder='subscribe to updates'/>
-                <!--<button type=submit class="ui blue submit button" id="submitbutton" >
-                    <i class="angle right icon"></i>
-                </button>!-->
-            <!--<input type='submit' value='GET NOTIFIED'/>!-->
-            </div>
-        </div>
-    </form>
+<div id='splash' class='vertically-centered'>
+	
+	<div class='vertically-centered-content'>
+		<img src='/static/img/logo.png' id='logo' />
+		<h1>Hack@Brown 2015</h1>
+		<div id='footer'>
+			<h2 id='tagline'>Build cool things with us</h2>
+			<h3>Providence, RI | January 23-24</h3>
+		</div>
+		
+		<form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST' class='signed-up'>
+			<input type='email' name='email' id='email' placeholder='subscribe for updates'/>
+		</form>
+	</div>
+	
 </div>
-
 
 {% endblock %}
