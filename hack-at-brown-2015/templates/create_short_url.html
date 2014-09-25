@@ -1,0 +1,15 @@
+{% extends "centered.html" %}
+{% block centered_content %}
+{{ super() }}
+<form method='POST'>
+	<h1>Create a short url</h1>
+	<div>
+		hackatbrown.org/<input name='text' placeholder='your-shortcut'/>
+	</div>
+	<div>
+		<label>Redirect to url:</label>
+		<input name='url' type='url' placeholder='http://google.com'/>
+	</div>
+	<input type='submit'/>
+</form>
+{% endblock %}

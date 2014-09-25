@@ -6,7 +6,7 @@
 
 {{ super() }}
 
-<!--<style>
+<style>
 
 html, body {
 	margin: 0px;
@@ -30,16 +30,20 @@ body > div > div > div {
 	text-align: center;
 }
 
-</style>!-->
+</style>
 
 {% endblock %}
 
 {% block content %}
 
 <div id="main">
-    {% block centered_content %}
+	<div>
+		<div>
+	      {% block centered_content %}
 			
-    {% endblock %}
+	      {% endblock %}
+		</div>
+ </div>
 </div>
 
 {% endblock %}
