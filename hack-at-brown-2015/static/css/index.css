@@ -46,7 +46,7 @@ h1, h2, h3 {
 	/* this is the button or text field in the center of the splash. */
 	background-color: rgba(255,255,255,0.3);
 	border: none;
-	padding: 6px;
+	padding: 8px;
 	font-size: 16px;
 	text-align: center;
 	width: 90%;
