@@ -35,12 +35,12 @@
 $(document).ready(function() {
 	$("#registration_form").submit(function(e) {
 		e.preventDefault();
-		$("#registration_form input[type=submit]").val("Uploading...").attr({disabled: true});
+		$("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
 		$("#registration_form").ajaxSubmit({
 			success: function(response) {
-				if (JSON.parse(response).success) {
-					$("#registration_form input[type=submit]").val("Apply");
-					$('#thanks').slideDown();
+				var response = JSON.parse(response);
+				if (response.success) {
+					$("#splash").html(response.replace_splash_with_html);
 					window.location.hash = "";
 				}
 			}

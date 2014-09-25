@@ -47,4 +47,6 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
 		send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
 		
-		self.response.write(json.dumps({"success": True}))
+		name = hacker.name.split(" ")[0] # TODO: make it better
+		confirmation_html = template("post_registration_splash.html", {"name": name})
+		self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))

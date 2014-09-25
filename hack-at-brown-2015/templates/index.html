@@ -15,7 +15,6 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 1/23-24
 {% include "social.html" %} <!-- necessary to support like buttons, etc -->
 
 {% if registration_status == "registration_open" %}
-	{% include "thanks_for_registering.html" %}
 	{% include "registration_form.html" %}
 {% endif %}
 
@@ -26,7 +25,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 1/23-24
 		<h1>Hack@Brown 2015</h1>
 		<div id='footer'>
 			<h2 id='tagline'>Build cool things with us</h2>
-			<h3>Providence, RI | January 23-24</h3>
+			<h3>Providence, RI | January 23-24 | <a href='http://facebook.com/hackatbrown'>Facebook</a> | <a href='http://twitter.com/hackatbrown'>Twitter</a></h3>
 		</div>
 	
 		{% if registration_status == "sign_up_for_updates" %}

@@ -3,6 +3,9 @@
 body {
 	color: #111;
 	line-height: 1.4;
+}
+
+body, input {
 	font-family: "proxima-nova", sans-serif;
 }
 
@@ -16,7 +19,7 @@ body {
 	text-align: center;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
 	font-family: 'Raleway', sans-serif;
 	font-weight: normal;
 }
