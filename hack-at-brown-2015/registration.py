@@ -3,7 +3,6 @@ from google.appengine.ext import ndb
 import json
 from send_email import send_email
 from template import template
-import hashlib
 import os
 import base64
 
@@ -18,21 +17,21 @@ class Hacker(ndb.Model):
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	
 	secret = ndb.StringProperty()
-	
+		
 	admit_priority = ndb.FloatProperty(default=0)
-	admitted = ndb.BooleanProperty(default=False)
 	admitted_email_sent_date = ndb.DateTimeProperty()
 	
 	waitlist_email_sent_date = ndb.DateTimeProperty()
 	
 	rsvpd = ndb.BooleanProperty(default=False)
+	
+	@classmethod
+	def WithSecret(cls, secret):
+		results = cls.query(cls.secret == secret).fetch(1)
+		return results[0] if len(results) else None
 
 def generate_secret_for_hacker_with_email(email):
-	hash = hashlib.md5()
-	hash.update(os.urandom(256))
-	hash.update(email)
-	b64 = base64.urlsafe_b64encode(hash.digest())
-	return b64[:min(30, len(b64))]
+	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
@@ -45,7 +44,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
 		hacker.put()
 		
-		email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0]})
+		email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
 		send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
 		
 		self.response.write(json.dumps({"success": True}))

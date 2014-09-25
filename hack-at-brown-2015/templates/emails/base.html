@@ -24,6 +24,14 @@
 	#logo {
 		text-align: center;
 	}
+	.cta {
+		background-color: #FF3057;
+		color: white;
+		padding: 10px;
+		display: inline-block;
+		margin: auto;
+		font-weight: bold;
+	}
 	</style>
 	<meta charset='utf-8'/>
 </head>
@@ -34,9 +42,9 @@
 		</div>
 		{% block content %}
 		{% endblock %}
-		{% if dashboard_url %}
+		{% if hacker %}
 		<p>
-			<a href='dashboard_url'>To cancel or make changes to your registration, visit your dashboard by clicking this link.</a>
+			<a href='http://2015.hackatbrown.org/secret/{{ hacker.secret }}'>To cancel or make changes to your registration, visit your dashboard by clicking this link.</a>
 		</p>
 		{% endif %}
 	</div>

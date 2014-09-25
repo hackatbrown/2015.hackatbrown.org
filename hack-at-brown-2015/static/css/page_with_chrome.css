@@ -1,0 +1,28 @@
+#header {
+	right: 10px;
+	top: 10px;
+	font-family: 'Raleway', sans-serif;
+	vertical-align: middle;
+	text-align: center;
+}
+#header a {
+	text-decoration: none;
+	color: black;
+	font-size: 2em;
+	border-bottom: 2px solid #FF3057;
+	display: inline-block;
+	padding: 0 1em;
+}
+#header img {
+	height: 125px;
+	margin: auto;
+	display: block;
+}
+a {
+	color: #FF3057;
+}
+#centered {
+	width: 90%;
+	margin: auto;
+	max-width: 700px;
+}

@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
 body {
 	color: #111;
 	line-height: 1.4;
@@ -12,5 +14,10 @@ body {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
+}
+
+h1, h2, h3 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: normal;
 }
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel='stylesheet' href='/static/css/page_with_chrome.css'/>
+{% endblock %}
+
+{% block content %}
+<div id='header'>
+	<a href='/'>
+		<img src='/static/img/logo-medium.png'/> Hack @ Brown
+	</a>
+</div>
+<div id='centered'>
+	{% block centered %} {% endblock %}
+</div>
+{% endblock %}
