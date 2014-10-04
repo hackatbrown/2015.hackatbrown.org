@@ -23,6 +23,8 @@ from google.appengine.ext import blobstore
 import background_work
 import hacker_page
 import short_urls
+import m
+from google.appengine.api import memcache
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -41,4 +43,6 @@ app = webapp2.WSGIApplication([
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
 		('/(.+)', short_urls.Serve)
-], debug=True)
+], debug=False)
+app = m.WSGIMiddleware(app, memcache=memcache)
+

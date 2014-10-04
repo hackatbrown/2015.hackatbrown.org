@@ -1,14 +1,14 @@
 <form action='{{ registration_post_url }}' id='registration_form' method='POST' enctype="multipart/form-data">
 	<div>
 		<h2>Register for Hack@Brown</h2>
-		<input name="name" placeholder="Full name" />
-		<input name="email" placeholder="Email address" type="email" />
-		<input name="school" placeholder="College" />
-		<input name="year" placeholder="Expected graduation year" />
+		<input name="name" placeholder="Full name" required/>
+		<input name="email" placeholder="Email address" type="email" required/>
+		<input name="school" placeholder="College" required/>
+		<input name="year" placeholder="Expected graduation year" required/>
 		<input name="dietary_restrictions" placeholder="Any dietary restrictions?" />
 		<div>
 			T-shirt size:
-			<select name='shirt_size' id='shirt_size'>
+			<select name='shirt_size' id='shirt_size' required>
            <option value='W-S' selected>Women's Small</option>
            <option value='M-S'>Men's Small</option>
            <option value='W-M'>Women's Medium</option>
@@ -22,7 +22,7 @@
 			</select>
 		</div>
 		<div>
-			Your resume:
+			Your resume (optional, but recommended):
 			<input name="resume" type="file" />
 		</div>
 		<p>We can't guarantee we'll have a spot for everyone — we'll email you with our decision as it gets closer to January.</p>
@@ -30,23 +30,26 @@
 	</div>
 </form>
 
+<script src='/static/js/H5F.js'></script> <!-- a polyfill that adds HTML5 form validation features to older browsers -->
+
 <script>
 
 $(document).ready(function() {
-	$("#registration_form").submit(function(e) {
-		e.preventDefault();
-		$("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
-		$("#registration_form").ajaxSubmit({
-			success: function(response) {
-				var response = JSON.parse(response);
-				if (response.success) {
-					$("#splash").html(response.replace_splash_with_html);
-					window.location.hash = "";
+	H5F.setup(document.getElementById("registration_form"), {
+		onSubmit: function() {
+			$("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
+			$("#registration_form").ajaxSubmit({
+				success: function(response) {
+					var response = JSON.parse(response);
+					if (response.success) {
+						$("#splash").html(response.replace_splash_with_html);
+						window.location.hash = "";
+					}
 				}
-			}
-		})
-		return false;
-	})
+			})
+			return false;
+		}
+	});
 })
 
 </script>

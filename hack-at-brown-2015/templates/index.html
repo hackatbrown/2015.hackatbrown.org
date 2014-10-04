@@ -21,7 +21,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 1/23-24
 <div id='splash' class='vertically-centered'>
 
 	<div class='vertically-centered-content'>
-		<img src='/static/img/logo-medium.png' id='logo' />
+		<img src='/static/img/logo-medium.png' id='logo' alt=''/>
 		<h1>Hack@Brown 2015</h1>
 		<div id='footer'>
 			<h2 id='tagline'>Build cool things with us</h2>
@@ -30,7 +30,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 1/23-24
 	
 		{% if registration_status == "sign_up_for_updates" %}
 		<form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
-			<input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates'/>
+			<input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
 		</form>
 		{% endif %}
 	
