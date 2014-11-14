@@ -44,5 +44,5 @@ app = webapp2.WSGIApplication([
 		('/create_short_url', short_urls.Create),
 		('/(.+)', short_urls.Serve)
 ], debug=False)
-app = m.WSGIMiddleware(app, memcache=memcache)
+#app = m.WSGIMiddleware(app, memcache=memcache)
 
