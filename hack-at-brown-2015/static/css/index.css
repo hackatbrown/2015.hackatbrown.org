@@ -107,7 +107,7 @@ a.main_cta {
 }
 
 #sign-up-for-updates.loading {
-	
+
 }
 
 #sign-up-for-updates.signed-up input[type=email] {
@@ -186,6 +186,7 @@ a.main_cta {
 }
 #registration_form input[type=submit]:hover {
 	background-color: #f58;
+	cursor: pointer;
 }
 
 /* after registering */
