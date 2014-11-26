@@ -17,6 +17,15 @@ class CheckinPageHandler(webapp2.RequestHandler):
         self.response.write(response)
         self.response.headers["Content-Type"] = "text/HTML"
 
+    def post(self):
+        #TODO: improve - use keys.
+        hackerName = self.request.get('name')
+        hacker = Hacker.query(Hacker.name == hackerName).fetch(1)[0]
+        hacker.checked_in = True
+        hacker.put()
+        self.redirect('/admin_checkin')
+
+
 def get_hackers_to_be_checked():
     # Cache this value, results don't need to be updated quickly.
     to_check_in = 'hackers_to_be_checked'
@@ -38,7 +47,7 @@ def check_in_hacker(hacker):
 
 
 app = webapp2.WSGIApplication([
-    ('/admin_checkin', CheckinPageHandler)
+    ('/admin_checkin', CheckinPageHandler),
 ], debug=True)
 
 
