@@ -42,11 +42,12 @@ app = webapp2.WSGIApplication([
 		('/register', registration.RegistrationHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__get_dash_stats', dashboard.DashboardBackgroundHandler),
-		('__send_email', dashboard.SendEmail),
+		('/__send_email', dashboard.SendEmail),
 		('/dashboard', dashboard.DashboardHandler),
+		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
 		('/(.+)', short_urls.Serve)
-], debug=False)
+], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)
 

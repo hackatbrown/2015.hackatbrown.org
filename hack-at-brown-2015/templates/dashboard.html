@@ -36,6 +36,7 @@
     </div>
     <div id="email-panel" class='panel' >
       <h2 class='option'> Email</h2>
+      <label ng-show='showEmailStatus' style='display: block' ><b>%%emailStatus%%</b></label>
       <ul ng-init='emailOption = "all"' id='email-options' class='panel-content'>
         <li ng-click='emailOption = "all"' ng-class='emailOption == "all" ? "selected" : "unselected"'> All </li>
         <li ng-click='emailOption = "accepted"' ng-class='emailOption == "accepted" ? "selected" : "unselected"'>Accepted</li>
@@ -62,6 +63,7 @@
       <div class='panel-content'>
         <label>Emails</label>
         <input ng-model= "manualEmails" type='text' name='emails' style='text-align: center; width: 100%; height: 50'>
+        <label ng-show='showManualStatus' style='display: block' ><b>%%manualStatus%%</b></label>
         <div ng-click='changeStatus("Register")' class='button'>Sign Up</div>
         <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>

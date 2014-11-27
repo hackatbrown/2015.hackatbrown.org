@@ -6,10 +6,15 @@ var dashApp = angular.module('dashApp', []).config(function($interpolateProvider
 dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.content = "";
   $scope.header = "";
+
+  $scope.showEmailStatus = false;
+  $scope.emailStatus = ""
   $scope.emailSubject = "";
   $scope.emailBody = "";
 
-  $scope.manualEmails = ""
+  $scope.showManualStatus = false;
+  $scope.manualStatus = "";
+  $scope.manualEmails = "";
 
   $scope.signupCount = 0;
   $scope.registerCount = 0;
@@ -47,32 +52,35 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
     };
     $http.post('/__send_email', {recipients: $scope.emailOption, subject: $scope.emailSubject,body:$scope.emailBody }).
     success(function(data, status, headers, config) { 
-      console.log("successfully sent emails");
-      console.log(data.recipients)
+      console.log("sent emails!");
+      $scope.emailStatus = "Sent Email to " + $scope.emailOption + "!";
+      $scope.showEmailStatus = true;
     }).
     error(function(data, status, headers, config) {
-      console.log('failed to send emails')
+      console.log('failed to send emails');
+      $scope.emailStatus = "Send failed...";
+      $scope.showEmailStatus = true;
     });
 
   };
 
-  $scope.changeStatus = function(){
+  $scope.changeStatus = function(action){
     emails = $scope.manualEmails.trim().split(",");
     if (emails == []) {
       console.log("No recipients")
-      return "Failed";
+      return;
     };
-    $http.post('/__manual', {emails: emails, subject: $scope.emailSubject,body:$scope.emailBody }).
+
+    $http.post('/__manual', {change: action, emails: $scope.emails}).
     success(function(data, status, headers, config) { 
-      if (data.success){
         console.log("successfully changed status for emails");
-      }
-      else
-        console.log("failed to change status");
-      
+        $scope.manualStatus = action + " Success!";
+        $scope.showManualStatus = true;
     }).
     error(function(data, status, headers, config) {
       console.log('failed to send change status')
+      $scope.manualStatus = action + " failed..."
+      $scope.showManualStatus = true;
     });
 
   };
