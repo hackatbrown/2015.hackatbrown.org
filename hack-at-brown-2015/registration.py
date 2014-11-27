@@ -33,6 +33,14 @@ class Hacker(ndb.Model):
 def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
+def accept_hacker(hacker):
+	email = template("emails/admitted.html", {"hacker": hacker})
+	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown")
+
+	hacker.admitted_email_sent_date = datetime.datetime.now()
+	hacker.put()
+	memcache.add("admitted:{0}".format(hacker.key.id()), "1", memcache_expiry)
+
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		hacker = Hacker()

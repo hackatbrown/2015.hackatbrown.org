@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<title>Hack@Brown 2015 — Dashboard</title>
+<link rel='stylesheet' href='/static/css/dashboard.css'/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
+<script src='/static/js/dashboard.js'></script>
+{% endblock %}
+
+
+{% block content %} 
+<div id='header' class='vertically-centered vertically-centered-content'>
+  <img src='/static/img/logo.png' width="134" height="144"/>
+  <h1>Hack@Brown Dashboard</h1>
+</div>
+
+<div ng-app='dashApp' ng-init="getStats()" ng-controller="MainCtrl" >
+  <div id='menu_1st_row'  class='menu'  >
+      <div>Hackers Signed Up: <span><h2>%%signupCount%%</h2></span></div>
+      <div>Hackers Registered: <span><h2>%%registerCount%%</h2></span></div>
+      <br>
+      <div><span>Accepted: <h2>%%acceptedCount%%</h2></span></div> 
+      <div>Waitedlisted: <span><h2>%%waitlistCount%%</h2></span></div> 
+      <div>Declined: <span><h2>%%declinedCount%%</h2></span></div>
+  </div>
+  <br>
+  <div id='menu_2nd_row' class='menu' >
+    <div id="downloads" class='panel' >
+      <h2 class='option' >Downloads</h2>
+      <div class='panel-content'>
+        <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes</div>
+        <div ng-click='downloadAcceptedCSV()'id='csv_accepted_download_button' class='button' > Download Accepted CSV</div>
+        <div ng-click='downloadAllCSV()'id='csv_all_download_button' class='button' > Download All CSV</div>
+      </div>
+    </div>
+    <div id="email-panel" class='panel' >
+      <h2 class='option'> Email</h2>
+      <ul ng-init='emailOption = "all"' id='email-options' class='panel-content'>
+        <li ng-click='emailOption = "all"' ng-class='emailOption == "all" ? "selected" : "unselected"'> All </li>
+        <li ng-click='emailOption = "accepted"' ng-class='emailOption == "accepted" ? "selected" : "unselected"'>Accepted</li>
+        <li ng-click='emailOption = "waitlisted"' ng-class='emailOption == "waitlisted" ? "selected" : "unselected"'>Waitlisted</li>
+      </ul>
+      <div>
+        <label>Subject</label>
+        <input ng-model= "emailSubject" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
+        <label>Body</label>
+        <textarea ng-model="emailBody" name='body' style='width: 100%; height: 300px'></textarea>
+        <div id="send_emails" class="button" ng-click='sendEmails()'> Send Emails</div>
+      </div>
+      
+    </div>
+    <div id="breakdown-panel" class='panel' >
+      <h2 class='option' >Breakdowns</h2>
+      <div class='panel-content'>
+        <div ng-click='toggleBreakdowns()' id='breakdown_button' class='button' > Show Breakdowns</div>
+      </div>
+    </div>
+    <div id="manual-panel" class='panel' >
+      <h2 class='option' >Manual</h2>
+      
+      <div class='panel-content'>
+        <label>Emails</label>
+        <input ng-model= "manualEmails" type='text' name='emails' style='text-align: center; width: 100%; height: 50'>
+        <div ng-click='changeStatus("Register")' class='button'>Sign Up</div>
+        <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
+        <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
