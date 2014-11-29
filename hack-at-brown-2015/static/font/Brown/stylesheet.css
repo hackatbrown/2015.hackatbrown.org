@@ -1,0 +1,123 @@
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-bold-webfont.eot');
+    src: url('brown-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-bold-webfont.woff2') format('woff2'),
+         url('brown-bold-webfont.woff') format('woff'),
+         url('brown-bold-webfont.ttf') format('truetype'),
+         url('brown-bold-webfont.svg#brownbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-bold-italic-webfont.eot');
+    src: url('brown-bold-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-bold-italic-webfont.woff2') format('woff2'),
+         url('brown-bold-italic-webfont.woff') format('woff'),
+         url('brown-bold-italic-webfont.ttf') format('truetype'),
+         url('brown-bold-italic-webfont.svg#brownbold_italic') format('svg');
+    font-weight: bold;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-regular-webfont.eot');
+    src: url('brown-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-regular-webfont.woff2') format('woff2'),
+         url('brown-regular-webfont.woff') format('woff'),
+         url('brown-regular-webfont.ttf') format('truetype'),
+         url('brown-regular-webfont.svg#brownregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-light-webfont.eot');
+    src: url('brown-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-light-webfont.woff2') format('woff2'),
+         url('brown-light-webfont.woff') format('woff'),
+         url('brown-light-webfont.ttf') format('truetype'),
+         url('brown-light-webfont.svg#brownlight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-light-italic-webfont.eot');
+    src: url('brown-light-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-light-italic-webfont.woff2') format('woff2'),
+         url('brown-light-italic-webfont.woff') format('woff'),
+         url('brown-light-italic-webfont.ttf') format('truetype'),
+         url('brown-light-italic-webfont.svg#brownlight_italic') format('svg');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-thin-webfont.eot');
+    src: url('brown-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-thin-webfont.woff2') format('woff2'),
+         url('brown-thin-webfont.woff') format('woff'),
+         url('brown-thin-webfont.ttf') format('truetype'),
+         url('brown-thin-webfont.svg#brownthin') format('svg');
+    font-weight: 100;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Brown';
+    src: url('brown-regular-italic-webfont.eot');
+    src: url('brown-regular-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-regular-italic-webfont.woff2') format('woff2'),
+         url('brown-regular-italic-webfont.woff') format('woff'),
+         url('brown-regular-italic-webfont.ttf') format('truetype'),
+         url('brown-regular-italic-webfont.svg#brownregular_italic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'brownthin_italic';
+    src: url('brown-thin-italic-webfont.eot');
+    src: url('brown-thin-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('brown-thin-italic-webfont.woff2') format('woff2'),
+         url('brown-thin-italic-webfont.woff') format('woff'),
+         url('brown-thin-italic-webfont.ttf') format('truetype'),
+         url('brown-thin-italic-webfont.svg#brownthin_italic') format('svg');
+    font-weight: 100;
+    font-style: italic;
+
+}

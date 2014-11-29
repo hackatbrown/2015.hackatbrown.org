@@ -7,7 +7,6 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 {% block head %}
 {{ super() }}
 <link rel='stylesheet' href='/static/css/index.css'/>
-<script src='/static/js/index.js'></script>
 {% endblock %}
 
 {% block content %}
@@ -18,55 +17,64 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 	{% include "registration_form.html" %}
 {% endif %}
 
-<div id='splash' class='vertically-centered'>
+<div class="container">
 
-	<div class='vertically-centered-content'>
-		<img src='/static/img/logo-medium.png' id='logo' alt=''/>
-		<h1>Hack@Brown 2015</h1>
-		<div id='footer'>
-			<h2 id='tagline'>Build cool things with us</h2>
-			<h3>Providence, RI | February 7-8 | <a href='http://facebook.com/hackatbrown'>Facebook</a> | <a href='http://twitter.com/hackatbrown'>Twitter</a></h3>
-		</div>
+    <div id='splash' class='splash panel'>
+            <ul class="top-bar_ul">
+                <li class="top-bar_li" id="hello_top">HELLO</li>
+                <li class="top-bar_li" id="schedule_top">SCHEDULE</li>
+                <li class="top-bar_li" id="sponsors_top">SPONSORS</li>
+                <li class="top-bar_li" id="faq_top">FAQ</li>
+            </ul>
+        
+            <div class='logo'></div>
+            <div class='title'>Hack@Brown<span class='light'>2015</span></div>
+            <hr class='hr'></hr>
+            <div class='slogan'>build cool things with us</div>
 
-		{% if registration_status == "sign_up_for_updates" %}
-		<form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
-			<input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
-		</form>
-		{% endif %}
+            {% if registration_status == "sign_up_for_updates" %}
+            <form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
+                <input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
+            </form>
+            {% endif %}
 
-		{% if registration_status == "registration_open" %}
-		<div id='register-button' class='main_cta' onclick="window.location = '#registration_form'; $('#registration_form input[name=name]').focus()">
-			Sign up now
-		</div>
-		{% endif %}
+            {% if registration_status == "registration_open" %}
+            <div id='register-button' class='main_cta' onclick="window.location = '#registration_form'; $('#registration_form input[name=name]').focus()">
+                Sign up now
+            </div>
+            {% endif %}
 
-		{% if registration_status == "registration_closed" %}
-		<div class='main_cta'>
-			Registration is closed, sorry!
-		</div>
-		{% endif %}
+            {% if registration_status == "registration_closed" %}
+            <div class='main_cta'>
+                Registration is closed, sorry!
+            </div>
+            {% endif %}
 
-	</div>
+            <div class='datetime light'>
+                <h3>Providence, RI | February 7-8 | <a href='http://facebook.com/hackatbrown'>Facebook</a> | <a href='http://twitter.com/hackatbrown'>Twitter</a></h3>
+            </div>
+    </div>
 
+    <div class='panel'>
+
+        <div id='faq1'>
+            <h2>What is Hack@Brown?</h2>
+            <p>Brown University's student-run hackathon. Last year, over 300 college students from around the Northeast came to Providence to spend 24 hours designing and building mobile apps, website services, Chrome extensions and more. And this February, we're doing it again.</p>
+        </div>
+
+        <div id='faq2'>
+            <h2>How do I get there? Where do I sleep? How do I get back?</h2>
+            <p>Last year, we provided free buses to and from New York City and Boston, and while we might do that again, we're also happy to announce that we'll also be offering reimbursements to hackers from out of town! The hackathon is being held across two of our most historic buildings–Sayles and Wilson Halls.</p>
+            <p>We'll make sure you have a quiet place to sleep, but it might not be the comfiest.</p>
+            <h2>What should I bring?</h2>
+            <p>Everything you need to execute your hack—which usually just means computers and chargers. And don't forget pillows, sleeping bags, toothbrushes, or anything else you need to survive the night (plus your student ID). We'll keep you fed, caffeinated, and give you a steady supply of free t-shirts and other free stuff from our sponsors.</p>
+            <h2>Can I work on a project I've already started?</h2>
+            <p>Hackathons are about learning new things and leaving your comfort zone, so we'll ask that you start something entirely new with your team. Of course, you're free to use publicly available resources, like frameworks or APIs.</p>
+        </div>
+
+    </div>
+    
 </div>
 
-<div id='rest'>
-
-	<div id='faq1'>
-		<h2>What is Hack@Brown?</h2>
-		<p>Brown University's student-run hackathon. Last year, over 300 college students from around the Northeast came to Providence to spend 24 hours designing and building mobile apps, website services, Chrome extensions and more. And this February, we're doing it again.</p>
-	</div>
-
-	<div id='faq2'>
-		<h2>How do I get there? Where do I sleep? How do I get back?</h2>
-		<p>Last year, we provided free buses to and from New York City and Boston, and while we might do that again, we're also happy to announce that we'll also be offering reimbursements to hackers from out of town! The hackathon is being held across two of our most historic buildings–Sayles and Wilson Halls.</p>
-		<p>We'll make sure you have a quiet place to sleep, but it might not be the comfiest.</p>
-		<h2>What should I bring?</h2>
-		<p>Everything you need to execute your hack—which usually just means computers and chargers. And don't forget pillows, sleeping bags, toothbrushes, or anything else you need to survive the night (plus your student ID). We'll keep you fed, caffeinated, and give you a steady supply of free t-shirts and other free stuff from our sponsors.</p>
-		<h2>Can I work on a project I've already started?</h2>
-		<p>Hackathons are about learning new things and leaving your comfort zone, so we'll ask that you start something entirely new with your team. Of course, you're free to use publicly available resources, like frameworks or APIs.</p>
-	</div>
-
-</div>
-
+<script src='/static/js/index.js'></script>
 {% endblock %}

@@ -1,65 +1,159 @@
+/* GENERAL */
 
-html, body {
-	margin: 0px;
-	height: 100%;
+a {
+    text-decoration:none;  
+    color:#1B8EB9; /*temp*/
 }
 
-#splash {
-	width: 100%;
-	height: 100%;
-	color: white;
-	position: relative;
-	background-image: url('/static/img/background2.jpg');
-	background-size: cover;
-	background-position: center;
-	background-color: #222;
-}
-#splash > div {
-	padding: 20px;
+a:hover {
+    
 }
 
-#logo {
-	height: 250px;
+a:active {
+    color:#1B8EB9;
 }
 
-#footer {
-	position: absolute;
-	bottom: 10px;
-	left: 10px;
-	right: 10px;
-	text-align: center;
-	opacity: 0.6;
+.top-bar_li:hover {
+    cursor:pointer;   
 }
 
-#footer a {
-	color: white;
-	text-decoration: none;
+.light{
+	font-family: 'Brown';
+	font-weight:300;
 }
 
-#footer a:hover {
-	text-decoration: underline;
+/* PAGE MODULES */
+.container {
+    width:100%;
+    height:100%;
+    overflow-x:hidden;
 }
 
-h1 {
-	margin: 0.2em;
-	margin-bottom: 0.5em;
+.panel {
+    position:relative;
+    width:100%;
+    min-height:100%;
+    height:auto;
+}
+
+/* NAV */
+.top-bar_ul{
+    margin:0 auto;
+    margin-top:1.7%;
+	list-style:none;
+	padding:0;
+    font-size:1em;
+}
+
+.top-bar_li{
+	display: inline;
+	color:#1B8EB9;
+	margin:1.1%;
+}
+
+.top-bar_li:hover{
+	color:#EF5D93;
+	border-bottom:2px #EF5D93 solid;
+	padding-bottom:1px;
+}
+
+/* SPLASH */
+.splash {
+    text-align:center;
+}
+
+.logo {
+    width:165px;
+	height:207px;
+    margin:0 auto;
+    margin-top:4%;
+    background-image:url(../img/logo-wire-inverted-pink.svg);   
+    background-size:cover;                      
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+
+.title{
+	color:#EF5D93;
+	font-size:3.7em;
+	font-weight:bold;
+	font-family: 'Brown';
+    margin:0 auto;
+    margin-top:3%;
+    text-transform:uppercase;
+}
+
+.title>span{
+	margin-left:10px;
+}
+
+.hr {
+    margin-top:2%;
+	height:4px;
+	width:100px;
+	background-color:#1B8EB9;
+	border:0;   
+}
+
+.slogan {
+    margin-top:2.5%;
+	font-size:18px;
+	color:#1B8EB9;
+	font-family:'Brown';
+	font-weight:300;
 }
 
 .main_cta {
 	/* this is the button or text field in the center of the splash. */
-	background-color: rgba(255,255,255,0.3);
-	border: none;
-	padding: 8px;
-	font-size: 16px;
+    margin-top:1.5%;
+	background-color:#1B8EB9;
+	border:none;
+	padding:8px;
+	font-size:1.2em;
+	text-align:center;
+	width:90%;
+	max-width:290px;
+	display:inline-block;
+    text-transform:uppercase;
+    color:white;
+}
+
+.main_cta:hover {
+    background-color:#3783AB;
+}
+
+.main_cta:active {
+    background-color:#317599;
+}
+
+.datetime {
+    margin-top:4%;
+	color:#1B8EB9;
+    font-size:.7em;
+    text-transform:uppercase;
+}
+
+/* CONTENT */
+#rest {
+	margin-bottom: 40px;
+}
+#rest h2 {
 	text-align: center;
+	font-size: 24px;
+}
+
+/* faqs */
+
+#faq1, #faq2 {
 	width: 90%;
-	max-width: 290px;
-	display: inline-block;
+	max-width: 700px;
+	margin: auto;
+	font-size: 14px;
 }
-a.main_cta {
-	text-decoration: none;
-	color: white;
-}
+
+
+
+/* REGISTRATION -- in progress */
 
 #register-button {
 	cursor: pointer;
@@ -117,25 +211,6 @@ a.main_cta {
 	-ms-transition: background-color 0.3s, box-shadow 1.0s;
 	box-shadow: inset 0px -100px 0px #6d7;
 }
-
-/* rest of the site */
-#rest {
-	margin-bottom: 40px;
-}
-#rest h2 {
-	text-align: center;
-	font-size: 24px;
-}
-
-/* faqs */
-
-#faq1, #faq2 {
-	width: 90%;
-	max-width: 700px;
-	margin: auto;
-	font-size: 14px;
-}
-
 
 /* registration */
 #registration_form {
@@ -207,17 +282,37 @@ a.main_cta {
 	margin: 0px;
 }
 
-/* some mobile things to make it RESPONSIVE!!! */
+/* RESPONSIVE */
+@media screen and (max-width: 750px) {
+    .logo {
+        margin-top:5%;
+    }
+    
+	.title {
+        font-size:3em;
+        margin-top:4%;
+    }
+    
+    .hr {
+        margin-top:5%;   
+    }
+    
+    .slogan {
+        margin-top:5%;   
+    }
+    
+    .main_cta {
+        margin-top:4%;   
+    }
+    
+    .datetime {
+        margin-top:7%;   
+    }
+}
 
-@media screen and (max-height: 560px) {
-	#splash > div {
-		padding-bottom: 110px; /* make sure the #footer text doesn't overlap the form on wee little screens */
-	}
-	#footer {
-		font-size: 0.7em;
-	}
-	#logo {
-		height: 125px;
-	}
+@media screen and (max-width: 500px) {
+	.title {
+        font-size:2em;
+    }
 }
 
