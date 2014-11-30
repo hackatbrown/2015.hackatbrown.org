@@ -71,6 +71,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 //                    });
                     // TODO: actually submit data.  This below thingus should be done after data is successfully submitted
                     $( ".double" ).css("left", "-100%");
+                    $('html,body').animate({
+                      scrollTop: 0}, 1000);
                   });
                 </script>
                 {% endif %}

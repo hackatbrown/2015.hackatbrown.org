@@ -74,9 +74,8 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     font-size:1em;
     text-align:center;
     position: fixed;
-    left: 0;
-    right: 0;
-    width: 100%;
+    left: 20%;
+    right: 20%;
     z-index: 999;
     background-color: white;
 }
