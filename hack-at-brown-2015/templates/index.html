@@ -37,10 +37,34 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
                 {% if registration_status == "registration_open" %}
                 <form class="init_reg">
-                    <input type="name" placeholder="NAME" class="init_input" />
+                    <input type="text" name="name" placeholder="NAME" class="init_input" />
                     <input type="text" name="email" placeholder="EMAIL" class="init_input" />
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
+                
+                <!-- Dirty Nasty Inline Script for AJAX posting data and then swoop de swooping incoming -->
+                <script type="text/javascript">
+                  $(".init_reg").submit(function(event) {
+
+                    /* stop form from submitting normally */
+                    event.preventDefault();
+
+                    // code below is silly and nate can probably do better
+//                    /* get some values from elements on the page: */
+//                    var $form = $( this ),
+//                        url = $form.attr( 'action' );
+//
+//                    /* Send the data using post */
+//                    var posting = $.post( url, { name: $('#name').val(), name2: $('#name2').val() } );
+//
+//                    /* Alerts the results */
+//                    posting.done(function( data ) {
+//                      alert('success');
+//                    });
+                    // TODO: actually submit data.  This below thingus should be done after data is successfully submitted
+                    $( ".double" ).css("left", "-100%");
+                  });
+                </script>
                 {% endif %}
 
                 {% if registration_status == "registration_closed" %}
@@ -57,10 +81,15 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         {% if registration_status == "registration_open" %}
             {% include "registration_form.html" %}
             <div class="cancel_reg">Cancel</div>
+            <script type="text/javascript">
+              $(".cancel_reg").click(function() {
+                $( ".double" ).css("left", "0px");
+              });
+            </script>
         {% endif %}
     </div>
 
-    <div class='panel'>
+    <section class='panel'>
 
         <div id='faq1'>
             <h2>What is Hack@Brown?</h2>
@@ -77,7 +106,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             <p>Hackathons are about learning new things and leaving your comfort zone, so we'll ask that you start something entirely new with your team. Of course, you're free to use publicly available resources, like frameworks or APIs.</p>
         </div>
 
-    </div>
+    </section>
     
 </div>
 
