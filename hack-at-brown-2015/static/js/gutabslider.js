@@ -67,7 +67,7 @@
             $slidingBar.css("position", "absolute");
             $slidingBar.css("display", "block");
             $slidingBar.css("width", "0");
-            $slidingBar.css("height", "3px");
+            $slidingBar.css("height", "2px");
 
             //Position tab under currently active tab
             positionTabUnderCurrentActiveTab($element);
