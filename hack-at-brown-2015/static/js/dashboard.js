@@ -21,6 +21,24 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.acceptedCount = 0;
   $scope.waitlistCount = 0;
   $scope.declinedCount = 0;
+
+  $scope.charts = [{
+      name : 'By School',
+      value : 'school',
+      hc_type : 'pie'
+    }, {
+      name : 'By Shirt Size',
+      value : 'shirt',
+      hc_type : 'pie'
+    }, {
+      name : 'By Dietary Restrictions',
+      value : 'diet',
+      hc_type : 'pie'
+    }];
+  $scope.currentChart = $scope.charts[0];
+  $scope.showChartStatus = false;
+  $scope.chartStatus = "";
+
   $scope.getContent = function (option) {
     return 'PLACEHOLDER'
   };
@@ -51,7 +69,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
       return "Failed";
     };
     $http.post('/__send_email', {recipients: $scope.emailOption, subject: $scope.emailSubject,body:$scope.emailBody }).
-    success(function(data, status, headers, config) { 
+    success(function(data, status, headers, config) {
       console.log("sent emails!");
       $scope.emailStatus = "Sent Email to " + $scope.emailOption + "!";
       $scope.showEmailStatus = true;
@@ -72,7 +90,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
     };
 
     $http.post('/__manual', {change: action, emails: $scope.emails}).
-    success(function(data, status, headers, config) { 
+    success(function(data, status, headers, config) {
         console.log("successfully changed status for emails");
         $scope.manualStatus = action + " Success!";
         $scope.showManualStatus = true;
@@ -84,4 +102,38 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
     });
 
   };
+
+  $scope.populateCharts = function() {
+
+    function toggleChart(toggle) {
+    }
+
+    $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
+        success(function(data, status) {
+          $scope.showChartStatus = (data == "null");
+          $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
+          $('#chart_1').toggle(data != "null");
+
+          if (data != "null") {
+            $('#chart_1').highcharts({
+                  title : {
+                    text : $scope.currentChart.name
+                  },
+                  series: [{
+                      type : 'pie',
+                      name: 'Hackers',
+                      data: data
+                  }]
+                });
+          }
+
+        }).
+        error(function(data, status) {
+          $scope.data = data || "Request failed";
+          $scope.status = status;
+
+      });
+
+  };
+
 }]);

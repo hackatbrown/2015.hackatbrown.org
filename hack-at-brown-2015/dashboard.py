@@ -12,10 +12,6 @@ class DashboardHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write(template("dashboard.html"))
 
-class BreakdownHandlers(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(template("dashboard.html"))
-
 class ManualRegistrationHandler(webapp2.RequestHandler):
     def post(self):
         parsed_request = json.loads(self.request.body)
@@ -27,7 +23,7 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
                     logging.debug(h)
                     if h.admitted_email_sent_date == None:
                         accept_hacker(h)
-              
+
 
 class DashboardBackgroundHandler(webapp2.RequestHandler):
   def get(self):
@@ -38,7 +34,7 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
     data['waitlist_count'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
     data['declined_count'] = 0
 
-    self.response.write(json.dumps(data)) 
+    self.response.write(json.dumps(data))
 
 class SendEmail(webapp2.RequestHandler):
   def post(self):
@@ -54,6 +50,31 @@ class SendEmail(webapp2.RequestHandler):
         send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
     send_email(recipients=send_to, html=body, subject=subject)
     self.response.write(json.dumps({"success": True, "recipients": send_to }))
+
+class BreakdownHandler(webapp2.RequestHandler):
+    def get(self, type):
+        if type == 'school':
+            data = getBySchool()
+        elif type == 'shirt':
+            data = getByShirtSize()
+        elif type == 'diet':
+            data = getByDietaryPreferences()
+        else:
+            data = {}
+
+        self.response.write(json.dumps(data))
+
+def getBySchool():
+    return [
+          {'name' : 'Brown', 'y' : 30},
+          {'name' : 'MIT', 'y' : 25},
+          {'name' : 'Yale', 'y' : 15},
+          {'name' : 'UPenn', 'y' : 25},
+          {'name' : 'Boston University', 'y' : 5}]
+def getByShirtSize():
+    return None
+def getByDietaryPreferences():
+    return None
 
 
 
@@ -99,7 +120,7 @@ class ResumeHandler(webapp2.RequestHandler):
     def post(self):
         offset, count = int(self.request.get('offset')), int(self.request.get('count'))
         self.response.headers['Content-Type'] ='application/zip'
-        self.response.headers['Content-Disposition'] = 'attachment; filename="resumes %i-%i.zip"'%(offset,count)    
+        self.response.headers['Content-Disposition'] = 'attachment; filename="resumes %i-%i.zip"'%(offset,count)
         data = StringIO.StringIO()
         zipfile = ZipFile(data, "w", ZIP_DEFLATED)
         zip_resumes(zipfile, offset, count)

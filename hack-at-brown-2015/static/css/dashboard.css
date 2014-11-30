@@ -3,9 +3,10 @@
 html, body {
   margin: 0px;
   height: 100%;
-  
+
   vertical-align: middle;
   text-align: center;
+
 }
 
 #header {
@@ -14,10 +15,10 @@ html, body {
   border-bottom: 3px solid orange;
 }
 
-.button { 
+.button {
   border: solid 1px red;
   padding: 5px;
-  cursor: pointer;  
+  cursor: pointer;
   display: inline-block;
   margin: 10px;
 }
@@ -31,6 +32,11 @@ html, body {
 }
 
 #menu_1st_row div {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#charts {
   margin-left: 20px;
   margin-right: 20px;
 }

@@ -37,12 +37,13 @@ class IndexHandler(webapp2.RequestHandler):
 			self.response.write(template("index.html", variables))
 
 app = webapp2.WSGIApplication([
-    ('/', IndexHandler),
+	    ('/', IndexHandler),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__get_dash_stats', dashboard.DashboardBackgroundHandler),
 		('/__send_email', dashboard.SendEmail),
+		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
