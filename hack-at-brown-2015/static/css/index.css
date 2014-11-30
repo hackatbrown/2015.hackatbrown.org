@@ -41,15 +41,24 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     width:100%;
     min-height:100%;
     height:auto;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
 /* NAV */
+
 .top-bar_ul{
     margin:0 auto;
     margin-top:1.7%;
+    margin-bottom: 1.0%;
 	list-style:none;
 	padding:0;
     font-size:1em;
+    text-align:center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 
 .top-bar_li{
@@ -58,15 +67,32 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 	margin:1.1%;
 }
 
+.top-bar_li.active a {
+    color:#EF5D93;
+	padding-bottom:1px;
+}
+
+.top-bar_li a:hover {
+    border-bottom: 0;
+}
+
 .top-bar_li:hover{
 	color:#EF5D93;
-	border-bottom:2px #EF5D93 solid;
 	padding-bottom:1px;
+}
+
+.gu-sliding-bar {
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    background: #EF5D93;
 }
 
 /* SPLASH */
 .splash {
     text-align:center;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
 .logo {
@@ -254,7 +280,7 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     background-color:white;
     margin:0 auto;
     padding:3%;
-    padding-top:30px;
+    padding-top:60px;
     top:0;
 }
 

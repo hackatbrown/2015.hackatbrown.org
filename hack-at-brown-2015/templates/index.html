@@ -9,20 +9,31 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 <link rel='stylesheet' href='/static/css/index.css'/>
 {% endblock %}
 
+{% block nav %}
+<ul id="tabs" class="top-bar_ul">
+    <li class="top-bar_li active" id="hello_top"><a href="#hero">HELLO</a></li>
+    <li class="top-bar_li" id="schedule_top"><a href="#schedule">SCHEDULE</a></li>
+    <li class="top-bar_li" id="sponsors_top"><a href="#sponsors">SPONSORS</a></li>
+    <li class="top-bar_li" id="faq_top"><a href="#faq">FAQ</a></li>
+</ul>
+{% endblock %}
+
 {% block content %}
 
 {% include "social.html" %} <!-- necessary to support like buttons, etc -->
 
 <div class="container">
 
-    <div class='double'>
+    <div id="hero" class='double'>
         <section id='splash' class='splash panel double_left'>
-                <ul class="top-bar_ul"> <!-- TODO: should probably redefine as nav -->
+<!--
+                <ul class="top-bar_ul">  TODO: should probably redefine as nav 
                     <li class="top-bar_li" id="hello_top">HELLO</li>
                     <li class="top-bar_li" id="schedule_top">SCHEDULE</li>
                     <li class="top-bar_li" id="sponsors_top">SPONSORS</li>
                     <li class="top-bar_li" id="faq_top">FAQ</li>
                 </ul>
+-->
 
                 <div class='logo'></div>
                 <div class='title'>Hack@Brown<span class='light'>2015</span></div> <!-- TODO: should probably redefine as h1 -->
@@ -89,7 +100,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         {% endif %}
     </div>
 
-    <section class='panel'>
+    <section id='faq' class='panel'>
 
         <div id='faq1'>
             <h2>What is Hack@Brown?</h2>
@@ -111,4 +122,26 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 </div>
 
 <script src='/static/js/index.js'></script>
+
+<script>
+    // Navigation thingus
+    
+    function sectionChanged(s) {
+        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
+    }
+    
+    $(document).ready(function() {
+        $('.top-bar_ul').onePageNav({
+            currentClass: "active",
+            changeHash: false,
+            begin: sectionChanged,
+            scrollChange: sectionChanged
+        });
+        
+        $('.top-bar_ul').gutabslider();
+
+        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
+    });
+
+</script>
 {% endblock %}
