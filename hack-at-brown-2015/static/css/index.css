@@ -25,7 +25,7 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 }
 
 .light {
-	font-family: 'Brown';
+/*	font-family: 'Brown';*/
 	font-weight:300;
 }
 
@@ -84,7 +84,7 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 	color:#EF5D93;
 	font-size:3.7em;
 	font-weight:bold;
-	font-family: 'Brown';
+/*	font-family: 'Brown';*/
     margin:0 auto;
     margin-top:3%;
     text-transform:uppercase;
@@ -107,7 +107,7 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     margin-top:2.5%;
 	font-size:18px;
 	color:#1B8EB9;
-	font-family:'Brown';
+/*	font-family:'Brown';*/
 	font-weight:300;
 }
 
@@ -146,12 +146,11 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 	font-size:1em;
 	border:2.5px solid #1B8EB9;
     padding:6px;
-	padding-left:12px;
-	font-family:'Brown';
     font-weight:300;
     box-sizing:border-box;
-    margin-left:1.5px;
-    margin-right:1.5px;
+    text-indent: 6px;       /* perceptual margin decreases when text overflows */
+/*    margin-left:1.5px;*/
+/*    margin-right:1.5px;*/
 }
 
 .init_input::-webkit-input-placeholder{
@@ -160,9 +159,10 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 }
 
 .init_input:focus {
-    border-left-width:4px; 
-    margin-left:0;
-    margin-right:0;
+/*    border-left-width:4px; */
+/*    margin-left:0;*/
+/*    margin-right:0;*/
+  border-color: #EF5D93;
 }
 
 .init_submit {
@@ -174,6 +174,11 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     padding:6px;
     padding-left:10px;
     padding-right:10px;
+}
+
+.init_submit:hover {
+    background-color: #EF5D93;
+    border-color: #EF5D93;
 }
 
 .datetime {
@@ -256,7 +261,6 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 .registration_title {
     color:#EF5D93;
 	font-size:1.1em;
-	font-family:'Brown', sans-serif;
     text-decoration:underline;
     text-transform:uppercase;
     text-align:center;
@@ -266,7 +270,6 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 .registration_form label {
     text-transform:uppercase;
     color:#1B8EB9;
-    font-family:'Brown',sans-serif;
     display:block;
     margin-bottom:7px;
     font-weight:400;
@@ -302,7 +305,6 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
 	background-color:white;
     width:100%;
     font-size:.9em;
-    font-family:'Brown',sans-serif;
     font-weight:300;
     height:15px;
 }
@@ -337,7 +339,6 @@ input[type="radio"] {
 
 input[type="radio"] + label {
     background-color:#EBEBEB;
-    font-family:'Brown',sans-serif;
     font-weight:300;
     color:#404042;
     text-transform:none;
@@ -375,7 +376,6 @@ input[type="radio"]:checked + label {
     background-color:#1B8EB9;
     color:white;
     text-transform:uppercase;
-    font-family:'Brown',sans-serif;
     font-size:1em;
     border:none;
 }
@@ -447,7 +447,6 @@ input[type="radio"]:checked + label {
 }
 #thanks h4 {
 	font-size: x-large;
-	font-family: "Raleway", sans-serif;
 	margin: 0px;
 }
 

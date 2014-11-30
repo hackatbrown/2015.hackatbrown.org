@@ -16,8 +16,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 <div class="container">
 
     <div class='double'>
-        <div id='splash' class='splash panel double_left'>
-                <ul class="top-bar_ul">
+        <section id='splash' class='splash panel double_left'>
+                <ul class="top-bar_ul"> <!-- TODO: should probably redefine as nav -->
                     <li class="top-bar_li" id="hello_top">HELLO</li>
                     <li class="top-bar_li" id="schedule_top">SCHEDULE</li>
                     <li class="top-bar_li" id="sponsors_top">SPONSORS</li>
@@ -25,7 +25,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 </ul>
 
                 <div class='logo'></div>
-                <div class='title'>Hack@Brown<span class='light'>2015</span></div>
+                <div class='title'>Hack@Brown<span class='light'>2015</span></div> <!-- TODO: should probably redefine as h1 -->
                 <hr class='hr'></hr>
                 <div class='slogan'>build cool things with us</div>
 
@@ -52,7 +52,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 <div class='datetime light'>
                     <h3>Providence, RI | February 7-8 | <a href='http://facebook.com/hackatbrown'>Facebook</a> | <a href='http://twitter.com/hackatbrown'>Twitter</a></h3>
                 </div>
-        </div>
+        </section>
     
         {% if registration_status == "registration_open" %}
             {% include "registration_form.html" %}
