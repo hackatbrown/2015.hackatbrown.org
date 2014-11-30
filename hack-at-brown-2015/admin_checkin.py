@@ -5,7 +5,7 @@ from template import template
 from registration import Hacker
 from google.appengine.api import memcache
 
-cache_time = 6 * 10
+cacheTime = 6 * 10
 hackerFormat = ['name', 'email']
 divider = ' - '
 
@@ -26,7 +26,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
                 first = False
             return formattedString
 
-        source = map(formatter, get_hackers_to_be_checked())
+        source = map(formatter, getHackersToBeChecked())
 
         response = template(
             "checkin_page.html", {"source": json.dumps(source)})
@@ -34,36 +34,29 @@ class CheckinPageHandler(webapp2.RequestHandler):
         self.response.write(response)
 
     def post(self):
-        name_email = self.request.get('name/email').split(divider)
-        hacker = Hacker.query(Hacker.name == name_email[0]
-                              and Hacker.email == name_email[1]).fetch(1)[0]
+        nameNemail = self.request.get('name/email').split(divider)
+        hacker = Hacker.query(Hacker.name == nameNemail[0]
+                              and Hacker.email == nameNemail[1]).fetch(1)[0]
         hacker.checked_in = True
         hacker.put()
         self.redirect('/admin_checkin')
 
 
-def get_hackers_to_be_checked():
+def getHackersToBeChecked():
     # Cache this value, results don't need to be updated quickly.
-    to_check_in = 'hackers_to_be_checked'
-    data = memcache.get(to_check_in)
+    toCheckIn = 'hackers_to_be_checked'
+    data = memcache.get(toCheckIn)
     if data is not None:
-        logging.info("Used cache")
+        logging.debug("Used cache")
         return data
     else:
         data = Hacker.query(Hacker.rsvpd == True
                             and Hacker.checked_in != True).fetch(
             projection=[Hacker.name, Hacker.email])
-        logging.info("Could not use cache")
-        if not memcache.add(to_check_in, data, cache_time):
+        logging.debug("Could not use cache")
+        if not memcache.add(toCheckIn, data, cacheTime):
             logging.error('Memcache set failed')
     return data
-
-
-def check_in_hacker(hacker):
-    hacker.check_in = True
-    # Do we also use memcache here?
-    hacker.put()
-
 
 app = webapp2.WSGIApplication([
     ('/admin_checkin', CheckinPageHandler),
