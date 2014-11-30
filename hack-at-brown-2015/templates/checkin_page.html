@@ -13,14 +13,13 @@
 <link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css'/>
 
 <form id='checkin' method='POST' >
-  <input name="name" id='search'/>
+  <input name="name/email" id='search'/>
   <input type='submit' value='Check in'</input>
 </form>
 <div>
   <script>
-  var hacker_names = {{ hacker_names|safe }};
   $('#search').autocomplete({
-    source: hacker_names
+    source: {{ source|safe }}
   });
   </script>
 </div>
