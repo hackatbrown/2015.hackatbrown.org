@@ -7,6 +7,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 {% block head %}
 {{ super() }}
 <link rel='stylesheet' href='/static/css/index.css'/>
+<script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
 {% endblock %}
 
 {% block nav %}
@@ -21,6 +22,10 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 {% block content %}
 
 {% include "social.html" %} <!-- necessary to support like buttons, etc -->
+
+
+<div class="background">
+</div>
 
 <div class="container">
 
@@ -92,7 +97,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         {% endif %}
     </div>
 
-    <section id='faq' class='panel'>
+    <section id='faq' class='panel white'>
 
         <div id='faq1'>
             <h2>What is Hack@Brown?</h2>
@@ -112,6 +117,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     </section>
     
 </div>
+
 
 <script src='/static/js/index.js'></script>
 
@@ -133,6 +139,16 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         $('.top-bar_ul').gutabslider();
 
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
+        
+        //particle background
+      $('.background').particleground({
+        dotColor: '#E0E0E0',
+        lineColor: '#EFEFEF',
+        particleRadius: 5
+      });
+      $('.intro').css({
+        'margin-top': -($('.intro').height() / 2)
+      });
     });
 
 </script>
