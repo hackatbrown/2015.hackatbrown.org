@@ -1,23 +1,30 @@
 /* GENERAL */
-
 a {
     text-decoration:none;  
     color:#1B8EB9; /*temp*/
 }
 
 a:hover {
-    
+    color:#EF5D93;
+	border-bottom:2px #EF5D93 solid;
 }
 
 a:active {
-    color:#1B8EB9;
+    color:#EF5D93;
+	border-bottom:2px #EF5D93 solid;
 }
 
-.top-bar_li:hover {
+.top-bar_li:hover, .init_submit:hover, .form_finish input[type=submit]:hover, 
+input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     cursor:pointer;   
 }
 
-.light{
+.init_input:focus, .init_submit:focus, .registration_form input[type=email]:focus, 
+.registration_form input[type=submit]:focus, .registration_form input:not([type]):focus {
+    outline:none;   
+}
+
+.light {
 	font-family: 'Brown';
 	font-weight:300;
 }
@@ -88,6 +95,7 @@ a:active {
 }
 
 .hr {
+    margin:0 auto;
     margin-top:2%;
 	height:4px;
 	width:100px;
@@ -130,6 +138,44 @@ a:active {
     color: #EF5D93; 
 }
 
+.init_reg {
+    margin-top:1.5%;
+}  
+
+.init_input{
+	font-size:1em;
+	border:2.5px solid #1B8EB9;
+    padding:6px;
+	padding-left:12px;
+	font-family:'Brown';
+    font-weight:300;
+    box-sizing:border-box;
+    margin-left:1.5px;
+    margin-right:1.5px;
+}
+
+.init_input::-webkit-input-placeholder{
+	color:#1B8EB9;
+	font-weight:300px
+}
+
+.init_input:focus {
+    border-left-width:4px; 
+    margin-left:0;
+    margin-right:0;
+}
+
+.init_submit {
+    position:relative;
+	font-size:1em;
+	background-color:#1b8fb9;
+	border:2px solid #1B8EB9;
+    color:white;
+    padding:6px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
 .datetime {
     margin-top:4%;
 	color:#1B8EB9;
@@ -157,12 +203,188 @@ a:active {
 
 
 
-/* REGISTRATION -- in progress */
-
-#register-button {
-	cursor: pointer;
+/* REGISTRATION */
+.cancel_reg {
+    position:absolute;
+    text-transform:uppercase;
+    color:white;
+    font-size:1.1em;
+    top:30px;
+    left:52%;
 }
 
+.double {
+    position:relative;
+    width:200%;
+    height:100%;
+    height:auto;
+    left:0; /* CHANGE THIS TO -100% TO MAKE REG DEFAULT MAIN PANEL */
+    top:0;
+    transition:left 1s;
+}
+
+.double_left {
+    width:50%;
+    float:left;   
+}
+
+.double_right {
+    width:50%;
+    float:right;
+}
+
+.clearfix {
+    clear:both;   
+}
+
+/* REGISTRATION FORM */
+.registration_wrapper {
+	background-color:#404042;
+    padding:0;
+}
+
+.registration_form {
+    width:60%;
+    height:100%;
+    background-color:white;
+    margin:0 auto;
+    padding:3%;
+    padding-top:30px;
+    top:0;
+}
+
+.registration_title {
+    color:#EF5D93;
+	font-size:1.1em;
+	font-family:'Brown', sans-serif;
+    text-decoration:underline;
+    text-transform:uppercase;
+    text-align:center;
+    margin-bottom:2%;
+}
+
+.registration_form label {
+    text-transform:uppercase;
+    color:#1B8EB9;
+    font-family:'Brown',sans-serif;
+    display:block;
+    margin-bottom:7px;
+    font-weight:400;
+}
+
+.form_row {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    margin-bottom:35px;
+}
+
+.form_full {
+    width:100%;
+}
+
+.form_half {
+    width:48%;
+}
+
+.form_school {
+    width:76%;
+}
+
+.form_year {
+    width:16%;
+}
+
+.registration_form input[type=email], .registration_form input:not([type]), .add_link {
+	border:1px solid #E9E9E9;
+	padding:8px;
+	color:#666666;
+	background-color:white;
+    width:100%;
+    font-size:.9em;
+    font-family:'Brown',sans-serif;
+    font-weight:300;
+    height:15px;
+}
+
+.add_link {
+    margin-top:10px;
+    padding-top:6px;
+    padding-bottom:10px;
+}
+
+.radio_select {
+    border-collapse:collapse;
+    border-spacing:0;
+    padding:0;
+    margin:0;
+}
+
+.radio_select td {
+    border-collapse:collapse;
+    border-spacing:0;
+    border:0;
+}
+
+.empty { /* to give space between gender and shirt size */
+    display:inline-block;
+    width:15px;   
+}
+
+input[type="radio"] {
+    display:none;   
+}
+
+input[type="radio"] + label {
+    background-color:#EBEBEB;
+    font-family:'Brown',sans-serif;
+    font-weight:300;
+    color:#404042;
+    text-transform:none;
+    width:auto;
+    height:16px;
+    padding:11px;
+    padding-top:5px;
+    padding-bottom:11px;
+    font-size:.9em;
+}
+
+input[type="radio"] + label:hover {
+    background-color:#E2E1DF;
+}
+
+input[type="radio"]:checked + label {
+    background-color:#CCCCCC;
+}
+
+.form_finish {
+    text-align:center;
+    width:100%;
+}
+
+.form_finish label {
+    text-transform:none;
+    font-weight:300;
+}
+
+.form_finish input[type=submit] {
+    width:auto;
+    padding:20px;
+    padding-top:6px;
+    padding-bottom:6px;
+    background-color:#1B8EB9;
+    color:white;
+    text-transform:uppercase;
+    font-family:'Brown',sans-serif;
+    font-size:1em;
+    border:none;
+}
+
+.form_finish input[type=submit]:hover {
+    background-color:#3783AB;
+}
+
+/* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
 #sign-up-for-updates input[type=email] {
 	outline: none;
 	transition: background-color 0.3s, box-shadow 0.3s;
@@ -204,10 +426,6 @@ a:active {
 	color: white;
 }
 
-#sign-up-for-updates.loading {
-
-}
-
 #sign-up-for-updates.signed-up input[type=email] {
 	transition: background-color 0.3s, box-shadow 1.0s;
 	-webkit-transition: background-color 0.3s,box-shadow 1.0s;
@@ -215,59 +433,6 @@ a:active {
 	-ms-transition: background-color 0.3s, box-shadow 1.0s;
 	box-shadow: inset 0px -100px 0px #6d7;
 }
-
-/* registration */
-#registration_form {
-	max-height: 0;
-	overflow-y: hidden;
-	background-color: #222;
-	color: white;
-	transition: max-height 1s;
-	-webkit-transition: max-height 1s;
-	-moz-transition: max-height 1s;
-	-ms-transition: max-height 1s;
-}
-
-#registration_form:target {
-	max-height: 700px;
-}
-
-#registration_form > div {
-	width: 90%;
-	margin: auto;
-	max-width: 700px;
-	padding: 0px 20px;
-}
-
-#registration_form input[type=email], input[type=submit], input:not([type]) {
-	display: block;
-	margin-bottom: 1em;
-	font-size: large;
-	border: none;
-	border-bottom: 3px solid white;
-	padding: 4px;
-	color: white;
-	outline: none;
-	background-color: transparent;
-	width: 90%;
-	max-width: 400px;
-}
-
-#registration_form input[type=submit] {
-	width: 200px;
-	color: #222;
-	background-color: white;
-	transition: background-color 0.125s;
-	border-bottom: none;
-}
-#registration_form div {
-	margin-bottom: 1em;
-}
-#registration_form input[type=submit]:hover {
-	background-color: #f58;
-	cursor: pointer;
-}
-
 /* after registering */
 .toast {
 	display: none;
@@ -286,7 +451,7 @@ a:active {
 	margin: 0px;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE -- you're out of the old zone */
 @media screen and (max-width: 750px) {
     .logo {
         margin-top:5%;
@@ -305,7 +470,7 @@ a:active {
         margin-top:5%;   
     }
     
-    .main_cta {
+    .main_cta, .form_wrapper {
         margin-top:4%;   
     }
     
@@ -319,4 +484,7 @@ a:active {
         font-size:2em;
     }
 }
+
+/* TODO: make form super responsive, limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
+ */
 
