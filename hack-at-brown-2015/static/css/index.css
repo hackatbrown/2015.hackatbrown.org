@@ -280,7 +280,8 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     background-color:white;
     margin:0 auto;
     padding:3%;
-    padding-top:60px;
+    padding-top:120px;
+    padding-bottom: 120px;
     top:0;
 }
 
