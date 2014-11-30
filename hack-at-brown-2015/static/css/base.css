@@ -1,12 +1,15 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway);
+* {margin:0;padding:0;}
 
-body {
+body, html {
 	color: #111;
-	line-height: 1.4;
+    margin:0;
+    padding:0;
+    width:100%;
+	height:100%;
 }
 
 body, input {
-	font-family: "proxima-nova", sans-serif;
+	font-family: 'Brown', sans-serif;
 }
 
 .vertically-centered {
@@ -20,7 +23,7 @@ body, input {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Brown', sans-serif;
 	font-weight: normal;
 }
 
