@@ -1,109 +1,86 @@
 <div class='registration_wrapper panel double_right'>
-    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form' method='POST' enctype="multipart/form-data">
-        <div> <!-- what's this div for? -->        
-            <div class="form_row">
-                <div class="form_half">
-                    <label for="name">Name</label>
-                    <input name="name" placeholder="Josiah Carberry" required/>
-                </div>
-
-                <div class="form_half">
-                    <label for="email">Email</label>
-                    <input name="email" placeholder="handle@schooldomain.edu" type="email" required/>
-                </div>
+    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data">
+        
+        <div class="two fields">
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" name="name" placeholder="Josiah Carberry" />
             </div>
-
-            <div class="form_row">
-                <div class="form_row form_half" style="margin-bottom:0">
-                    <div class="form_school">
+            <div class="field">
+                <label for="name">Email</label>
+                <input type="email" name="email" placeholder="handle@schooldomanin.edu" />
+            </div>
+        </div>
+        
+        <div class="two fields">
+            <div class="field">
+                <div class="two fields">
+                    <div class="field">
                         <label for="school">School</label>
-                        <input name="school" placeholder="Beige University" required/>
+                        <input type="text" name="school" placeholder="Beige University" />
                     </div>
-                    
-                    <div class="form_year">
+                    <div class="field">
                         <label for="year">Year</label>
-                        <input name="year" placeholder="2017" required/>
+                        <input type="text" name="year" placeholder="2017" />
                     </div>
                 </div>
-
-                <div class="form_half">
-                    <label for="shirt_sex">T-Shirt Size</label>
-
-                    <table class="radio_select">
-                        <tr>
-                            <td>
-                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
-                                <label for="sgM">Men's</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_gen" id="sgW" value='W' />
-                                <label for="sgW">Women's</label>
-                            </td>
-                            <td>
-                                <span class="empty"> </span>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
-                                <label for="ssXS">XS</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_size" id="ssS" value='S' />
-                                <label for="ssS">S</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_size" id="ssM" value='M' />
-                                <label for="ssM">M</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_size" id="ssL" value='L' />
-                                <label for="ssL">L</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_size" id="ssXL" value='XL' />
-                                <label for="ssXL">XL</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
-                                <label for="ssXXL">XXL</label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </div>
-
-            <div class="form_row">
-                <div class="form_full">
-                    <label for="dietary_restrictions">Any Dietary Restrictions?</label>
-                    <input name="dietary_restrictions"/>
-                </div>
+            <div class="field">
+                <label>T-Shirt Size</label>
+                    <div class="shirt_size">
+                        <table class="radio_select">
+                            <tr>
+                                <td>
+                                    <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                    <label for="sgM">Men's</label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shirt_gen" id="sgW" value='W' />
+                                    <label for="sgW">Women's</label>
+                                </td>
+                             </tr>
+                        </table>
+                
+                        <table class="radio_select">
+                            <tr>
+                                <td>
+                                    <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                    <label for="ssXS">XS</label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shirt_size" id="ssS" value='S' />
+                                    <label for="ssS">S</label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shirt_size" id="ssM" value='M' />
+                                    <label for="ssM">M</label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shirt_size" id="ssL" value='L' />
+                                    <label for="ssL">L</label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shirt_size" id="ssXL" value='XL' />
+                                    <label for="ssXL">XL</label>
+                                </td>
+                                <td>
+                                    <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
+                                    <label for="ssXXL">XXL</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
             </div>
-
-            <div class="form_row">
-                <div class="form_half">
-                    <label for="first_hackathon">Will Hack@Brown be your first hackathon?</label>
-                    <table class="radio_select">
-                        <tr>
-                            <td>
-                                <input type="radio" name="first_hackathon" id="first_yes" value='yeah' />
-                                <label for="first_yes">Yeah!</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="first_hackathon" id="first_no" value='nope' />
-                                <label for="first_no">Nope</label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="form_half">
-                    <label for="resume">Your resume (optional, but recommended):</label>
-                    <input name="resume" type="file" />
-                </div>
-            </div>
-
-            <div class="form_row">
-                <div class="form_half">
-                    <label for="travel_reimbursement">Will you need travel reimbursement?</label>
+        </div>
+        
+        <div class="field">
+            <label for="dietary_restrictions">Any dietary restrictions?</label>
+            <input type="text" name="dietary_restrictions" />
+        </div>
+        
+        <div class="two fields">
+            <div class="field">
+                <label for="travel_reimbursement">Will you need travel reimbursement?</label>
                     <table class="radio_select" style="margin-bottom:35px;">
                         <tr>
                             <td>
@@ -117,7 +94,7 @@
                         </tr>
                     </table>
                     
-                    <label for="hardware_hack">Hardware Hack?</label>
+                <label for="hardware_hack">Hardware Hack?</label>
                     <table class="radio_select">
                         <tr>
                             <td>
@@ -130,19 +107,10 @@
                             </td>
                         </tr>
                     </table>
-                </div>
-                
-                <div class="form_half">
-                    <label for="links">Links (optional)</label>
-                    <input name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
-                    <div id="add_link" class="add_link">add another link</div>
-                </div>
             </div>
-            
-            <div class="form_finish">
-                <label for="accept_code">I accept this event's Code of Conduct: </label>
-                <!--<input type="radio" name="accept_code" value="accepted"/>-->
-                <input type='submit' value='Submit'/>
+            <div class="field">
+                <label for="links">Links (optional)</label>
+                    <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
             </div>
         </div>
     </form>

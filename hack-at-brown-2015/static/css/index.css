@@ -305,15 +305,6 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     top:0;
 }
 
-.registration_title {
-    color:#EF5D93;
-	font-size:1.1em;
-    text-decoration:underline;
-    text-transform:uppercase;
-    text-align:center;
-    margin-bottom:2%;
-}
-
 .registration_form label {
     text-transform:uppercase;
     color:#1B8EB9;
@@ -322,44 +313,19 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     font-weight:400;
 }
 
-.form_row {
-    display:flex;
-    flex-direction:row;
-    justify-content:space-between;
-    margin-bottom:35px;
-}
-
-.form_full {
-    width:100%;
-}
-
-.form_half {
-    width:48%;
-}
-
-.form_school {
-    width:76%;
-}
-
-.form_year {
-    width:16%;
-}
-
-.registration_form input[type=email], .registration_form input:not([type]), .add_link {
+.registration_form input[type=email], .registration_form input[type=text], .registration_form input:not([type]) {
 	border:1px solid #E9E9E9;
-	padding:8px;
 	color:#666666;
 	background-color:white;
-    width:100%;
     font-size:.9em;
     font-weight:300;
-    height:15px;
+    height:35px;
+    border-radius:0 !important;
 }
 
-.add_link {
-    margin-top:10px;
-    padding-top:6px;
-    padding-bottom:10px;
+.shirt_size {
+    display:flex;
+    justify-content:space-between;
 }
 
 .radio_select {
@@ -367,6 +333,7 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     border-spacing:0;
     padding:0;
     margin:0;
+    display:inline-block;
 }
 
 .radio_select td {
@@ -390,9 +357,9 @@ input[type="radio"] + label {
     color:#404042;
     text-transform:none;
     width:auto;
-    height:16px;
+    height:19px;
     padding:11px;
-    padding-top:5px;
+    padding-top:8px;
     padding-bottom:11px;
     font-size:.9em;
 }
@@ -523,6 +490,10 @@ input[type="radio"]:checked + label {
     .datetime {
         margin-top:7%;   
     }
+    
+    .shirt_size {
+        flex-direction:column;   
+    }
 }
 
 @media screen and (max-width: 500px) {
@@ -531,6 +502,6 @@ input[type="radio"]:checked + label {
     }
 }
 
-/* TODO: make form super responsive, limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
+/* TODO: limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
  */
 
