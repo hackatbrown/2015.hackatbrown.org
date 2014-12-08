@@ -222,17 +222,6 @@ input[type="radio"] + label:hover,
     text-align: center;
     font-size: 24px;
 }
-/* faqs */
-
-/*
-#faq1,
-#faq2 {
-    width: 90%;
-    max-width: 700px;
-    margin: auto;
-    font-size: 14px;
-}
-*/a
 /* REGISTRATION */
 
 .cancel_reg {
