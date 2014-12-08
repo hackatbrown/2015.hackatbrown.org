@@ -74,10 +74,11 @@ input[type="radio"] + label:hover,
     text-transform: uppercase;
     color: #1B8EB9;
     position: fixed;
-    left: 20%;
-    right: 20%;
+    max-width: 964.8px;
+    left: 0%;
+    right: 0%;
     z-index: 999;
-    background-color: white;
+    background-color: rgba(255, 255, 255, .95);
 }
 .top-bar_li {
     display: inline;
@@ -223,6 +224,7 @@ input[type="radio"] + label:hover,
 }
 /* faqs */
 
+/*
 #faq1,
 #faq2 {
     width: 90%;
@@ -230,6 +232,7 @@ input[type="radio"] + label:hover,
     margin: auto;
     font-size: 14px;
 }
+*/a
 /* REGISTRATION */
 
 .cancel_reg {
@@ -459,7 +462,7 @@ input[type="radio"]:checked + label {
 /* TODO: limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
  */
 
-/* PANELS */
+/* PANEL GENERAL */
 
 .triangle {
     background-repeat: no-repeat;
@@ -473,7 +476,8 @@ input[type="radio"]:checked + label {
 .triangle h1 {
     font-size: 2.2em;
     font-weight: bold;
-    
+    margin-bottom: 0;
+    margin-top: 1.5em;
 }
 
 .triangle p {
@@ -498,12 +502,12 @@ input[type="radio"]:checked + label {
     max-width: 964.8px;
 }
 
-.triangle > div > div > article {
-    padding-top: 180px;
-    padding-bottom: 180px;
+.triangle article {
+    margin-top: 180px;
+    margin-bottom: 180px;
 }
 
-.triangle.right > div > div > article {
+.triangle.right article {
     float: right;
 }
 
@@ -511,8 +515,14 @@ input[type="radio"]:checked + label {
     text-align: right;
 }
 
+.triangle article h1:first-child {
+    margin-top: 0;
+}
+
+/* PANEL SPECIFIC */
+
 .about {
-    top: -120px;
+    margin-top: -480px;
     background-size: 1393.6px 1440px;
     background-image: url(/static/img/svgtriangles/centered-0bg_0_grey-triangle.svg);
     height: 1440px;
@@ -522,8 +532,14 @@ input[type="radio"]:checked + label {
     max-width: 589.6px;
 }
 
+.about article h2 {
+    font-size: 1.6em;
+    color: #918f8c;
+    font-weight: 300;
+}
+
 .schedule {
-    top: -870px;
+    margin-top: -750px;
     background-size: 1500.8px 2520px;
     background-image: url(/static/img/svgtriangles/centered-0bg_1_sky-trapezoid.svg);
     height: 2520px;
@@ -533,14 +549,38 @@ input[type="radio"]:checked + label {
 
 .schedule article {
     max-width: 482.4px;
+    padding-bottom: 2em;
 }
+
+.schedule article h1 {
+    text-transform: uppercase;
+}
+
+.schedule article h2 {
+    margin-top: 1em;
+    margin-bottom: -.2em;
+}
+
+.schedule article h2 > span {
+    font-weight: 300;
+    float: right;
+}
+
+.sponsors {
+    margin-top: -510px;
+}
+
+.faq article h2 {
+    margin-top: 1em;
+    margin-bottom: -.2em;
+}
+
+/* ETC */
 
 .caps {
     text-transform: uppercase;
 }
 
-.bg0.grey-triangle {
-    opacity: .1;
-    padding-top: 600px;
+.blue {
+    color: #1b8eb9;
 }
-
