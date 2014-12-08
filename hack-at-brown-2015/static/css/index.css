@@ -1,105 +1,99 @@
 /* GENERAL */
+
 html {
     overflow-x: hidden;
 }
-
 a {
-    text-decoration:none;  
-    color:#1B8EB9; /*temp*/
+    text-decoration: none;
+    color: #1B8EB9;
+    /*temp*/
 }
-
 a:hover {
-    color:#EF5D93;
-	border-bottom:2px #EF5D93 solid;
+    color: #EF5D93;
+    border-bottom: 2px #EF5D93 solid;
 }
-
 a:active {
-    color:#EF5D93;
-	border-bottom:2px #EF5D93 solid;
+    color: #EF5D93;
+    border-bottom: 2px #EF5D93 solid;
 }
-
-.top-bar_li:hover, .init_submit:hover, .form_finish input[type=submit]:hover, 
-input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
-    cursor:pointer;   
+.top-bar_li:hover,
+.init_submit:hover,
+.form_finish input[type=submit]:hover,
+input[type="radio"] + label:hover,
+.cancel_reg:hover,
+.add_link:hover {
+    cursor: pointer;
 }
-
-.init_input:focus, .init_submit:focus, .registration_form input[type=email]:focus, 
-.registration_form input[type=submit]:focus, .registration_form input:not([type]):focus {
-    outline:none;   
+.init_input:focus,
+.init_submit:focus,
+.registration_form input[type=email]:focus,
+.registration_form input[type=submit]:focus,
+.registration_form input:not([type]):focus {
+    outline: none;
 }
-
 .light {
-/*	font-family: 'Brown';*/
-	font-weight:300;
+    /*	font-family: 'Brown';*/
+    font-weight: 300;
 }
-
 /* PAGE MODULES */
+
 .background {
     position: fixed;
     width: 100%;
     height: 100%;
 }
-
 .container {
-    width:100%;
-    height:100%;
-/*    overflow-x:hidden;*/
+    width: 100%;
 }
-
 .panel {
-    position:relative;
-    width:100%;
-/*    min-height:100%;*/
-    height:auto;
+    position: relative;
+    width: 100%;
+    height: auto;
     padding-top: 100px;
     padding-bottom: 100px;
 }
-
 .panel.white {
     background-color: rgba(255, 255, 255, .8);
 }
 
+.grid {
+    background-image: url(/static/img/svgtriangles/trigrid-tile-5pct.svg);
+    background-size: 107.2px 120px;
+    background-position: center top;
+}
 /* NAV */
 
-.top-bar_ul{
-    margin:0 auto;
-/*
-    margin-top:1.7%;
-    margin-bottom: 1.0%;
-*/
-	list-style:none;
+.top-bar_ul {
+    margin: 0 auto;
+    list-style: none;
     padding: 0;
-	padding-top:30px;
-    padding-bottom:3px;
-    font-size:1em;
-    text-align:center;
+    padding-top: 30px;
+    padding-bottom: 3px;
+    font-size: 1.2em;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1B8EB9;
     position: fixed;
     left: 20%;
     right: 20%;
     z-index: 999;
     background-color: white;
 }
-
-.top-bar_li{
-	display: inline;
-	color:#1B8EB9;
-	margin:1.1%;
+.top-bar_li {
+    display: inline;
+    margin: 1.1%;
 }
-
 .top-bar_li.active a {
-    color:#EF5D93;
-	padding-bottom:1px;
+    color: #EF5D93;
+    padding-bottom: 1px;
 }
-
 .top-bar_li a:hover {
     border-bottom: 0;
 }
-
-.top-bar_li:hover{
-	color:#EF5D93;
-	padding-bottom:1px;
+.top-bar_li:hover {
+    color: #EF5D93;
+    padding-bottom: 1px;
 }
-
 .gu-sliding-bar {
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -107,401 +101,389 @@ input[type="radio"] + label:hover, .cancel_reg:hover, .add_link:hover {
     background: #EF5D93;
     height: 2px;
 }
-
 /* SPLASH */
+
 .splash {
-    text-align:center;
+    text-align: center;
     padding-top: 60px;
-    padding-bottom: 60px;
+    padding-bottom: 120px;
 }
-
 .logo {
-    width:165px;
-	height:207px;
-    margin:0 auto;
-    margin-top:4%;
-    background-image:url(../img/logo-wire-inverted-pink.svg);   
-    background-size:cover;                      
-    background-repeat:no-repeat;
-    background-position:center center;
+    width: 190px;
+    height: 240px;
+    margin: 0 auto;
+    margin-top: 8%;
+    background-image: url(../img/logo-poly.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
-
-.title{
-	color:#EF5D93;
-	font-size:3.7em;
-	font-weight:bold;
-/*	font-family: 'Brown';*/
-    margin:0 auto;
-    margin-top:3%;
-    text-transform:uppercase;
+.title {
+    color: #EF5D93;
+    font-size: 3em;
+    font-weight: bold;
+    /*	font-family: 'Brown';*/
+    margin: 0 auto;
+    margin-top: 3%;
+    text-transform: uppercase;
 }
-
-.title>span{
-	margin-left:10px;
+.title>span {
+    margin-left: 10px;
 }
-
 .hr {
-    margin:0 auto;
-    margin-top:2%;
-	height:4px;
-	width:100px;
-	background-color:#1B8EB9;
-	border:0;   
+    margin: 0 auto;
+    margin-top: 2%;
+    height: 4px;
+    width: 100px;
+    background-color: #1B8EB9;
+    border: 0;
 }
-
 .slogan {
-    margin-top:2.5%;
-	font-size:18px;
-	color:#1B8EB9;
-/*	font-family:'Brown';*/
-	font-weight:300;
+    margin-top: 3%;
+    font-size: 1.5em;
+    color: #EF5D93;
+    font-weight: 300;
 }
-
 .main_cta {
-	/* this is the button or text field in the center of the splash. */
-    margin-top:1.5%;
-	background-color:#1B8EB9;
-	border:none;
-	padding:8px;
-	font-size:1.2em;
-	text-align:center;
-	width:90%;
-	max-width:290px;
-	display:inline-block;
-    text-transform:uppercase;
-    color:white;
+    /* this is the button or text field in the center of the splash. */
+    margin-top: 1.5%;
+    background-color: #1B8EB9;
+    border: none;
+    padding: 8px;
+    font-size: 1.2em;
+    text-align: center;
+    width: 90%;
+    max-width: 290px;
+    display: inline-block;
+    text-transform: uppercase;
+    color: white;
 }
-
 .main_cta:hover {
-    background-color:#3783AB;
+    background-color: #3783AB;
 }
-
 .main_cta:active {
-    background-color:#317599;
+    background-color: #317599;
 }
-
 .main_cta:focus {
-    color: #EF5D93; 
+    color: #EF5D93;
 }
-
 .init_reg {
-    margin-top:1.5%;
-}  
-
-.init_input{
-	font-size:1em;
-	border:2.5px solid #1B8EB9;
-    padding:6px;
-    font-weight:300;
-    box-sizing:border-box;
-    text-indent: 6px;       /* perceptual margin decreases when text overflows */
-/*    margin-left:1.5px;*/
-/*    margin-right:1.5px;*/
+    margin-top: 1.5%;
 }
-
-.init_input::-webkit-input-placeholder{
-	color:#1B8EB9;
-	font-weight:300px
+.init_input {
+    font-size: 1em;
+    border: 2.5px solid #1B8EB9;
+    padding: 6px;
+    font-weight: 300;
+    box-sizing: border-box;
+    text-indent: 6px;
+    /* perceptual margin decreases when text overflows */
+    /*    margin-left:1.5px;*/
+    /*    margin-right:1.5px;*/
 }
-
+.init_input::-webkit-input-placeholder {
+    color: #1B8EB9;
+    font-weight: 300px
+}
 .init_input:focus {
-/*    border-left-width:4px; */
-/*    margin-left:0;*/
-/*    margin-right:0;*/
-  border-color: #EF5D93;
+    /*    border-left-width:4px; */
+    /*    margin-left:0;*/
+    /*    margin-right:0;*/
+    border-color: #EF5D93;
 }
-
 .init_submit {
-    position:relative;
-	font-size:1em;
-	background-color:#1b8fb9;
-	border:2px solid #1B8EB9;
-    color:white;
-    padding:6px;
-    padding-left:10px;
-    padding-right:10px;
+    position: relative;
+    font-size: 1em;
+    background-color: #1b8fb9;
+    border: 2px solid #1B8EB9;
+    color: white;
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
-
 .init_submit:hover {
     background-color: #EF5D93;
     border-color: #EF5D93;
 }
-
 .datetime {
-    margin-top:4%;
-	color:#1B8EB9;
-    font-size:.7em;
-    text-transform:uppercase;
+/*    margin-top: 2%;*/
+    color: #EF5D93;
+    font-size: .8em;
+    text-transform: uppercase;
 }
-
 /* CONTENT */
+
 #rest {
-	margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 #rest h2 {
-	text-align: center;
-	font-size: 24px;
+    text-align: center;
+    font-size: 24px;
 }
-
 /* faqs */
 
-#faq1, #faq2 {
-	width: 90%;
-	max-width: 700px;
-	margin: auto;
-	font-size: 14px;
+#faq1,
+#faq2 {
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+    font-size: 14px;
 }
-
-
-
 /* REGISTRATION */
+
 .cancel_reg {
-    position:absolute;
-    text-transform:uppercase;
-    color:white;
-    font-size:1.1em;
-    top:30px;
-    left:52%;
+    position: absolute;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.1em;
+    top: 30px;
+    left: 52%;
 }
-
 .double {
-    position:relative;
-    width:200%;
-    height:100%;
-    height:auto;
-    left:0; /* CHANGE THIS TO -100% TO MAKE REG DEFAULT MAIN PANEL */
-    top:0;
-    transition:left 1s;
+    position: relative;
+    width: 200%;
+    height: 100%;
+    height: auto;
+    left: 0;
+    /* CHANGE THIS TO -100% TO MAKE REG DEFAULT MAIN PANEL */
+    top: 0;
+    transition: left 1s;
 }
-
 .double_left {
-    width:50%;
-    float:left;   
+    width: 50%;
+    float: left;
 }
-
 .double_right {
-    width:50%;
-    float:right;
+    width: 50%;
+    float: right;
 }
-
 .clearfix {
-    clear:both;   
+    clear: both;
 }
-
 /* REGISTRATION FORM */
+
 .registration_wrapper {
-	background-color:#404042;
-    padding:0;
+    background-color: #404042;
+    padding: 0;
 }
-
 .registration_form {
-    width:60%;
-    height:100%;
-    background-color:white;
-    margin:0 auto;
-    padding:3%;
-    padding-top:120px;
+    width: 60%;
+    height: 100%;
+    background-color: white;
+    margin: 0 auto;
+    padding: 3%;
+    padding-top: 120px;
     padding-bottom: 120px;
-    top:0;
+    top: 0;
 }
-
 .registration_form label {
-    text-transform:uppercase;
-    color:#1B8EB9;
-    display:block;
-    margin-bottom:7px;
-    font-weight:400;
+    text-transform: uppercase;
+    color: #1B8EB9;
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 400;
 }
-
-.registration_form input[type=email], .registration_form input[type=text], .registration_form input:not([type]) {
-	border:1px solid #E9E9E9;
-	color:#666666;
-	background-color:white;
-    font-size:.9em;
-    font-weight:300;
-    height:35px;
-    border-radius:0 !important;
+.registration_form input[type=email],
+.registration_form input[type=text],
+.registration_form input:not([type]) {
+    border: 1px solid #E9E9E9;
+    color: #666666;
+    background-color: white;
+    font-size: .9em;
+    font-weight: 300;
+    height: 35px;
+    border-radius: 0 !important;
 }
-
 .shirt_size {
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
 }
-
 .radio_select {
-    border-collapse:collapse;
-    border-spacing:0;
-    padding:0;
-    margin:0;
-    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
 }
-
 .radio_select td {
-    border-collapse:collapse;
-    border-spacing:0;
-    border:0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
 }
-
-.empty { /* to give space between gender and shirt size */
-    display:inline-block;
-    width:15px;   
+.empty {
+    /* to give space between gender and shirt size */
+    display: inline-block;
+    width: 15px;
 }
-
 input[type="radio"] {
-    display:none;   
+    display: none;
 }
-
 input[type="radio"] + label {
-    background-color:#EBEBEB;
-    font-weight:300;
-    color:#404042;
-    text-transform:none;
-    width:auto;
-    height:19px;
-    padding:11px;
-    padding-top:8px;
-    padding-bottom:11px;
-    font-size:.9em;
+    background-color: #EBEBEB;
+    font-weight: 300;
+    color: #404042;
+    text-transform: none;
+    width: auto;
+    height: 19px;
+    padding: 11px;
+    padding-top: 8px;
+    padding-bottom: 11px;
+    font-size: .9em;
 }
-
 input[type="radio"] + label:hover {
-    background-color:#E2E1DF;
+    background-color: #E2E1DF;
 }
-
 input[type="radio"]:checked + label {
-    background-color:#CCCCCC;
+    background-color: #CCCCCC;
 }
-
 .form_finish {
-    text-align:center;
-    width:100%;
+    text-align: center;
+    width: 100%;
 }
-
 .form_finish label {
-    text-transform:none;
-    font-weight:300;
+    text-transform: none;
+    font-weight: 300;
 }
-
 .form_finish input[type=submit] {
-    width:auto;
-    padding:20px;
-    padding-top:6px;
-    padding-bottom:6px;
-    background-color:#1B8EB9;
-    color:white;
-    text-transform:uppercase;
-    font-size:1em;
-    border:none;
+    width: auto;
+    padding: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #1B8EB9;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1em;
+    border: none;
 }
-
 .form_finish input[type=submit]:hover {
-    background-color:#3783AB;
+    background-color: #3783AB;
 }
-
 /* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
-#sign-up-for-updates input[type=email] {
-	outline: none;
-	transition: background-color 0.3s, box-shadow 0.3s;
-	-webkit-transition: background-color 0.3s, box-shadow 0.3s;
-	-moz-transition: background-color 0.3s, box-shadow 0.3s;
-	-ms-transition: background-color 0.3s, box-shadow 0.3s;
-}
 
+#sign-up-for-updates input[type=email] {
+    outline: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    -webkit-transition: background-color 0.3s, box-shadow 0.3s;
+    -moz-transition: background-color 0.3s, box-shadow 0.3s;
+    -ms-transition: background-color 0.3s, box-shadow 0.3s;
+}
 /* turn placeholder text white */
+
 #sign-up-for-updates input[type=email]::-webkit-input-placeholder {
-	color: white;
+    color: white;
 }
 #sign-up-for-updates input[type=email]::-ms-input-placeholder {
-	color: white;
+    color: white;
 }
 #sign-up-for-updates input[type=email]:-moz-placeholder {
-	color: white;
+    color: white;
 }
 #sign-up-for-updates input[type=email]::-moz-placeholder {
-	color: white;
+    color: white;
 }
-
 #sign-up-for-updates input[type=email]:focus {
-	background-color: white;
-	box-shadow: inset 0px -3px 0px #EF5D93;
+    background-color: white;
+    box-shadow: inset 0px -3px 0px #EF5D93;
 }
-
 /* turn placeholder text gray on focus */
+
 #sign-up-for-updates input[type=email]:focus::-webkit-input-placeholder {
-	color: gray;
+    color: gray;
 }
 #sign-up-for-updates input[type=email]:focus::-ms-input-placeholder {
-	color: white;
+    color: white;
 }
 #sign-up-for-updates input[type=email]:focus:-moz-placeholder {
-	color: white;
+    color: white;
 }
 #sign-up-for-updates input[type=email]:focus::-moz-placeholder {
-	color: white;
+    color: white;
 }
-
 #sign-up-for-updates.signed-up input[type=email] {
-	transition: background-color 0.3s, box-shadow 1.0s;
-	-webkit-transition: background-color 0.3s,box-shadow 1.0s;
-	-moz-transition: background-color 0.3s, box-shadow 1.0s;
-	-ms-transition: background-color 0.3s, box-shadow 1.0s;
-	box-shadow: inset 0px -100px 0px #6d7;
+    transition: background-color 0.3s, box-shadow 1.0s;
+    -webkit-transition: background-color 0.3s, box-shadow 1.0s;
+    -moz-transition: background-color 0.3s, box-shadow 1.0s;
+    -ms-transition: background-color 0.3s, box-shadow 1.0s;
+    box-shadow: inset 0px -100px 0px #6d7;
 }
 /* after registering */
+
 .toast {
-	display: none;
-	position: absolute;
-	background-color: rgba(53, 195, 71, 0.9);
-	color: white;
-	padding: 20px;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	z-index: 100;
+    display: none;
+    position: absolute;
+    background-color: rgba(53, 195, 71, 0.9);
+    color: white;
+    padding: 20px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
 }
 #thanks h4 {
-	font-size: x-large;
-	margin: 0px;
+    font-size: x-large;
+    margin: 0px;
 }
-
 /* RESPONSIVE -- you're out of the old zone */
+
 @media screen and (max-width: 750px) {
     .logo {
-        margin-top:5%;
+        margin-top: 5%;
     }
-    
-	.title {
-        font-size:3em;
-        margin-top:4%;
+    .title {
+        font-size: 3em;
+/*        margin-top: 4%;*/
     }
-    
     .hr {
-        margin-top:5%;   
+/*        margin-top: 5%;*/
     }
-    
     .slogan {
-        margin-top:5%;   
+/*        margin-top: 5%;*/
     }
-    
-    .main_cta, .form_wrapper {
-        margin-top:4%;   
+    .main_cta,
+    .form_wrapper {
+/*        margin-top: 4%;*/
     }
-    
     .datetime {
-        margin-top:7%;   
+/*        margin-top: 7%;*/
     }
-    
     .shirt_size {
-        flex-direction:column;   
+        flex-direction: column;
     }
 }
-
 @media screen and (max-width: 500px) {
-	.title {
-        font-size:2em;
+    .title {
+        font-size: 2em;
     }
 }
-
 /* TODO: limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
  */
+
+/* PANELS */
+.triangle-left{
+    background-repeat: no-repeat;
+    background-position: right top;
+    width: auto;
+    left: 0;
+    padding-left: 12%;
+    padding-right: 24%;
+    display:table;
+}
+
+.triangle-left > article {
+    display: table-cell;
+    vertical-align: middle;
+    max-width: 586px;
+}
+
+.about {
+    top: -100px;
+    background-size: 1286.4px 1440px;
+    background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg); 
+/*    height: 1286.4px;*/
+    height: 540px;
+    max-width: 1286.4px;
+    right: 20%;
+    padding-top: 400px;
+    padding-bottom: 500px;
+}
 
