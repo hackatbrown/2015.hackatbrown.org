@@ -459,17 +459,28 @@ input[type="radio"]:checked + label {
  */
 
 /* PANELS */
-.triangle-left{
+
+.triangle {
     background-repeat: no-repeat;
-    background-position: right top;
     width: auto;
-    left: 0;
-    padding-left: 12%;
-    padding-right: 24%;
     display:table;
 }
 
-.triangle-left > article {
+.triangle.left{
+    background-position: right top;
+    left: 0;
+    padding-left: 12%;
+    padding-right: 24%;
+}
+
+.triangle.right{
+    background-position: left top;
+    right: 0;
+    padding-left: 24%;
+    padding-right: 12%;
+}
+
+.triangle > article {
     display: table-cell;
     vertical-align: middle;
     max-width: 586px;
@@ -479,11 +490,26 @@ input[type="radio"]:checked + label {
     top: -100px;
     background-size: 1286.4px 1440px;
     background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg); 
-/*    height: 1286.4px;*/
+    padding-top: 400px;
+    padding-bottom: 500px;
     height: 540px;
     max-width: 1286.4px;
     right: 20%;
+}
+
+.schedule {
+    top: -1200px;
+    background-size: 1447.2px 2520px;
+    background-image: url(/static/img/svgtriangles/0bg_1_sky-trapezoid.svg);
     padding-top: 400px;
     padding-bottom: 500px;
+    height: 1620px;
+    width: 90%;
+    max-width: 1447.2px;
+    left: 10%;
+}
+
+.caps {
+    text-transform: uppercase;
 }
 
