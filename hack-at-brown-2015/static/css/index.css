@@ -107,6 +107,7 @@ input[type="radio"] + label:hover,
     text-align: center;
     padding-top: 60px;
     padding-bottom: 120px;
+    height: 870px;
 }
 .logo {
     width: 190px;
@@ -462,54 +463,84 @@ input[type="radio"]:checked + label {
 
 .triangle {
     background-repeat: no-repeat;
-    width: auto;
+    width: 100%;
     display:table;
+    background-position: center top;
+    padding: 0;
+    color: #404040;
 }
 
-.triangle.left{
-    background-position: right top;
-    left: 0;
-    padding-left: 12%;
-    padding-right: 24%;
+.triangle h1 {
+    font-size: 2.2em;
+    font-weight: bold;
+    
 }
 
-.triangle.right{
-    background-position: left top;
-    right: 0;
-    padding-left: 24%;
-    padding-right: 12%;
+.triangle p {
+    font-size: 1.5em;
+    font-weight: 300;
 }
 
-.triangle > article {
+.triangle.verbose p {
+    font-size: 1em;
+}
+
+.triangle > div {
     display: table-cell;
     vertical-align: middle;
-    max-width: 586px;
+    align-self: center;
+}
+
+.triangle > div > div {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    max-width: 964.8px;
+}
+
+.triangle > div > div > article {
+    padding-top: 180px;
+    padding-bottom: 180px;
+}
+
+.triangle.right > div > div > article {
+    float: right;
+}
+
+.triangle.right h1,h2>span {
+    text-align: right;
 }
 
 .about {
-    top: -100px;
-    background-size: 1286.4px 1440px;
-    background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg); 
-    padding-top: 400px;
-    padding-bottom: 500px;
-    height: 540px;
-    max-width: 1286.4px;
-    right: 20%;
+    top: -120px;
+    background-size: 1393.6px 1440px;
+    background-image: url(/static/img/svgtriangles/centered-0bg_0_grey-triangle.svg);
+    height: 1440px;
+}
+
+.about article {
+    max-width: 589.6px;
 }
 
 .schedule {
-    top: -1200px;
-    background-size: 1447.2px 2520px;
-    background-image: url(/static/img/svgtriangles/0bg_1_sky-trapezoid.svg);
-    padding-top: 400px;
-    padding-bottom: 500px;
-    height: 1620px;
-    width: 90%;
-    max-width: 1447.2px;
-    left: 10%;
+    top: -870px;
+    background-size: 1500.8px 2520px;
+    background-image: url(/static/img/svgtriangles/centered-0bg_1_sky-trapezoid.svg);
+    height: 2520px;
+    color: white;
+    text-align: justify;
+}
+
+.schedule article {
+    max-width: 482.4px;
 }
 
 .caps {
     text-transform: uppercase;
+}
+
+.bg0.grey-triangle {
+    opacity: .1;
+    padding-top: 600px;
 }
 
