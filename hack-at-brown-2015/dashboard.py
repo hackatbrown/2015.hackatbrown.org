@@ -72,9 +72,18 @@ def getBySchool():
           {'name' : 'UPenn', 'y' : 25},
           {'name' : 'Boston University', 'y' : 5}]
 def getByShirtSize():
+    return [
+    {'name' : 'Small', 'y' : 20},
+    {'name' : 'Medium', 'y' : 40},
+    {'name' : 'Large', 'y' : 30},
+    {'name' : 'Capacious', 'y' : 10}]
     return None
 def getByDietaryPreferences():
-    return None
+    return [
+    {'name' : 'Babies', 'y' : 10},
+    {'name' : 'Vegetables', 'y' : 40},
+    {'name' : 'Bajas', 'y' : 30},
+    {'name' : 'Gluten-Free', 'y' : 10}]
 
 
 
