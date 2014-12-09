@@ -1,5 +1,4 @@
 /* GENERAL */
-
 html {
     overflow-x: hidden;
 }
@@ -21,19 +20,45 @@ a:active {
 .form_finish input[type=submit]:hover,
 input[type="radio"] + label:hover,
 .cancel_reg:hover,
-.add_link:hover {
+.add_link:hover, 
+.registration_form input[type="checkbox"]:hover,
+.check_agree:hover {
     cursor: pointer;
 }
 .init_input:focus,
 .init_submit:focus,
 .registration_form input[type=email]:focus,
 .registration_form input[type=submit]:focus,
-.registration_form input:not([type]):focus {
+.registration_form input:not([type]):focus,
+.registration_form input[type="checkbox"]:focus {
     outline: none;
 }
 .light {
-    /*	font-family: 'Brown';*/
+    /*  font-family: 'Brown';*/
     font-weight: 300;
+}
+.center {
+    text-align: center;
+}
+
+input[type=submit] {
+    position: relative;
+    font-size: 1em;
+    background-color: #1b8fb9;
+    border: 2px solid #1B8EB9;
+    color: white;
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+input[type=submit]:hover {
+    background-color: #EF5D93;
+    border-color: #EF5D93;
+}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* Override Autofills */
+    background:none !important;
+    background-color:rgba(0,0,0,0) !important;
+    color: #666 !important;
 }
 /* PAGE MODULES */
 
@@ -52,6 +77,7 @@ input[type="radio"] + label:hover,
     height: auto;
     padding-top: 100px;
     padding-bottom: 100px;
+    overflow-x:hidden;
 }
 .panel.white {
     background-color: rgba(255, 255, 255, .8);
@@ -104,12 +130,15 @@ input[type="radio"] + label:hover,
     height: 2px;
 }
 /* SPLASH */
-
 .splash {
     text-align: center;
     padding-top: 60px;
     padding-bottom: 120px;
     height: 870px;
+    margin-bottom:0;
+    overflow-y:hidden;
+    z-index:2;
+    transition:height 1s, margin 1s;
 }
 .logo {
     width: 190px;
@@ -246,47 +275,49 @@ input[type="radio"] + label:hover,
 .double_left {
     width: 50%;
     float: left;
+    height: auto;
 }
 .double_right {
     width: 50%;
     float: right;
+    height: auto;
 }
 .clearfix {
     clear: both;
 }
 /* REGISTRATION FORM */
-
-.registration_wrapper {
-    background-color: #404042;
-    padding: 0;
-}
 .registration_form {
     width: 60%;
     height: 100%;
-    background-color: white;
     margin: 0 auto;
-    padding: 3%;
-    padding-top: 120px;
-    padding-bottom: 120px;
     top: 0;
+    text-align: left;
 }
-.registration_form label {
+.registration_form label { 
     text-transform: uppercase;
     color: #1B8EB9;
     display: block;
     margin-bottom: 7px;
     font-weight: 400;
+    font-size:1.1em;
 }
 .registration_form input[type=email],
 .registration_form input[type=text],
 .registration_form input:not([type]) {
-    border: 1px solid #E9E9E9;
+    border:none;
+    box-shadow: inset 1px -3px 0px -1px rgba(59,142,185,0.5);
     color: #666666;
-    background-color: white;
-    font-size: .9em;
+    background:none;
+    font-size: 1em;
     font-weight: 300;
     height: 35px;
-    border-radius: 0 !important;
+    transition: box-shadow .5s;
+}
+.registration_form input[type=email]:focus,
+.registration_form input[type=text]:focus,
+.registration_form input:not([type]):focus {
+    box-shadow: inset 1px -35px 0px -1px rgb(240,93,125);
+    color:#fff;
 }
 .shirt_size {
     display: flex;
@@ -300,28 +331,20 @@ input[type="radio"] + label:hover,
     display: inline-block;
 }
 .radio_select td {
-    border-collapse: collapse;
-    border-spacing: 0;
     border: 0;
-}
-.empty {
-    /* to give space between gender and shirt size */
-    display: inline-block;
-    width: 15px;
 }
 input[type="radio"] {
     display: none;
 }
 input[type="radio"] + label {
     background-color: #EBEBEB;
-    font-weight: 300;
-    color: #404042;
     text-transform: none;
-    width: auto;
     height: 19px;
     padding: 11px;
     padding-top: 8px;
     padding-bottom: 11px;
+    color: #404042;
+    font-weight: 300;
     font-size: .9em;
 }
 input[type="radio"] + label:hover {
@@ -330,27 +353,20 @@ input[type="radio"] + label:hover {
 input[type="radio"]:checked + label {
     background-color: #CCCCCC;
 }
-.form_finish {
-    text-align: center;
-    width: 100%;
+.registration_form input[type="checkbox"] {
+    appearance:none;
+    -webkit-appearance: none;
+    display: inline-block;
+    margin-top:1px !important;
+    border:2px solid rgba(59,142,185,0.5);
+    background-color:#fff;
+    padding:6px;
+    box-shadow: inset 1px 0px 0px -1px rgba(59,142,185,0.5);
+    transition:box-shadow .5s, border .5s;
 }
-.form_finish label {
-    text-transform: none;
-    font-weight: 300;
-}
-.form_finish input[type=submit] {
-    width: auto;
-    padding: 20px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    background-color: #1B8EB9;
-    color: white;
-    text-transform: uppercase;
-    font-size: 1em;
-    border: none;
-}
-.form_finish input[type=submit]:hover {
-    background-color: #3783AB;
+.registration_form input[type="checkbox"]:checked {
+    border:2px solid rgba(59,142,185,1);
+    box-shadow: inset 1px -13px 0px -1px rgb(59,142,185);
 }
 /* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
 
@@ -417,40 +433,6 @@ input[type="radio"]:checked + label {
     font-size: x-large;
     margin: 0px;
 }
-/* RESPONSIVE -- you're out of the old zone */
-
-@media screen and (max-width: 750px) {
-    .logo {
-        margin-top: 5%;
-    }
-    .title {
-        font-size: 3em;
-/*        margin-top: 4%;*/
-    }
-    .hr {
-/*        margin-top: 5%;*/
-    }
-    .slogan {
-/*        margin-top: 5%;*/
-    }
-    .main_cta,
-    .form_wrapper {
-/*        margin-top: 4%;*/
-    }
-    .datetime {
-/*        margin-top: 7%;*/
-    }
-    .shirt_size {
-        flex-direction: column;
-    }
-}
-@media screen and (max-width: 500px) {
-    .title {
-        font-size: 2em;
-    }
-}
-/* TODO: limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
- */
 
 /* PANEL GENERAL */
 
@@ -544,6 +526,7 @@ input[type="radio"]:checked + label {
 .about {
     margin-top: -300px;
     height: 960px;
+    z-index:1;
 }
 
 .about article {
@@ -614,3 +597,39 @@ input[type="radio"]:checked + label {
 .blue {
     color: #1b8eb9;
 }
+
+/* RESPONSIVE */
+@media screen and (max-width: 1150px) {
+    .registration_form {
+        width:80%;
+    }
+}
+@media screen and (max-width: 750px) {
+    .splash {
+        height: 800px;
+    }
+    .logo {
+        margin-top: 5%;
+    }
+    .title {
+        font-size: 3em;
+    }
+    .shirt_size {
+        flex-direction: column;
+    }
+    .registration_form.center {
+        text-align:left;
+    }
+    input[type="radio"] + label {
+        font-size:1em;
+        padding-left:20px;
+        padding-right:20px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .title {
+        font-size: 2em;
+    }
+}
+/* TODO: limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
+ */

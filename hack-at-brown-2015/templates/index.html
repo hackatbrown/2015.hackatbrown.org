@@ -6,9 +6,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
 {% block head %}
 {{ super() }}
-<link rel='stylesheet' href='/static/Semantic-UI-1.1.2/dist/components/form.min.css' />
+<link rel='stylesheet' href='/static/semantic/minified/collections/form.min.css' />
 <link rel='stylesheet' href='/static/Semantic-UI-1.1.2/dist/components/grid.min.css' />
-<script type="text/javascript" src='/static/Semantic-UI-1.1.2/dist/components/form.min.js'></script>
 <link rel='stylesheet' href='/static/css/index.css'/>
 {% endblock %}
 
@@ -29,33 +28,41 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 <div class="trigrid container">
 
     <section id='hero' class="splash panel">
-        <div class='logo'></div>
-        <div class='title'>Hack@Brown<span class='light'>2015</span></div>
-        <div class='datetime light'>
-            <h2>Providence, RI | February 7-8 </h2>
+        <div class="double">
+            <div class="double_left">
+                <div class='logo'></div>
+                <div class='title'>Hack@Brown<span class='light'>2015</span></div>
+                <div class='datetime light'>
+                    <h2>Providence, RI | February 7-8 </h2>
+                </div>
+                
+                <div class='slogan'>make, play, learn:</div>
+                
+                
+                {% if registration_status == "sign_up_for_updates" %}
+                <form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
+                    <input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
+                </form>
+                {% endif %}
+                {% if registration_status == "registration_open" %}
+                <form class="init_reg">
+                    <input type="text" name="name" placeholder="NAME" class="init_input" />
+                    <input type="text" name="email" placeholder="EMAIL" class="init_input" />
+                    <input type="submit" value="REGISTER" class="init_submit light" />
+                </form>
+                {% endif %}
+                
+                {% if registration_status == "registration_closed" %}
+                <div class='main_cta'>
+                    Registration is closed, sorry!
+                </div>
+                {% endif %}
+            </div>
+
+            {% if registration_status == "registration_open" %} 
+                {% include "registration_form.html" %}
+            {% endif %}
         </div>
-        
-        <div class='slogan'>make, play, learn:</div>
-        
-        
-        {% if registration_status == "sign_up_for_updates" %}
-        <form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
-            <input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
-        </form>
-        {% endif %}
-        {% if registration_status == "registration_open" %}
-        <form class="init_reg">
-            <input type="text" name="name" placeholder="NAME" class="init_input" />
-            <input type="text" name="email" placeholder="EMAIL" class="init_input" />
-            <input type="submit" value="REGISTER" class="init_submit light" />
-        </form>
-        {% endif %}
-        
-        {% if registration_status == "registration_closed" %}
-        <div class='main_cta'>
-            Registration is closed, sorry!
-        </div>
-        {% endif %}
     </section>
     
     <section class="panel triangle left about">
@@ -273,7 +280,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     
 </div>
 
-<script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
+<script type="text/javascript" src='/static/Semantic-UI-1.1.2/dist/components/form.min.js'></script>
 <script src='/static/js/index.js'></script>
 
 <script>
@@ -282,8 +289,27 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     function sectionChanged(s) {
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
     }
+
+    function fixSplashHeight() {
+        if ($(".splash").hasClass("reg")) {
+            $(".splash").css("height", "auto");
+            $(".splash").css("margin-bottom", "60px");
+        } else {
+            var $height = $(".double_left").height() + 180;
+            $(".splash").height($height);
+        }
+
+        /* align to 60px grid - not working atm
+        var $r_height = $(".splash").outerHeight();
+        var $height = $(".splash").height();
+        var $new_height = $height + ($r_height % 60);
+        $(".splash").css("height", $new_height + "px");*/
+    }
     
     $(document).ready(function() {
+        // Make sure splash height is good on doc ready
+        fixSplashHeight();
+
         $('.top-bar_ul').onePageNav({
             currentClass: "active",
             changeHash: false,
@@ -294,6 +320,31 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         $('.top-bar_ul').gutabslider();
 
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
+
+        // Fix splash height if the browser resizes
+        $(window).resize(function() {
+            fixSplashHeight();
+        });
+
+        // Toggle between form and splash
+        $(".init_submit").click(function (e) {
+            e.preventDefault();
+            $(".splash").addClass("reg");
+            $(".splash").css("z-index", "-10");
+            $(".double").css("left", "-100%");
+
+            fixSplashHeight();
+
+            $(".splash").css("z-index", "2");
+        });
+
+        $(".cancel_reg").click(function () {
+            $(".splash").removeClass("reg");
+            $(".splash").css("z-index", "-10");
+            $(".double").css("left", "0");
+            fixSplashHeight();
+            $(".splash").css("z-index", "2");
+        });
         
     });
 
