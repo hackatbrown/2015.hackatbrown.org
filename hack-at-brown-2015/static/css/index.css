@@ -494,8 +494,8 @@ input[type="radio"]:checked + label {
 }
 
 .triangle article {
-    margin-top: 180px;
-    margin-bottom: 180px;
+    padding-top: 180px;
+    padding-bottom: 180px;
 }
 
 .triangle.right article {
