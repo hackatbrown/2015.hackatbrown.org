@@ -136,6 +136,27 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     background: #EF5D93;
     height: 2px;
 }
+
+.nav-trigger {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    padding: 15px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+    background-size: 30px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
 /* SPLASH */
 .splash {
     top: 0;
@@ -224,6 +245,9 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 .init_reg {
     margin-top: 1.5%;
 }
+.init_reg * {
+    margin-bottom: 10px;
+}
 .init_input {
     font-size: 1em;
     border: 2.5px solid #1B8EB9;
@@ -237,7 +261,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 .init_input::-webkit-input-placeholder {
     color: #1B8EB9;
-    font-weight: 300px
+    font-weight: 300px;
 }
 .init_input:focus {
     /*    border-left-width:4px; */
@@ -299,14 +323,14 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     float: left;
     height: auto;
     padding-top: 120px;
-    padding-bottom: 120px;
+    padding-bottom: 5%;
 }
 .double_right {
     width: 50%;
     float: right;
     height: auto;
-    padding-top: 120px;
-    padding-bottom: 120px;
+    padding-top: 8%;
+    padding-bottom: 8%;
 }
 .clearfix {
     clear: both;
@@ -645,7 +669,7 @@ input[type="radio"]:checked + label {
 }
 @media screen and (max-width: 750px) {
     .splash {
-        height: 800px;
+/*        height: 800px;*/
     }
     .logo {
         margin-top: 5%;
@@ -669,6 +693,32 @@ input[type="radio"]:checked + label {
     .title {
         font-size: 2em;
     }
+    .init_reg {
+        margin-top: 60px;
+    }
+    .init_reg * {
+        width: 80%;
+    }
+    .top-bar_ul {
+        padding-bottom: 15px;
+        height: 10px;
+        width: 60px;
+        margin-left: 0;
+        overflow: hidden;
+        transition: height .5s, width .5s, margin .5s;
+    }
+    .top-bar_ul > li {
+        display: none;
+        margin: 4%;
+    }
+    .hamburger {
+        display: block
+    }
+    .open.top-bar_ul {
+        height: 210px;
+        width: 100%;
+    }
+    .open.top-bar_ul > li {
+        display: block;
+    }
 }
-/* TODO: limit height of .double at some checkpoint and when registering transition left and height of double (and overflow)
- */

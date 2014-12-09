@@ -12,6 +12,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 {% endblock %}
 
 {% block nav %}
+<div class="hamburger"></div>
 <ul class="top-bar_ul">
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
@@ -19,6 +20,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     <li class="top-bar_li" id="sponsors_top"><a href="#sponsors">Sponsors</a></li>
     <li class="top-bar_li" id="faq_top"><a href="#faq">FAQ</a></li>
 </ul>
+
+
 {% endblock %}
 
 {% block content %}
@@ -331,6 +334,12 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         $(".cancel_reg").click(function () {
             $(".splash").removeClass("reg");
             fixSplashHeight();
+        });
+        
+        //Hamburger menu for mobile
+        $(".hamburger").click(function () {
+            console.log("harmblkfa");
+            $(".top-bar_ul").toggleClass("open");
         });
         
     });
