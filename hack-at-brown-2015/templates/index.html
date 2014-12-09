@@ -57,8 +57,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 {% endif %}
                 {% if registration_status == "registration_open" %}
                 <form class="init_reg">
-                    <input type="text" name="name" placeholder="NAME" class="init_input" />
-                    <input type="text" name="email" placeholder="EMAIL" class="init_input" />
+                    <input type="text" name="name" placeholder="NAME" class="init_input" required/>
+                    <input type="text" name="email" placeholder="EMAIL" class="init_input" required/>
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
                 {% endif %}
@@ -348,8 +348,9 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         });
 
         // Toggle between form and splash
-        $(".init_submit").click(function (e) {
+        $("form.init_reg").submit(function (e) {
             e.preventDefault();
+            $('html,body').animate({scrollTop: 0}, 1000);
             $(".splash").addClass("reg");
             $(".cancel_reg").addClass("reg");
             $(".splash .background > .fore").addClass("translated");
