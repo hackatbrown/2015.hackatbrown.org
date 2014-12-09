@@ -255,12 +255,12 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 /* REGISTRATION */
 
 .cancel_reg {
-    position: absolute;
+    position: relative;
     text-transform: uppercase;
-    color: white;
+    color: #666;
     font-size: 1.1em;
-    top: 30px;
-    left: 52%;
+    left: 0;
+    top: -50px;
 }
 .double {
     position: relative;
