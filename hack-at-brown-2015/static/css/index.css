@@ -2,6 +2,9 @@
 html {
     overflow-x: hidden;
 }
+body {
+    top: 0;
+}
 a {
     text-decoration: none;
     color: #1B8EB9;
@@ -86,6 +89,10 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     background-image: url(/static/img/svgtriangles/trigrid-tile-5pct.svg);
     background-size: 107.2px 120px;
     background-position: center top;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    overflow: hidden;
 }
 /* NAV */
 
@@ -103,6 +110,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     max-width: 964.8px;
     left: 0%;
     right: 0%;
+    top: 0;
     z-index: 999;
     background-color: rgba(255, 255, 255, .95);
 }
@@ -130,13 +138,24 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 /* SPLASH */
 .splash {
+    top: 0;
     text-align: center;
-    padding-top: 60px;
-    padding-bottom: 120px;
-    height: 870px;
+/*    padding-top: 60px;*/
+/*    padding-bottom: 120px;*/
+    padding-top: 0px;
+    padding-bottom: 0px;
     margin-bottom:0;
     z-index:2;
-    transition:height 2s, margin 2s, background-color 1s;
+    transform: translate3d(0, 0, 0);
+    transition:height 2s, padding 1.2s, background-color 1.2s, transform 2s;
+    height: auto;
+    position: absolute;
+    overflow: hidden;
+}
+
+.splash.reg {
+    transform: translate3d(-100%, 0, 0);
+    overflow: visible;
 }
 
 .splash.dim {
@@ -279,11 +298,15 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     width: 50%;
     float: left;
     height: auto;
+    padding-top: 120px;
+    padding-bottom: 120px;
 }
 .double_right {
     width: 50%;
     float: right;
     height: auto;
+    padding-top: 120px;
+    padding-bottom: 120px;
 }
 .clearfix {
     clear: both;
@@ -440,6 +463,13 @@ input[type="radio"]:checked + label {
 
 /* PANEL GENERAL */
 
+.panels {
+    top: 0;
+    transform: translate3d(0, 870px, 0);
+    transition: transform 2s;
+    padding-bottom: 1200px;
+}
+
 .triangle {
     background-repeat: no-repeat;
     width: 100%;
@@ -530,7 +560,7 @@ input[type="radio"]:checked + label {
 /* PANEL SPECIFIC */
 
 .about {
-    margin-top: -300px;
+/*    margin-top: -300px;*/
     height: 960px;
     z-index:1;
 }
