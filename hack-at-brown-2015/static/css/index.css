@@ -77,7 +77,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     height: auto;
     padding-top: 100px;
     padding-bottom: 100px;
-    overflow-x:hidden;
 }
 .panel.white {
     background-color: rgba(255, 255, 255, .8);
@@ -136,7 +135,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     padding-bottom: 120px;
     height: 870px;
     margin-bottom:0;
-    overflow-y:hidden;
     z-index:2;
     transition:height 1s, margin 1s;
 }
