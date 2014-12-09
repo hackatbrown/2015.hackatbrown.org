@@ -21,6 +21,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         </g>
     </svg>
 </div>
+<div class="hamburger"></div>
 <ul class="top-bar_ul">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
@@ -337,7 +338,9 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
         
         // P-P-P-PARALLAX
-        skrollr.init()
+        skrollr.init({
+            mobileChec=function() {return false;}
+        })
 
         // Fix splash height if the browser resizes
         $(window).resize(function() {
