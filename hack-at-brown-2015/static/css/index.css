@@ -726,7 +726,7 @@ input[type="radio"]:checked + label {
         display: block
     }
     nav.open .top-bar_ul {
-        height: 210px;
+        height: 240px;
         width: 100%;
     }
     nav.open .top-bar_ul > li {
@@ -754,6 +754,20 @@ input[type="radio"]:checked + label {
     }
     .init_reg * {
         width: 80%;
+    }
+    section.triangle {
+        padding-top: 300px;
+        padding-bottom: 300px;
+    }
+    section .background {
+        transform: scale(1.5, 1.5);
+        transform-origin: center top;
+    }
+    
+    section.about {
+        padding-top: 180px;
+        padding-bottom: 180px;
+        margin-top: -180px;
     }
 }
 
