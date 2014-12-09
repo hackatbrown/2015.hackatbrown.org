@@ -53,6 +53,7 @@ input[type=submit] {
     padding: 6px;
     padding-left: 10px;
     padding-right: 10px;
+    text-transform: uppercase;
 }
 input[type=submit]:hover {
     background-color: #EF5D93;
@@ -265,19 +266,21 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     font-weight: 300;
     box-sizing: border-box;
     text-indent: 6px;
-    /* perceptual margin decreases when text overflows */
-    /*    margin-left:1.5px;*/
-    /*    margin-right:1.5px;*/
+    box-shadow: inset 1px 0px 0px -1px #404040;
+    transition: box-shadow .2s, border .2s, color .2s;
 }
 .init_input::-webkit-input-placeholder {
     color: #1B8EB9;
     font-weight: 300px;
+    text-transform: capitalize;
+}
+.init_input:focus::-webkit-input-placeholder {
+    color: #fff;
 }
 .init_input:focus {
-    /*    border-left-width:4px; */
-    /*    margin-left:0;*/
-    /*    margin-right:0;*/
-    border-color: #EF5D93;
+    color: #fff;
+    box-shadow: inset 1px -35px 0px -1px #404040;
+    border-color: #404040;
 }
 .init_submit {
     position: relative;
