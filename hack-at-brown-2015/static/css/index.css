@@ -517,7 +517,7 @@ input[type="radio"]:checked + label {
     right: 50%;
     width: 0;
     height: inherit;
-    z-index: -1;
+    z-index: -9;
 }
 
 .triangle .background > div {
@@ -525,23 +525,25 @@ input[type="radio"]:checked + label {
     height: inherit;
     background-size: cover;
     background-repeat: no-repeat;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .triangle.left .background > div {
-    background-position: right top;
+    background-position: right center;
     right: 0;
 }
 
 .triangle.right .background > div {
-    background-position: left top;
+    background-position: left center;
     left: 0;
 }
 
 /* PANEL SPECIFIC */
 
 .about {
-    margin-top: -1200px;
-    height: 2880px;
+    margin-top: -300px;
+    height: 960px;
 }
 
 .about article {
@@ -557,12 +559,12 @@ input[type="radio"]:checked + label {
 .about .background > div {
     width: 2572.8px;
     margin-right: -643.2px;
-    float: right;
+    height: 2880px;
     background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg);
 }
 
 .schedule {
-    margin-top: -1470px;
+    margin-top: -510px;
     height: 2520px;
     color: white;
     text-align: justify;
@@ -590,6 +592,7 @@ input[type="radio"]:checked + label {
 .schedule .background > div {
     width: 1447.2px;
     margin-left: -750.4px;
+    height: 2520px;
     background-image: url(/static/img/svgtriangles/0bg_1_sky-trapezoid.svg);
 }
 
