@@ -53,6 +53,7 @@ input[type=submit] {
     padding: 6px;
     padding-left: 10px;
     padding-right: 10px;
+    text-transform: uppercase;
 }
 input[type=submit]:hover {
     background-color: #EF5D93;
@@ -108,6 +109,8 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     color: #1B8EB9;
     position: fixed;
     max-width: 964.8px;
+    left: 0%;
+    right: 0%;
     width: 100%;
     top: 0;
     z-index: 999;
@@ -263,19 +266,21 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     font-weight: 300;
     box-sizing: border-box;
     text-indent: 6px;
-    /* perceptual margin decreases when text overflows */
-    /*    margin-left:1.5px;*/
-    /*    margin-right:1.5px;*/
+    box-shadow: inset 1px 0px 0px -1px #404040;
+    transition: box-shadow .2s, border .2s, color .2s;
 }
 .init_input::-webkit-input-placeholder {
     color: #1B8EB9;
     font-weight: 300px;
+    text-transform: capitalize;
+}
+.init_input:focus::-webkit-input-placeholder {
+    color: #fff;
 }
 .init_input:focus {
-    /*    border-left-width:4px; */
-    /*    margin-left:0;*/
-    /*    margin-right:0;*/
-    border-color: #EF5D93;
+    color: #fff;
+    box-shadow: inset 1px -35px 0px -1px #404040;
+    border-color: #404040;
 }
 .init_submit {
     position: relative;
@@ -323,8 +328,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     width: 200%;
     height: 100%;
     height: auto;
-    left: 0;
-    /* CHANGE THIS TO -100% TO MAKE REG DEFAULT MAIN PANEL */
+    left: 0; /* CHANGE THIS TO -100% TO MAKE REG DEFAULT MAIN PANEL */
     top: 0;
     transition: left 1s;
 }
@@ -339,8 +343,9 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     width: 50%;
     float: right;
     height: auto;
-    padding-top: 8%;
+    padding-top: 4%;
     padding-bottom: 8%;
+    transition: padding .5s;
 }
 .clearfix {
     clear: both;
@@ -407,12 +412,15 @@ input[type="radio"] + label {
     color: #404042;
     font-weight: 300;
     font-size: .9em;
+    box-shadow: inset 1px 0px 0px -1px #1B8EB9;
+    transition: box-shadow .1s, color .1s;
 }
 input[type="radio"] + label:hover {
     background-color: #E2E1DF;
 }
 input[type="radio"]:checked + label {
-    background-color: #CCCCCC;
+    color:#fff;
+    box-shadow: inset 1px -38px 0px -1px #1B8EB9;
 }
 .registration_form input[type="checkbox"] {
     appearance:none;
@@ -771,9 +779,6 @@ section .background > .mid {
     }
 }
 @media screen and (max-width: 750px) {
-    .splash {
-/*        height: 800px;*/
-    }
     .logo {
         margin-top: 5%;
     }
@@ -788,8 +793,11 @@ section .background > .mid {
     }
     input[type="radio"] + label {
         font-size:1em;
-        padding-left:20px;
-        padding-right:20px;
+        padding-left:15px;
+        padding-right:15px;
+    }
+    .double_right {
+        padding-top: 8%;
     }
     .top-bar_ul {
         padding-top: 45px;

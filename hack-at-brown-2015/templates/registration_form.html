@@ -4,11 +4,11 @@
         <div class="two fields">
             <div class="field">
                 <label for="name">Name</label>
-                <input type="text" name="name" placeholder="Josiah Carberry" />
+                <input type="text" name="name" placeholder="Josiah Carberry" required/>
             </div>
             <div class="field">
                 <label for="name">Email</label>
-                <input type="email" name="email" placeholder="handle@schooldomain.edu" />
+                <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
             </div>
         </div>
         
@@ -17,11 +17,11 @@
                 <div class="two fields">
                     <div class="field">
                         <label for="school">School</label>
-                        <input type="text" name="school" placeholder="Beige University" />
+                        <input type="text" name="school" placeholder="Beige University" required/>
                     </div>
                     <div class="field">
                         <label for="year">Year</label>
-                        <input type="text" name="year" placeholder="2017" />
+                        <input type="text" name="year" placeholder="2017" required/>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
         </div>
         <div class="inline field center">
             <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
-            <input type="checkbox" name="agree" id="agree" />
+            <input type="checkbox" name="agree" id="agree"/>
         </div>
         <div class="field center">
             <input type="submit" class="ui button" vlaue="REGISTER" />
@@ -128,20 +128,47 @@
 
 <script>
 
+function validateForm() {
+    // Check if they filled out shirt gender & size
+    if (!$("input[name='shirt_gen']:checked").val())
+        return false;
+    if (!$("input[name='shirt_size']:checked").val())
+        return false;
+
+    // Check if they filled out travel reimbursement
+    if (!$("input[name='travel_reimbursement']:checked").val())
+        return false;
+
+    // Check if they filled out hardware hack
+    if (!$("input[name='hardware_hack']:checked").val())
+        return false;
+
+    // Check if they agree to the Code of Conduct
+    if (!$("#agree").prop('checked'))
+        return false;
+
+    return true;
+}
+
 $(document).ready(function() {
     H5F.setup(document.getElementById("registration_form"), {
-        onSubmit: function() {
-            $("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
-            $("#registration_form").ajaxSubmit({
-                success: function(response) {
-                    var response = JSON.parse(response);
-                    if (response.success) {
-                        $("#splash").html(response.replace_splash_with_html);
-                        window.location.hash = "";
+        onSubmit: function(e) {
+            if (validateForm()) {
+                $("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
+                $("#registration_form").ajaxSubmit({
+                    success: function(response) {
+                        var response = JSON.parse(response);
+                        if (response.success) {
+                            $("#splash").html(response.replace_splash_with_html);
+                            window.location.hash = "";
+                        }
                     }
-                }
-            })
-            return false;
+                })
+                return false;
+            } else {
+                e.preventDefault();
+                alert("You didn't finish!"); // temp
+            }
         }
     });
 })
