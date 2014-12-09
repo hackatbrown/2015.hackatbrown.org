@@ -152,10 +152,19 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     height: 30px;
     padding: 15px;
     cursor: pointer;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
-    background-size: 30px;
-    background-position: center center;
-    background-repeat: no-repeat;
+}
+
+.top-bar_ul .left {
+    position: absolute;
+    float: left;
+    margin-top: 0;
+    margin-bottom: 0;
+    left: 0;
+}
+
+.top-bar_ul a.secondary {
+    color: #918f8c;
+    font-weight: 300;
 }
 /* SPLASH */
 .splash {
@@ -168,10 +177,10 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     margin-bottom:0;
     z-index:2;
     transform: translate3d(0, 0, 0);
-    transition:height 2s, padding 1.2s, background-color 1.2s, transform 2s;
+    transition:height 2s, padding 1.2s, background-color 1.2s, transform 1s;
     height: auto;
     position: absolute;
-    overflow: hidden;
+/*    overflow: hidden;*/
 }
 
 .splash.reg {
@@ -300,6 +309,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 /* REGISTRATION */
 
+/*
 .cancel_reg {
     position: relative;
     text-transform: uppercase;
@@ -307,6 +317,17 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     font-size: 1.1em;
     left: 0;
     top: -50px;
+}
+*/
+.cancel_reg {
+    opacity: 0;
+    clip: rect(0,0,0,0);
+    transition: opacity .5s, clip .5s;
+}
+
+.reg.cancel_reg {
+    clip: auto;
+    opacity: 1;
 }
 .double {
     position: relative;
@@ -337,8 +358,8 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 /* REGISTRATION FORM */
 .registration_form {
-    width: 68%;
-    max-width: 964px;
+    width: 80%;
+    max-width: 964px !important;
     height: 100%;
     margin: 0 auto;
     top: 0;
@@ -367,8 +388,8 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
-    box-shadow: inset 1px -35px 0px -1px white;
-    color: #404040;
+    box-shadow: inset 1px -35px 0px -1px #404040;
+    color: white;
 }
 .shirt_size {
     display: flex;
@@ -490,7 +511,7 @@ input[type="radio"]:checked + label {
 .panels {
     top: 0;
     transform: translate3d(0, 870px, 0);
-    transition: transform 2s;
+    transition: transform 1s;
     padding-bottom: 1200px;
 }
 
@@ -688,20 +709,10 @@ input[type="radio"]:checked + label {
         padding-left:20px;
         padding-right:20px;
     }
-}
-@media screen and (max-width: 500px) {
-    .title {
-        font-size: 2em;
-    }
-    .init_reg {
-        margin-top: 60px;
-    }
-    .init_reg * {
-        width: 80%;
-    }
     .top-bar_ul {
+        padding-top: 45px;
         padding-bottom: 15px;
-        height: 10px;
+        height: 0px;
         width: 60px;
         margin-left: 0;
         overflow: hidden;
@@ -714,11 +725,64 @@ input[type="radio"]:checked + label {
     .hamburger {
         display: block
     }
-    .open.top-bar_ul {
+    nav.open .top-bar_ul {
         height: 210px;
         width: 100%;
     }
-    .open.top-bar_ul > li {
+    nav.open .top-bar_ul > li {
         display: block;
     }
+    .splash {
+        transition: background-color .5s, transform .5s;
+    }
+    .top-bar_ul .left {
+        position: absolute;
+        float: none;
+        margin-top: -27px;
+        margin-bottom: 0;
+        margin-left: 10%;
+        width: 80%;
+        z-index: 1200;
+    }
+}
+@media screen and (max-width: 500px) {
+    .title {
+        font-size: 2em;
+    }
+    .init_reg {
+        margin-top: 60px;
+    }
+    .init_reg * {
+        width: 80%;
+    }
+}
+
+.hamsvg > .bar {
+    transform: rotate(0) translateY(0) translateX(0);
+    transform-origin: 0px 4px;
+    transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out, fill .4s ease-in-out;
+}
+
+.hamsvg {
+    transition: transform 0.2s ease-in-out;
+}
+
+.hamsvg > .bar:nth-of-type(1) {
+    transform-origin: 0px 25px;
+}
+
+nav.open .hamsvg > .bar:nth-of-type(1) {
+    transform: rotate(-45deg) translate(0, -2px);
+}
+
+nav.open .hamsvg > .bar:nth-of-type(2) {
+    opacity: 0;
+}
+
+nav.open .hamsvg > .bar:nth-of-type(3) {
+    transform: rotate(45deg) translate(0, 2px);
+}
+
+nav.open .hamsvg {
+    transform: translate(5px, 0);
 }
