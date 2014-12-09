@@ -6,14 +6,23 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
 {% block head %}
 {{ super() }}
-<link rel='stylesheet' href='/static/Semantic-UI-1.1.2/dist/components/form.min.css' />
+<link rel='stylesheet' href='/static/semantic/minified/collections/form.min.css' />
 <link rel='stylesheet' href='/static/Semantic-UI-1.1.2/dist/components/grid.min.css' />
-<script type="text/javascript" src='/static/Semantic-UI-1.1.2/dist/components/form.min.js'></script>
 <link rel='stylesheet' href='/static/css/index.css'/>
 {% endblock %}
 
 {% block nav %}
+<div class="hamburger">
+    <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+        <g class="hamsvg" sketch:type="MSLayerGroup">
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+        </g>
+    </svg>
+</div>
 <ul class="top-bar_ul">
+    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#schedule">Schedule</a></li>
@@ -26,267 +35,336 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
 {% include "social.html" %} <!-- necessary to support like buttons, etc -->
 
-<div class="grid container">
+<div class="trigrid container">
 
     <section id='hero' class="splash panel">
-        <div class='logo'></div>
-        <div class='title'>Hack@Brown<span class='light'>2015</span></div>
-        <div class='datetime light'>
-            <h2>Providence, RI | February 7-8 </h2>
-        </div>
-        
-        <div class='slogan'>make, play, learn:</div>
-        
-        
-        {% if registration_status == "sign_up_for_updates" %}
-        <form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
-            <input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
-        </form>
-        {% endif %}
-        {% if registration_status == "registration_open" %}
-        <form class="init_reg">
-            <input type="text" name="name" placeholder="NAME" class="init_input" />
-            <input type="text" name="email" placeholder="EMAIL" class="init_input" />
-            <input type="submit" value="REGISTER" class="init_submit light" />
-        </form>
-        {% endif %}
-        
-        {% if registration_status == "registration_closed" %}
-        <div class='main_cta'>
-            Registration is closed, sorry!
-        </div>
-        {% endif %}
-    </section>
-    
-    <section class="panel triangle left about">
-        <div>
-            <div>
-                <article id='about'>
-                    <h1>Hackathon?</h1>
-                    <h2>noun \'hak&#601;,TH&#228;n\</h2>
-                    <p>Some kind of inspiring definition here. Newbies welcome!</p>
-                    <h1 class="blue">We're Brown's annual student hackathon.</h1>
-                    <p>Get ready for a weekend full of learning new technologies, making great friends, and building something new. We’ll be providing plenty of mentors, food, and anything else you need to carry out your best ideas.</p>
-                </article>
+        <div class="double">
+            <div class="double_left">
+                <div class='logo'></div>
+                <div class='title'>Hack@Brown<span class='light'>2015</span></div>
+                <div class='datetime light'>
+                    <h2>Providence, RI | February 7-8 </h2>
+                </div>
+                
+                <div class='slogan'>make, play, learn:</div>
+                
+                
+                {% if registration_status == "sign_up_for_updates" %}
+                <form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
+                    <input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
+                </form>
+                {% endif %}
+                {% if registration_status == "registration_open" %}
+                <form class="init_reg">
+                    <input type="text" name="name" placeholder="NAME" class="init_input" />
+                    <input type="text" name="email" placeholder="EMAIL" class="init_input" />
+                    <input type="submit" value="REGISTER" class="init_submit light" />
+                </form>
+                {% endif %}
+                
+                {% if registration_status == "registration_closed" %}
+                <div class='main_cta'>
+                    Registration is closed, sorry!
+                </div>
+                {% endif %}
             </div>
-        </div>
-    </section>
-    
-    
-    <section class="panel triangle right schedule verbose">
-        <div>
-            <div>
-                <article id="schedule" class="schedule-text">
-                    <div id="saturday">
-                        <h1>Saturday</h1>
-                        <h2>Registration <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Opening Ceremony <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Hacking Begins <span>8:00 - 12:00</span></h2>
-                        <h2>Registration <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Dinner <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Snacks <span>8:00 - 12:00</span></h2>
-                        <h2>Insomnia Cookies! <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                    </div>
-                    <div id="sunday">
-                        <h1>Sunday</h1>
-                        <h2>Nerf Gun Battle <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Aliens <span>8:00 - 12:00</span></h2>
-                        <h2>Apple Event <span>8:00 - 12:00</span></h2>
-                        <h2>Breakfast <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Legos Become Self-Aware <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Hacking Ends <span>8:00 - 12:00</span></h2>
-                        <h2>Awards <span>8:00 - 12:00</span></h2>
-                        <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                        <h2>Bye <span>8:00 - 12:00</span></h2>
-                    </div>
-                </article>
-            </div>
-        </div>
-        
-    </section>
-    
-    <section id='sponsors' class="panel triangle left sponsors">
-        <div>
-            <div>
-                <article>
-                    <h1>Our Thanks</h1>
-                    <p>To the companies who make this possible!</p>
-                    <div class="ui grid">
-                        <div class="doubling four column row">
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                        <div class="doubling six column row">
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                        <div class="doubling ten column row">
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                        <div class="doubling ten column row">
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                        <div class="doubling ten column row">
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                        <div class="doubling ten column row">
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                        <div class="doubling ten column row">
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                            <div class="right floated column">
-                                <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-        
-    </section>
 
-    <section id='faq' class='panel triangle left faq verbose'>
-        <div>
-            <div>
-                <article>
-                    <h1>FAQ</h1>
-                    <h2>Who can attend?</h2>
-                    <p>All undergraduate, graduate, and high school students from any school are welcome. If you are under 18, we’ll need a parental consent form.</p>
-                    
-                    <h2>How will you decide between applicants?</h2>
-                    <p>Applicants will be chosen based on a random lottery. Everyone is welcome to apply and attend!</p>
-     
-                    <h2>How much is this going to cost me?</h2>
-                    <p>Hack@Brown is completely free, including food, drinks, and awesome swag.</p>
-                    
-                    <h2>How do I get there?</h2>
-                    <p>You can take Amtrak or the MBTA to Providence Station, a short walk from campus. We’re working on getting travel reimbursements and buses set-up for you! Hack@Brown will take place in Sayles & Wilson Hall at Brown University.</p>
-                    
-                    <h2>What about team sizes?</h2>
-                    <p>You’re welcome to have up to six people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown—we’ll have a fun team-forming session at the beginning.</p>
-                    
-                    <h2>What should I bring?</h2>
-                    <p>Your valid student ID, laptop, phone, chargers, sleeping equipment, and lots of excitement. If you’re a minor, a parental consent form too that we’ll email to you.</p>
-                    
-                    <h2>I have a question that's not answered here</h2>
-                    <p>We’re here for you! Send us an email at hello@hackatbrown.org or feel to reach out to us at Twitter or Facebook.</p>
-                </article>
-            </div>
+            {% if registration_status == "registration_open" %} 
+                {% include "registration_form.html" %}
+            {% endif %}
+        </div>
+        <div class="background parallax">
+            <div class="left fore parallax__layer blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
+            <div class="left fore parallax__layer pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></></div>
+            <div class="right fore parallax__layer green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
+            <div class="right fore parallax__layer green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
         </div>
     </section>
+    
+    <div id="panels" class="panels">
+        <section class="panel triangle left about" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,10%,0);">
+            <div>
+                <div>
+                    <article id='about' data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
+                        <h1>Hackathon?</h1>
+                        <h2>noun \'hak&#601;,TH&#228;n\</h2>
+                        <p>Some kind of inspiring definition here. Newbies welcome!</p>
+                        <h1 class="blue">We're Brown's annual student hackathon.</h1>
+                        <p>Get ready for a weekend full of learning new technologies, making great friends, and building something new. We’ll be providing plenty of mentors, food, and anything else you need to carry out your best ideas.</p>
+                    </article>
+                </div>
+            </div>
+            <div class="background parallax">
+                <div class="back"></div>
+                <div class="right mid parallax__layer pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
+            </div>
+        </section>
+
+        <section class="panel triangle right schedule verbose">
+            <div>
+                <div>
+                    <article id="schedule" class="schedule-text" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
+                        <div id="saturday">
+                            <h1>Saturday</h1>
+                            <h2>Registration <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Opening Ceremony <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Hacking Begins <span>8:00 - 12:00</span></h2>
+                            <h2>Registration <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Dinner <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Snacks <span>8:00 - 12:00</span></h2>
+                            <h2>Insomnia Cookies! <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                        </div>
+                        <div id="sunday">
+                            <h1>Sunday</h1>
+                            <h2>Nerf Gun Battle <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Aliens <span>8:00 - 12:00</span></h2>
+                            <h2>Apple Event <span>8:00 - 12:00</span></h2>
+                            <h2>Breakfast <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Legos Become Self-Aware <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Hacking Ends <span>8:00 - 12:00</span></h2>
+                            <h2>Awards <span>8:00 - 12:00</span></h2>
+                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Bye <span>8:00 - 12:00</span></h2>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="background">
+                <div class="back"></div>
+                <div class="left fore white-tower" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
+                <div class="left mid fallback-orange" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-80%,0);"></div>
+            </div>
+        </section>
+
+        <section class="panel triangle left sponsors">
+            <div>
+                <div>
+                    <article id='sponsors'>
+                        <h1>Our Thanks</h1>
+                        <p>To the companies who make this possible!</p>
+                        <div class="ui grid">
+                            <div class="doubling four column row">
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                            <div class="doubling six column row">
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                            <div class="doubling ten column row">
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                            <div class="doubling ten column row">
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                            <div class="doubling ten column row">
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                            <div class="doubling ten column row">
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                            <div class="doubling ten column row">
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                                <div class="right floated column">
+                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+        </section>
+
+        <section class='panel triangle left faq verbose'>
+            <div>
+                <div>
+                    <article id='faq'>
+                        <h1>FAQ</h1>
+                        <h2>Who can attend?</h2>
+                        <p>All undergraduate, graduate, and high school students from any school are welcome. If you are under 18, we’ll need a parental consent form.</p>
+
+                        <h2>How will you decide between applicants?</h2>
+                        <p>Applicants will be chosen based on a random lottery. Everyone is welcome to apply and attend!</p>
+
+                        <h2>How much is this going to cost me?</h2>
+                        <p>Hack@Brown is completely free, including food, drinks, and awesome swag.</p>
+
+                        <h2>How do I get there?</h2>
+                        <p>You can take Amtrak or the MBTA to Providence Station, a short walk from campus. We’re working on getting travel reimbursements and buses set-up for you! Hack@Brown will take place in Sayles & Wilson Hall at Brown University.</p>
+
+                        <h2>What about team sizes?</h2>
+                        <p>You’re welcome to have up to six people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown—we’ll have a fun team-forming session at the beginning.</p>
+
+                        <h2>What should I bring?</h2>
+                        <p>Your valid student ID, laptop, phone, chargers, sleeping equipment, and lots of excitement. If you’re a minor, a parental consent form too that we’ll email to you.</p>
+
+                        <h2>I have a question that's not answered here</h2>
+                        <p>We’re here for you! Send us an email at hello@hackatbrown.org or feel to reach out to us at Twitter or Facebook.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </div>
     
 </div>
 
-<script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
-<script src='/static/js/index.js'></script>
+<script type="text/javascript" src='/static/Semantic-UI-1.1.2/dist/components/form.min.js'></script>
+<script type="text/javascript" src='/static/js/index.js'></script>
+<script type="text/javascript" src="/static/js/skrollr.js"></script>
 
 <script>
     // Navigation thingus
+
     
     function sectionChanged(s) {
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
     }
+
+    function fixSplashHeight() {
+        var height = 870;
+        var splash = document.getElementById("hero");
+        var panels = document.getElementById("panels");
+        if (splash.classList.contains("reg")) {
+            height = Math.ceil(splash.offsetHeight/60) * 60 + 30;
+        } 
+        $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
+    }
     
     $(document).ready(function() {
+        // Make sure splash height is good on doc ready
+        fixSplashHeight();
+
         $('.top-bar_ul').onePageNav({
             currentClass: "active",
             changeHash: false,
             begin: sectionChanged,
-            scrollChange: sectionChanged
+            scrollChange: sectionChanged,
+            filter: ':not(.secondary)',
         });
         
         $('.top-bar_ul').gutabslider();
 
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
+        
+        // P-P-P-PARALLAX
+        skrollr.init()
+
+        // Fix splash height if the browser resizes
+        $(window).resize(function() {
+            fixSplashHeight();
+        });
+
+        // Toggle between form and splash
+        $(".init_submit").click(function (e) {
+            e.preventDefault();
+            $(".splash").addClass("reg");
+            $(".cancel_reg").addClass("reg");
+            $(".splash .background > .fore").addClass("translated");
+            fixSplashHeight();
+        });
+
+        $(".cancel_reg").click(function () {
+            $(".splash").removeClass("reg");
+            $(this).removeClass("reg");
+            $(".splash .background > .fore").removeClass("translated");
+            fixSplashHeight();
+        });
+        
+        //Hamburger menu for mobile
+        $(".hamburger").click(function () {
+            $("nav").toggleClass("open");
+            setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 500);
+        });
         
     });
 

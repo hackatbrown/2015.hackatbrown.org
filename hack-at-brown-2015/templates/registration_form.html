@@ -1,6 +1,6 @@
-<div class='registration_wrapper panel double_right'>
+<div class='panel double_right'>
     <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data">
-        
+
         <div class="two fields">
             <div class="field">
                 <label for="name">Name</label>
@@ -8,7 +8,7 @@
             </div>
             <div class="field">
                 <label for="name">Email</label>
-                <input type="email" name="email" placeholder="handle@schooldomanin.edu" />
+                <input type="email" name="email" placeholder="handle@schooldomain.edu" />
             </div>
         </div>
         
@@ -28,7 +28,7 @@
             <div class="field">
                 <label>T-Shirt Size</label>
                     <div class="shirt_size">
-                        <table class="radio_select">
+                        <table class="radio_select center">
                             <tr>
                                 <td>
                                     <input type="radio" name="shirt_gen" id="sgM" value='M' />
@@ -41,7 +41,7 @@
                              </tr>
                         </table>
                 
-                        <table class="radio_select">
+                        <table class="radio_select center">
                             <tr>
                                 <td>
                                     <input type="radio" name="shirt_size" id="ssXS" value='XS' />
@@ -110,8 +110,15 @@
             </div>
             <div class="field">
                 <label for="links">Links (optional)</label>
-                    <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
+                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
             </div>
+        </div>
+        <div class="inline field center">
+            <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
+            <input type="checkbox" name="agree" id="agree" />
+        </div>
+        <div class="field center">
+            <input type="submit" class="ui button" vlaue="REGISTER" />
         </div>
     </form>
 </div>
@@ -122,21 +129,21 @@
 <script>
 
 $(document).ready(function() {
-	H5F.setup(document.getElementById("registration_form"), {
-		onSubmit: function() {
-			$("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
-			$("#registration_form").ajaxSubmit({
-				success: function(response) {
-					var response = JSON.parse(response);
-					if (response.success) {
-						$("#splash").html(response.replace_splash_with_html);
-						window.location.hash = "";
-					}
-				}
-			})
-			return false;
-		}
-	});
+    H5F.setup(document.getElementById("registration_form"), {
+        onSubmit: function() {
+            $("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
+            $("#registration_form").ajaxSubmit({
+                success: function(response) {
+                    var response = JSON.parse(response);
+                    if (response.success) {
+                        $("#splash").html(response.replace_splash_with_html);
+                        window.location.hash = "";
+                    }
+                }
+            })
+            return false;
+        }
+    });
 })
 
 </script>
