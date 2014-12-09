@@ -329,7 +329,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         // Toggle between form and splash
         $(".init_submit").click(function (e) {
             e.preventDefault();
-            $(".splash").addClass("reg");
+            $(".splash").addClass("reg dim");
             $(".splash").css("z-index", "-10");
             $(".double").css("left", "-100%");
 
@@ -339,7 +339,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         });
 
         $(".cancel_reg").click(function () {
-            $(".splash").removeClass("reg");
+            $(".splash").removeClass("reg dim");
             $(".splash").css("z-index", "-10");
             $(".double").css("left", "0");
             fixSplashHeight();

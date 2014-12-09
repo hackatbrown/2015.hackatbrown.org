@@ -136,8 +136,13 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     height: 870px;
     margin-bottom:0;
     z-index:2;
-    transition:height 1s, margin 1s;
+    transition:height 2s, margin 2s, background-color 1s;
 }
+
+.splash.dim {
+    background-color: rgba(0,0,0,.8);
+}
+
 .logo {
     width: 190px;
     height: 240px;
@@ -285,7 +290,8 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 /* REGISTRATION FORM */
 .registration_form {
-    width: 60%;
+    width: 68%;
+    max-width: 964px;
     height: 100%;
     margin: 0 auto;
     top: 0;
@@ -309,13 +315,13 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     font-size: 1em;
     font-weight: 300;
     height: 35px;
-    transition: box-shadow .5s;
+    transition: box-shadow .2s;
 }
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
-    box-shadow: inset 1px -35px 0px -1px rgb(240,93,125);
-    color:#fff;
+    box-shadow: inset 1px -35px 0px -1px white;
+    color: #404040;
 }
 .shirt_size {
     display: flex;
@@ -360,7 +366,7 @@ input[type="radio"]:checked + label {
     background-color:#fff;
     padding:6px;
     box-shadow: inset 1px 0px 0px -1px rgba(59,142,185,0.5);
-    transition:box-shadow .5s, border .5s;
+    transition:box-shadow .1s, border .1s;
 }
 .registration_form input[type="checkbox"]:checked {
     border:2px solid rgba(59,142,185,1);
