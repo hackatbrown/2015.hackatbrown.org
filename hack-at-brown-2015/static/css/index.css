@@ -579,7 +579,8 @@ ul.tagit li.tagit-new {
 
 .panels {
     top: 0;
-    transform: translate3d(0, 870px, 0);
+    padding-top: 870px;
+/*    transform: translate3d(0, 870px, 0);*/
     transition: transform 1s;
     padding-bottom: 1200px;
 }
@@ -642,6 +643,13 @@ ul.tagit li.tagit-new {
     margin-top: 0;
 }
 
+section .foreground {
+/*
+    height: 80%;
+    margin-top: 10%;
+*/
+}
+
 section .background {
     position: absolute;
     top: 0;
@@ -685,12 +693,13 @@ section .background > .right {
 /* PANEL SPECIFIC */
 
 .about {
-/*    margin-top: -300px;*/
-    height: 960px;
+    margin-top: 90px;
+    height: 660px;
 }
 
 .about article {
     max-width: 589.6px;
+    padding-bottom: 210px;
 }
 
 .about article h2 {
@@ -708,7 +717,6 @@ section .background > .right {
 
 
 .schedule {
-    margin-top: -120px;
     height: 1740px;
     color: white;
     text-align: justify;
@@ -717,8 +725,11 @@ section .background > .right {
 .schedule article {
     max-width: 482.4px;
     padding-bottom: calc(180px + 2em);
-    margin-top: -180px;
-    margin-bottom: -180px;
+/*
+    padding-top: 120px;
+    margin-top: -120px;
+    margin-bottom: -120px;
+*/
 }
 
 .schedule article h1 {
@@ -733,6 +744,11 @@ section .background > .right {
 .schedule article h2 > span {
     font-weight: 300;
     float: right;
+}
+
+.schedule article > .day {
+    margin-top: 30px;
+    margin-bottom: 90px;
 }
 
 .schedule .background > .back {
@@ -969,6 +985,16 @@ section .background > .mid {
     .top-bar_ul.skrollable-between {
       background-color: rgba(255, 255, 255, 0);
     }
+    .gu-sliding-bar {
+        display: none
+    }
+    .triangle article {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        margin-top: -60px;
+        margin-bottom: -60px;
+    }
+    
 }
 @media screen and (max-width: 500px) {
     .title {

@@ -28,7 +28,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
     </svg>
 </div>
 <div class="hamburger"></div>
-<ul class="top-bar_ul transparent" data-0="" data-1="">
+<ul class="top-bar_ul" data-0="" data-1="">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
@@ -88,10 +88,10 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
     </section>
     
     <div id="panels" class="panels">
-        <section class="panel triangle left about" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,10%,0);">
+        <section id='about' class="panel triangle left about" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,10%,0);">
             <div>
                 <div>
-                    <article id='about' data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
+                    <article data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
                         <h1>Hackathon?</h1>
                         <h2>noun \'hak&#601;,TH&#228;n\</h2>
                         <p>An event to collaboratively create, solve, and build something new</p>
@@ -107,10 +107,10 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
         </section>
 
         <section class="panel triangle right schedule verbose">
-            <div>
+            <div class="foreground">
                 <div>
-                    <article id="schedule" class="schedule-text" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
-                        <div id="saturday">
+                    <article id="schedule" class="schedule-text">
+                        <div class="day saturday" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
                             <h1>Saturday</h1>
                             <h2>Registration <span>9:00&ndash;11:00</span></h2>
                             <p>Check-in at Sayles Hall</p>
@@ -125,7 +125,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 
                             <p>Continue hacking... sleeping areas will be plentiful!</p>
                         </div>
-                        <div id="sunday">
+                        <div class="day sunday" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
                             <h1>Sunday</h1>
                             <h2>Breakfast & Coffee <span>8:00&ndash;9:00</span></h2>
                             <h2>Hacking submissions due!<span>12:00&ndash;1:00</span></h2>
@@ -256,11 +256,11 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
     }
 
     function fixSplashHeight() {
-        var height = 870;
+        var height = 0;
         var splash = document.getElementById("hero");
         var panels = document.getElementById("panels");
         if (splash.classList.contains("reg")) {
-            height = Math.ceil(splash.offsetHeight/60) * 60 + 30;
+            height = (Math.ceil(splash.offsetHeight/60) * 60) - 840;
         }
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
@@ -323,9 +323,9 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
         
         // P-P-P- 
         if(!iOS) {
-          skrollr.init({
-            mobileCheck: function() {return false;}
-          })
+//          skrollr.init({
+//            mobileCheck: function() {return false;}
+//          })
         }
 
         // Fix splash height if the browser resizes
