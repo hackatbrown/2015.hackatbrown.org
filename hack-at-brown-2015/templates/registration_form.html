@@ -1,5 +1,6 @@
 <div class='panel double_right'>
-    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data">
+    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data" novalidate>
+        <div class="errorsPresent">Please fix all errors in the form.</div>
 
         <div class="two fields row">
             <div class="field">
@@ -85,14 +86,14 @@
         </div>
 
         <div class="field row">
-            <label for="teammates">Any Friends You'd Like to Work With? (Optional, Limit 3 Emails)</label>
+            <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
             <input name="teammates" class="tagit team" />
         </div>
 
         <div class="two fields row">
             <div class="field">
                 <label for="hardware_hack">Hardware Hack?</label>
-                <table class="radio_select">
+                <table class="radio_select" for="hardware_hack">
                     <tr>
                         <td>
                             <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
@@ -138,45 +139,80 @@
 <script src="/static/Tagit/js/tag-it.js"></script>
 
 <script>
+    function addNag(msg, parent) {
+        var nags = parent.children(".nag");
+        if (nags.length == 0)
+            parent.append("<div class='nag'>" + msg + "</div>");
+        else 
+            parent.removeClass("valid");
+    }
+
     function validateForm() {
         var validated = true;
 
         // Check if name is filled out
         if (!$("input[name='name']").val()) {
             $("input[name='name']").addClass("invalid");
-            /*var nag = document.createElement("div");
-        nag.css("width", "100%");
-        nag.css("border", "1px solid black");
-        $("input[name='name']").parents("div").appendChild(nag);*/
+            addNag("We're gonna need your name.", $("input[name='name']").parent());
             validated = false;
             console.log("Invalid name");
         }
 
-        /* Check if year chosen -- really hacky
-        if ($(".dropdown dt a").css("color") != "#121212") {
+        // Check if email is filled out
+        if (!$("input[name='email']").val()) {
+            $("input[name='email']").addClass("invalid");
+            addNag("We're gonna need your email.", $("input[name='email']").parent());
+            validated = false;
+            console.log("Invalid email");
+        }
+
+
+        // Check if school is filled out
+        if (!$("input[name='school']").val()) {
+            $("input[name='school']").addClass("invalid");
+            addNag("We're gonna need your school.", $("input[name='school']").parent());
+            validated = false;
+            console.log("Invalid school");
+        }
+
+
+        // Check if year chosen
+        if (!$(".dropdown dt a").hasClass("chosen")) {
+            $(".dropdown dt a").addClass("invalid");
+            addNag("Choose a year whydon'tcha.", $(".dropdown dt a").parent().parent().parent());
             validated = false;
             console.log("Invalid year");
-        }*/
+        }
+
+        var shirt_valid = true;
 
         // Check if they filled out shirt gender & size
         if (!$("input[name='shirt_gen']:checked").val()) {
+            shirt_valid = false;
             validated = false;
             console.log("Invalid shirt gender");
         }
 
         if (!$("input[name='shirt_size']:checked").val()) {
+            shirt_valid = false;
             validated = false;
             console.log("Invalid shirt size");
         }
 
+        if (!shirt_valid) {
+            addNag("Choose a complete shirt size.", $("div.shirt_size").parent());
+        }
+
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
+            addNag("Check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
             validated = false;
             console.log("Invalid hardware hack");
         }
 
         // Check if they agree to the Code of Conduct
         if (!$("#agree").prop('checked')) {
+            addNag("You must agree to the Code of Conduct before registering.", $("#agree").parent());
             validated = false;
             console.log("Invalid agree");
         }
@@ -207,6 +243,7 @@
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
             onSubmit: function (e) {
+                e.preventDefault();
                 if (validateForm()) {
                     $("#registration_form input[type=submit]").val("Registering you...").attr({
                         disabled: true
@@ -220,29 +257,58 @@
                         return false;
                         }});
                     } else {
-                        e.preventDefault();
-                        alert("You didn't finish!"); // temp
+                        $(".errorsPresent").addClass("nag");
+                        $('html,body').animate({scrollTop: 0}, 1000);
                     }
             }
         });
 
-        // Do some validation color stuff
+
+        /* Validation Styling */
         function toggleInvalid(el) {
-            if (el.val() == "")
+            if (el.val() == "") {
                 el.addClass("invalid");
-            else
+                el.removeClass("valid");
+            } else {
                 el.removeClass("invalid");
+                el.addClass("valid");
+            }
         }
 
         $("input[name='name']").focusout(function () {
             toggleInvalid($(this));
-        })
+        });
+
+        $("input[name='email']").focusout(function () {
+            toggleInvalid($(this));
+        });
 
         $("input[name='school']").focusout(function () {
             toggleInvalid($(this));
-        })
+        });
 
-        // Get datas
+            // Check for shirt size validation
+        $(".shirt_size input[type='radio'][name='shirt_gen'] + label").click(function () {
+            if ($("input[name='shirt_size']:checked").val()) 
+                $("div.shirt_size").addClass("valid");
+        });
+
+        $(".shirt_size input[type='radio'][name='shirt_size'] + label").click(function () {
+            if($("input[name='shirt_gen']:checked").val())
+                $("div.shirt_size").addClass("valid");
+        });
+
+            // Check for hardware hack validation
+        $("input[type='radio'][name='hardware_hack'] + label").click(function () {
+            $("table[for='hardware_hack'").addClass("valid");
+        });
+
+            // Check for agreement with CoC
+        $("input[type='checkbox'][name='agree']").click(function () {
+            $("label[for='agree']").addClass("valid");
+        });
+
+        /* Get datas */
         var $diet_restrictions = [];
         $.getJSON("/static/data/dietary-restrictions.json", function (data) {
             $.each(data, function (key, val) {
@@ -257,7 +323,8 @@
             })
         });
 
-        // On email change & valid, check for university domain
+
+        /* On email change & valid, check for university domain */
         function searchUniversities(domain) {
             $universities.forEach(function (obj) {
                 if (domain == obj["domain"]) {
@@ -275,7 +342,8 @@
             }
         });
 
-        // Setting up tagit for dietary restrictions and teammates
+
+        /* Setting up tagit for dietary restrictions and teammates */
         $(".tagit.diet").tagit({
             allowSpaces: true,
             availableTags: $diet_restrictions
@@ -300,14 +368,14 @@
         });
 
 
-        // Autocomplete suggestions for schools
+        /* Autocomplete suggestions for schools */
         $(function () {
             $(".schools").autocomplete({
                 source: $universities
             });
         });
 
-        // Condor dynamic link input stuff
+        /* Condor dynamic link input stuff */
         $(".condor").condor({
             uniqueNames: false,
             namePrefix: 'links',
@@ -315,7 +383,7 @@
             inactiveHint: 'add another link'
         });
 
-        // Custom dropdown
+        /* Custom dropdown */
         createDropDown();
 
         function removeFocus() {
@@ -323,6 +391,7 @@
             $(".dropdown dd ul").css("max-height", "0");
         }
 
+        // On click of selected value, toggle focus
         $(".dropdown dt a").click(function(e) {
             e.preventDefault();
             if ($(this).hasClass("focus")) {
@@ -333,17 +402,23 @@
             }
         });
 
+        // On click of one of the options, make valid, remove focus, change actual selected option
         $(".dropdown dd ul li a").click(function(e) {
             e.preventDefault();
             var text = $(this).html();
-            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
+            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9"); // Because valid class isn't working for styling yet
             $(".dropdown dt a").css("color", "#121212");
             $(".dropdown dt a").html(text);
+            $(".dropdown dt a").addClass("chosen");
+            $(".dropdown dt a").removeClass("invalid");
+            $(".dropdown dt a").addClass("valid");
+            $("dl.dropdown").addClass("valid");
             removeFocus();
             var source = $("#source");
             source.val($(this).find("span.value").html());
         });
 
+        // If page is clicked anywhere but the dropdown (dropdown.focusout), remove focus
         $(document).bind('click', function(e) {
             var $clicked = $(e.target);
             if (! $clicked.parents().hasClass("dropdown")) {
@@ -352,7 +427,7 @@
         });
 
         
-        //Prevent horizontal scrolling of element into view on focus
+        /* Prevent horizontal scrolling of element into view on focus */
         $(document).on('keydown', ':focus', function (event)
         {
             if ((event.keyCode || event.which) == 9)
