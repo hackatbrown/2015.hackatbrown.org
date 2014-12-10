@@ -14,6 +14,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 <script type="text/javascript" src="/static/js/vendor/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="/static/js/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="/static/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="/static/js/condor.js"></script>
 {% endblock %}
 
 {% block nav %}
@@ -260,7 +261,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
         var panels = document.getElementById("panels");
         if (splash.classList.contains("reg")) {
             height = Math.ceil(splash.offsetHeight/60) * 60 + 30;
-        } 
+        }
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
   

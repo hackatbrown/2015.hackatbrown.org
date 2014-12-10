@@ -11,7 +11,7 @@
                 <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
             </div>
         </div>
-        
+
         <div class="two fields row">
             <div class="field">
                 <div class="two fields">
@@ -22,63 +22,63 @@
                     <div class="six wide field">
                         <label for="year">Year</label>
                         <select name="year" class="ui dropdown" required />
-                            <option value="freshman">Freshman</option>
-                            <option value="sophomore">Sophomore</option>
-                            <option value="junior">Junior</option>
-                            <option value="senior">Senior</option>
-                            <option value="highschool">High School</option>
+                        <option value="freshman">Freshman</option>
+                        <option value="sophomore">Sophomore</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                        <option value="highschool">High School</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="field">
                 <label>T-Shirt Size</label>
-                    <div class="shirt_size">
-                        <table class="radio_select center">
-                            <tr>
-                                <td>
-                                    <input type="radio" name="shirt_gen" id="sgM" value='M' />
-                                    <label for="sgM">Men's</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_gen" id="sgW" value='W' />
-                                    <label for="sgW">Women's</label>
-                                </td>
-                             </tr>
-                        </table>
-                
-                        <table class="radio_select center">
-                            <tr>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssXS" value='XS' />
-                                    <label for="ssXS">XS</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssS" value='S' />
-                                    <label for="ssS">S</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssM" value='M' />
-                                    <label for="ssM">M</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssL" value='L' />
-                                    <label for="ssL">L</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssXL" value='XL' />
-                                    <label for="ssXL">XL</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
-                                    <label for="ssXXL">XXL</label>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="shirt_size">
+                    <table class="radio_select center">
+                        <tr>
+                            <td>
+                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                <label for="sgM">Men's</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_gen" id="sgW" value='W' />
+                                <label for="sgW">Women's</label>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="radio_select center">
+                        <tr>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                <label for="ssXS">XS</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssS" value='S' />
+                                <label for="ssS">S</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssM" value='M' />
+                                <label for="ssM">M</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssL" value='L' />
+                                <label for="ssL">L</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssXL" value='XL' />
+                                <label for="ssXL">XL</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
+                                <label for="ssXXL">XXL</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-        
+
         <div class="field row">
             <label for="dietary_restrictions">Any dietary restrictions?</label>
             <ul name="dietary_restrictions" class="tagit diet"></ul>
@@ -88,41 +88,42 @@
             <label for="teammates">Friends You'd Like to Work With (Limit 3 Emails)</label>
             <ul name="teammates" class="tagit team"></ul>
         </div>
-        
+
         <div class="two fields row">
             <div class="field">
                 <label for="hardware_hack">Hardware Hack?</label>
-                    <table class="radio_select">
-                        <tr>
-                            <td>
-                                <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
-                                <label for="hardware_yes">Yes!</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
-                                <label for="hardware_no">Nah</label>
-                            </td>
-                        </tr>
-                    </table>
+                <table class="radio_select">
+                    <tr>
+                        <td>
+                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
+                            <label for="hardware_yes">Yes!</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
+                            <label for="hardware_no">Nah</label>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <div class="field">
                 <label for="resume">Upload Resume</label>
                 <input id="resume" class="resume-upload" type="file" name="resume">
-<!--                <input type="file" name="resume" id="resume" />-->
+                <!--                <input type="file" name="resume" id="resume" />-->
             </div>
         </div>
 
         <div class="two fields row">
             <div class="field">
                 <label for="links">Links (optional)</label>
-                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />
+                <div class="condor"></div>
+                <!--                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />-->
             </div>
         </div>
 
         <div class="inline field center row">
             <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
-            <input type="checkbox" name="agree" id="agree"/>
+            <input type="checkbox" name="agree" id="agree" />
         </div>
         <div class="field center">
             <input type="submit" class="ui button" vlaue="REGISTER" />
@@ -131,154 +132,166 @@
 </div>
 <div class="clearfix"></div>
 
-<script src='/static/js/H5F.js'></script> <!-- a polyfill that adds HTML5 form validation features to older browsers -->
+<script src='/static/js/H5F.js'></script>
+<!-- a polyfill that adds HTML5 form validation features to older browsers -->
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="/static/Tagit/js/tag-it.js"></script>
 
 <script>
-function validateForm() {
-    var validated = true;
+    function validateForm() {
+        var validated = true;
 
-    // Check if name is filled out
-    if (!$("input[name='name']:checked").val()) {
-        $("input[name='name']").addClass("invalid");
-        /*var nag = document.createElement("div");
+        // Check if name is filled out
+        if (!$("input[name='name']:checked").val()) {
+            $("input[name='name']").addClass("invalid");
+            /*var nag = document.createElement("div");
         nag.css("width", "100%");
         nag.css("border", "1px solid black");
         $("input[name='name']").parents("div").appendChild(nag);*/
-        validated = false;
+            validated = false;
+        }
+
+        // Check if they filled out shirt gender & size
+        if (!$("input[name='shirt_gen']:checked").val()) {
+            validated = false;
+        }
+
+        if (!$("input[name='shirt_size']:checked").val()) {
+            validated = false;
+        }
+
+        // Check if they filled out hardware hack
+        if (!$("input[name='hardware_hack']:checked").val()) {
+            validated = false;
+        }
+
+        // Check if they agree to the Code of Conduct
+        if (!$("#agree").prop('checked')) {
+            validated = false;
+        }
+
+        return validated;
     }
 
-    // Check if they filled out shirt gender & size
-    if (!$("input[name='shirt_gen']:checked").val()) {
-        validated = false;
-    }
-    
-    if (!$("input[name='shirt_size']:checked").val()) {
-        validated = false;
-    }
-
-    // Check if they filled out hardware hack
-    if (!$("input[name='hardware_hack']:checked").val()) {
-        validated = false;
-    }
-
-    // Check if they agree to the Code of Conduct
-    if (!$("#agree").prop('checked')) {
-        validated = false;
-    }
-
-    return validated;
-}
-
-$(document).ready(function() {
-    H5F.setup(document.getElementById("registration_form"), {
-        onSubmit: function(e) {
-            if (validateForm()) {
-                $("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
-                $("#registration_form").ajaxSubmit({
-                    success: function(response) {
-                        var response = JSON.parse(response);
-                        if (response.success) {
-                            $("#splash").html(response.replace_splash_with_html);
-                            window.location.hash = "";
+    $(document).ready(function () {
+        H5F.setup(document.getElementById("registration_form"), {
+            onSubmit: function (e) {
+                if (validateForm()) {
+                    $("#registration_form input[type=submit]").val("Registering you...").attr({
+                        disabled: true
+                    });
+                    $("#registration_form").ajaxSubmit({
+                        success: function (response) {
+                            var response = JSON.parse(response);
+                            if (response.success) {
+                                $("#splash").html(response.replace_splash_with_html);
+                                window.location.hash = "";
+                            }
                         }
-                    }
-                })
-                return false;
-            } else {
-                e.preventDefault();
-                alert("You didn't finish!"); // temp
-            }
-        }
-    });
-
-    // Do some validation color stuff
-    function toggleInvalid(el) {
-        if(el.val() == "")
-            el.addClass("invalid");
-        else
-            el.removeClass("invalid");
-    }
-
-    $("input[name='name']").focusout(function() {
-        toggleInvalid($(this));
-    })
-
-    $("input[name='school']").focusout(function() {
-        toggleInvalid($(this));
-    })
-
-    // Get datas
-    var $diet_restrictions = [];
-    $.getJSON("/static/data/dietary-restrictions.json", function( data ) {
-        $.each( data, function( key, val ) {
-            $diet_restrictions[key] = val;
-        }
-    )});
-
-    var $universities = [];
-    $.getJSON("/static/data/universities.json", function( data ) {
-        $.each( data, function( key, val ) {
-            $universities[key] = val;
-        }
-    )});
-
-    // On email change & valid, check for university domain
-    function searchUniversities(domain) {
-        $universities.forEach(function(obj) {
-            if(domain == obj["domain"]) {
-                $(".registration_form input[name='school']").val(obj["label"]);
+                    })
+                    return false;
+                } else {
+                    e.preventDefault();
+                    alert("You didn't finish!"); // temp
+                }
             }
         });
-    }
 
-    $("input[type='email']").change(function() {
-        var splitEmail = $(this).val().split('@');
-        if (splitEmail.length == 2) {
-            var univ = searchUniversities(splitEmail[1]);
-            if (univ != null)
-                $(".registration_form input.schools").val(univ);
+        // Do some validation color stuff
+        function toggleInvalid(el) {
+            if (el.val() == "")
+                el.addClass("invalid");
+            else
+                el.removeClass("invalid");
         }
-    });
 
-    // Setting up tagit for dietary restrictions and teammates
-    $(".tagit.diet").tagit({
-        allowSpaces:true,
-        availableTags: $diet_restrictions
-    });
+        $("input[name='name']").focusout(function () {
+            toggleInvalid($(this));
+        })
 
-    $(".tagit.team").tagit({
-        maxTags:3
-    });
+        $("input[name='school']").focusout(function () {
+            toggleInvalid($(this));
+        })
 
-    $("ul.tagit input").focus(function(){
-        $(this).parents("ul").css("box-shadow", "inset 1px -35px 0px -1px #404040");
-        $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
-    });
+        // Get datas
+        var $diet_restrictions = [];
+        $.getJSON("/static/data/dietary-restrictions.json", function (data) {
+            $.each(data, function (key, val) {
+                $diet_restrictions[key] = val;
+            })
+        });
 
-    $("ul.tagit input").focusout(function(){
-        $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
-        $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
-    });
+        var $universities = [];
+        $.getJSON("/static/data/universities.json", function (data) {
+            $.each(data, function (key, val) {
+                $universities[key] = val;
+            })
+        });
 
-    
-    // Autocomplete suggestions for schools
-    $(function() {
-    $( ".schools" ).autocomplete({
-      source: $universities
-    });
-  });
-})
-
-//Resume upload schtuff
-$(function () {
-    $('#resume').fileupload({
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
+        // On email change & valid, check for university domain
+        function searchUniversities(domain) {
+            $universities.forEach(function (obj) {
+                if (domain == obj["domain"]) {
+                    $(".registration_form input[name='school']").val(obj["label"]);
+                }
             });
         }
+
+        $("input[type='email']").change(function () {
+            var splitEmail = $(this).val().split('@');
+            if (splitEmail.length == 2) {
+                var univ = searchUniversities(splitEmail[1]);
+                if (univ != null)
+                    $(".registration_form input.schools").val(univ);
+            }
+        });
+
+        // Setting up tagit for dietary restrictions and teammates
+        $(".tagit.diet").tagit({
+            allowSpaces: true,
+            availableTags: $diet_restrictions
+        });
+
+        $(".tagit.team").tagit({
+            maxTags: 3
+        });
+
+        $("ul.tagit input").focus(function () {
+            $(this).parents("ul").css("box-shadow", "inset 1px -35px 0px -1px #404040");
+            $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
+        });
+
+        $("ul.tagit input").focusout(function () {
+            $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
+            $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
+        });
+
+
+        // Autocomplete suggestions for schools
+        $(function () {
+            $(".schools").autocomplete({
+                source: $universities
+            });
+        });
+        //Condor dynamic link input stuff
+        $(".condor").condor({
+            uniqueNames: false,
+            namePrefix: 'links',
+            activeHint: 'Github, Dribbble, Behance, etc.'
+        });
+
+    })
+
+
+
+    //Resume upload schtuff
+    $(function () {
+        $('#resume').fileupload({
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo(document.body);
+                });
+            }
+        });
     });
-});
 </script>
