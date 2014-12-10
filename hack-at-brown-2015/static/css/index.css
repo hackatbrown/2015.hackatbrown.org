@@ -756,6 +756,11 @@ section .background > .right {
     word-spacing: 50px;
 }
 
+.sponsors .sponsor-row h3 {
+    text-transform: uppercase;
+    border-bottom: 1px solid #eee;
+}
+
 .sponsors a {
     opacity: 0.8;
     border-bottom: none;
