@@ -823,7 +823,7 @@ section .background > .mid {
     .top-bar_ul > li.reg.cancel_reg {
         clip: rect(0,0,0,0);
     }
-    nav.open .top-bar_ul > li.reg.cancel_reg {
+    nav.open .top-bar_ul > li.reg.cancel_reg, nav.open .top-bar_ul > li {
         clip: auto;
     }
     .hamburger {
@@ -832,9 +832,6 @@ section .background > .mid {
     nav.open .top-bar_ul {
         height: 225px;
         width: 100%;
-    }
-    nav.open .top-bar_ul > li {
-        clip: auto;
     }
     .splash {
         transition: background-color .5s, transform .5s;

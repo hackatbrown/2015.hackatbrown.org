@@ -327,34 +327,24 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         } 
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
-    
-    $(document).ready(function() {
-        // Make sure splash height is good on doc ready
-        fixSplashHeight();
-
-        $('.top-bar_ul').onePageNav({
+  
+    function initalizeNavMenu(selector) {
+      $(selector).onePageNav({
             currentClass: "active",
             changeHash: false,
             begin: sectionChanged,
             scrollChange: sectionChanged,
             filter: ':not(.secondary)',
         });
-        
-        $('.top-bar_ul').gutabslider();
+      
+      $(selector).gutabslider();
 
-        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
-        
-        // P-P-P-PARALLAX
-        skrollr.init({
-            mobileCheck: function() {return false;}
-        })
-
-        // Fix splash height if the browser resizes
-        $(window).resize(function() {
-            fixSplashHeight();
-        });
-
-        // Toggle between form and splash
+      setTimeout("$(" + selector + ").gutabslider('active-tab-changed')", 50);
+      setTimeout("$(" + selector + ").gutabslider('active-tab-changed')", 100);
+    }
+  
+    function initalizeReg() {
+      // Toggle between form and splash
         $("form.init_reg").submit(function (e) {
             e.preventDefault();
             transferInitInfo();
@@ -371,6 +361,29 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             $(".splash .background > .fore").removeClass("translated");
             fixSplashHeight();
         });
+    }
+    
+    $(document).ready(function() {
+        var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+      
+        // Make sure splash height is good on doc ready
+        fixSplashHeight();
+
+        initalizeNavMenu('.top-bar_ul');
+        
+        // P-P-P-PARALLAX
+        if(!iOS) {
+          skrollr.init({
+            mobileCheck: function() {return false;}
+          })
+        }
+
+        // Fix splash height if the browser resizes
+        $(window).resize(function() {
+            fixSplashHeight();
+        });
+
+        initalizeReg();
         
         //Hamburger menu for mobile
         $(".hamburger").click(function () {
