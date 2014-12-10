@@ -351,8 +351,31 @@
             }
         });
 
-
-
+        
+        //Prevent horizontal scrolling of element into view on focus
+        $(document).on('keydown', ':focus', function (event)
+        {
+            if ((event.keyCode || event.which) == 9)
+            {
+                //TODO: Generalize and support selecting other kinds of input
+                var $inputs = $("input[type=text], input[type=email]");
+                console.log($inputs);
+                var index = $inputs.index(this);
+                // Index previous or next input based on the shift key
+                index += event.shiftKey ? -1 : 1;
+                // If we are in the range of valid inputs (else browser takes focus)
+                if (index >= 0 && index < $inputs.length)
+                {
+                    var $next = $inputs.eq(index);
+                    event.preventDefault();
+                    // Move, not scroll, to the next/prev item....
+//                    MoveIntoView($next);
+                    console.log($next);
+                    $next.focus();
+                    return false;
+                }
+            }
+        });
         
 
     })
