@@ -15,9 +15,9 @@
         <div class="two fields">
             <div class="field">
                 <div class="two fields">
-                    <div class="field">
+                    <div class="field ui-widget">
                         <label for="school">School</label>
-                        <input type="text" name="school" placeholder="Beige University" required/>
+                        <input type="text" name="school" class="schools" placeholder="Beige University" required/>
                     </div>
                     <div class="field">
                         <label for="year">Year</label>
@@ -75,25 +75,19 @@
         
         <div class="field">
             <label for="dietary_restrictions">Any dietary restrictions?</label>
-            <input type="text" name="dietary_restrictions" />
+            <ul name="dietary_restrictions" class="tagit diet"></ul>
+        </div>
+
+        <div class="field">
+            <label for="teammates">Friends You'd Like to Work With (Limit 3 Emails)</label>
+            <ul name="teammates" class="tagit team"></ul>
         </div>
         
         <div class="two fields">
             <div class="field">
-                <label for="travel_reimbursement">Will you need travel reimbursement?</label>
-                    <table class="radio_select" style="margin-bottom:35px;">
-                        <tr>
-                            <td>
-                                <input type="radio" name="travel_reimbursement" id="travel_yes" value='yes' />
-                                <label for="travel_yes">Yes</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="travel_reimbursement" id="travel_no" value='no' />
-                                <label for="travel_no">No</label>
-                            </td>
-                        </tr>
-                    </table>
-                    
+                <label for="resume">Upload Resume</label>
+                <input type="file" name="resume" id="resume" />
+
                 <label for="hardware_hack">Hardware Hack?</label>
                     <table class="radio_select">
                         <tr>
@@ -108,11 +102,13 @@
                         </tr>
                     </table>
             </div>
+
             <div class="field">
                 <label for="links">Links (optional)</label>
                 <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
             </div>
         </div>
+
         <div class="inline field center">
             <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
             <input type="checkbox" name="agree" id="agree"/>
@@ -125,9 +121,10 @@
 <div class="clearfix"></div>
 
 <script src='/static/js/H5F.js'></script> <!-- a polyfill that adds HTML5 form validation features to older browsers -->
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="/static/Tagit/js/tag-it.js"></script>
 
 <script>
-
 function validateForm() {
     // Check if they filled out shirt gender & size
     if (!$("input[name='shirt_gen']:checked").val())
@@ -171,6 +168,67 @@ $(document).ready(function() {
             }
         }
     });
+
+    // Get datas
+    var $diet_restrictions = [];
+    $.getJSON("/static/data/dietary-restrictions.json", function( data ) {
+        $.each( data, function( key, val ) {
+            $diet_restrictions[key] = val;
+        }
+    )});
+
+    var $universities = [];
+    $.getJSON("/static/data/universities.json", function( data ) {
+        $.each( data, function( key, val ) {
+            $universities[key] = val;
+        }
+    )});
+
+    // On email change & valid, check for university domain
+    function searchUniversities(domain) {
+        $universities.forEach(function(obj) {
+            if(domain == obj["domain"]) {
+                $(".registration_form input[name='school']").val(obj["label"]);
+            }
+        });
+    }
+
+    $("input[type='email']").change(function() {
+        var splitEmail = $(this).val().split('@');
+        if (splitEmail.length == 2) {
+            var univ = searchUniversities(splitEmail[1]);
+            if (univ != null)
+                $(".registration_form input.schools").val(univ);
+        }
+    });
+
+    // Setting up tagit for dietary restrictions and teammates
+    $(".tagit.diet").tagit({
+        allowSpaces:true,
+        availableTags: $diet_restrictions
+    });
+
+    $(".tagit.team").tagit({
+        maxTags:3
+    });
+
+    $("ul.tagit input").focus(function(){
+        $(this).parents("ul").css("box-shadow", "inset 1px -35px 0px -1px #404040");
+        $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
+    });
+
+    $("ul.tagit input").focusout(function(){
+        $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(59,142,185,0.5)");
+        $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
+    });
+
+    
+
+    $(function() {
+    $( ".schools" ).autocomplete({
+      source: $universities
+    });
+  });
 })
 
 </script>

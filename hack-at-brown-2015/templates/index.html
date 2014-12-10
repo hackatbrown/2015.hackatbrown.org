@@ -7,7 +7,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 {% block head %}
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic/minified/collections/form.min.css' />
-<link rel='stylesheet' href='/static/Semantic-UI-1.1.2/dist/components/grid.min.css' />
+<link rel='stylesheet' href='/static/semantic/minified/collections/grid.min.css' />
+<link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css">
 <link rel='stylesheet' href='/static/css/index.css'/>
 {% endblock %}
 
@@ -22,7 +23,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     </svg>
 </div>
 <div class="hamburger"></div>
-<ul class="top-bar_ul">
+<ul class="top-bar_ul transparent" data-0="" data-1="">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
@@ -57,7 +58,6 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 {% endif %}
                 {% if registration_status == "registration_open" %}
                 <form class="init_reg">
-                    <input type="text" name="name" placeholder="NAME" class="init_input" required/>
                     <input type="email" name="email" placeholder="EMAIL" class="init_input" required/>
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
@@ -74,11 +74,11 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 {% include "registration_form.html" %}
             {% endif %}
         </div>
-        <div class="background parallax">
-            <div class="left fore parallax__layer blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
-            <div class="left fore parallax__layer pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></></div>
-            <div class="right fore parallax__layer green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
-            <div class="right fore parallax__layer green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
+        <div class="background">
+            <div class="left fore blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
+            <div class="left fore pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
+            <div class="right fore green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
+            <div class="right fore green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
         </div>
     </section>
     
@@ -89,15 +89,15 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                     <article id='about' data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
                         <h1>Hackathon?</h1>
                         <h2>noun \'hak&#601;,TH&#228;n\</h2>
-                        <p>Some kind of inspiring definition here. Newbies welcome!</p>
+                        <p>An event to collaboratively create, solve, and build something new</p>
                         <h1 class="blue">We're Brown's annual student hackathon.</h1>
-                        <p>Get ready for a weekend full of learning new technologies, making great friends, and building something new. We’ll be providing plenty of mentors, food, and anything else you need to carry out your best ideas.</p>
+                        <p>Get ready for a weekend full of learning new technologies, making great friends, and pushing your limits. We’ll be providing plenty of mentors, food, and anything else you need to carry out your craziest ideas.</p>
                     </article>
                 </div>
             </div>
-            <div class="background parallax">
+            <div class="background">
                 <div class="back"></div>
-                <div class="right mid parallax__layer pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
+                <div class="right mid pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
             </div>
         </section>
 
@@ -107,33 +107,31 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                     <article id="schedule" class="schedule-text" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
                         <div id="saturday">
                             <h1>Saturday</h1>
-                            <h2>Registration <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Opening Ceremony <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Hacking Begins <span>8:00 - 12:00</span></h2>
-                            <h2>Registration <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Dinner <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Snacks <span>8:00 - 12:00</span></h2>
-                            <h2>Insomnia Cookies! <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
+                            <h2>Registration <span>9:00 - 11:00</span></h2>
+                            <p>Check-in at Sayles Hall</p>
+                            <h2>Introduction & Kick-off! <span>11:00 - 12:00</span></h2>
+                            <p>Head to Salomon Auditorium</p>
+                            <h2>Lunch <span>12:00 - 1:00</span></h2>
+                            <p>Eat, mingle, brainstorm</p>
+                            <h2>Hacking Begins <span>1:00</span></h2>
+                            <p>Work time & we'll have snacks throughout</p>
+                            <h2>Dinner <span>6:00 - 7:00</span></h2>
+                            <h2>Midnight Snack <span>12:00 - 1:00</span></h2>
+
+                            <p>Continue hacking... sleeping areas will be plentiful!</p>
                         </div>
                         <div id="sunday">
                             <h1>Sunday</h1>
-                            <h2>Nerf Gun Battle <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Aliens <span>8:00 - 12:00</span></h2>
-                            <h2>Apple Event <span>8:00 - 12:00</span></h2>
-                            <h2>Breakfast <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Legos Become Self-Aware <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Hacking Ends <span>8:00 - 12:00</span></h2>
-                            <h2>Awards <span>8:00 - 12:00</span></h2>
-                            <p>Cliche tattooed ugh, Thundercats health goth photo booth fap listicle mlkshk. Pickled Intelligentsia DIY Austin. Echo Park 90's blog</p>
-                            <h2>Bye <span>8:00 - 12:00</span></h2>
+                            <h2>Breakfast & Coffee <span>8:00 - 9:00</span></h2>
+                            <h2>Hacking submissions due!<span>12:00 - 1:00</span></h2>
+                            <h2>Lunch <span>12:00 - 12:45</span></h2>
+                            <h2>Juding & Demo Fair<span>1:00 - 2:30</span></h2>
+                            <p>1st round judging. Judges will visit teams for informal demos and choose finalists. Feel free to check out other teams' projects!</p>
+                            <h2>Finalists Announced<span>2:45</span></h2>
+                            <h2>Awards<span>3:00 - 4:30</span></h2>
+                            <p>Keynote, final demos, winners announced</p>
+                            <h2>Bye! <span>5:00</span></h2>
+                            <p>Clean up, pack up belongings, buses will be leaving at 5:00 pm</p>
                         </div>
                     </article>
                 </div>
@@ -284,12 +282,15 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                         <p>You can take Amtrak or the MBTA to Providence Station, a short walk from campus. We’re working on getting travel reimbursements and buses set-up for you! Hack@Brown will take place in Sayles & Wilson Hall at Brown University.</p>
 
                         <h2>What about team sizes?</h2>
-                        <p>You’re welcome to have up to six people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown—we’ll have a fun team-forming session at the beginning.</p>
+                        <p>You’re welcome to have up to four people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown—we’ll have a fun team-forming session at the beginning.</p>
 
                         <h2>What should I bring?</h2>
                         <p>Your valid student ID, laptop, phone, chargers, sleeping equipment, and lots of excitement. If you’re a minor, a parental consent form too that we’ll email to you.</p>
+                        
+                        <h2>What should I not bring?</h2>
+                        <p>Weapons, illegal things, invasive species, etc.</p>
 
-                        <h2>I have a question that's not answered here</h2>
+                        <h2>I have a question that's not answered here! </h2>
                         <p>We’re here for you! Send us an email at hello@hackatbrown.org or feel to reach out to us at Twitter or Facebook.</p>
                     </article>
                 </div>
@@ -299,7 +300,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     
 </div>
 
-<script type="text/javascript" src='/static/Semantic-UI-1.1.2/dist/components/form.min.js'></script>
+<script type="text/javascript" src='/static/semantic/minified/modules/behavior/form.min.js'></script>
 <script type="text/javascript" src='/static/js/index.js'></script>
 <script type="text/javascript" src="/static/js/skrollr.js"></script>
 
@@ -313,8 +314,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
     function transferInitInfo() {
         var vals = $("form.init_reg").serializeArray();
-        $(".registration_form input[name='name']").val(vals[0].value);
-        $(".registration_form input[name='email']").val(vals[1].value);
+        $(".registration_form input[name='email']").val(vals[0].value);
     }
 
     function fixSplashHeight() {
@@ -326,34 +326,21 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         } 
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
-    
-    $(document).ready(function() {
-        // Make sure splash height is good on doc ready
-        fixSplashHeight();
-
-        $('.top-bar_ul').onePageNav({
+  
+    function initalizeNavMenu(selector) {
+      $(selector).onePageNav({
             currentClass: "active",
             changeHash: false,
             begin: sectionChanged,
             scrollChange: sectionChanged,
             filter: ':not(.secondary)',
         });
-        
-        $('.top-bar_ul').gutabslider();
-
-        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
-        
-        // P-P-P-PARALLAX
-        skrollr.init({
-            mobileCheck: function() {return false;}
-        })
-
-        // Fix splash height if the browser resizes
-        $(window).resize(function() {
-            fixSplashHeight();
-        });
-
-        // Toggle between form and splash
+      
+      setTimeout(function(){ $(selector).gutabslider(); }, 400);
+    }
+  
+    function initalizeReg() {
+      // Toggle between form and splash
         $("form.init_reg").submit(function (e) {
             e.preventDefault();
             transferInitInfo();
@@ -370,14 +357,41 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             $(".splash .background > .fore").removeClass("translated");
             fixSplashHeight();
         });
-        
-        //Hamburger menu for mobile
+    }
+  
+    function initalizeHamburger() {
+      //Hamburger menu for mobile
         $(".hamburger").click(function () {
             $("nav").toggleClass("open");
             setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 500);
         });
+    }
+    
+    $(document).ready(function() {
+        var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+      
+        // Make sure splash height is good on doc ready
+        fixSplashHeight();
+        
+        // P-P-P- 
+        if(!iOS) {
+          skrollr.init({
+            mobileCheck: function() {return false;}
+          })
+        }
+
+        // Fix splash height if the browser resizes
+        $(window).resize(function() {
+            fixSplashHeight();
+        });
+
+        initalizeReg();
+        
+        initalizeHamburger();
+      
+        initalizeNavMenu('.top-bar_ul');
         
     });
-
+  
 </script>
 {% endblock %}

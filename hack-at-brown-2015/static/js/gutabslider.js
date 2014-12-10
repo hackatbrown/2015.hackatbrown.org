@@ -74,7 +74,7 @@
 
             //Resize when window size changes
             $(window).resize(_.debounce(function() {
-                positionTabUnderCurrentActiveTab($element);
+                setTimeout(function(){ positionTabUnderCurrentActiveTab($element); }, 100);
             }, 100));
 
             //Finished

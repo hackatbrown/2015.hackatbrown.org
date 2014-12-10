@@ -1,9 +1,15 @@
 /* GENERAL */
 html {
     overflow-x: hidden;
+    transition: font-size .5s;
 }
 body {
     top: 0;
+}
+@media screen and (max-width:1280px) {
+  html {
+    font-size: 80%;
+  }
 }
 a {
     text-decoration: none;
@@ -59,10 +65,21 @@ input[type=submit]:hover {
     background-color: #EF5D93;
     border-color: #EF5D93;
 }
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* Override Autofills */
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill,
+input:-moz-autofill, textarea:-moz-autofill, select:-moz-autofill,
+input:-o-autofill, textarea:-o-autofill, select:-o-autofill { /* Override Autofills */
     background:none !important;
     background-color:rgba(0,0,0,0) !important;
-    color: #666 !important;
+    color: #fff !important;
+}
+input:focus:-webkit-autofill, textarea:focus:-webkit-autofill, select:focus:-webkit-autofill {
+    -webkit-text-fill-color:#fff !important;
+}
+input:focus:-moz-autofill, textarea:focus:-moz-autofill, select:focus:-moz-autofill {
+    -moz-text-fill-color:#fff !important;
+}
+input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
+    -o-text-fill-color:#fff !important;
 }
 /* PAGE MODULES */
 
@@ -96,25 +113,28 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     overflow: hidden;
 }
 /* NAV */
-
 .top-bar_ul {
     margin: 0 auto;
     list-style: none;
     padding: 0;
     padding-top: 30px;
-    padding-bottom: 3px;
+    padding-bottom: 5px;
     font-size: 1.2em;
     text-align: center;
     text-transform: uppercase;
     color: #1B8EB9;
     position: fixed;
-    max-width: 964.8px;
+/*    max-width: 964.8px;*/
     left: 0%;
     right: 0%;
     width: 100%;
     top: 0;
     z-index: 999;
     background-color: rgba(255, 255, 255, .95);
+    transition: background-color .5s;
+}
+.top-bar_ul.skrollable-between {
+    background-color: rgba(255, 255, 255, 0);
 }
 .top-bar_li {
     display: inline;
@@ -122,7 +142,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 .top-bar_li.active a {
     color: #EF5D93;
-    padding-bottom: 1px;
+    padding-bottom: 3px;
 }
 .top-bar_li a:hover {
     border-bottom: 0;
@@ -131,6 +151,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     color: #EF5D93;
     padding-bottom: 1px;
 }
+/* Nav sliding bar */
 .gu-sliding-bar {
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -172,8 +193,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 .splash {
     top: 0;
     text-align: center;
-/*    padding-top: 60px;*/
-/*    padding-bottom: 120px;*/
     padding-top: 0px;
     padding-bottom: 0px;
     margin-bottom:0;
@@ -182,18 +201,14 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     transition:height 2s, padding 1.2s, background-color 1.2s, transform 1s;
     height: auto;
     position: absolute;
-/*    overflow: hidden;*/
 }
-
 .splash.reg {
     transform: translate3d(-100%, 0, 0);
     overflow: visible;
 }
-
 .splash.dim {
     background-color: rgba(0,0,0,.8);
 }
-
 .logo {
     width: 190px;
     height: 240px;
@@ -297,13 +312,11 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     border-color: #EF5D93;
 }
 .datetime {
-/*    margin-top: 2%;*/
     color: #EF5D93;
     font-size: .8em;
     text-transform: uppercase;
 }
 /* CONTENT */
-
 #rest {
     margin-bottom: 40px;
 }
@@ -312,7 +325,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     font-size: 24px;
 }
 /* REGISTRATION */
-
 .cancel_reg {
     opacity: 0;
     clip: rect(0,0,0,0);
@@ -336,7 +348,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
     width: 50%;
     float: left;
     height: auto;
-    padding-top: 120px;
+    padding-top: 60px;
     padding-bottom: 5%;
 }
 .double_right {
@@ -369,7 +381,8 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill { /* 
 }
 .registration_form input[type=email],
 .registration_form input[type=text],
-.registration_form input:not([type]) {
+.registration_form input:not([type]),
+.registration_form ul.tagit {
     border:none;
     box-shadow: inset 1px -3px 0px -1px rgba(59,142,185,0.5);
     color: #666666;
@@ -431,14 +444,90 @@ input[type="radio"]:checked + label {
     background-color:#fff;
     padding:6px;
     box-shadow: inset 1px 0px 0px -1px rgba(59,142,185,0.5);
-    transition:box-shadow .1s, border .1s;
+    background-image:url("/static/img/check52.svg");
+    background-size: 130% auto;
+    background-repeat: no-repeat;
+    background-position: 50% -300%;
+    transition:box-shadow .1s, border .1s, background-position .1s;
 }
 .registration_form input[type="checkbox"]:checked {
-    border:2px solid rgba(59,142,185,1);
-    box-shadow: inset 1px -13px 0px -1px rgb(59,142,185);
+    background-position: 50% 50%;
+    box-shadow: inset 1px -13px 0px -1px rgba(59,142,185,0.5);
+}
+/* Styling tags -- overthrowing tagit stuff */
+ul.tagit {
+    height:auto !important;
+    max-height:75px;
+    padding-left: 0 !important;
+    padding-bottom: 0 !important;
+    overflow-y:hidden;
+    z-index:3;
+    cursor:text;
+}
+ul.tagit input {
+    height:30px !important;
+    margin:0 !important;
+    box-shadow:none !important;
+}
+ul.tagit input:focus {
+    box-shadow:none !important;
+}
+ul.tagit li.tagit-choice {
+    background-color: #404040;
+    margin-bottom: 1px !important;
+    margin-top: 1px !important;
+    padding-left:.5em !important;
+    z-index:4;
+}
+ul.tagit li.tagit-new {
+    padding: 0 !important;
+    margin-top: 2px !important;
+}
+/* Styling Autocomplete */
+.ui-autocomplete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+}
+.ui-front {
+    z-index: 100;
+}
+.ui-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    outline: none;
+    max-height:150px;
+    overflow-y:auto;
+}
+.ui-widget-content {
+    background-color: #404040;
+    color: #fff;
+}
+.ui-menu-item {
+    cursor: pointer;
+    padding: 5px;
+    transition: background-color .1s;
+}
+.ui-menu-item:hover {
+    background-color: #636363;
+}
+.ui-helper-hidden {
+    display: none;
+}
+.ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 /* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
-
 #sign-up-for-updates input[type=email] {
     outline: none;
     transition: background-color 0.3s, box-shadow 0.3s;
@@ -586,7 +675,7 @@ section .background > div {
     background-size: cover;
     background-repeat: no-repeat;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
     z-index: -9;
 }
 
@@ -817,7 +906,7 @@ section .background > .mid {
     .top-bar_ul > li.reg.cancel_reg {
         clip: rect(0,0,0,0);
     }
-    nav.open .top-bar_ul > li.reg.cancel_reg {
+    nav.open .top-bar_ul > li.reg.cancel_reg, nav.open .top-bar_ul > li {
         clip: auto;
     }
     .hamburger {
@@ -826,9 +915,6 @@ section .background > .mid {
     nav.open .top-bar_ul {
         height: 225px;
         width: 100%;
-    }
-    nav.open .top-bar_ul > li {
-        clip: auto;
     }
     .splash {
         transition: background-color .5s, transform .5s;
@@ -841,6 +927,9 @@ section .background > .mid {
         margin-left: 10%;
         width: 80%;
         z-index: 1200;
+    }
+    .top-bar_ul.skrollable-between {
+      background-color: rgba(255, 255, 255, 0);
     }
 }
 @media screen and (max-width: 500px) {
@@ -914,3 +1003,5 @@ nav.open .hamsvg {
 .parallax__layer {
     position: absolute;
 }
+
+

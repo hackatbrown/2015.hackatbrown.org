@@ -1,0 +1,20 @@
+{
+    "name": "Josiah Carberry",
+    "email": "joe@brown.edu",
+    "grade": "Freshman", // Can be High School, Freshman etc.
+    "school": "Brown University", // Auto-fill from email
+    "tshirt": {
+        "gender": "m",
+        "size": "xl"
+    },
+    "dietary_restrictions": ["vegetarian", "no meat"], // Auto-fill from pre-defined list or custom
+    "teammates": ["justin@brown.edu", "lily@brown.edu"], // 5 max
+    "first_hackathon": true,
+    "travel_reimbursement": false,
+    "hardware_hack": false,
+    "links": {
+        "github": "http://github.com/joe",
+        "dribbble": "http://dribbble.com/joe",
+        "other": ["http://joe.com", "http://joeis.sexy"]
+    }
+}
