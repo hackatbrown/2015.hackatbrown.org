@@ -687,7 +687,6 @@ section .background > .right {
 .about {
 /*    margin-top: -300px;*/
     height: 960px;
-    z-index:1;
 }
 
 .about article {
@@ -744,7 +743,6 @@ section .background > .right {
 }
 
 .sponsors {
-    z-index: 1;
     margin-top: 0px;
 }
 
