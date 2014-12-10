@@ -309,9 +309,11 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
   
     function initalizeHamburger() {
       //Hamburger menu for mobile
+        $("nav ul > li a").click(function() {
+                $("nav").toggleClass("open");
+            })
         $(".hamburger").click(function () {
             $("nav").toggleClass("open");
-            setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 500);
         });
     }
     
