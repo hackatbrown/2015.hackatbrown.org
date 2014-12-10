@@ -65,7 +65,7 @@
             $element.append("<span class='" + barClassName + "'></span>");
             var $slidingBar = $element.find("." + barClassName);
             $slidingBar.css("position", "absolute");
-            $slidingBar.css("display", "block");
+//            $slidingBar.css("display", "block");
             $slidingBar.css("width", "0");
             $slidingBar.css("height", "2px");
 

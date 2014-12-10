@@ -15,3 +15,14 @@ indexes:
   - name: admitted_email_sent_date
   - name: admit_priority
     direction: desc
+
+- kind: Hacker
+  properties:
+  - name: checked_in
+  - name: email
+  - name: name
+
+- kind: Hacker
+  properties:
+  - name: checked_in
+  - name: name

@@ -4,6 +4,9 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+includes:
+- H@B_Admin/admin.yaml
+
 handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
@@ -14,8 +17,14 @@ handlers:
 - url: .*
   script: main.app
 
+- url: /dashboard(/.*)?
+  script: main.app
+  login: admin
+
 libraries:
 - name: webapp2
   version: "2.5.2"
 - name: jinja2
   version: "latest"
+
+
