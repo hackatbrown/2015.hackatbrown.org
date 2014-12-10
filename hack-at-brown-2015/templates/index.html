@@ -23,7 +23,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     </svg>
 </div>
 <div class="hamburger"></div>
-<ul class="top-bar_ul transparent">
+<ul class="top-bar_ul transparent" data-0="" data-1="">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
@@ -327,15 +327,21 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
     
-    var transparent = true;
-    function menuTransparent(selector){
-        var st = $(document).scrollTop();
-        console.log(transparent);
-          if((st == 0) && !transparent)
-            $(selector).addClass("transparent");
-          else if(transparent)
-            $(selector).removeClass("transparent");
-    }
+//    var transparent = true;
+//  
+//    function menuTransparent(selector){
+//        var st = $(".trigrid").scrollTop();
+//        console.log(st);
+//        console.log(transparent);
+//          if((st == 0) && !transparent) {
+//            console.log("add");
+//            $(selector).addClass("transparent");
+//          }
+//          else if((st != 0) && transparent) {
+//            console.log("remove");
+//            $(selector).removeClass("transparent");
+//          }
+//    }
   
     function initalizeNavMenu(selector) {
       $(selector).onePageNav({
@@ -345,8 +351,6 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             scrollChange: sectionChanged,
             filter: ':not(.secondary)',
         });
-      
-      $(window).scroll(menuTransparent(selector));
       
       setTimeout(function(){ $(selector).gutabslider(); }, 400);
     }
@@ -404,6 +408,8 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         initalizeNavMenu('.top-bar_ul');
         
     });
+  
+//    window.scroll(menuTransparent('.top-bar_ul'));
 
 </script>
 {% endblock %}

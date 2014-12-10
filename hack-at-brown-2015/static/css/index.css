@@ -133,7 +133,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     background-color: rgba(255, 255, 255, .95);
     transition: background-color .5s;
 }
-.top-bar_ul.transparent {
+.top-bar_ul.skrollable-between:not(nav.open > div) {
     background-color: rgba(255, 255, 255, 0);
 }
 .top-bar_li {
