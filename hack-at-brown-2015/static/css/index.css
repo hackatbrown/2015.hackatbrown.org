@@ -383,6 +383,12 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     font-weight: 400;
     font-size:1.1em;
 }
+.registration_form label a {
+    border-bottom: 2px #1B8EB9 solid;
+}
+.registration_form label a:hover {
+    border-bottom: 2px #EF5D93 solid;
+}
 .row {
     margin-bottom:40px !important;
 }
