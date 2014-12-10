@@ -137,63 +137,66 @@
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="/static/Tagit/js/tag-it.js"></script>
 
-<script>
-    function validateForm() {
-        var validated = true;
-
-        // Check if name is filled out
-        if (!$("input[name='name']:checked").val()) {
-            $("input[name='name']").addClass("invalid");
-            /*var nag = document.createElement("div");
-        nag.css("width", "100%");
-        nag.css("border", "1px solid black");
-        $("input[name='name']").parents("div").appendChild(nag);*/
-            validated = false;
-        }
-
-        // Check if they filled out shirt gender & size
-        if (!$("input[name='shirt_gen']:checked").val()) {
-            validated = false;
-        }
-
-        if (!$("input[name='shirt_size']:checked").val()) {
-            validated = false;
-        }
-
-        // Check if they filled out hardware hack
-        if (!$("input[name='hardware_hack']:checked").val()) {
-            validated = false;
-        }
-
-        // Check if they agree to the Code of Conduct
-        if (!$("#agree").prop('checked')) {
-            validated = false;
-        }
-
-        return validated;
-    }
+<script type="text/javascript">
+    // this function is completely unneccesary because of H5F
+    // function validateForm() {
+    //     // Check if name is filled out
+    //     if (!$("input[name='name']:checked").val()) {
+    //         $("input[name='name']").addClass("invalid");
+    //         /*var nag = document.createElement("div");
+    //         nag.css("width", "100%");
+    //         nag.css("border", "1px solid black");
+    //         $("input[name='name']").parents("div").appendChild(nag);*/
+    //         return false;
+    //     }
+    // 
+    //     // Check if they filled out shirt gender & size
+    //     !$("input[name='shirt_gen']:checked").val() && return false;
+    //     !$("input[name='shirt_size']:checked").val() && return false;
+    //     !$("input[name='hardware_hack']:checked").val() && return false;
+    //     // Check if they agree to the Code of Conduct
+    //     !$("input[name=agree]:checked").val() && return false;
+    // 
+    //     return true;
+    // }
 
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
+            onInvalid: function (e) {
+                var nameIn = document.querySelectorAll("input[name='name']");
+                nameIn.checkValidity() && nameIn.classList.add(invalid);
+                alert("You didn't finish!"); // temp
+            },
+            // this shouldn't even happen if `e.form.checkValidity()` isn't true
             onSubmit: function (e) {
-                if (validateForm()) {
-                    $("#registration_form input[type=submit]").val("Registering you...").attr({
-                        disabled: true
-                    });
-                    $("#registration_form").ajaxSubmit({
-                        success: function (response) {
-                            var response = JSON.parse(response);
-                            if (response.success) {
-                                $("#splash").html(response.replace_splash_with_html);
-                                window.location.hash = "";
-                            }
+                e.preventDefault();
+                var $form = $(this);
+                // if (e.form.checkValidity()) { // might just be `this.checkValidity()`
+                $("#registration_form input[type=submit]").val("Registering you...").attr({
+                    disabled: true
+                });
+    
+                console.log("POSTing response");
+
+                $.post({
+                    url: $form.attr('action'),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: new FormData($form[0]), // get the right selector ALSO make sure the tagit stuff is added properly (idrk whats going on w that)
+                    success: function (response) {
+                        var response = JSON.parse(response);
+                        if (response.success) {
+                            $("#splash").html(response.replace_splash_with_html);
+                            window.location.hash = "";
                         }
-                    })
-                    return false;
-                } else {
-                    e.preventDefault();
-                    alert("You didn't finish!"); // temp
-                }
+                    }
+                })
+
+                // } else {
+                //     e.preventDefault();
+                //     alert("You didn't finish!"); // temp
+                // }
             }
         });
 
@@ -281,8 +284,6 @@
         });
 
     })
-
-
 
     //Resume upload schtuff
     $(function () {
