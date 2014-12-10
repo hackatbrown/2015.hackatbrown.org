@@ -408,9 +408,9 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 .ui.form :focus::-webkit-input-placeholder{color:#fff;}
 .ui.form :focus::-moz-placeholder{color:#fff;}
 /* Validation Styles */
-.registration_form input[type=email]:valid,
-.registration_form input[type=text]:valid,
-.registration_form input:not([type]):valid {
+.registration_form input[type=email][required]:valid,
+.registration_form input[type=text][required]:valid,
+.registration_form input:not([type])[required]:valid {
     box-shadow: inset 1px -3px 0px -1px #1B8EB9;
     color: #121212;
 }
@@ -418,9 +418,9 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
-    box-shadow: inset 1px -50px 0px -1px #404040;
+    box-shadow: inset 1px -50px 0px -1px #404040 !important; /* To override valid style */
+    color: white !important;
     padding-left:.65em;
-    color: white;
 }
 .shirt_size {
     display: flex;
@@ -547,7 +547,7 @@ dl, dd {
 .dropdown dd ul li:hover {
     background-color: #737373;
 }
-/* Styling tags -- overthrowing tagit stuff */
+/* Styling tags -- overthrowing a lot of tagit stuff */
 ul.tagit {
     height: auto !important;
     max-height: 75px;
@@ -557,6 +557,7 @@ ul.tagit {
     margin-top: 0 !important;
     overflow-y: hidden;
     z-index: 3;
+    box-sizing: border-box;
     cursor: text;
 }
 ul.tagit input {
@@ -569,9 +570,11 @@ ul.tagit input:focus {
 }
 ul.tagit li.tagit-choice {
     background-color: #404040;
-    margin-bottom: 1px !important;
-    margin-top: 1px !important;
-    padding-left: .5em !important;
+    height: 30px !important;
+    margin-bottom: 0 !important;
+    margin-top: 2px !important;
+    padding: .25em .65em .3em .65em !important;
+    box-sizing: border-box;
     z-index: 4;
 }
 ul.tagit li.tagit-new {

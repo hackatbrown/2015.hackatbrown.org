@@ -302,7 +302,11 @@
         });
 
         $("ul.tagit input").focusout(function () {
-            $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
+            if ($("ul.tagit").children("li").length > 2) {
+                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
+            } else {
+                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
+            }         
             $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
         });
 
