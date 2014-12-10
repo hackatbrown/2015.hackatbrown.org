@@ -19,15 +19,30 @@
                         <label for="school">School</label>
                         <input type="text" name="school" class="schools" placeholder="Beige University" required/>
                     </div>
-                    <div class="six wide field">
+                    <div class="six wide field yr">
                         <label for="year">Year</label>
-                        <select name="year" class="ui dropdown" required />
-                        <option value="freshman">Freshman</option>
-                        <option value="sophomore">Sophomore</option>
-                        <option value="junior">Junior</option>
-                        <option value="senior">Senior</option>
-                        <option value="highschool">High School</option>
+                        <select name="year" id="source" required />
+                            <optgroup>
+                                <option selected="selected" value="freshman">Freshman</option>
+                                <option value="sophomore">Sophomore</option>
+                                <option value="junior">Junior</option>
+                                <option value="senior">Senior</option>
+                                <option value="highschool">High School</option>
+                            </optgroup>
                         </select>
+
+                        <!--<dl class="dropdown">
+                            <dt><a href="#"><span>Freshman</span></a></dt>
+                            <dd>
+                                <ul>
+                                    <li><a href="#">Freshman</a></li>
+                                    <li><a href="#">Sophomore</a></li>
+                                    <li><a href="#">Junior</a></li>
+                                    <li><a href="#">Senior</a></li>
+                                    <li><a href="#">High School</a></li>
+                                </ul>
+                            </dd>
+                        </dl>-->
                     </div>
                 </div>
             </div>
@@ -142,12 +157,17 @@
         var validated = true;
 
         // Check if name is filled out
-        if (!$("input[name='name']:checked").val()) {
+        if (!$("input[name='name']").val()) {
             $("input[name='name']").addClass("invalid");
             /*var nag = document.createElement("div");
         nag.css("width", "100%");
         nag.css("border", "1px solid black");
         $("input[name='name']").parents("div").appendChild(nag);*/
+            validated = false;
+        }
+
+        // Check if year chosen -- really hacky
+        if ($(".dropdown dt a").css("color") != "#121212") {
             validated = false;
         }
 
@@ -171,6 +191,26 @@
         }
 
         return validated;
+    }
+
+    function createDropDown(){
+        var source = $("#source");
+        var selected = source.find("option[selected]");  // get selected <option>
+        var options = $("option", source);  // get all <option> elements
+        // create <dl> and <dt> with selected value inside it
+        $(".yr").append('<dl id="target" class="dropdown"></dl>')
+        $("#target").append('<dt><a href="#">' + selected.text() + 
+            '<span class="value">' + selected.val() + 
+            '</span></a></dt>')
+        $("#target").append('<dd><ul></ul></dd>')
+        // iterate through all the <option> elements and create UL
+        options.each(function(){
+            $("#target dd ul").append('<li><a href="#">' + 
+                $(this).text() + '<span class="value">' + 
+                $(this).val() + '</span></a></li>');
+        });
+
+        source.hide();
     }
 
     $(document).ready(function () {
@@ -257,7 +297,7 @@
         });
 
         $("ul.tagit input").focus(function () {
-            $(this).parents("ul").css("box-shadow", "inset 1px -35px 0px -1px #404040");
+            $(this).parents("ul").css("box-shadow", "inset 1px -50px 0px -1px #404040");
             $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
         });
 
@@ -273,7 +313,8 @@
                 source: $universities
             });
         });
-        //Condor dynamic link input stuff
+
+        // Condor dynamic link input stuff
         $(".condor").condor({
             uniqueNames: false,
             namePrefix: 'links',
@@ -281,8 +322,47 @@
             inactiveHint: 'add another link'
         });
 
+        // Custom dropdown
+        createDropDown();
+
+        function removeFocus() {
+            $(".dropdown dt a").removeClass("focus");
+            $(".dropdown dd ul").css("max-height", "0");
+        }
+
+        $(".dropdown dt a").click(function(e) {
+            e.preventDefault();
+            if ($(this).hasClass("focus")) {
+                removeFocus();
+            } else {
+                $(this).addClass("focus");
+                $(".dropdown dd ul").css("max-height", "400px");
+            }
+        });
+
+        $(".dropdown dd ul li a").click(function(e) {
+            e.preventDefault();
+            var text = $(this).html();
+            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
+            $(".dropdown dt a").css("color", "#121212");
+            $(".dropdown dt a").html(text);
+            removeFocus();
+            var source = $("#source");
+            source.val($(this).find("span.value").html());
+        });
+
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (! $clicked.parents().hasClass("dropdown")) {
+                removeFocus();
+            }
+        });
+
+        
+
     })
 
+    
 
 
     //Resume upload schtuff

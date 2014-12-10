@@ -31,8 +31,8 @@ input[type="radio"] + label:hover,
 .add_link:hover, 
 .registration_form input[type="checkbox"]:hover,
 .check_agree:hover,
-.ui.dropdown:hover,
-.ui.dropdown option:hover {
+.dropdown:hover,
+.dropdown option:hover {
     cursor: pointer;
 }
 .init_input:focus,
@@ -41,7 +41,7 @@ input[type="radio"] + label:hover,
 .registration_form input[type=submit]:focus,
 .registration_form input:not([type]):focus,
 .registration_form input[type="checkbox"]:focus,
-.ui.dropdown:focus {
+.dropdown:focus {
     outline: none;
 }
 .light {
@@ -298,7 +298,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 .init_input:focus {
     color: #fff;
-    box-shadow: inset 1px -35px 0px -1px #404040;
+    box-shadow: inset 1px -50px 0px -1px #404040;
     border-color: #404040;
 }
 .init_submit {
@@ -392,56 +392,35 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 .registration_form input[type=email],
 .registration_form input[type=text],
 .registration_form input:not([type]),
-.registration_form ul.tagit,
-.ui.dropdown {
+.registration_form ul.tagit {
     border:none;
     box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     color: #121212;
-    background:none;
+    background: none;
     font-size: 1em;
     font-weight: 300;
     height: 35px;
     padding: .65em .65em .65em 0;
-    transition: box-shadow .2s, padding .2s;
+    transition: box-shadow .2s, padding .2s, color .2s;
 }
-/* Validation Styles */
-    .registration_form input[type=email]:valid,
-    .registration_form input[type=text]:valid,
-    .registration_form input:not([type]):valid {
-        box-shadow:inset 1px -3px 0px -1px #1B8EB9;
-    }
-    .registration_form input[type=email]:invalid,
-    .registration_form input[type=text].invalid,
-    .registration_form input:not([type]).invalid {
-        box-shadow:inset 1px -3px 0px -1px #F3C788;
-    }
-
 .ui.form ::-webkit-input-placeholder{color:#AAA;}
 .ui.form ::-moz-placeholder{color:#AAA;}
 .ui.form :focus::-webkit-input-placeholder{color:#fff;}
 .ui.form :focus::-moz-placeholder{color:#fff;}
+/* Validation Styles */
+.registration_form input[type=email]:valid,
+.registration_form input[type=text]:valid,
+.registration_form input:not([type]):valid {
+    box-shadow: inset 1px -3px 0px -1px #1B8EB9;
+    color: #121212;
+}
+/* Focus Styles */
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
-.registration_form input:not([type]):focus,
-.ui.dropdown:focus {
-    box-shadow: inset 1px -35px 0px -1px #404040;
+.registration_form input:not([type]):focus {
+    box-shadow: inset 1px -50px 0px -1px #404040;
     padding-left:.65em;
     color: white;
-}
-.ui.dropdown {
-    width:100%;
-    font-family: 'Brown', sans-serif;
-    font-weight: 300;
-    padding:0;
-}
-.ui.dropdown option {
-    background-color: #404040;
-    font-weight: 300;
-    padding-bottom: 2px;
-    transition: .2s;
-}
-.ui.dropdown .menu {
-    border:1px solid red;
 }
 .shirt_size {
     display: flex;
@@ -483,6 +462,7 @@ input[type="radio"]:checked + label {
 .registration_form input[type="checkbox"] {
     appearance:none;
     -webkit-appearance: none;
+    -moz-appearance: none;
     display: inline-block;
     margin-top:1px !important;
     border:2px solid rgba(59,142,185,0.5);
@@ -497,7 +477,75 @@ input[type="radio"]:checked + label {
 }
 .registration_form input[type="checkbox"]:checked {
     background-position: 50% 50%;
-    box-shadow: inset 1px -13px 0px -1px rgba(59,142,185,0.5);
+    box-shadow: inset 1px -25px 0px -1px rgba(59,142,185,0.5);
+}
+/* Custom Dropdown Styling */
+.dropdown dd, .dropdown dt,
+.dropdown ul, .dropdown dl,
+dl, dd {
+    margin:0 !important;
+    padding:0 !important;
+    -webkit-margin-before: 0 !important;
+    -webkit-margin-after: 0 !important;
+}
+.dropdown dl {
+    width:100%;
+    font-family: 'Brown', sans-serif;
+    box-sizing: border-box;
+    height: 35px;
+}
+.dropdown dd {
+    position: relative;
+}
+.dropdown dt a {
+    background:rgba(0,0,0,0) url(/static/img/arrow_down.svg) no-repeat scroll right center;
+    background-size: 1em auto;
+    box-sizing: border-box;
+    height: 35px;
+    display: block;
+    padding: .65em .65em .65em 0;
+    box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
+    width: 100%;
+    color: #AAA;
+    transition: box-shadow .2s, padding .2s, color .2s;
+}
+.dropdown a {
+    font-weight: 300;
+    font-size: 1em;
+    line-height: normal;
+}
+.dropdown a:hover {
+    border: 0;
+}
+.dropdown dt a span {
+    cursor: pointer;
+    display: block;
+}
+.dropdown dd ul {
+    background-color: #404040;
+    height: auto;
+    max-height: 0;
+    overflow-y: hidden;
+    list-style: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transition: max-height .2s;
+}
+.dropdown span.value {
+    display:none;
+}
+.dropdown dd ul li a {
+    padding:.65em;
+    color: white;
+    display:block;
+}
+.dropdown dd ul li {
+    transition: background-color .1s;
+}
+.dropdown dd ul li:hover {
+    background-color: #737373;
 }
 /* Styling tags -- overthrowing tagit stuff */
 ul.tagit {
@@ -575,6 +623,17 @@ ul.tagit li.tagit-new {
     width: 1px;
 }
 
+.registration_form input[type=email]:invalid,
+.registration_form input[type=text].invalid,
+.registration_form input:not([type]).invalid {
+    box-shadow:inset 1px -3px 0px -1px #F3C788;
+}
+/* Extra Form Styling */
+.focus {
+    box-shadow: inset 1px -50px 0px -1px #404040 !important;
+    padding-left:.65em !important;
+    color: white !important;
+}
 /* PANEL GENERAL */
 
 .panels {
