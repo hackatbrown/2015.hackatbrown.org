@@ -20,6 +20,10 @@ class Hacker(ndb.Model):
 	dietary_restrictions = ndb.StringProperty()
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
+	links = ndb.StringProperty(default=None)
+	teammates = ndb.StringProperty(default=None)
+	hardware_hack = ndb.StringProperty()
+
 
 	secret = ndb.StringProperty()
 
@@ -50,9 +54,15 @@ def accept_hacker(hacker):
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
+		print "CALLING RegistrationHandler"
 		hacker = Hacker()
-		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'dietary_restrictions']:
+		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'dietary_restrictions', 'teammates', 'hardware_hack' 'links']:
+			print key + " " + self.request.get(key)
 			setattr(hacker, key, self.request.get(key))
+		if Hacker.query(Hacker.email == hacker.email).count() > 0:
+			print "Already in DB"
+			self.response.write(json.dumps({"success":False}))
+			return
 		resume_files = self.get_uploads('resume')
 		if len(resume_files) > 0:
 			hacker.resume = resume_files[0].key()

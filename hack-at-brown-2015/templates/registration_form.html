@@ -81,12 +81,13 @@
 
         <div class="field row">
             <label for="dietary_restrictions">Dietary restrictions?</label>
-            <ul name="dietary_restrictions" class="tagit diet"></ul>
+            <input type="text" name="dietary_restrictions" class="tagit diet">
+
         </div>
 
         <div class="field row">
             <label for="teammates">Any Friends You'd Like to Work With? (Optional, Limit 3 Emails)</label>
-            <ul name="teammates" class="tagit team"></ul>
+            <input type="text" name="teammates" class="tagit team">
         </div>
 
         <div class="two fields row">
@@ -116,7 +117,7 @@
         <div class="two fields row">
             <div class="field">
                 <label for="links">Link(s) (optional)</label>
-                <div class="condor"></div>
+                <div type="text" class="condor"></div>
                 <!--                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />-->
             </div>
         </div>
@@ -142,32 +143,37 @@
         var validated = true;
 
         // Check if name is filled out
-        if (!$("input[name='name']:checked").val()) {
+        if ($("input[name='name']:checked").val() === '') {
             $("input[name='name']").addClass("invalid");
             /*var nag = document.createElement("div");
         nag.css("width", "100%");
         nag.css("border", "1px solid black");
         $("input[name='name']").parents("div").appendChild(nag);*/
             validated = false;
+            console.log("name  not valid");
         }
 
         // Check if they filled out shirt gender & size
         if (!$("input[name='shirt_gen']:checked").val()) {
             validated = false;
+            console.log("shirt gen not valid");
         }
 
         if (!$("input[name='shirt_size']:checked").val()) {
             validated = false;
+            console.log("shirt size not valid");
         }
 
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
             validated = false;
+            console.log("hardware not valid");
         }
 
         // Check if they agree to the Code of Conduct
         if (!$("#agree").prop('checked')) {
             validated = false;
+            console.log("agree not valid");
         }
 
         return validated;
@@ -180,8 +186,13 @@
                     $("#registration_form input[type=submit]").val("Registering you...").attr({
                         disabled: true
                     });
+                    console.log("POSTing response");
+                    //e.preventDefault();
                     $("#registration_form").ajaxSubmit({
                         success: function (response) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            console.log("Javascript handling response");
                             var response = JSON.parse(response);
                             if (response.success) {
                                 $("#splash").html(response.replace_splash_with_html);
@@ -284,15 +295,4 @@
     })
 
 
-
-    //Resume upload schtuff
-    $(function () {
-        $('#resume').fileupload({
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo(document.body);
-                });
-            }
-        });
-    });
 </script>
