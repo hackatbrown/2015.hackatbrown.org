@@ -22,27 +22,12 @@
                     <div class="six wide field yr">
                         <label for="year">Year</label>
                         <select name="year" id="source" required />
-                            <optgroup>
-                                <option selected="selected" value="freshman">Freshman</option>
-                                <option value="sophomore">Sophomore</option>
-                                <option value="junior">Junior</option>
-                                <option value="senior">Senior</option>
-                                <option value="highschool">High School</option>
-                            </optgroup>
+                            <option selected="selected" value="freshman">Freshman</option>
+                            <option value="sophomore">Sophomore</option>
+                            <option value="junior">Junior</option>
+                            <option value="senior">Senior</option>
+                            <option value="highschool">High School</option>
                         </select>
-
-                        <!--<dl class="dropdown">
-                            <dt><a href="#"><span>Freshman</span></a></dt>
-                            <dd>
-                                <ul>
-                                    <li><a href="#">Freshman</a></li>
-                                    <li><a href="#">Sophomore</a></li>
-                                    <li><a href="#">Junior</a></li>
-                                    <li><a href="#">Senior</a></li>
-                                    <li><a href="#">High School</a></li>
-                                </ul>
-                            </dd>
-                        </dl>-->
                     </div>
                 </div>
             </div>
@@ -96,12 +81,12 @@
 
         <div class="field row">
             <label for="dietary_restrictions">Dietary restrictions?</label>
-            <ul name="dietary_restrictions" class="tagit diet"></ul>
+            <input name="dietary_restrictions" class="tagit diet" />
         </div>
 
         <div class="field row">
             <label for="teammates">Any Friends You'd Like to Work With? (Optional, Limit 3 Emails)</label>
-            <ul name="teammates" class="tagit team"></ul>
+            <input name="teammates" class="tagit team" />
         </div>
 
         <div class="two fields row">
@@ -164,30 +149,36 @@
         nag.css("border", "1px solid black");
         $("input[name='name']").parents("div").appendChild(nag);*/
             validated = false;
+            console.log("Invalid name");
         }
 
         // Check if year chosen -- really hacky
         if ($(".dropdown dt a").css("color") != "#121212") {
             validated = false;
+            console.log("Invalid year");
         }
 
         // Check if they filled out shirt gender & size
         if (!$("input[name='shirt_gen']:checked").val()) {
             validated = false;
+            console.log("Invalid shirt gender");
         }
 
         if (!$("input[name='shirt_size']:checked").val()) {
             validated = false;
+            console.log("Invalid shirt size");
         }
 
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
             validated = false;
+            console.log("Invalid hardware hack");
         }
 
         // Check if they agree to the Code of Conduct
         if (!$("#agree").prop('checked')) {
             validated = false;
+            console.log("Invalid agree");
         }
 
         return validated;
@@ -220,20 +211,18 @@
                     $("#registration_form input[type=submit]").val("Registering you...").attr({
                         disabled: true
                     });
-                    $("#registration_form").ajaxSubmit({
-                        success: function (response) {
-                            var response = JSON.parse(response);
-                            if (response.success) {
-                                $("#splash").html(response.replace_splash_with_html);
-                                window.location.hash = "";
-                            }
-                        }
-                    })
-                    return false;
-                } else {
-                    e.preventDefault();
-                    alert("You didn't finish!"); // temp
-                }
+                        console.log("POSTing response");
+                        $("#registration_form").ajaxSubmit({
+                            success: function (response) {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                                console.log("Javascript handling response");
+                        return false;
+                        }});
+                    } else {
+                        e.preventDefault();
+                        alert("You didn't finish!"); // temp
+                    }
             }
         });
 
@@ -361,6 +350,8 @@
                 removeFocus();
             }
         });
+
+
 
         
 
