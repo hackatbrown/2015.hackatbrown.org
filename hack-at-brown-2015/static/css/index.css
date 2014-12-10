@@ -498,7 +498,8 @@ ul.tagit li.tagit-new {
     margin: 0;
     display: block;
     outline: none;
-    transition: max-height .2s;
+    max-height:150px;
+    overflow-y:auto;
 }
 .ui-widget-content {
     background-color: #404040;

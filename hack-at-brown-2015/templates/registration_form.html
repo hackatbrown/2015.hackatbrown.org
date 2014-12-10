@@ -169,9 +169,25 @@ $(document).ready(function() {
         }
     });
 
+    // Get datas
+    var $diet_restrictions = [];
+    $.getJSON("/static/data/dietary-restrictions.json", function( data ) {
+        $.each( data, function( key, val ) {
+            $diet_restrictions[key] = val;
+        }
+    )});
+
+    var $universities = [];
+    $.getJSON("/static/data/universities.json", function( data ) {
+        $.each( data, function( key, val ) {
+            $universities[key] = val;
+        }
+    )});
+
     // Setting up tagit for dietary restrictions and teammates
     $(".tagit.diet").tagit({
-        allowSpaces:true
+        allowSpaces:true,
+        availableTags: $diet_restrictions
     });
 
     $(".tagit.team").tagit({
@@ -191,12 +207,8 @@ $(document).ready(function() {
     
 
     $(function() {
-    var availableTags = [
-      {"value":"ActionScript",l:"l"},
-      {"value":"BctionScript",l:"l"}
-    ];
     $( ".schools" ).autocomplete({
-      source: availableTags
+      source: $universities
     });
   });
 })
