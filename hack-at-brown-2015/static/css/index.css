@@ -462,6 +462,7 @@ ul.tagit {
     padding-bottom: 0 !important;
     overflow-y:hidden;
     z-index:3;
+    cursor:text;
 }
 ul.tagit input {
     height:30px !important;
