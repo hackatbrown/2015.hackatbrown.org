@@ -143,8 +143,10 @@
         var nags = parent.children(".nag");
         if (nags.length == 0)
             parent.append("<div class='nag'>" + msg + "</div>");
-        else 
+        else {
             parent.removeClass("valid");
+            parent.children().removeClass("valid");
+        }
     }
 
     function validateForm() {
@@ -159,9 +161,9 @@
         }
 
         // Check if email is filled out
-        if (!$("input[name='email']").val()) {
-            $("input[name='email']").addClass("invalid");
-            addNag("We're gonna need your email.", $("input[name='email']").parent());
+        if (!$(".field input[name='email']").val()) {
+            $(".field input[name='email']").addClass("invalid");
+            addNag("We're gonna need your email.", $(".field input[name='email']").parent());
             validated = false;
             console.log("Invalid email");
         }
@@ -329,6 +331,7 @@
             $universities.forEach(function (obj) {
                 if (domain == obj["domain"]) {
                     $(".registration_form input[name='school']").val(obj["label"]);
+                    $(".registration_form input[name='school']").removeClass("invalid");
                 }
             });
         }

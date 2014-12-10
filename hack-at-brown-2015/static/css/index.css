@@ -428,7 +428,7 @@ span.optional {
 .registration_form input[type=text].invalid,
 .registration_form input:not([type]).invalid,
 .invalid {
-    box-shadow:inset 1px -3px 0px -1px #F3C788;
+    box-shadow:inset 1px -3px 0px -1px #F3C788 !important; /* To override the dropdown style */
 }
 .errorsPresent {
     max-height: 0;
