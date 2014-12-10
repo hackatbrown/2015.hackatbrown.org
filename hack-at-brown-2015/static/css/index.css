@@ -133,7 +133,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     background-color: rgba(255, 255, 255, .95);
     transition: background-color .5s;
 }
-.top-bar_ul.skrollable-between:not(nav.open > div) {
+.top-bar_ul.skrollable-between {
     background-color: rgba(255, 255, 255, 0);
 }
 .top-bar_li {
@@ -348,7 +348,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     width: 50%;
     float: left;
     height: auto;
-    padding-top: 120px;
+    padding-top: 60px;
     padding-bottom: 5%;
 }
 .double_right {
@@ -674,7 +674,7 @@ section .background > div {
     background-size: cover;
     background-repeat: no-repeat;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
     z-index: -9;
 }
 
@@ -926,6 +926,9 @@ section .background > .mid {
         margin-left: 10%;
         width: 80%;
         z-index: 1200;
+    }
+    .top-bar_ul.skrollable-between {
+      background-color: rgba(255, 255, 255, 0);
     }
 }
 @media screen and (max-width: 500px) {
