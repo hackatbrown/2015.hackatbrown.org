@@ -29,7 +29,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 </div>
 <div class="hamburger"></div>
 <ul class="top-bar_ul transparent" data-0="" data-1="">
-    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
+    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#schedule">Schedule</a></li>
@@ -286,6 +286,11 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
             $(".splash").addClass("reg");
             $(".cancel_reg").addClass("reg");
             $(".splash .background > .fore").addClass("translated");
+            $(".top-bar_li#hello_top a").fadeOut(500, function() {
+                $(this).text("Registration");
+                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+                $(this).fadeIn(800);
+            });
             fixSplashHeight();
         });
 
@@ -293,6 +298,11 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
             $(".splash").removeClass("reg");
             $(this).removeClass("reg");
             $(".splash .background > .fore").removeClass("translated");
+            $(".top-bar_li#hello_top a").fadeOut(500, function() {
+                $(this).text("Hello");
+                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+                $(this).fadeIn(800);
+            });
             fixSplashHeight();
         });
     }

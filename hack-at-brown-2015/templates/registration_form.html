@@ -80,12 +80,12 @@
         </div>
 
         <div class="field row">
-            <label for="dietary_restrictions">Any dietary restrictions?</label>
+            <label for="dietary_restrictions">Dietary restrictions?</label>
             <ul name="dietary_restrictions" class="tagit diet"></ul>
         </div>
 
         <div class="field row">
-            <label for="teammates">Friends You'd Like to Work With (Limit 3 Emails)</label>
+            <label for="teammates">Any Friends You'd Like to Work With? (Optional, Limit 3 Emails)</label>
             <ul name="teammates" class="tagit team"></ul>
         </div>
 
@@ -115,7 +115,7 @@
 
         <div class="two fields row">
             <div class="field">
-                <label for="links">Links (optional)</label>
+                <label for="links">Link(s) (optional)</label>
                 <div class="condor"></div>
                 <!--                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />-->
             </div>
@@ -277,7 +277,8 @@
         $(".condor").condor({
             uniqueNames: false,
             namePrefix: 'links',
-            activeHint: 'Github, Dribbble, Behance, etc.'
+            activeHint: 'Github, Dribbble, Behance, etc.',
+            inactiveHint: 'add another link'
         });
 
     })
