@@ -108,7 +108,8 @@
 
             <div class="field">
                 <label for="resume">Upload Resume</label>
-                <input type="file" name="resume" id="resume" />
+                <input id="resume" class="resume-upload" type="file" name="resume">
+<!--                <input type="file" name="resume" id="resume" />-->
             </div>
         </div>
 
@@ -270,4 +271,14 @@ $(document).ready(function() {
   });
 })
 
+//Resume upload schtuff
+$(function () {
+    $('#resume').fileupload({
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        }
+    });
+});
 </script>
