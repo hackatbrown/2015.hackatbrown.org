@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
+Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 {% endblock %}
 
 {% block head %}
@@ -10,6 +10,11 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 <link rel='stylesheet' href='/static/semantic/minified/collections/grid.min.css' />
 <link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css">
 <link rel='stylesheet' href='/static/css/index.css'/>
+<script type="text/javascript" src='/static/js/prefixfree.min.js'></script>
+<script type="text/javascript" src="/static/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="/static/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="/static/js/condor.js"></script>
 {% endblock %}
 
 {% block nav %}
@@ -24,7 +29,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 </div>
 <div class="hamburger"></div>
 <ul class="top-bar_ul transparent" data-0="" data-1="">
-    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
+    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#schedule">Schedule</a></li>
@@ -45,7 +50,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 <div class='logo'></div>
                 <div class='title'>Hack@Brown<span class='light'>2015</span></div>
                 <div class='datetime light'>
-                    <h2>Providence, RI | February 7-8 </h2>
+                    <h2>February 7&ndash;8 &bull; Providence, RI</h2>
                 </div>
                 
                 <div class='slogan'>make, play, learn:</div>
@@ -107,30 +112,30 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                     <article id="schedule" class="schedule-text" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
                         <div id="saturday">
                             <h1>Saturday</h1>
-                            <h2>Registration <span>9:00 - 11:00</span></h2>
+                            <h2>Registration <span>9:00&ndash;11:00</span></h2>
                             <p>Check-in at Sayles Hall</p>
-                            <h2>Introduction & Kick-off! <span>11:00 - 12:00</span></h2>
+                            <h2>Introduction and Kick-off! <span>11:00&ndash;12:00</span></h2>
                             <p>Head to Salomon Auditorium</p>
-                            <h2>Lunch <span>12:00 - 1:00</span></h2>
+                            <h2>Lunch <span>12:00&ndash;1:00</span></h2>
                             <p>Eat, mingle, brainstorm</p>
                             <h2>Hacking Begins <span>1:00</span></h2>
-                            <p>Work time & we'll have snacks throughout</p>
-                            <h2>Dinner <span>6:00 - 7:00</span></h2>
-                            <h2>Midnight Snack <span>12:00 - 1:00</span></h2>
+                            <p>Work time with snacks and hot-chocolate throughout</p>
+                            <h2>Dinner <span>6:00&ndash;7:00</span></h2>
+                            <h2>Midnight Snack <span>12:00&ndash;1:00</span></h2>
 
                             <p>Continue hacking... sleeping areas will be plentiful!</p>
                         </div>
                         <div id="sunday">
                             <h1>Sunday</h1>
-                            <h2>Breakfast & Coffee <span>8:00 - 9:00</span></h2>
-                            <h2>Hacking submissions due!<span>12:00 - 1:00</span></h2>
-                            <h2>Lunch <span>12:00 - 12:45</span></h2>
-                            <h2>Juding & Demo Fair<span>1:00 - 2:30</span></h2>
+                            <h2>Breakfast & Coffee <span>8:00&ndash;9:00</span></h2>
+                            <h2>Hacking submissions due!<span>12:00&ndash;1:00</span></h2>
+                            <h2>Lunch <span>12:00&ndash;12:45</span></h2>
+                            <h2>Juding & Demo Fair<span>1:00&ndash;2:30</span></h2>
                             <p>1st round judging. Judges will visit teams for informal demos and choose finalists. Feel free to check out other teams' projects!</p>
                             <h2>Finalists Announced<span>2:45</span></h2>
-                            <h2>Awards<span>3:00 - 4:30</span></h2>
+                            <h2>Awards<span>3:00&ndash;4:30</span></h2>
                             <p>Keynote, final demos, winners announced</p>
-                            <h2>Bye! <span>5:00</span></h2>
+                            <h2>Goodbye! <span>5:00</span></h2>
                             <p>Clean up, pack up belongings, buses will be leaving at 5:00 pm</p>
                         </div>
                     </article>
@@ -148,116 +153,49 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 <div>
                     <article id='sponsors'>
                         <h1>Our Thanks</h1>
-                        <p>To the companies who make this possible!</p>
-                        <div class="ui grid">
-                            <div class="doubling four column row">
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
-                            <div class="doubling six column row">
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
-                            <div class="doubling ten column row">
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
-                            <div class="doubling ten column row">
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
-                            <div class="doubling ten column row">
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
-                            <div class="doubling ten column row">
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
-                            <div class="doubling ten column row">
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                                <div class="right floated column">
-                                    <img src="/static/img/logo-wire-inverted-pink.svg" class="ui fluid image">
-                                </div>
-                            </div>
+                        <p>To the companies that make this possible!</p>
+                        <h3>Peta Sponsor</h3>
+                        <div class="sponsor-row peta">
+                            <a href="http://teespring.com" target="_blank">
+                                <img src="/static/img/sponsor-logos/teespring.png">
+                            </a>
                         </div>
+                        <h3>Tera Sponsors</h3>
+                        <div class="sponsor-row tera">
+                            <a href="http://apple.com/jobs/us/students" target="_blank">
+                                <img src="/static/img/sponsor-logos/apple.svg">
+                            </a>
+                            <a href="http://twosigma.com" target="_blank">
+                                <img src="/static/img/sponsor-logos/twosigma.png">
+                            </a>
+                        </div>
+                        <h3>Giga, Mega and Kilo Sponsors</h3>
+                        <div class="sponsor-row other">
+                            <span class="giga">
+                                <a href="http://dropbox.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/dropbox.png">
+                                </a>
+                                <a href="http://kayak.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/kayak.png">
+                                </a>
+                            </span>
+
+                            <span class="mega">
+                                <a href="http://google.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/google.svg">
+                                </a>
+                            </span>
+
+                            <span class="kilo">
+                                <a href="http://retailmenot.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/retailmenot.png">
+                                </a>
+                                <a href="http://thalmic.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/thalmiclabs.svg">
+                                </a>
+                            </span>
+                        </div>
+                        <p>Interested in sponsoring? <a href="/static/sponsorship.pdf">More details here.</a></p>
                     </article>
                 </div>
             </div>
@@ -282,7 +220,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                         <p>You can take Amtrak or the MBTA to Providence Station, a short walk from campus. We’re working on getting travel reimbursements and buses set-up for you! Hack@Brown will take place in Sayles & Wilson Hall at Brown University.</p>
 
                         <h2>What about team sizes?</h2>
-                        <p>You’re welcome to have up to four people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown—we’ll have a fun team-forming session at the beginning.</p>
+                        <p>You’re welcome to have up to four people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown&mdash;we’ll have a fun team-forming session at the beginning.</p>
 
                         <h2>What should I bring?</h2>
                         <p>Your valid student ID, laptop, phone, chargers, sleeping equipment, and lots of excitement. If you’re a minor, a parental consent form too that we’ll email to you.</p>
@@ -291,7 +229,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                         <p>Weapons, illegal things, invasive species, etc.</p>
 
                         <h2>I have a question that's not answered here! </h2>
-                        <p>We’re here for you! Send us an email at hello@hackatbrown.org or feel to reach out to us at Twitter or Facebook.</p>
+                        <p>We’re here for you! Send us an email at <a href="mailto:hello@hackatbrown.org">hello@hackatbrown.org</a> or feel to reach out to us on <a href="http://twitter.com/hackatbrown">Twitter</a> or <a href="http://facebook.com/hackatbrown">Facebook</a>.</p>
                     </article>
                 </div>
             </div>
@@ -323,7 +261,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         var panels = document.getElementById("panels");
         if (splash.classList.contains("reg")) {
             height = Math.ceil(splash.offsetHeight/60) * 60 + 30;
-        } 
+        }
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
   
@@ -348,6 +286,11 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             $(".splash").addClass("reg");
             $(".cancel_reg").addClass("reg");
             $(".splash .background > .fore").addClass("translated");
+            $(".top-bar_li#hello_top a").fadeOut(500, function() {
+                $(this).text("Registration");
+                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+                $(this).fadeIn(800);
+            });
             fixSplashHeight();
         });
 
@@ -355,6 +298,11 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             $(".splash").removeClass("reg");
             $(this).removeClass("reg");
             $(".splash .background > .fore").removeClass("translated");
+            $(".top-bar_li#hello_top a").fadeOut(500, function() {
+                $(this).text("Hello");
+                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+                $(this).fadeIn(800);
+            });
             fixSplashHeight();
         });
     }
