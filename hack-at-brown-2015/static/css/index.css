@@ -6,7 +6,7 @@ html {
 body {
     top: 0;
 }
-@media screen and (max-width:1400px) {
+@media screen and (max-width:1280px) {
   html {
     font-size: 80%;
   }
