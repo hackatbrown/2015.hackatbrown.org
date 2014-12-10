@@ -394,6 +394,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 span.optional {
     font-weight: 300;
+    color: #918f8c;
 }
 .two.fields .field {
     margin-bottom:0;
