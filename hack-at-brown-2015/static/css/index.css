@@ -775,7 +775,9 @@ section .background > .right {
 }
 
 .sponsors img {
-    height: 50px;
+    height: auto;
+    max-height: 50px;
+    max-width: 100%;
     margin: 25px 0px;
     vertical-align: middle;
 }
@@ -785,7 +787,7 @@ section .background > .right {
 }
 
 .sponsors .tera img {
-    height: 100px;
+    max-height: 100px;
 }
 
 .sponsors .peta {
@@ -793,7 +795,7 @@ section .background > .right {
 }
 
 .sponsors .peta img {
-    height: 120px;
+    max-height: 120px;
 }
 
 .faq article h2 {
