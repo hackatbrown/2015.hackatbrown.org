@@ -746,7 +746,42 @@ section .background > .right {
 }
 
 .sponsors {
+    z-index: 1;
     margin-top: 0px;
+}
+
+.sponsors .row {
+    word-spacing: 50px;
+}
+
+.sponsors a {
+    opacity: 0.8;
+    border-bottom: none;
+    -webkit-transition: opacity 0.2s ease-out;
+    -moz-transition: opacity 0.2s ease-out;
+    -o-transition: opacity 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
+}
+
+.sponsors a:hover {
+    opacity: 1.0;
+}
+
+.sponsors img {
+    height: 70px;
+    margin: 25px 0px;
+}
+
+.sponsors .tera {
+    word-spacing: 70px;
+}
+
+.sponsors .tera img {
+    height: 100px;
+}
+
+.sponsors .peta img {
+    height: 120px;
 }
 
 .faq article h2 {
