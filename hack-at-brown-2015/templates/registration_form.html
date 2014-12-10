@@ -23,11 +23,11 @@
                     <div class="six wide field yr">
                         <label for="year">Year</label>
                         <select name="year" id="source" required />
-                            <option selected="selected" value="freshman">Freshman</option>
-                            <option value="sophomore">Sophomore</option>
-                            <option value="junior">Junior</option>
-                            <option value="senior">Senior</option>
-                            <option value="highschool">High School</option>
+                        <option selected="selected" value="freshman">Freshman</option>
+                        <option value="sophomore">Sophomore</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                        <option value="highschool">High School</option>
                         </select>
                     </div>
                 </div>
@@ -220,20 +220,20 @@
         return validated;
     }
 
-    function createDropDown(){
+    function createDropDown() {
         var source = $("#source");
-        var selected = source.find("option[selected]");  // get selected <option>
-        var options = $("option", source);  // get all <option> elements
+        var selected = source.find("option[selected]"); // get selected <option>
+        var options = $("option", source); // get all <option> elements
         // create <dl> and <dt> with selected value inside it
         $(".yr").append('<dl id="target" class="dropdown"></dl>')
-        $("#target").append('<dt><a href="#">' + selected.text() + 
-            '<span class="value">' + selected.val() + 
+        $("#target").append('<dt><a href="#">' + selected.text() +
+            '<span class="value">' + selected.val() +
             '</span></a></dt>')
         $("#target").append('<dd><ul></ul></dd>')
         // iterate through all the <option> elements and create UL
-        options.each(function(){
-            $("#target dd ul").append('<li><a href="#">' + 
-                $(this).text() + '<span class="value">' + 
+        options.each(function () {
+            $("#target dd ul").append('<li><a href="#">' +
+                $(this).text() + '<span class="value">' +
                 $(this).val() + '</span></a></li>');
         });
 
@@ -248,14 +248,14 @@
                     $("#registration_form input[type=submit]").val("Registering you...").attr({
                         disabled: true
                     });
-                        console.log("POSTing response");
-                        $("#registration_form").ajaxSubmit({
-                            success: function (response) {
-                                e.preventDefault();
-                                e.stopImmediatePropagation();
-                                console.log("Javascript handling response");
-                        return false;
-                        }});
+                    console.log("POSTing response");
+                    $("#registration_form").ajaxSubmit({
+                        success: function (response) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            console.log("Javascript handling response");
+                    return false;
+                    }});
                     } else {
                         $(".errorsPresent").addClass("nag");
                         $('html,body').animate({scrollTop: 0}, 1000);
@@ -363,7 +363,7 @@
                 $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
             } else {
                 $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
-            }         
+            }
             $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
         });
 
@@ -421,41 +421,37 @@
         // If page is clicked anywhere but the dropdown (dropdown.focusout), remove focus
         $(document).bind('click', function(e) {
             var $clicked = $(e.target);
-            if (! $clicked.parents().hasClass("dropdown")) {
+            if (!$clicked.parents().hasClass("dropdown")) {
                 removeFocus();
             }
         });
 
-        
         /* Prevent horizontal scrolling of element into view on focus */
-        $(document).on('keydown', ':focus', function (event)
-        {
-            if ((event.keyCode || event.which) == 9)
-            {
+        $(document).on('keydown', ':focus', function (event) {
+            if ((event.keyCode || event.which) == 9) {
                 //TODO: Generalize and support selecting other kinds of input
-                var $inputs = $("input[type=text], input[type=email]");
+                var $inputs = $("input[type=text], input[type=email], input[type=radio]");
                 console.log($inputs);
                 var index = $inputs.index(this);
                 // Index previous or next input based on the shift key
                 index += event.shiftKey ? -1 : 1;
                 // If we are in the range of valid inputs (else browser takes focus)
-                if (index >= 0 && index < $inputs.length)
-                {
+                if (index >= 0 && index < $inputs.length) {
                     var $next = $inputs.eq(index);
                     event.preventDefault();
                     // Move, not scroll, to the next/prev item....
-//                    MoveIntoView($next);
+                    //                    MoveIntoView($next);
                     console.log($next);
                     $next.focus();
                     return false;
                 }
             }
         });
-        
+
 
     })
 
-    
+
 
 
     //Resume upload schtuff

@@ -469,7 +469,11 @@ span.optional {
     border: 0;
 }
 input[type="radio"] {
-    display: none;
+    display: block;
+    clip: rect(0,0,0,0);
+    opacity: 0;
+    height: 0px;
+    width: 0px;
 }
 input[type="radio"] + label {
     background-color: #EBEBEB;
@@ -484,7 +488,7 @@ input[type="radio"] + label {
     box-shadow: inset 1px 0px 0px -1px #1B8EB9;
     transition: box-shadow .1s, color .1s;
 }
-input[type="radio"] + label:hover {
+input[type="radio"] + label:hover, input[type="radio"]:focus + label {
     background-color: #E2E1DF;
 }
 input[type="radio"]:checked + label {
