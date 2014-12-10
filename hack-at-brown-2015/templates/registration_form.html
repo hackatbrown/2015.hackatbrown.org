@@ -1,7 +1,7 @@
 <div class='panel double_right'>
     <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data">
 
-        <div class="two fields">
+        <div class="two fields row">
             <div class="field">
                 <label for="name">Name</label>
                 <input type="text" name="name" placeholder="Josiah Carberry" required/>
@@ -12,16 +12,22 @@
             </div>
         </div>
         
-        <div class="two fields">
+        <div class="two fields row">
             <div class="field">
                 <div class="two fields">
-                    <div class="field ui-widget">
+                    <div class="ten wide field ui-widget">
                         <label for="school">School</label>
                         <input type="text" name="school" class="schools" placeholder="Beige University" required/>
                     </div>
-                    <div class="field">
+                    <div class="six wide field">
                         <label for="year">Year</label>
-                        <input type="text" name="year" placeholder="2017" required/>
+                        <select name="year" class="ui dropdown" required />
+                            <option value="freshman">Freshman</option>
+                            <option value="sophomore">Sophomore</option>
+                            <option value="junior">Junior</option>
+                            <option value="senior">Senior</option>
+                            <option value="highschool">High School</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -73,21 +79,18 @@
             </div>
         </div>
         
-        <div class="field">
+        <div class="field row">
             <label for="dietary_restrictions">Any dietary restrictions?</label>
             <ul name="dietary_restrictions" class="tagit diet"></ul>
         </div>
 
-        <div class="field">
+        <div class="field row">
             <label for="teammates">Friends You'd Like to Work With (Limit 3 Emails)</label>
             <ul name="teammates" class="tagit team"></ul>
         </div>
         
-        <div class="two fields">
+        <div class="two fields row">
             <div class="field">
-                <label for="resume">Upload Resume</label>
-                <input type="file" name="resume" id="resume" />
-
                 <label for="hardware_hack">Hardware Hack?</label>
                     <table class="radio_select">
                         <tr>
@@ -104,12 +107,19 @@
             </div>
 
             <div class="field">
-                <label for="links">Links (optional)</label>
-                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
+                <label for="resume">Upload Resume</label>
+                <input type="file" name="resume" id="resume" />
             </div>
         </div>
 
-        <div class="inline field center">
+        <div class="two fields row">
+            <div class="field">
+                <label for="links">Links (optional)</label>
+                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />
+            </div>
+        </div>
+
+        <div class="inline field center row">
             <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
             <input type="checkbox" name="agree" id="agree"/>
         </div>
@@ -126,25 +136,38 @@
 
 <script>
 function validateForm() {
-    // Check if they filled out shirt gender & size
-    if (!$("input[name='shirt_gen']:checked").val())
-        return false;
-    if (!$("input[name='shirt_size']:checked").val())
-        return false;
+    var validated = true;
 
-    // Check if they filled out travel reimbursement
-    if (!$("input[name='travel_reimbursement']:checked").val())
-        return false;
+    // Check if name is filled out
+    if (!$("input[name='name']:checked").val()) {
+        $("input[name='name']").addClass("invalid");
+        /*var nag = document.createElement("div");
+        nag.css("width", "100%");
+        nag.css("border", "1px solid black");
+        $("input[name='name']").parents("div").appendChild(nag);*/
+        validated = false;
+    }
+
+    // Check if they filled out shirt gender & size
+    if (!$("input[name='shirt_gen']:checked").val()) {
+        validated = false;
+    }
+    
+    if (!$("input[name='shirt_size']:checked").val()) {
+        validated = false;
+    }
 
     // Check if they filled out hardware hack
-    if (!$("input[name='hardware_hack']:checked").val())
-        return false;
+    if (!$("input[name='hardware_hack']:checked").val()) {
+        validated = false;
+    }
 
     // Check if they agree to the Code of Conduct
-    if (!$("#agree").prop('checked'))
-        return false;
+    if (!$("#agree").prop('checked')) {
+        validated = false;
+    }
 
-    return true;
+    return validated;
 }
 
 $(document).ready(function() {
@@ -168,6 +191,22 @@ $(document).ready(function() {
             }
         }
     });
+
+    // Do some validation color stuff
+    function toggleInvalid(el) {
+        if(el.val() == "")
+            el.addClass("invalid");
+        else
+            el.removeClass("invalid");
+    }
+
+    $("input[name='name']").focusout(function() {
+        toggleInvalid($(this));
+    })
+
+    $("input[name='school']").focusout(function() {
+        toggleInvalid($(this));
+    })
 
     // Get datas
     var $diet_restrictions = [];
@@ -218,12 +257,12 @@ $(document).ready(function() {
     });
 
     $("ul.tagit input").focusout(function(){
-        $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(59,142,185,0.5)");
+        $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
         $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
     });
 
     
-
+    // Autocomplete suggestions for schools
     $(function() {
     $( ".schools" ).autocomplete({
       source: $universities

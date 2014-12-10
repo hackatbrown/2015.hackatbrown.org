@@ -14,7 +14,6 @@ body {
 a {
     text-decoration: none;
     color: #1B8EB9;
-    /*temp*/
 }
 a:hover {
     color: #EF5D93;
@@ -31,7 +30,9 @@ input[type="radio"] + label:hover,
 .cancel_reg:hover,
 .add_link:hover, 
 .registration_form input[type="checkbox"]:hover,
-.check_agree:hover {
+.check_agree:hover,
+.ui.dropdown:hover,
+.ui.dropdown option:hover {
     cursor: pointer;
 }
 .init_input:focus,
@@ -39,7 +40,8 @@ input[type="radio"] + label:hover,
 .registration_form input[type=email]:focus,
 .registration_form input[type=submit]:focus,
 .registration_form input:not([type]):focus,
-.registration_form input[type="checkbox"]:focus {
+.registration_form input[type="checkbox"]:focus,
+.ui.dropdown:focus {
     outline: none;
 }
 .light {
@@ -284,12 +286,16 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     box-shadow: inset 1px 0px 0px -1px #404040;
     transition: box-shadow .2s, border .2s, color .2s;
 }
-.init_input::-webkit-input-placeholder {
+.init_input::-webkit-input-placeholder, 
+.init_input::-moz-input-placeholder,
+.init_input::-o-input-placeholder {
     color: #1B8EB9;
     font-weight: 300px;
     text-transform: capitalize;
 }
-.init_input:focus::-webkit-input-placeholder {
+.init_input:focus::-webkit-input-placeholder, 
+.init_input:focus::-moz-input-placeholder,
+.init_input:focus::-o-input-placeholder {
     color: #fff;
 }
 .init_input:focus {
@@ -379,24 +385,65 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     font-weight: 400;
     font-size:1.1em;
 }
+.row {
+    margin-bottom:40px !important;
+}
+.two.fields .field {
+    margin-bottom:0;
+}
 .registration_form input[type=email],
 .registration_form input[type=text],
 .registration_form input:not([type]),
-.registration_form ul.tagit {
+.registration_form ul.tagit,
+.ui.dropdown {
     border:none;
-    box-shadow: inset 1px -3px 0px -1px rgba(59,142,185,0.5);
-    color: #666666;
+    box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
+    color: #121212;
     background:none;
     font-size: 1em;
     font-weight: 300;
     height: 35px;
-    transition: box-shadow .2s;
+    padding: .65em .65em .65em 0;
+    transition: box-shadow .2s, padding .2s;
 }
+/* Validation Styles */
+    .registration_form input[type=email]:valid,
+    .registration_form input[type=text]:valid,
+    .registration_form input:not([type]):valid {
+        box-shadow:inset 1px -3px 0px -1px #1B8EB9;
+    }
+    .registration_form input[type=email]:invalid,
+    .registration_form input[type=text].invalid,
+    .registration_form input:not([type]).invalid {
+        box-shadow:inset 1px -3px 0px -1px #F3C788;
+    }
+
+.ui.form ::-webkit-input-placeholder{color:#AAA;}
+.ui.form ::-moz-placeholder{color:#AAA;}
+.ui.form :focus::-webkit-input-placeholder{color:#fff;}
+.ui.form :focus::-moz-placeholder{color:#fff;}
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
-.registration_form input:not([type]):focus {
+.registration_form input:not([type]):focus,
+.ui.dropdown:focus {
     box-shadow: inset 1px -35px 0px -1px #404040;
+    padding-left:.65em;
     color: white;
+}
+.ui.dropdown {
+    width:100%;
+    font-family: 'Brown', sans-serif;
+    font-weight: 300;
+    padding:0;
+}
+.ui.dropdown option {
+    background-color: #404040;
+    font-weight: 300;
+    padding-bottom: 2px;
+    transition: .2s;
+}
+.ui.dropdown .menu {
+    border:1px solid red;
 }
 .shirt_size {
     display: flex;
@@ -456,28 +503,30 @@ input[type="radio"]:checked + label {
 }
 /* Styling tags -- overthrowing tagit stuff */
 ul.tagit {
-    height:auto !important;
-    max-height:75px;
+    height: auto !important;
+    max-height: 75px;
     padding-left: 0 !important;
     padding-bottom: 0 !important;
-    overflow-y:hidden;
-    z-index:3;
-    cursor:text;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    overflow-y: hidden;
+    z-index: 3;
+    cursor: text;
 }
 ul.tagit input {
-    height:30px !important;
-    margin:0 !important;
-    box-shadow:none !important;
+    height: 30px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
 }
 ul.tagit input:focus {
-    box-shadow:none !important;
+    box-shadow: none !important;
 }
 ul.tagit li.tagit-choice {
     background-color: #404040;
     margin-bottom: 1px !important;
     margin-top: 1px !important;
-    padding-left:.5em !important;
-    z-index:4;
+    padding-left: .5em !important;
+    z-index: 4;
 }
 ul.tagit li.tagit-new {
     padding: 0 !important;
@@ -526,70 +575,6 @@ ul.tagit li.tagit-new {
     padding: 0;
     position: absolute;
     width: 1px;
-}
-/* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
-#sign-up-for-updates input[type=email] {
-    outline: none;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    -webkit-transition: background-color 0.3s, box-shadow 0.3s;
-    -moz-transition: background-color 0.3s, box-shadow 0.3s;
-    -ms-transition: background-color 0.3s, box-shadow 0.3s;
-}
-/* turn placeholder text white */
-
-#sign-up-for-updates input[type=email]::-webkit-input-placeholder {
-    color: white;
-}
-#sign-up-for-updates input[type=email]::-ms-input-placeholder {
-    color: white;
-}
-#sign-up-for-updates input[type=email]:-moz-placeholder {
-    color: white;
-}
-#sign-up-for-updates input[type=email]::-moz-placeholder {
-    color: white;
-}
-#sign-up-for-updates input[type=email]:focus {
-    background-color: white;
-    box-shadow: inset 0px -3px 0px #EF5D93;
-}
-/* turn placeholder text gray on focus */
-
-#sign-up-for-updates input[type=email]:focus::-webkit-input-placeholder {
-    color: gray;
-}
-#sign-up-for-updates input[type=email]:focus::-ms-input-placeholder {
-    color: white;
-}
-#sign-up-for-updates input[type=email]:focus:-moz-placeholder {
-    color: white;
-}
-#sign-up-for-updates input[type=email]:focus::-moz-placeholder {
-    color: white;
-}
-#sign-up-for-updates.signed-up input[type=email] {
-    transition: background-color 0.3s, box-shadow 1.0s;
-    -webkit-transition: background-color 0.3s, box-shadow 1.0s;
-    -moz-transition: background-color 0.3s, box-shadow 1.0s;
-    -ms-transition: background-color 0.3s, box-shadow 1.0s;
-    box-shadow: inset 0px -100px 0px #6d7;
-}
-/* after registering */
-
-.toast {
-    display: none;
-    position: absolute;
-    background-color: rgba(53, 195, 71, 0.9);
-    color: white;
-    padding: 20px;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    z-index: 100;
-}
-#thanks h4 {
-    font-size: x-large;
-    margin: 0px;
 }
 
 /* PANEL GENERAL */
@@ -880,6 +865,12 @@ section .background > .mid {
     .registration_form.center {
         text-align:left;
     }
+    .row {
+        margin-bottom:0 !important;
+    }
+    .two.fields .field {
+        margin-bottom:16px;
+    }
     input[type="radio"] + label {
         font-size:1em;
         padding-left:15px;
@@ -1005,3 +996,79 @@ nav.open .hamsvg {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
+#sign-up-for-updates input[type=email] {
+    outline: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    -webkit-transition: background-color 0.3s, box-shadow 0.3s;
+    -moz-transition: background-color 0.3s, box-shadow 0.3s;
+    -ms-transition: background-color 0.3s, box-shadow 0.3s;
+}
+/* turn placeholder text white */
+
+#sign-up-for-updates input[type=email]::-webkit-input-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]::-ms-input-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]::-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:focus {
+    background-color: white;
+    box-shadow: inset 0px -3px 0px #EF5D93;
+}
+/* turn placeholder text gray on focus */
+
+#sign-up-for-updates input[type=email]:focus::-webkit-input-placeholder {
+    color: gray;
+}
+#sign-up-for-updates input[type=email]:focus::-ms-input-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:focus:-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:focus::-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates.signed-up input[type=email] {
+    transition: background-color 0.3s, box-shadow 1.0s;
+    -webkit-transition: background-color 0.3s, box-shadow 1.0s;
+    -moz-transition: background-color 0.3s, box-shadow 1.0s;
+    -ms-transition: background-color 0.3s, box-shadow 1.0s;
+    box-shadow: inset 0px -100px 0px #6d7;
+}
+/* after registering */
+
+.toast {
+    display: none;
+    position: absolute;
+    background-color: rgba(53, 195, 71, 0.9);
+    color: white;
+    padding: 20px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+}
+#thanks h4 {
+    font-size: x-large;
+    margin: 0px;
+}
