@@ -184,6 +184,24 @@ $(document).ready(function() {
         }
     )});
 
+    // On email change & valid, check for university domain
+    function searchUniversities(domain) {
+        $universities.forEach(function(obj) {
+            if(domain == obj["domain"]) {
+                $(".registration_form input[name='school']").val(obj["label"]);
+            }
+        });
+    }
+
+    $("input[type='email']").change(function() {
+        var splitEmail = $(this).val().split('@');
+        if (splitEmail.length == 2) {
+            var univ = searchUniversities(splitEmail[1]);
+            if (univ != null)
+                $(".registration_form input.schools").val(univ);
+        }
+    });
+
     // Setting up tagit for dietary restrictions and teammates
     $(".tagit.diet").tagit({
         allowSpaces:true,
