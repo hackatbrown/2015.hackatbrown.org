@@ -748,7 +748,11 @@ section .background > .right {
     margin-top: 0px;
 }
 
-.sponsors .row {
+.sponsors p {
+    margin-top: 0.5em;
+}
+
+.sponsors .sponsor-row {
     word-spacing: 50px;
 }
 
@@ -766,8 +770,9 @@ section .background > .right {
 }
 
 .sponsors img {
-    height: 70px;
-    margin: 10px 0px;
+    height: 50px;
+    margin: 25px 0px;
+    vertical-align: middle;
 }
 
 .sponsors .tera {
@@ -776,6 +781,10 @@ section .background > .right {
 
 .sponsors .tera img {
     height: 100px;
+}
+
+.sponsors .peta {
+    margin-top: 30px;
 }
 
 .sponsors .peta img {
