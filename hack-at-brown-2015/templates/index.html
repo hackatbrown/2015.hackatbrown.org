@@ -74,11 +74,11 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 {% include "registration_form.html" %}
             {% endif %}
         </div>
-        <div class="background parallax">
-            <div class="left fore parallax__layer blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
-            <div class="left fore parallax__layer pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
-            <div class="right fore parallax__layer green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
-            <div class="right fore parallax__layer green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
+        <div class="background">
+            <div class="left fore blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
+            <div class="left fore pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
+            <div class="right fore green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
+            <div class="right fore green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
         </div>
     </section>
     
@@ -95,9 +95,9 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                     </article>
                 </div>
             </div>
-            <div class="background parallax">
+            <div class="background">
                 <div class="back"></div>
-                <div class="right mid parallax__layer pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
+                <div class="right mid pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
             </div>
         </section>
 
@@ -373,7 +373,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         // Make sure splash height is good on doc ready
         fixSplashHeight();
         
-        // P-P-P-PARALLAX
+        // P-P-P- 
         if(!iOS) {
           skrollr.init({
             mobileCheck: function() {return false;}
