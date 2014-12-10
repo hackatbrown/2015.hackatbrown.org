@@ -75,34 +75,20 @@
         
         <div class="field">
             <label for="dietary_restrictions">Any dietary restrictions?</label>
-            <ul name="dietary_restrictions" class="tagit"></ul>
+            <ul name="dietary_restrictions" class="tagit diet"></ul>
+        </div>
+
+        <div class="field">
+            <label for="teammates">Friends You'd Like to Work With (Limit 3 Emails)</label>
+            <ul name="dietary_restrictions" class="tagit team"></ul>
         </div>
         
         <div class="two fields">
             <div class="field">
-                <label for="travel_reimbursement">Will you need travel reimbursement?</label>
-                    <table class="radio_select" style="margin-bottom:35px;">
-                        <tr>
-                            <td>
-                                <input type="radio" name="travel_reimbursement" id="travel_yes" value='yes' />
-                                <label for="travel_yes">Yes</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="travel_reimbursement" id="travel_no" value='no' />
-                                <label for="travel_no">No</label>
-                            </td>
-                        </tr>
-                    </table>
-            </div>
-            <div class="field">
-                <label for="links">Links (optional)</label>
-                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
-            </div>
-        </div>
+                <label for="resume">Upload Resume</label>
+                <input type="file" name="resume" id="resume" />
 
-        <div class="two fields">
-                <div class="field">
-                    <label for="hardware_hack">Hardware Hack?</label>
+                <label for="hardware_hack">Hardware Hack?</label>
                     <table class="radio_select">
                         <tr>
                             <td>
@@ -115,12 +101,12 @@
                             </td>
                         </tr>
                     </table>
-                </div>
+            </div>
 
-                <div class="field">
-                    <label for="resume">Upload Resume</label>
-                    <input type="file" name="resume" id="resume" />
-                </div>
+            <div class="field">
+                <label for="links">Links (optional)</label>
+                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
+            </div>
         </div>
 
         <div class="inline field center">
@@ -183,17 +169,23 @@ $(document).ready(function() {
         }
     });
 
-    // Setting up tagit for dietary restrictions
-    $(".tagit").tagit({
+    // Setting up tagit for dietary restrictions and teammates
+    $(".tagit.diet").tagit({
         allowSpaces:true
+    });
+
+    $(".tagit.team").tagit({
+        maxTags:3
     });
 
     $("ul.tagit input").focus(function(){
         $(this).parents("ul").css("box-shadow", "inset 1px -35px 0px -1px #404040");
+        $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
     });
 
     $("ul.tagit input").focusout(function(){
         $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(59,142,185,0.5)");
+        $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
     });
 
     

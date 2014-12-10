@@ -444,11 +444,15 @@ input[type="radio"]:checked + label {
     background-color:#fff;
     padding:6px;
     box-shadow: inset 1px 0px 0px -1px rgba(59,142,185,0.5);
-    transition:box-shadow .1s, border .1s;
+    background-image:url("/static/img/check52.svg");
+    background-size: 130% auto;
+    background-repeat: no-repeat;
+    background-position: 50% -300%;
+    transition:box-shadow .1s, border .1s, background-position .1s;
 }
 .registration_form input[type="checkbox"]:checked {
-    border:2px solid rgba(59,142,185,1);
-    box-shadow: inset 1px -13px 0px -1px rgb(59,142,185);
+    background-position: 50% 50%;
+    box-shadow: inset 1px -13px 0px -1px rgba(59,142,185,0.5);
 }
 /* Styling tags -- overthrowing tagit stuff */
 ul.tagit {
@@ -468,7 +472,7 @@ ul.tagit input:focus {
     box-shadow:none !important;
 }
 ul.tagit li.tagit-choice {
-    background-color: rgb(59,142,185);
+    background-color: #404040;
     margin-bottom: 1px !important;
     margin-top: 1px !important;
     padding-left:.5em !important;
