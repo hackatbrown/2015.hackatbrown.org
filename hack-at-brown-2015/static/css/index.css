@@ -787,11 +787,6 @@ section .background > .right {
 .schedule article {
     max-width: 482.4px;
     padding-bottom: calc(180px + 2em);
-/*
-    padding-top: 120px;
-    margin-top: -120px;
-    margin-bottom: -120px;
-*/
 }
 
 .schedule article h1 {
@@ -821,11 +816,12 @@ section .background > .right {
 }
 
 .sponsors {
-    margin-top: 0px;
+    margin-top: 180px;
+    margin-bottom: 180px;
 }
 
 .sponsors p {
-    margin-top: 0.5em;
+    margin-top: 1.5em;
 }
 
 .sponsors .sponsor-row {
@@ -858,20 +854,29 @@ section .background > .right {
     vertical-align: middle;
 }
 
-.sponsors .tera {
+.sponsors .sponsor-row.tera {
     word-spacing: 70px;
 }
 
-.sponsors .tera img {
+.sponsors .sponsor-row.tera img {
     max-height: 100px;
 }
 
-.sponsors .peta {
+.sponsors .sponsor-row.peta {
     margin-top: 30px;
 }
 
-.sponsors .peta img {
+.sponsors .sponsor-row.peta img {
     max-height: 120px;
+}
+
+.sponsors h2 {
+    font-weight: 300;
+    color: #918f8c;
+}
+
+.sponsors h2.other {
+    font-size: 1.2em;
 }
 
 .faq article h2 {
