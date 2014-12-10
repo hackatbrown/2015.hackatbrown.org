@@ -8,6 +8,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic/minified/collections/form.min.css' />
 <link rel='stylesheet' href='/static/Semantic-UI-1.1.2/dist/components/grid.min.css' />
+<link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css">
 <link rel='stylesheet' href='/static/css/index.css'/>
 {% endblock %}
 
@@ -57,7 +58,6 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
                 {% endif %}
                 {% if registration_status == "registration_open" %}
                 <form class="init_reg">
-                    <input type="text" name="name" placeholder="NAME" class="init_input" required/>
                     <input type="email" name="email" placeholder="EMAIL" class="init_input" required/>
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
@@ -314,8 +314,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
     function transferInitInfo() {
         var vals = $("form.init_reg").serializeArray();
-        $(".registration_form input[name='name']").val(vals[0].value);
-        $(".registration_form input[name='email']").val(vals[1].value);
+        $(".registration_form input[name='email']").val(vals[0].value);
     }
 
     function fixSplashHeight() {

@@ -15,9 +15,9 @@
         <div class="two fields">
             <div class="field">
                 <div class="two fields">
-                    <div class="field">
+                    <div class="field ui-widget">
                         <label for="school">School</label>
-                        <input type="text" name="school" placeholder="Beige University" required/>
+                        <input type="text" name="school" class="schools" placeholder="Beige University" required/>
                     </div>
                     <div class="field">
                         <label for="year">Year</label>
@@ -75,7 +75,7 @@
         
         <div class="field">
             <label for="dietary_restrictions">Any dietary restrictions?</label>
-            <input type="text" name="dietary_restrictions" />
+            <ul name="dietary_restrictions" class="tagit"/>
         </div>
         
         <div class="two fields">
@@ -93,8 +93,16 @@
                             </td>
                         </tr>
                     </table>
-                    
-                <label for="hardware_hack">Hardware Hack?</label>
+            </div>
+            <div class="field">
+                <label for="links">Links (optional)</label>
+                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
+            </div>
+        </div>
+
+        <div class="two fields">
+                <div class="field">
+                    <label for="hardware_hack">Hardware Hack?</label>
                     <table class="radio_select">
                         <tr>
                             <td>
@@ -107,12 +115,14 @@
                             </td>
                         </tr>
                     </table>
-            </div>
-            <div class="field">
-                <label for="links">Links (optional)</label>
-                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
-            </div>
+                </div>
+
+                <div class="field">
+                    <label for="resume">Upload Resume</label>
+                    <input type="file" name="resume" id="resume" />
+                </div>
         </div>
+
         <div class="inline field center">
             <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
             <input type="checkbox" name="agree" id="agree"/>
@@ -125,9 +135,10 @@
 <div class="clearfix"></div>
 
 <script src='/static/js/H5F.js'></script> <!-- a polyfill that adds HTML5 form validation features to older browsers -->
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="/static/Tagit/js/tag-it.js"></script>
 
 <script>
-
 function validateForm() {
     // Check if they filled out shirt gender & size
     if (!$("input[name='shirt_gen']:checked").val())
@@ -171,6 +182,31 @@ $(document).ready(function() {
             }
         }
     });
+
+    // Setting up tagit for dietary restrictions
+    $(".tagit").tagit({
+        allowSpaces:true
+    });
+
+    $("ul.tagit input").focus(function(){
+        $(this).parents("ul").css("box-shadow", "inset 1px -35px 0px -1px #404040");
+    });
+
+    $("ul.tagit input").focusout(function(){
+        $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(59,142,185,0.5)");
+    });
+
+    
+
+    $(function() {
+    var availableTags = [
+      {"value":"ActionScript",l:"l"},
+      {"value":"BctionScript",l:"l"}
+    ];
+    $( ".schools" ).autocomplete({
+      source: availableTags
+    });
+  });
 })
 
 </script>
