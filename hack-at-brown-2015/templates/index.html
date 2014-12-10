@@ -23,7 +23,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
     </svg>
 </div>
 <div class="hamburger"></div>
-<ul class="top-bar_ul">
+<ul class="top-bar_ul transparent">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary" href="#cancel">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
     <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
@@ -76,7 +76,7 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         </div>
         <div class="background parallax">
             <div class="left fore parallax__layer blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
-            <div class="left fore parallax__layer pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></></div>
+            <div class="left fore parallax__layer pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
             <div class="right fore parallax__layer green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
             <div class="right fore parallax__layer green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
         </div>
@@ -326,6 +326,16 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
         } 
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
     }
+    
+    var transparent = true;
+    function menuTransparent(selector){
+        var st = $(document).scrollTop();
+        console.log(transparent);
+          if((st == 0) && !transparent)
+            $(selector).addClass("transparent");
+          else if(transparent)
+            $(selector).removeClass("transparent");
+    }
   
     function initalizeNavMenu(selector) {
       $(selector).onePageNav({
@@ -336,10 +346,9 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             filter: ':not(.secondary)',
         });
       
-      $(selector).gutabslider();
-
-      setTimeout("$(" + selector + ").gutabslider('active-tab-changed')", 50);
-      setTimeout("$(" + selector + ").gutabslider('active-tab-changed')", 100);
+      $(window).scroll(menuTransparent(selector));
+      
+      setTimeout(function(){ $(selector).gutabslider(); }, 400);
     }
   
     function initalizeReg() {
@@ -361,14 +370,20 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
             fixSplashHeight();
         });
     }
+  
+    function initalizeHamburger() {
+      //Hamburger menu for mobile
+        $(".hamburger").click(function () {
+            $("nav").toggleClass("open");
+            setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 500);
+        });
+    }
     
     $(document).ready(function() {
         var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
       
         // Make sure splash height is good on doc ready
         fixSplashHeight();
-
-        initalizeNavMenu('.top-bar_ul');
         
         // P-P-P-PARALLAX
         if(!iOS) {
@@ -384,11 +399,9 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
         initalizeReg();
         
-        //Hamburger menu for mobile
-        $(".hamburger").click(function () {
-            $("nav").toggleClass("open");
-            setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 500);
-        });
+        initalizeHamburger();
+      
+        initalizeNavMenu('.top-bar_ul');
         
     });
 

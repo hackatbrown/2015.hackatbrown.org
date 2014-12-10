@@ -118,19 +118,23 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     list-style: none;
     padding: 0;
     padding-top: 30px;
-    padding-bottom: 3px;
+    padding-bottom: 5px;
     font-size: 1.2em;
     text-align: center;
     text-transform: uppercase;
     color: #1B8EB9;
     position: fixed;
-    max-width: 964.8px;
+/*    max-width: 964.8px;*/
     left: 0%;
     right: 0%;
     width: 100%;
     top: 0;
     z-index: 999;
     background-color: rgba(255, 255, 255, .95);
+    transition: background-color .5s;
+}
+.top-bar_ul.transparent {
+    background-color: rgba(255, 255, 255, 0);
 }
 .top-bar_li {
     display: inline;
@@ -138,7 +142,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 .top-bar_li.active a {
     color: #EF5D93;
-    padding-bottom: 1px;
+    padding-bottom: 3px;
 }
 .top-bar_li a:hover {
     border-bottom: 0;
@@ -147,6 +151,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     color: #EF5D93;
     padding-bottom: 1px;
 }
+/* Nav sliding bar */
 .gu-sliding-bar {
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
