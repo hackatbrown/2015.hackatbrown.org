@@ -983,19 +983,14 @@ section .background > .mid {
         width: 80%;
     }
     section.triangle {
-        padding-top: 300px;
-        padding-bottom: 300px;
+/*        padding-top: 300px;*/
+/*        padding-bottom: 300px;*/
     }
     section .background {
-        transform: scale(1.5, 1.5);
+/*        transform: scale(1.5, 1.5);*/
         transform-origin: center top;
     }
     
-    section.about {
-        padding-top: 180px;
-        padding-bottom: 180px;
-        margin-top: -180px;
-    }
 }
 
 .hamsvg > .bar {
