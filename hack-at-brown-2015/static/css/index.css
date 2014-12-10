@@ -1,9 +1,15 @@
 /* GENERAL */
 html {
     overflow-x: hidden;
+    transition: font-size .5s;
 }
 body {
     top: 0;
+}
+@media screen and (max-width:1400px) {
+  html {
+    font-size: 80%;
+  }
 }
 a {
     text-decoration: none;
@@ -914,3 +920,5 @@ nav.open .hamsvg {
 .parallax__layer {
     position: absolute;
 }
+
+
