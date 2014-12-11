@@ -16,6 +16,7 @@ class Hacker(ndb.Model):
 	school = ndb.StringProperty()
 	year = ndb.StringProperty()
 	email = ndb.StringProperty()
+	shirt_gen = ndb.StringProperty()
 	shirt_size = ndb.StringProperty()
 	dietary_restrictions = ndb.StringProperty()
 	resume = ndb.BlobKeyProperty()
@@ -56,9 +57,12 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		print "CALLING RegistrationHandler"
 		hacker = Hacker()
-		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'dietary_restrictions', 'teammates', 'hardware_hack' 'links']:
-			print key + " " + self.request.get(key)
-			setattr(hacker, key, self.request.get(key))
+
+		loaded_request = json.loads(self.request.body)
+		print loaded_request
+		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack' 'links']:
+			#print key + " " + loaded_request.get(key)
+			setattr(hacker, key, loaded_request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:
 			print "Already in DB"
 			self.response.write(json.dumps({"success":False}))

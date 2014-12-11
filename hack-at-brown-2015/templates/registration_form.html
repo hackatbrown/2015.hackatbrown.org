@@ -37,7 +37,7 @@
                     <table class="radio_select center">
                         <tr>
                             <td>
-                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                <input type="radio" name="shirt_gen" id="sgM" value='M' required />
                                 <label for="sgM">Men's</label>
                             </td>
                             <td>
@@ -50,7 +50,7 @@
                     <table class="radio_select center">
                         <tr>
                             <td>
-                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                <input type="radio" name="shirt_size" id="ssXS" value='XS' required />
                                 <label for="ssXS">XS</label>
                             </td>
                             <td>
@@ -95,7 +95,7 @@
                 <table class="radio_select">
                     <tr>
                         <td>
-                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
+                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' required />
                             <label for="hardware_yes">Yes!</label>
                         </td>
                         <td>
@@ -122,11 +122,11 @@
         </div>
 
         <div class="inline field center row">
-            <input type="checkbox" name="agree" id="agree" />
+            <input type="checkbox" name="agree" id="agree" required/>
             <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
         </div>
         <div class="field center">
-            <input type="submit" class="ui button" vlaue="REGISTER" />
+            <input type="submit" class="ui button" value="REGISTER" />
         </div>
     </form>
 </div>
@@ -137,52 +137,29 @@
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="/static/Tagit/js/tag-it.js"></script>
 
-<script>
-    function validateForm() {
-        var validated = true;
 
-        // Check if name is filled out
-        if (!$("input[name='name']").val()) {
-            $("input[name='name']").addClass("invalid");
-            /*var nag = document.createElement("div");
-        nag.css("width", "100%");
-        nag.css("border", "1px solid black");
-        $("input[name='name']").parents("div").appendChild(nag);*/
-            validated = false;
-            console.log("Invalid name");
-        }
-
-        /* Check if year chosen -- really hacky
-        if ($(".dropdown dt a").css("color") != "#121212") {
-            validated = false;
-            console.log("Invalid year");
-        }*/
-
-        // Check if they filled out shirt gender & size
-        if (!$("input[name='shirt_gen']:checked").val()) {
-            validated = false;
-            console.log("Invalid shirt gender");
-        }
-
-        if (!$("input[name='shirt_size']:checked").val()) {
-            validated = false;
-            console.log("Invalid shirt size");
-        }
-
-        // Check if they filled out hardware hack
-        if (!$("input[name='hardware_hack']:checked").val()) {
-            validated = false;
-            console.log("Invalid hardware hack");
-        }
-
-        // Check if they agree to the Code of Conduct
-        if (!$("#agree").prop('checked')) {
-            validated = false;
-            console.log("Invalid agree");
-        }
-
-        return validated;
-    }
+<script type="text/javascript">
+    // this function is completely unneccesary because of H5F
+    // function validateForm() {
+    //     // Check if name is filled out
+    //     if (!$("input[name='name']:checked").val()) {
+    //         $("input[name='name']").addClass("invalid");
+    //         /*var nag = document.createElement("div");
+    //         nag.css("width", "100%");
+    //         nag.css("border", "1px solid black");
+    //         $("input[name='name']").parents("div").appendChild(nag);*/
+    //         return false;
+    //     }
+    // 
+    //     // Check if they filled out shirt gender & size
+    //     !$("input[name='shirt_gen']:checked").val() && return false;
+    //     !$("input[name='shirt_size']:checked").val() && return false;
+    //     !$("input[name='hardware_hack']:checked").val() && return false;
+    //     // Check if they agree to the Code of Conduct
+    //     !$("input[name=agree]:checked").val() && return false;
+    // 
+    //     return true;
+    // }
 
     function createDropDown(){
         var source = $("#source");
@@ -206,23 +183,52 @@
 
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
+            onInvalid: function (e) {
+                var nameIn = document.querySelectorAll("input[name='name']");
+                nameIn.checkValidity() && nameIn.classList.add(invalid);
+                alert("You didn't finish!"); // temp
+            },
+            // this shouldn't even happen if `e.form.checkValidity()` isn't true
             onSubmit: function (e) {
-                if (validateForm()) {
-                    $("#registration_form input[type=submit]").val("Registering you...").attr({
-                        disabled: true
-                    });
-                        console.log("POSTing response");
-                        $("#registration_form").ajaxSubmit({
-                            success: function (response) {
-                                e.preventDefault();
-                                e.stopImmediatePropagation();
-                                console.log("Javascript handling response");
-                        return false;
-                        }});
+                e.preventDefault();
+                // if (e.form.checkValidity()) { // might just be `this.checkValidity()`
+                $("#registration_form input[type=submit]").val("Registering you...").attr({
+                    disabled: true
+                });
+    
+                var form_data = {};
+                var a = $("#registration_form").serializeArray();
+                $.each(a, function() {
+                    if (form_data[this.name] !== undefined) {
+                        if (!form_data[this.name].push) {
+                            form_data[this.name] = [form_data[this.name]];
+                        }
+                        form_data[this.name].push(this.value || '');
                     } else {
-                        e.preventDefault();
-                        alert("You didn't finish!"); // temp
+                        form_data[this.name] = this.value || '';
                     }
+                });
+                var register_url = $("#registration_form").attr('action');
+                $.ajax({
+                    type: "POST",
+                    url: register_url,
+                    cache: false,
+                    processData: false,
+                    data: JSON.stringify(form_data),
+                    success: function (response) {
+                        var response = JSON.parse(response);
+                        if (response.success) {
+                            console.log("success!")
+                            $("#splash").html(response.replace_splash_with_html);
+                            window.location.hash = "";
+                        }
+                        else{
+                            $("#registration_form input[type=submit]").val("Email already Registered!").attr({
+                                disabled: true
+                            });
+                        }
+                    }
+                })
             }
         });
 
@@ -357,17 +363,4 @@
 
     })
 
-    
-
-
-    //Resume upload schtuff
-    $(function () {
-        $('#resume').fileupload({
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo(document.body);
-                });
-            }
-        });
-    });
 </script>
