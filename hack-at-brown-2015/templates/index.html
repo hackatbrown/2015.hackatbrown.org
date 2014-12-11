@@ -200,7 +200,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
         <section class='panel triangle left faq verbose'>
             <div>
                 <div>
-                    <article id='faq'>
+                    <article id='faq' data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
                         <h1>FAQ</h1>
                         <h2>Who can attend?</h2>
                         <p>All undergraduate, graduate, and high school students from any school are welcome. If you are under 18, we’ll need a parental consent form.</p>
@@ -224,6 +224,9 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                         <p>We’re here for you! Send us an email at <a href="mailto:hello@hackatbrown.org">hello@hackatbrown.org</a> or feel to reach out to us on <a href="http://twitter.com/hackatbrown">Twitter</a> or <a href="http://facebook.com/hackatbrown">Facebook</a>.</p>
                     </article>
                 </div>
+            </div>
+            <div class="background">
+                <div class="back" data-bottom-top="transform: translate3d(0,-45%,0);" data-top-bottom="transform: translate3d(0,-55%,0);"></div>
             </div>
         </section>
         
@@ -361,7 +364,8 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
         // P-P-P- 
         if(!iOS) {
           skrollr.init({
-            mobileCheck: function() {return false;}
+            mobileCheck: function() {return false;},
+            forceHeight: false,
           })
         }
 

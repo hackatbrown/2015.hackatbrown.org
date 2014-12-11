@@ -1046,12 +1046,28 @@ section .background > .right {
 }
 
 .faq {
-    margin-top: 180px;
+    margin-top: 600px;
+    margin-bottom: 420px;
+    color: white;
+    height: 840px;
+}
+
+.faq article {
+    max-width: 589.6px;
+    padding-bottom: 300px;
+    margin-top: -240px
 }
 
 .faq article h2 {
     margin-top: 1em;
     margin-bottom: -.2em;
+}
+
+.faq .background > .back {
+    width: 2304.8px;
+    margin-right: -1018.4px;
+    height: 2220px;
+    background-image: url(/static/img/svgtriangles/0bg_2_darkgrey-triangle.svg);
 }
 
 footer {
@@ -1286,7 +1302,9 @@ section .background > .mid {
     
 }
 
-.hamsvg > .bar {
+/*Hamburger animation doing its thing */
+
+. hamsvg > .bar {
     transform: rotate(0) translateY(0) translateX(0);
     transform-origin: 0px 4px;
     transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out, fill .4s ease-in-out;
