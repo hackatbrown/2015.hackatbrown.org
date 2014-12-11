@@ -489,10 +489,10 @@ input[type="radio"] {
 input[type="radio"] + label {
     background-color: #EBEBEB;
     text-transform: none;
-    height: 19px;
+    height: 18px;
     padding: 11px;
-    padding-top: 8px;
-    padding-bottom: 11px;
+    padding-top: 7px;
+    padding-bottom: 10px;
     color: #404042;
     font-weight: 300;
     font-size: .9em;
@@ -1038,6 +1038,8 @@ section .background > .mid {
         font-size:1em;
         padding-left:15px;
         padding-right:15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .double_right {
         padding-top: 8%;
