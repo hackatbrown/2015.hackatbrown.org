@@ -181,12 +181,13 @@
 
         // Check if year chosen
         //TODO
-        if (!$(".dropdown dt a").hasClass("chosen")) {
-            $(".dropdown dt a").addClass("invalid");
-            addNag("Choose a year whydon'tcha.", $(".dropdown dt a").parent().parent().parent());
-            validated = false;
-            console.log("Invalid year");
-        }
+//        if (!$(".dropdown dt a").hasClass("chosen")) {
+//            $(".dropdown dt a").addClass("invalid");
+//            addNag("Choose a year whydon'tcha.", $(".dropdown dt a").parent().parent().parent());
+//            validated = false;
+//            console.log("Invalid year");
+//        }
+
 
         var shirt_valid = true;
 
@@ -224,25 +225,6 @@
         return validated;
     }
 
-//    function createDropDown() {
-//        var source = $("#source");
-//        var selected = source.find("option[selected]"); // get selected <option>
-//        var options = $("option", source); // get all <option> elements
-//        // create <dl> and <dt> with selected value inside it
-//        $(".yr").append('<dl id="target" class="dropdown"></dl>')
-//        $("#target").append('<dt><a href="#">' + selected.text() +
-//            '<span class="value">' + selected.val() +
-//            '</span></a></dt>')
-//        $("#target").append('<dd><ul></ul></dd>')
-//        // iterate through all the <option> elements and create UL
-//        options.each(function () {
-//            $("#target dd ul").append('<li><a href="#">' +
-//                $(this).text() + '<span class="value">' +
-//                $(this).val() + '</span></a></li>');
-//        });
-//
-//        source.hide();
-//    }
 
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
@@ -255,9 +237,17 @@
                     console.log("POSTing response");
                     $("#registration_form").ajaxSubmit({
                         success: function (response) {
-                            e.preventDefault();
-                            e.stopImmediatePropagation();
-                            console.log("Javascript handling response");
+                            //$('#submit_button').removeAttr('disabled');
+                            response = JSON.parse(response)
+                            if (response.success === true) {
+                                console.log("displaying splash page")
+                                $("#splash").html(response.replace_splash_with_html);
+                                window.location.hash = "";
+                            } else{
+                                $("#registration_form input[type=submit]").val("Email already Registered!").attr({
+                                    disabled: false
+                                });
+                            }
                     return false;
                     }});
                     } else {
@@ -399,50 +389,6 @@
         $("#source").on("select2-change", function() {
             $(".select2-container.drop").addClass("chosen");
         });
-        
-
-        /* Custom dropdown */
-//        createDropDown();
-//
-//        function removeFocus() {
-//            $(".dropdown dt a").removeClass("focus");
-//            $(".dropdown dd ul").css("max-height", "0");
-//        }
-//
-//        // On click of selected value, toggle focus
-//        $(".dropdown dt a").click(function(e) {
-//            e.preventDefault();
-//            if ($(this).hasClass("focus")) {
-//                removeFocus();
-//            } else {
-//                $(this).addClass("focus");
-//                $(".dropdown dd ul").css("max-height", "400px");
-//            }
-//        });
-//
-//        // On click of one of the options, make valid, remove focus, change actual selected option
-//        $(".dropdown dd ul li a").click(function(e) {
-//            e.preventDefault();
-//            var text = $(this).html();
-//            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9"); // Because valid class isn't working for styling yet
-//            $(".dropdown dt a").css("color", "#121212");
-//            $(".dropdown dt a").html(text);
-//            $(".dropdown dt a").addClass("chosen");
-//            $(".dropdown dt a").removeClass("invalid");
-//            $(".dropdown dt a").addClass("valid");
-//            $("dl.dropdown").addClass("valid");
-//            removeFocus();
-//            var source = $("#source");
-//            source.val($(this).find("span.value").html());
-//        });
-//
-//        // If page is clicked anywhere but the dropdown (dropdown.focusout), remove focus
-//        $(document).bind('click', function(e) {
-//            var $clicked = $(e.target);
-//            if (!$clicked.parents().hasClass("dropdown")) {
-//                removeFocus();
-//            }
-//        });
 
         /* Prevent horizontal scrolling of element into view on focus */
         $(document).on('keydown', ':focus', function (event) {
@@ -459,7 +405,7 @@
                     event.preventDefault();
                     // Move, not scroll, to the next/prev item....
                     //                    MoveIntoView($next);
-                    console.log($next);
+                    //console.log($next);
                     $next.focus();
                     return false;
                 }
@@ -471,15 +417,4 @@
 
 
 
-
-    //Resume upload schtuff
-    $(function () {
-        $('#resume').fileupload({
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo(document.body);
-                });
-            }
-        });
-    });
 </script>
