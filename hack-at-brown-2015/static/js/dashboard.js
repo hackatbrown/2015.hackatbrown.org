@@ -85,18 +85,15 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.changeStatus = function(action){
     emails = $scope.manualEmails.trim().split(",");
     if (emails == []) {
-      console.log("No recipients")
       return;
     };
 
     $http.post('/__manual', {change: action, emails: emails}).
     success(function(data, status, headers, config) {
-        console.log("successfully changed status for emails");
         $scope.manualStatus = action + " Success!";
         $scope.showManualStatus = true;
     }).
     error(function(data, status, headers, config) {
-      console.log('failed to send change status')
       $scope.manualStatus = action + " failed..."
       $scope.showManualStatus = true;
     });
