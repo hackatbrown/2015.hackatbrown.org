@@ -56,8 +56,10 @@ input[type="radio"] + label:hover,
 }
 
 input {
-    -webkit-appearance: none;
-    border-radius: 0;
+    -webkit-appearance: none !important;
+    -moz-appearance:    none !important;
+    appearance:         none !important;
+    border-radius: 0 !important;
 }
 
 input[type=submit] {
@@ -290,8 +292,8 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     font-weight: 300;
     box-sizing: border-box;
     text-indent: 6px;
-    -webkit-box-shadow: inset 1px 0px 0px -1px #404040;
-    box-shadow: inset 1px 0px 0px -1px #404040;
+    -webkit-box-shadow: inset 1px 0px 0px -1px #404040 !important;
+    box-shadow: inset 1px 0px 0px -1px #404040 !important;
     -webkit-appearance: none;
     transition: box-shadow .2s, border .2s, color .2s;
 }
