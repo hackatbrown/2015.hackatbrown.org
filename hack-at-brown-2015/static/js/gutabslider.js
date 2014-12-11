@@ -65,7 +65,7 @@
             $element.append("<span class='" + barClassName + "'></span>");
             var $slidingBar = $element.find("." + barClassName);
             $slidingBar.css("position", "absolute");
-            $slidingBar.css("display", "block");
+//            $slidingBar.css("display", "block");
             $slidingBar.css("width", "0");
             $slidingBar.css("height", "2px");
 
@@ -74,7 +74,7 @@
 
             //Resize when window size changes
             $(window).resize(_.debounce(function() {
-                positionTabUnderCurrentActiveTab($element);
+                setTimeout(function(){ positionTabUnderCurrentActiveTab($element); }, 100);
             }, 100));
 
             //Finished

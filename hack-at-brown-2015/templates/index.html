@@ -1,20 +1,40 @@
 {% extends "base.html" %}
 
 {% block title %}
-Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
+Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 {% endblock %}
 
 {% block head %}
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic/minified/collections/form.min.css' />
+<link rel='stylesheet' href='/static/semantic/minified/collections/grid.min.css' />
+<link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css"/>
+<link rel="stylesheet" href="/static/css/select2.css"/>
 <link rel='stylesheet' href='/static/css/index.css'/>
+<script type="text/javascript" src="/static/js/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="/static/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="/static/js/condor.js"></script>
+<script type="text/javascript" src="/static/js/select2.min.js"></script>
 {% endblock %}
 
 {% block nav %}
-<ul class="top-bar_ul">
-    <li class="top-bar_li active" id="hello_top"><a href="#hero">HELLO</a></li>
-    <li class="top-bar_li" id="schedule_top"><a href="#schedule">SCHEDULE</a></li>
-    <li class="top-bar_li" id="sponsors_top"><a href="#sponsors">SPONSORS</a></li>
+<div class="hamburger">
+    <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+        <g class="hamsvg" sketch:type="MSLayerGroup">
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+        </g>
+    </svg>
+</div>
+<div class="hamburger"></div>
+<ul class="top-bar_ul" data-0="" data-1="">
+    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Cancel</a></li>
+    <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
+    <li class="top-bar_li" id="schedule_top"><a href="#about">About</a></li>
+    <li class="top-bar_li" id="schedule_top"><a href="#schedule">Schedule</a></li>
+    <li class="top-bar_li" id="sponsors_top"><a href="#sponsors">Sponsors</a></li>
     <li class="top-bar_li" id="faq_top"><a href="#faq">FAQ</a></li>
 </ul>
 {% endblock %}
@@ -23,135 +43,344 @@ Hack@Brown 2015 — build cool stuff with us in Providence, 2/7-8
 
 {% include "social.html" %} <!-- necessary to support like buttons, etc -->
 
+<div id="skrollr-body" class="trigrid container">
 
-<div class="background">
-</div>
-
-<div class="container">
-
-    <div id="hero" class='double'>
-        <section id='splash' class='splash panel double_left'>
-
+    <section id='hero' class="splash panel">
+        <div class="double">
+            <div class="double_left">
                 <div class='logo'></div>
-                <div class='title'>Hack@Brown<span class='light'>2015</span></div> <!-- TODO: should probably redefine as h1 -->
-                <hr class='hr'></hr>
-                <div class='slogan'>build cool things with us</div>
-
+                <div class='title'>Hack@Brown<span class='light'>2015</span></div>
+                <div class='datetime light'>
+                    <h2>February 7&ndash;8 &bull; Providence, RI</h2>
+                </div>
+                
+                <div class='slogan'>make, play, learn:</div>
+                
+                
                 {% if registration_status == "sign_up_for_updates" %}
                 <form id='sign-up-for-updates' action='/sign_up_for_updates' method='POST'>
                     <input class='main_cta' type='email' name='email' id='email' placeholder='subscribe for updates' required/>
                 </form>
                 {% endif %}
-
                 {% if registration_status == "registration_open" %}
-                <form class="init_reg">
-                    <input type="text" name="name" placeholder="NAME" class="init_input" />
-                    <input type="text" name="email" placeholder="EMAIL" class="init_input" />
+                <form class="init_reg" novalidate>
+                    <input type="email" name="email" placeholder="EMAIL" class="init_input" required/>
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
-                
-                <!-- Dirty Nasty Inline Script for AJAX posting data and then swoop de swooping incoming -->
-                <script type="text/javascript">
-                  $(".init_reg").submit(function(event) {
-
-                    /* stop form from submitting normally */
-                    event.preventDefault();
-
-                    // code below is silly and nate can probably do better
-//                    /* get some values from elements on the page: */
-//                    var $form = $( this ),
-//                        url = $form.attr( 'action' );
-//
-//                    /* Send the data using post */
-//                    var posting = $.post( url, { name: $('#name').val(), name2: $('#name2').val() } );
-//
-//                    /* Alerts the results */
-//                    posting.done(function( data ) {
-//                      alert('success');
-//                    });
-                    // TODO: actually submit data.  This below thingus should be done after data is successfully submitted
-                    $( ".double" ).css("left", "-100%");
-                    $('html,body').animate({
-                      scrollTop: 0}, 1000);
-                  });
-                </script>
                 {% endif %}
-
+                
                 {% if registration_status == "registration_closed" %}
                 <div class='main_cta'>
                     Registration is closed, sorry!
                 </div>
                 {% endif %}
+            </div>
 
-                <div class='datetime light'>
-                    <h3>Providence, RI | February 7-8 </h3>
-                </div>
-        </section>
-    
-        {% if registration_status == "registration_open" %}
-            {% include "registration_form.html" %}
-            <div class="cancel_reg">Cancel</div>
-            <script type="text/javascript">
-              $(".cancel_reg").click(function() {
-                $( ".double" ).css("left", "0px");
-              });
-            </script>
-        {% endif %}
-    </div>
-
-    <section id='faq' class='panel white'>
-
-        <div id='faq1'>
-            <h2>What is Hack@Brown?</h2>
-            <p>Brown University's student-run hackathon. Last year, over 300 college students from around the Northeast came to Providence to spend 24 hours designing and building mobile apps, website services, Chrome extensions and more. And this February, we're doing it again.</p>
+            {% if registration_status == "registration_open" %} 
+                {% include "registration_form.html" %}
+            {% endif %}
         </div>
-
-        <div id='faq2'>
-            <h2>How do I get there? Where do I sleep? How do I get back?</h2>
-            <p>Last year, we provided free buses to and from New York City and Boston, and while we might do that again, we're also happy to announce that we'll also be offering reimbursements to hackers from out of town! The hackathon is being held across two of our most historic buildings–Sayles and Wilson Halls.</p>
-            <p>We'll make sure you have a quiet place to sleep, but it might not be the comfiest.</p>
-            <h2>What should I bring?</h2>
-            <p>Everything you need to execute your hack—which usually just means computers and chargers. And don't forget pillows, sleeping bags, toothbrushes, or anything else you need to survive the night (plus your student ID). We'll keep you fed, caffeinated, and give you a steady supply of free t-shirts and other free stuff from our sponsors.</p>
-            <h2>Can I work on a project I've already started?</h2>
-            <p>Hackathons are about learning new things and leaving your comfort zone, so we'll ask that you start something entirely new with your team. Of course, you're free to use publicly available resources, like frameworks or APIs.</p>
+        <div class="background">
+            <div class="left fore blue-staggered" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-100%.0);"></div>
+            <div class="left fore pink-overlapping" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
+            <div class="right fore green-backtoback" data-bottom-top="transform: translate3d(0,-30%,0);" data-top-bottom="transform: translate3d(0,-70%,0);"></div>
+            <div class="right fore green-facing" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,-110%,0);"></div>
         </div>
-
     </section>
     
+    <div id="panels" class="panels">
+        <section class="panel triangle left about" data-bottom-top="transform: translate3d(0,-10%,0);" data-top-bottom="transform: translate3d(0,10%,0);">
+            <div>
+                <div>
+                    <article id='about' data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
+                        <h1>Hackathon?</h1>
+                        <h2>noun \'hak&#601;,TH&#228;n\</h2>
+                        <p>An event to collaboratively create, solve, and build something new</p>
+                        <h1 class="blue">We're Brown's annual student hackathon.</h1>
+                        <p>Get ready for a weekend full of learning new technologies, making great friends, and pushing your limits. We’ll be providing plenty of mentors, food, and anything else you need to carry out your craziest ideas.</p>
+                    </article>
+                </div>
+            </div>
+            <div class="background">
+                <div class="back"></div>
+                <div class="right mid pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
+            </div>
+        </section>
+
+        <section class="panel triangle right schedule verbose">
+            <div class="foreground">
+                <div>
+                    <article id="schedule" class="schedule-text">
+                        <div class="day saturday" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
+                            <h1>Saturday</h1>
+                            <h2>Registration <span>9:00&ndash;11:00</span></h2>
+                            <p>Check-in at Sayles Hall</p>
+                            <h2>Introduction and Kick-off! <span>11:00&ndash;12:00</span></h2>
+                            <p>Head to Salomon Auditorium</p>
+                            <h2>Lunch <span>12:00&ndash;1:00</span></h2>
+                            <p>Eat, mingle, brainstorm</p>
+                            <h2>Hacking Begins <span>1:00</span></h2>
+                            <p>Work time with snacks and hot-chocolate throughout</p>
+                            <h2>Dinner <span>6:00&ndash;7:00</span></h2>
+                            <h2>Midnight Snack <span>12:00&ndash;1:00</span></h2>
+
+                            <p>Continue hacking... sleeping areas will be plentiful!</p>
+                        </div>
+                        <div class="day sunday" data-bottom-top="transform: translate3d(0,15%,0);" data-top-bottom="transform: translate3d(0,-15%,0);">
+                            <h1>Sunday</h1>
+                            <h2>Breakfast & Coffee <span>8:00&ndash;9:00</span></h2>
+                            <h2>Hacking submissions due!<span>12:00&ndash;1:00</span></h2>
+                            <h2>Lunch <span>12:00&ndash;12:45</span></h2>
+                            <h2>Judging and Demo Fair<span>1:00&ndash;2:30</span></h2>
+                            <p>1st round judging. Judges will visit teams for informal demos and choose finalists. Feel free to check out other teams' projects!</p>
+                            <h2>Finalists Announced<span>2:45</span></h2>
+                            <h2>Awards<span>3:00&ndash;4:30</span></h2>
+                            <p>Keynote, final demos, winners announced</p>
+                            <h2>Goodbye! <span>5:00</span></h2>
+                            <p>Clean up, pack up belongings, buses will be leaving at 5:00 pm</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="background">
+                <div class="back"></div>
+                <div class="left fore white-tower" data-bottom-top="transform: translate3d(0,50%,0);" data-top-bottom="transform: translate3d(0,-150%,0);"></div>
+                <div class="left mid fallback-orange" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-80%,0);"></div>
+            </div>
+        </section>
+
+        <section class="panel triangle left sponsors">
+            <div>
+                <div>
+                    <article id='sponsors'>
+                        <h1>Our Thanks</h1>
+                        <p>To the companies that make this possible!</p>
+                        <h2 class="tera">Tera Sponsor</h2>
+                        <div class="sponsor-row tera">
+                            <a href="http://twosigma.com" target="_blank">
+                                <img src="/static/img/sponsor-logos/twosigma.png">
+                            </a>
+                        </div>
+                        <h2 class="giga">Giga Sponsors</h2>
+                        <div class="sponsor-row giga">
+                            <a href="http://dropbox.com" target="_blank">
+                                <img src="/static/img/sponsor-logos/dropbox.png">
+                            </a>
+                            <a href="http://kayak.com" target="_blank">
+                                <img src="/static/img/sponsor-logos/kayak.png">
+                            </a>
+                            <a href="http://palantir.com" target="_blank">
+                                <img src="/static/img/sponsor-logos/palantir.png">
+                            </a>
+                        </div>
+                        <h2 class="other">Mega and Kilo Sponsors</h2>
+                        <div class="sponsor-row other">
+                            <span class="mega">
+                                <a href="http://google.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/google.svg">
+                                </a>
+                            </span>
+
+                            <span class="kilo">
+                                <a href="http://retailmenot.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/retailmenot.png">
+                                </a>
+                                <a href="http://thalmic.com" target="_blank">
+                                    <img src="/static/img/sponsor-logos/thalmiclabs.png">
+                                </a>
+                            </span>
+                        </div>
+                        <p>Interested in sponsoring? <a href="/static/sponsorship.pdf">More details here.</a></p>
+                    </article>
+                </div>
+            </div>
+
+        </section>
+
+        <section class='panel triangle left faq verbose'>
+            <div>
+                <div>
+                    <article id='faq' data-bottom-top="transform: translate3d(0,20%,0);" data-top-bottom="transform: translate3d(0,-20%,0);">
+                        <h1>FAQ</h1>
+                        <h2>Who can attend?</h2>
+                        <p>All undergraduate, graduate, and high school students from any school are welcome. If you are under 18, we’ll need a parental consent form.</p>
+
+                        <h2>How will you decide between applicants?</h2>
+                        <p>Applicants will be chosen based on a random lottery. Everyone is welcome to apply and attend!</p>
+
+                        <h2>How much is this going to cost me?</h2>
+                        <p>Hack@Brown is completely free, including food, drinks, and awesome swag.</p>
+
+                        <h2>How do I get there?</h2>
+                        <p>You can take Amtrak or the MBTA to Providence Station, a short walk from campus. We’re working on getting travel reimbursements and buses set-up for you! Hack@Brown will take place in Sayles & Wilson Hall at Brown University.</p>
+
+                        <h2>What about team sizes?</h2>
+                        <p>You’re welcome to have up to four people on a team. It is absolutely not necessary to have a team prior to coming to Hack@Brown&mdash;we’ll have a fun team-forming session at the beginning.</p>
+
+                        <h2>What should I bring?</h2>
+                        <p>Your valid student ID, laptop, phone, chargers, sleeping equipment, and lots of excitement. If you’re a minor, a parental consent form too that we’ll email to you.</p>
+                        
+                        <h2>I have a question that's not answered here! </h2>
+                        <p>We’re here for you! Send us an email at <a href="mailto:hello@hackatbrown.org">hello@hackatbrown.org</a> or feel to reach out to us on <a href="http://twitter.com/hackatbrown">Twitter</a> or <a href="http://facebook.com/hackatbrown">Facebook</a>.</p>
+                    </article>
+                </div>
+            </div>
+            <div class="background">
+                <div class="back" data-bottom-top="transform: translate3d(0,-45%,0);" data-top-bottom="transform: translate3d(0,-55%,0);"></div>
+            </div>
+        </section>
+        
+        <section class="panel triangle left footer">
+            <div><div>
+            <footer>
+                Copyright &copy; 2015 Hack@Brown
+                <a class="coc" href="/static/code-of-conduct.pdf">Code of Conduct</a>
+                <ul class="social-links">
+                    <li><a href="mailto:hello@hackatbrown.org">Email</a></li>
+                    <li><a href="http://facebook.com/hackatbrown">Facebook</a></li>
+                    <li><a href="http://twitter.com/hackatbrown">Twitter</a></li>
+                    <li><a href="http://medium.com/hack-at-brown">Blog</a></li>
+                </ul>
+            </footer>
+            </div></div>
+        </section>
+    </div>
 </div>
 
-<script type="text/javascript" src="/static/js/jquery.particleground.min.js"></script>
-<script src='/static/js/index.js'></script>
+<script type="text/javascript" src='/static/semantic/minified/modules/behavior/form.min.js'></script>
+<script type="text/javascript" src='/static/js/index.js'></script>
+<script type="text/javascript" src="/static/js/skrollr.js"></script>
 
 <script>
     // Navigation thingus
+
     
     function sectionChanged(s) {
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
     }
-    
-    $(document).ready(function() {
-        $('.top-bar_ul').onePageNav({
+
+    function transferInitInfo() {
+        var vals = $("form.init_reg").serializeArray();
+        $(".registration_form input[name='email']").val(vals[0].value);
+    }
+
+    function fixSplashHeight() {
+        var height = 0;
+        var splash = document.getElementById("hero");
+        var panels = document.getElementById("panels");
+        if (splash.classList.contains("reg")) {
+            height = (Math.ceil(splash.offsetHeight/60) * 60) - 840;
+        }
+        $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
+    }
+  
+    function initalizeNavMenu(selector) {
+      $(selector).onePageNav({
             currentClass: "active",
             changeHash: false,
             begin: sectionChanged,
-            scrollChange: sectionChanged
+            scrollChange: sectionChanged,
+            filter: ':not(.secondary)',
         });
-        
-        $('.top-bar_ul').gutabslider();
+      
+      setTimeout(function(){ $(selector).gutabslider(); }, 400);
+    }
 
-        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 50);
+    // Function that validates email address through a regular expression.
+    function validateEmail(sEmail) {
+        var filter = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i;
+        if (filter.test(sEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+      
+    function initalizeReg() {
+      // Toggle between form and splash
+        $("form.init_reg").submit(function (e) {
+            e.preventDefault();
+            
+            $(".registration_form").addClass("active");
+
+            // Validate
+            if (!validateEmail($(".init_reg input[type='email']").val())) {
+                addNag("Please enter a valid email address.", $(".init_reg input[type='email']").parent());
+                console.log("Splash Page: Invalid email!");
+                return;
+            } else {
+                $(".init_reg .init_submit").addClass("valid");
+            }
+           
+
+
+            transferInitInfo();
+            $('html,body').animate({scrollTop: 0}, 1000);
+            $(".splash").addClass("reg");
+            $(".cancel_reg").addClass("reg");
+            $(".splash .background > .fore").addClass("translated");
+            $(".top-bar_li#hello_top a").fadeOut(500, function() {
+                $(this).text("Registration");
+                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+                $(this).fadeIn(800);
+            });
+            fixSplashHeight();
+            //Replace this with a callback
+            setTimeout("document.getElementById('name').focus();", 900);
+        });
+
+        $(".cancel_reg").click(function () {
+            $(".splash").removeClass("reg");
+            $(this).removeClass("reg");
+            $(".splash .background > .fore").removeClass("translated");
+            $(".top-bar_li#hello_top a").fadeOut(500, function() {
+                $(this).text("Hello");
+                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+                $(this).fadeIn(800);
+            });
+            fixSplashHeight();
+            setTimeout("$('.registration_form').removeClass('active')", 2000);
+            
+        });
+    }
+  
+    function initalizeHamburger() {
+      //Hamburger menu for mobile
+        $("nav ul > li a").click(function() {
+                $("nav").removeClass("open");
+            })
+        $(".hamburger").click(function () {
+            $("nav").toggleClass("open");
+        });
+    }
+    
+    $(document).ready(function() {
+        var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+      
+        // Make sure splash height is good on doc ready
+        fixSplashHeight();
         
-        //particle background
-      $('.background').particleground({
-        dotColor: '#E0E0E0',
-        lineColor: '#EFEFEF',
-        particleRadius: 5
-      });
-      $('.intro').css({
-        'margin-top': -($('.intro').height() / 2)
-      });
+        // P-P-P- 
+        if(!iOS) {
+          skrollr.init({
+            mobileCheck: function() {return false;},
+            forceHeight: false,
+          })
+        }
+
+        // Fix splash height if the browser resizes
+        $(window).resize(function() {
+            fixSplashHeight();
+        });
+
+        initalizeReg();
+        
+        initalizeHamburger();
+      
+        initalizeNavMenu('.top-bar_ul');
+        
     });
-
+  
 </script>
 {% endblock %}

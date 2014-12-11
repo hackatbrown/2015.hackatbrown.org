@@ -1,142 +1,460 @@
-<div class='registration_wrapper panel double_right'>
-    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data">
-        
-        <div class="two fields">
+<div class='panel double_right'>
+    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data" novalidate>
+        <div class="errorsPresent">Please fix all errors in the form.</div>
+
+        <div class="two fields row">
             <div class="field">
                 <label for="name">Name</label>
-                <input type="text" name="name" placeholder="Josiah Carberry" />
+                <input id="name" type="text" name="name" placeholder="Josiah Carberry" required/>
             </div>
             <div class="field">
                 <label for="name">Email</label>
-                <input type="email" name="email" placeholder="handle@schooldomanin.edu" />
+                <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
             </div>
         </div>
-        
-        <div class="two fields">
+
+        <div class="two fields row">
             <div class="field">
                 <div class="two fields">
-                    <div class="field">
+                    <div class="ten wide field ui-widget">
                         <label for="school">School</label>
-                        <input type="text" name="school" placeholder="Beige University" />
+                        <input type="text" name="school" class="schools" placeholder="Beige University" required/>
                     </div>
-                    <div class="field">
+                    <div class="six wide field yr">
                         <label for="year">Year</label>
-                        <input type="text" name="year" placeholder="2017" />
+                        <select name="year" id="source" class="drop" required >
+                            <option></option>
+                            <option value="freshman">First Year</option>
+                            <option value="sophomore">Second Year</option>
+                            <option value="junior">Third Year</option>
+                            <option value="senior">Fourth Year</option>
+                            <option value="highschool">High School</option>
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="field">
                 <label>T-Shirt Size</label>
-                    <div class="shirt_size">
-                        <table class="radio_select">
-                            <tr>
-                                <td>
-                                    <input type="radio" name="shirt_gen" id="sgM" value='M' />
-                                    <label for="sgM">Men's</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_gen" id="sgW" value='W' />
-                                    <label for="sgW">Women's</label>
-                                </td>
-                             </tr>
-                        </table>
-                
-                        <table class="radio_select">
-                            <tr>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssXS" value='XS' />
-                                    <label for="ssXS">XS</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssS" value='S' />
-                                    <label for="ssS">S</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssM" value='M' />
-                                    <label for="ssM">M</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssL" value='L' />
-                                    <label for="ssL">L</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssXL" value='XL' />
-                                    <label for="ssXL">XL</label>
-                                </td>
-                                <td>
-                                    <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
-                                    <label for="ssXXL">XXL</label>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-            </div>
-        </div>
-        
-        <div class="field">
-            <label for="dietary_restrictions">Any dietary restrictions?</label>
-            <input type="text" name="dietary_restrictions" />
-        </div>
-        
-        <div class="two fields">
-            <div class="field">
-                <label for="travel_reimbursement">Will you need travel reimbursement?</label>
-                    <table class="radio_select" style="margin-bottom:35px;">
+                <div class="shirt_size">
+                    <table class="radio_select center">
                         <tr>
                             <td>
-                                <input type="radio" name="travel_reimbursement" id="travel_yes" value='yes' />
-                                <label for="travel_yes">Yes</label>
+                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                <label for="sgM">Men's</label>
                             </td>
                             <td>
-                                <input type="radio" name="travel_reimbursement" id="travel_no" value='no' />
-                                <label for="travel_no">No</label>
+                                <input type="radio" name="shirt_gen" id="sgW" value='W' />
+                                <label for="sgW">Women's</label>
                             </td>
                         </tr>
                     </table>
-                    
+
+                    <table class="radio_select center">
+                        <tr>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                <label for="ssXS">XS</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssS" value='S' />
+                                <label for="ssS">S</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssM" value='M' />
+                                <label for="ssM">M</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssL" value='L' />
+                                <label for="ssL">L</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssXL" value='XL' />
+                                <label for="ssXL">XL</label>
+                            </td>
+                            <td>
+                                <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
+                                <label for="ssXXL">XXL</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="field row">
+            <label for="dietary_restrictions">Dietary restrictions? <span class="optional">(Optional)</span></label>
+<!--            <input name="dietary_restrictions" class="tagit diet" />-->
+            <input type="hidden" id="diet" class="stags" style="width:100%"/>
+        </div>
+
+        <div class="field row">
+            <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
+<!--            <input name="teammates" class="tagit team" />-->
+            <input type="hidden" id="teammates" class="stags nodrop" name="teammates"/>
+        </div>
+
+        <div class="two fields row">
+            <div class="field">
                 <label for="hardware_hack">Hardware Hack?</label>
-                    <table class="radio_select">
-                        <tr>
-                            <td>
-                                <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
-                                <label for="hardware_yes">Yes!</label>
-                            </td>
-                            <td>
-                                <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
-                                <label for="hardware_no">Nah</label>
-                            </td>
-                        </tr>
-                    </table>
+                <table class="radio_select" for="hardware_hack">
+                    <tr>
+                        <td>
+                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
+                            <label for="hardware_yes">Yes!</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
+                            <label for="hardware_no">Nah</label>
+                        </td>
+                    </tr>
+                </table>
             </div>
+
             <div class="field">
-                <label for="links">Links (optional)</label>
-                    <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." /> <br />
+                <label for="resume">Upload Resume</label>
+                <input id="resume" class="resume-upload" type="file" name="resume" required />
             </div>
+        </div>
+
+        <div class="two fields row">
+            <div class="field">
+                <label for="links">Link(s) <span class="optional">(Optional)</span></label>
+                <div class="condor"></div>
+            </div>
+        </div>
+
+        <div class="inline field center row">
+            <input type="checkbox" name="agree" id="agree" />
+            <label for="agree" class="check_agree">I agree to the <a href="http://confcodeofconduct.com/" target="_blank">Code of Conduct</a></label>
+        </div>
+        <div class="field center">
+            <input type="submit" class="ui button" value="REGISTER" />
         </div>
     </form>
 </div>
 <div class="clearfix"></div>
 
-<script src='/static/js/H5F.js'></script> <!-- a polyfill that adds HTML5 form validation features to older browsers -->
+<script src='/static/js/H5F.js'></script>
+<!-- a polyfill that adds HTML5 form validation features to older browsers -->
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="/static/Tagit/js/tag-it.js"></script>
 
 <script>
+    function addNag(msg, parent) {
+        var nags = parent.children(".nag");
+        if (nags.length == 0)
+            parent.append("<div class='nag'>" + msg + "</div>");
+        else {
+            parent.removeClass("valid");
+            parent.children().removeClass("valid");
+        }
+    }
 
-$(document).ready(function() {
-	H5F.setup(document.getElementById("registration_form"), {
-		onSubmit: function() {
-			$("#registration_form input[type=submit]").val("Registering you...").attr({disabled: true});
-			$("#registration_form").ajaxSubmit({
-				success: function(response) {
-					var response = JSON.parse(response);
-					if (response.success) {
-						$("#splash").html(response.replace_splash_with_html);
-						window.location.hash = "";
-					}
-				}
-			})
-			return false;
-		}
-	});
-})
+    function validateForm() {
+        var validated = true;
+
+        // Check if name is filled out
+        if (!$("input[name='name']").val()) {
+            $("input[name='name']").addClass("invalid");
+            addNag("We're gonna need your name.", $("input[name='name']").parent());
+            validated = false;
+            console.log("Invalid name");
+        }
+
+        // Check if email is filled out
+        if (!validateEmail($(".field input[name='email']").val())) {
+            $(".field input[name='email']").addClass("invalid");
+            addNag("Please enter a valid email address.", $(".field input[name='email']").parent());
+            validated = false;
+            console.log("Invalid email");
+        }
+
+
+        // Check if school is filled out
+        if (!$("input[name='school']").val()) {
+            $("input[name='school']").addClass("invalid");
+            addNag("Please enter your school.", $("input[name='school']").parent());
+            validated = false;
+            console.log("Invalid school");
+        }
+
+        if (!$("select[name='year']").val()) {
+            $(".select2-container.drop").addClass("invalid");
+            addNag("Please choose your current year.", $("select[name='year']").parent());
+            validated = false;
+            console.log("Invalid year");
+        }
+
+        var shirt_valid = true;
+
+        // Check if they filled out shirt gender & size
+        if (!$("input[name='shirt_gen']:checked").val()) {
+            shirt_valid = false;
+            validated = false;
+            console.log("Invalid shirt gender");
+        }
+
+        if (!$("input[name='shirt_size']:checked").val()) {
+            shirt_valid = false;
+            validated = false;
+            console.log("Invalid shirt size");
+        }
+
+        if (!shirt_valid) {
+            addNag("Please choose a complete shirt size.", $("div.shirt_size").parent());
+        }
+
+        // Check if they filled out hardware hack
+        if (!$("input[name='hardware_hack']:checked").val()) {
+            addNag("Please check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
+            validated = false;
+            console.log("Invalid hardware hack");
+        }
+
+        // Check for resume
+        if (!$(".resume-upload").val()) {
+            addNag("Upload your resume, man/woman/being/dog/mythical creature.", $(".resume-upload").parent());
+            validated = false;
+            console.log("Invalid resume");
+        }
+
+        // Check if they agree to the Code of Conduct
+        if (!$("#agree").prop('checked')) {
+            addNag("You must agree to the Code of Conduct before registering.", $("#agree").parent());
+            validated = false;
+            console.log("Invalid agree");
+        }
+
+        return validated;
+    }
+
+
+    $(document).ready(function () {
+        H5F.setup(document.getElementById("registration_form"), {
+            onSubmit: function (e) {
+                e.preventDefault();
+                if (validateForm()) {
+                    $("#registration_form input[type=submit]").val("Registering you...").attr({
+                        disabled: true
+                    });
+                    console.log("POSTing response");
+                    $("#registration_form").ajaxSubmit({
+                        success: function (response) {
+                            //$('#submit_button').removeAttr('disabled');
+                            response = JSON.parse(response)
+                            if (response.success === true) {
+                                console.log("displaying splash page")
+                                $("#splash").html(response.replace_splash_with_html);
+                                window.location.hash = "";
+                            } else{
+                                $("#registration_form input[type=submit]").val("Email already Registered!").attr({
+                                    disabled: false
+                                });
+                            }
+                    return false;
+                    }});
+                    } else {
+                        $(".errorsPresent").addClass("nag");
+                        $('html,body').animate({scrollTop: 0}, 1000);
+                    }
+            }
+        });
+
+
+        /* Validation Styling */
+        function toggleInvalid(el, email) {
+            var validEmail = true;
+
+            if (email) {
+                validEmail = validateEmail(el.val());
+            }
+
+            if (el.val() == "" || !validEmail) {
+                el.addClass("invalid");
+                el.removeClass("valid");
+            } else {
+                el.removeClass("invalid");
+                el.addClass("valid");
+            }
+        }
+
+        $(".registration_form input[name='name']").focusout(function () {
+            toggleInvalid($(this), false);
+        });
+
+        $(".registration_form input[name='email']").focusout(function () {
+            toggleInvalid($(this), true);
+        });
+
+        $(".registration_form input[name='school']").focusout(function () {
+            toggleInvalid($(this), false);
+        });
+
+            // Check for shirt size validation
+        $(".shirt_size input[type='radio'][name='shirt_gen'] + label").click(function () {
+            if ($("input[name='shirt_size']:checked").val()) 
+                $("div.shirt_size").addClass("valid");
+        });
+
+        $(".shirt_size input[type='radio'][name='shirt_size'] + label").click(function () {
+            if($("input[name='shirt_gen']:checked").val())
+                $("div.shirt_size").addClass("valid");
+        });
+
+            // Check for hardware hack validation
+        $("input[type='radio'][name='hardware_hack'] + label").click(function () {
+            $("table[for='hardware_hack'").addClass("valid");
+        });
+
+            // Check for file upload
+        $("input[type='file']").change(function () {
+            $(this).addClass("valid");
+        });
+
+            // Check for agreement with CoC
+        $("input[type='checkbox'][name='agree']").click(function () {
+            $("label[for='agree']").addClass("valid");
+        });
+
+        /* Get datas */
+//        var $diet_restrictions = [];
+//        $.getJSON("/static/data/dietary-restrictions.json", function (data) {
+//            $.each(data, function (key, val) {
+//                $diet_restrictions[key] = val;
+//            })
+//        });
+
+        var $universities = [];
+        $.getJSON("/static/data/universities.json", function (data) {
+            $.each(data, function (key, val) {
+                $universities[key] = val;
+            })
+        });
+
+
+        /* On email change & valid, check for university domain */
+        function searchUniversities(domain) {
+            $universities.forEach(function (obj) {
+                if (domain == obj["domain"]) {
+                    $(".registration_form input[name='school']").val(obj["label"]);
+                    $(".registration_form input[name='school']").removeClass("invalid");
+                }
+            });
+        }
+
+        $("input[type='email']").change(function () {
+            var splitEmail = $(this).val().split('@');
+            if (splitEmail.length == 2) {
+                var univ = searchUniversities(splitEmail[1]);
+                if (univ != null)
+                    $(".registration_form input.schools").val(univ);
+            }
+        });
+
+
+        /* Setting up tagit for dietary restrictions and teammates */
+//        $(".tagit.diet").tagit({
+//            allowSpaces: true,
+//            availableTags: $diet_restrictions
+//        });
+
+//        $(".tagit.team").tagit({
+//            maxTags: 3
+//        });
+//
+//        $("ul.tagit input").focus(function () {
+//            $(this).parents("ul").css("box-shadow", "inset 1px -50px 0px -1px #404040");
+//            $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
+//        });
+//
+//        $("ul.tagit input").focusout(function () {
+//            if ($("ul.tagit").children("li").length > 2) {
+//                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
+//            } else {
+//                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
+//            }
+//            $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
+//        });
+
+
+        /* Autocomplete suggestions for schools */
+        $(function () {
+            $(".schools").autocomplete({
+                source: $universities
+            });
+        });
+
+        /* Condor dynamic link input stuff */
+        $(".condor").condor({
+            uniqueNames: false,
+            namePrefix: 'links',
+            activeHint: 'Github, Dribbble, Behance, etc.',
+            inactiveHint: 'add another link',
+            addCallback: fixSplashHeight,
+        });
+        
+        //select2 dropdown
+        $("#source").select2({
+            width: "100%",
+            minimumResultsForSearch: -1,
+            placeholder: "Select Year",
+        });
+        
+        $("#source").on("change", function() {
+            $("select[name='year']").addClass("valid");
+            $(".select2-container.drop").removeClass("invalid");
+            $(".select2-container.drop").addClass("valid");
+        });
+        
+        $("#teammates").select2({
+            width: "100%",
+            tags:[""],
+            tokenSeparators: [",", " "],
+            dropdownCssClass: "select2-drop-override",
+            maximumSelectionSize: 3
+        });
+        
+        var $dRestrictions = ["Vegetarian", "Vegan", "Gluten Free", "Kosher", "Lactose Intolerant", "Nuts Allergy", "Treenuts Allergy", "Soy Allergy", 
+"Shellfish Allergy", "Corn Allergy", "No Pork", "No Ham", "No Beef", "No Mutton", "Halal", "No Red Meat", "None"];
+        
+        $("#diet").select2({
+            width: "100%",
+            tags: $dRestrictions,
+            tokenSeparators: [","],
+            dropdownCssClass: "bigdrop"
+        });
+
+//        $("#teammates").on("select2-opening", function(e) {
+//            e.preventDefault();
+//        });
+        
+        
+
+        /* Prevent horizontal scrolling of element into view on focus */
+        $(document).on('keydown', ':focus', function (event) {
+            if ((event.keyCode || event.which) == 9) {
+                //TODO: Generalize and support selecting other kinds of input
+                var $inputs = $("input[type=text], input[type=email], input[type=radio], input[type=checkbox]");
+//                console.log($inputs);
+                var index = $inputs.index(this);
+                // Index previous or next input based on the shift key
+                index += event.shiftKey ? -1 : 1;
+                // If we are in the range of valid inputs (else browser takes focus)
+                if (index >= 0 && index < $inputs.length) {
+                    var $next = $inputs.eq(index);
+                    event.preventDefault();
+                    // Move, not scroll, to the next/prev item....
+                    //                    MoveIntoView($next);
+                    //console.log($next);
+                    $next.focus();
+                    return false;
+                }
+            }
+        });
+
+
+    })
+
+
 
 </script>
