@@ -298,6 +298,8 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
       // Toggle between form and splash
         $("form.init_reg").submit(function (e) {
             e.preventDefault();
+            
+            $(".registration_form").addClass("active");
 
             // Validate
             if (!validateEmail($(".init_reg input[type='email']").val())) {
@@ -335,6 +337,8 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                 $(this).fadeIn(800);
             });
             fixSplashHeight();
+            setTimeout("$('.registration_form').removeClass('active')", 2000);
+            
         });
     }
   

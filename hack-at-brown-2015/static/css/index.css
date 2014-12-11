@@ -372,12 +372,16 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 /* REGISTRATION FORM */
 .registration_form {
+    display: none;
     width: 80%;
     max-width: 964px !important;
     height: 100%;
     margin: 0 auto;
     top: 0;
     text-align: left;
+}
+.registration_form.active {
+    display: block;
 }
 .registration_form label { 
     text-transform: uppercase;
