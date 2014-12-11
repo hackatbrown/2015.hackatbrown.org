@@ -204,6 +204,27 @@
             addNag("Please choose a complete shirt size.", $("div.shirt_size").parent());
         }
 
+        // Check for valid teammate emails
+        var $mates = $("#teammates").val();
+        if($mates) {
+            $mates = $mates.split(",");
+            var validEmails = true;
+            $.each($mates, function(index, email) {
+                if (!validateEmail(email)) {
+                    validEmails = false;
+                }
+            });
+
+            if (!validEmails) {
+                console.log("Invalid teammate email(s)");
+                addNag("Please make sure all your teammates' emails are valid.", $("#teammates").parent());
+            } else {
+                $("#teammates").addClass("valid");
+            }
+        } else {
+            $("#teammates").addClass("valid");
+        }
+
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
             addNag("Please check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
