@@ -23,10 +23,10 @@
                     <div class="six wide field yr">
                         <label for="year">Year</label>
                         <select name="year" id="source" required >
-                            <option selected="selected" value="freshman">Freshman</option>
-                            <option value="sophomore">Sophomore</option>
-                            <option value="junior">Junior</option>
-                            <option value="senior">Senior</option>
+                            <option selected="selected" value="freshman">First Year</option>
+                            <option value="sophomore">Second Year</option>
+                            <option value="junior">Third Year</option>
+                            <option value="senior">Fourth Year</option>
                             <option value="highschool">High School</option>
                         </select>
                     </div>
@@ -222,25 +222,25 @@
         return validated;
     }
 
-    function createDropDown() {
-        var source = $("#source");
-        var selected = source.find("option[selected]"); // get selected <option>
-        var options = $("option", source); // get all <option> elements
-        // create <dl> and <dt> with selected value inside it
-        $(".yr").append('<dl id="target" class="dropdown"></dl>')
-        $("#target").append('<dt><a href="#">' + selected.text() +
-            '<span class="value">' + selected.val() +
-            '</span></a></dt>')
-        $("#target").append('<dd><ul></ul></dd>')
-        // iterate through all the <option> elements and create UL
-        options.each(function () {
-            $("#target dd ul").append('<li><a href="#">' +
-                $(this).text() + '<span class="value">' +
-                $(this).val() + '</span></a></li>');
-        });
-
-        source.hide();
-    }
+//    function createDropDown() {
+//        var source = $("#source");
+//        var selected = source.find("option[selected]"); // get selected <option>
+//        var options = $("option", source); // get all <option> elements
+//        // create <dl> and <dt> with selected value inside it
+//        $(".yr").append('<dl id="target" class="dropdown"></dl>')
+//        $("#target").append('<dt><a href="#">' + selected.text() +
+//            '<span class="value">' + selected.val() +
+//            '</span></a></dt>')
+//        $("#target").append('<dd><ul></ul></dd>')
+//        // iterate through all the <option> elements and create UL
+//        options.each(function () {
+//            $("#target dd ul").append('<li><a href="#">' +
+//                $(this).text() + '<span class="value">' +
+//                $(this).val() + '</span></a></li>');
+//        });
+//
+//        source.hide();
+//    }
 
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
@@ -385,49 +385,52 @@
             activeHint: 'Github, Dribbble, Behance, etc.',
             inactiveHint: 'add another link'
         });
+        
+        //select2
+        $("#source").select2();
 
         /* Custom dropdown */
-        createDropDown();
-
-        function removeFocus() {
-            $(".dropdown dt a").removeClass("focus");
-            $(".dropdown dd ul").css("max-height", "0");
-        }
-
-        // On click of selected value, toggle focus
-        $(".dropdown dt a").click(function(e) {
-            e.preventDefault();
-            if ($(this).hasClass("focus")) {
-                removeFocus();
-            } else {
-                $(this).addClass("focus");
-                $(".dropdown dd ul").css("max-height", "400px");
-            }
-        });
-
-        // On click of one of the options, make valid, remove focus, change actual selected option
-        $(".dropdown dd ul li a").click(function(e) {
-            e.preventDefault();
-            var text = $(this).html();
-            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9"); // Because valid class isn't working for styling yet
-            $(".dropdown dt a").css("color", "#121212");
-            $(".dropdown dt a").html(text);
-            $(".dropdown dt a").addClass("chosen");
-            $(".dropdown dt a").removeClass("invalid");
-            $(".dropdown dt a").addClass("valid");
-            $("dl.dropdown").addClass("valid");
-            removeFocus();
-            var source = $("#source");
-            source.val($(this).find("span.value").html());
-        });
-
-        // If page is clicked anywhere but the dropdown (dropdown.focusout), remove focus
-        $(document).bind('click', function(e) {
-            var $clicked = $(e.target);
-            if (!$clicked.parents().hasClass("dropdown")) {
-                removeFocus();
-            }
-        });
+//        createDropDown();
+//
+//        function removeFocus() {
+//            $(".dropdown dt a").removeClass("focus");
+//            $(".dropdown dd ul").css("max-height", "0");
+//        }
+//
+//        // On click of selected value, toggle focus
+//        $(".dropdown dt a").click(function(e) {
+//            e.preventDefault();
+//            if ($(this).hasClass("focus")) {
+//                removeFocus();
+//            } else {
+//                $(this).addClass("focus");
+//                $(".dropdown dd ul").css("max-height", "400px");
+//            }
+//        });
+//
+//        // On click of one of the options, make valid, remove focus, change actual selected option
+//        $(".dropdown dd ul li a").click(function(e) {
+//            e.preventDefault();
+//            var text = $(this).html();
+//            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9"); // Because valid class isn't working for styling yet
+//            $(".dropdown dt a").css("color", "#121212");
+//            $(".dropdown dt a").html(text);
+//            $(".dropdown dt a").addClass("chosen");
+//            $(".dropdown dt a").removeClass("invalid");
+//            $(".dropdown dt a").addClass("valid");
+//            $("dl.dropdown").addClass("valid");
+//            removeFocus();
+//            var source = $("#source");
+//            source.val($(this).find("span.value").html());
+//        });
+//
+//        // If page is clicked anywhere but the dropdown (dropdown.focusout), remove focus
+//        $(document).bind('click', function(e) {
+//            var $clicked = $(e.target);
+//            if (!$clicked.parents().hasClass("dropdown")) {
+//                removeFocus();
+//            }
+//        });
 
         /* Prevent horizontal scrolling of element into view on focus */
         $(document).on('keydown', ':focus', function (event) {
