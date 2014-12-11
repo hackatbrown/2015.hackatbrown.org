@@ -17,6 +17,10 @@ handlers:
 - url: .*
   script: main.app
 
+- url: /dashboard
+  script: main.app
+  login: admin
+
 - url: /dashboard(/.*)?
   script: main.app
   login: admin
