@@ -226,7 +226,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     color: #EF5D93;
     font-size: 3em;
     font-weight: bold;
-    /*	font-family: 'Brown';*/
     margin: 0 auto;
     margin-top: 3%;
     text-transform: uppercase;
@@ -289,14 +288,16 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 .init_input::-webkit-input-placeholder, 
 .init_input::-moz-input-placeholder,
-.init_input::-o-input-placeholder {
+.init_input::-o-input-placeholder,
+.init_input:-ms-input-placeholder {
     color: #1B8EB9;
     font-weight: 300px;
     text-transform: capitalize;
 }
 .init_input:focus::-webkit-input-placeholder, 
 .init_input:focus::-moz-input-placeholder,
-.init_input:focus::-o-input-placeholder {
+.init_input:focus::-o-input-placeholder,
+.init_input:focus:-ms-input-placeholder {
     color: #fff;
 }
 .init_input:focus {
@@ -440,7 +441,7 @@ span.optional {
 .registration_form input[type=email]:invalid,
 .registration_form input[type=text].invalid,
 .registration_form input:not([type]).invalid,
-.invalid {
+.registration_form .invalid {
     box-shadow:inset 1px -3px 0px -1px #F3C788 !important; /* To override the dropdown style */
 }
 .errorsPresent {
@@ -527,6 +528,9 @@ input[type="radio"]:checked + label {
 .registration_form input[type="checkbox"]:checked {
     background-position: 50% 50%;
     background-color: #1B8EB9;
+}
+.registration_form .ui.button {
+    margin-top: 15px;
 }
 /* Styling tags -- overthrowing a lot of tagit stuff */
 ul.tagit {

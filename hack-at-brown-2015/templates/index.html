@@ -64,7 +64,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                 </form>
                 {% endif %}
                 {% if registration_status == "registration_open" %}
-                <form class="init_reg">
+                <form class="init_reg" novalidate>
                     <input type="email" name="email" placeholder="EMAIL" class="init_input" required/>
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
@@ -271,11 +271,34 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
       
       setTimeout(function(){ $(selector).gutabslider(); }, 400);
     }
-  
+
+    // Function that validates email address through a regular expression.
+    function validateEmail(sEmail) {
+        var filter = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i;
+        if (filter.test(sEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+      
     function initalizeReg() {
       // Toggle between form and splash
         $("form.init_reg").submit(function (e) {
             e.preventDefault();
+
+            // Validate
+            if (!validateEmail($(".init_reg input[type='email']").val())) {
+                addNag("Please enter a valid email address.", $(".init_reg input[type='email']").parent());
+                console.log("Splash Page: Invalid email!");
+                return;
+            } else {
+                $(".init_reg .init_submit").addClass("valid");
+            }
+           
+
+
             transferInitInfo();
             $('html,body').animate({scrollTop: 0}, 1000);
             $(".splash").addClass("reg");
