@@ -1,8 +1,45 @@
 {% extends "page_with_chrome.html" %}
 
 {% block centered %}
+<style>
+.wrapper {
+}
 
-<h1>Hello, {{ hacker.name }}</h1>
-<h3>Your status: <strong>status?</strong></h3>
+.info {
+  float: left;
+}
 
+.status {
+  float: right;
+}
+
+h1 {
+  border-bottom: 3px solid orange;
+}
+</style>
+
+<div class="wrapper">
+  <div class="info">
+    <h1>Hello, {{ hacker.name }}</h1>
+    <h3>Here's what we got from you:</h3>
+    <ul>
+      <li>Name: {{ hacker.name }}</li>
+      <li>Email: {{ hacker.email }}</li>
+      <li>School: {{ hacker.school }} </li>
+      <li>Class Year: {{ hacker.year }}</li>
+<!--       <li>Resume: {{ hacker.resume }}</li>
+ -->      <li>Personal Links: {{ hacker.links }}</li>
+      <li>Requested Teammates: {{ hacker.teammates }}</li>
+      <li>Hardware Hacking: {{ hacker.hardware_hack }} </li>
+    </ul>
+    <h3>Logistics</h3>
+    <ul>
+      <li>Shirt Gender/Size: {{ hacker.shirt_gen }}/{{ hacker.shirt_size }}</li>
+      <li>Dietary Restrictions: {{ hacker.dietary_restrictions }}</li>
+    </ul>
+  </div>
+  <div class="status">
+    <h1>Your Status: <br></h1><h3><strong>{{ status }} </strong></h3>
+  </div>
+</div>
 {% endblock %}
