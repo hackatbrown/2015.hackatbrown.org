@@ -31,8 +31,7 @@ input[type="radio"] + label:hover,
 .add_link:hover, 
 .registration_form input[type="checkbox"]:hover,
 .check_agree:hover,
-.dropdown:hover,
-.dropdown option:hover {
+.registration_form input[type="file"]:hover {
     cursor: pointer;
 }
 .init_input:focus,
@@ -41,7 +40,7 @@ input[type="radio"] + label:hover,
 .registration_form input[type=submit]:focus,
 .registration_form input:not([type]):focus,
 .registration_form input[type="checkbox"]:focus,
-.dropdown:focus {
+.registration_form input[type="file"]:focus {
     outline: none;
 }
 .registration_form input[type="checkbox"]:focus {
@@ -54,6 +53,13 @@ input[type="radio"] + label:hover,
 }
 .center {
     text-align: center;
+}
+
+input {
+    -webkit-appearance: none !important;
+    -moz-appearance:    none !important;
+    appearance:         none !important;
+    border-radius: 0 !important;
 }
 
 input[type=submit] {
@@ -229,7 +235,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     color: #EF5D93;
     font-size: 3em;
     font-weight: bold;
-    /*	font-family: 'Brown';*/
     margin: 0 auto;
     margin-top: 3%;
     text-transform: uppercase;
@@ -287,23 +292,29 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     font-weight: 300;
     box-sizing: border-box;
     text-indent: 6px;
+    -webkit-box-shadow: inset 1px 0px 0px -1px #404040;
     box-shadow: inset 1px 0px 0px -1px #404040;
+    -webkit-appearance: none;
     transition: box-shadow .2s, border .2s, color .2s;
 }
 .init_input::-webkit-input-placeholder, 
 .init_input::-moz-input-placeholder,
-.init_input::-o-input-placeholder {
+.init_input::-o-input-placeholder,
+.init_input:-ms-input-placeholder {
     color: #1B8EB9;
     font-weight: 300px;
     text-transform: capitalize;
 }
 .init_input:focus::-webkit-input-placeholder, 
 .init_input:focus::-moz-input-placeholder,
-.init_input:focus::-o-input-placeholder {
+.init_input:focus::-o-input-placeholder,
+.init_input:focus:-ms-input-placeholder {
     color: #fff;
 }
 .init_input:focus {
+    -webkit-appearance: none;
     color: #fff;
+    -webkit-box-shadow: inset 1px -50px 0px -1px #404040;
     box-shadow: inset 1px -50px 0px -1px #404040;
     border-color: #404040;
 }
@@ -405,11 +416,16 @@ span.optional {
 .two.fields .field {
     margin-bottom:0;
 }
+.registration_form input[type=file] { /* until replaced */
+    font-weight: 300;
+}
 .registration_form input[type=email],
 .registration_form input[type=text],
 .registration_form input:not([type]),
 .registration_form ul.tagit {
+    -webkit-appearance: none;
     border:none;
+    -webkit-box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     color: #121212;
     background: none;
@@ -427,7 +443,8 @@ span.optional {
 .registration_form input[type=email][required]:valid,
 .registration_form input[type=text][required]:valid,
 .registration_form input:not([type])[required]:valid,
-.dropdown dt a.valid {
+.select2-container.drop.valid {
+    -webkit-box-shadow: inset 1px -3px 0px -1px #1B8EB9;
     box-shadow: inset 1px -3px 0px -1px #1B8EB9;
     color: #121212;
 }
@@ -440,7 +457,8 @@ span.optional {
 .registration_form input[type=email]:invalid,
 .registration_form input[type=text].invalid,
 .registration_form input:not([type]).invalid,
-.invalid {
+.registration_form .invalid {
+    -webkit-box-shadow: inset 1px -3px 0px -1px #F3C788 !important;
     box-shadow:inset 1px -3px 0px -1px #F3C788 !important; /* To override the dropdown style */
 }
 .errorsPresent {
@@ -463,6 +481,8 @@ span.optional {
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
+    -webkit-appearance: none;
+    -webkit-box-shadow: inset 1px -50px 0px -1px #404040 !important;
     box-shadow: inset 1px -50px 0px -1px #404040 !important; /* To override valid style */
     color: white !important;
     padding-left:.65em;
@@ -500,6 +520,13 @@ input[type="radio"] + label {
     font-size: .9em;
     box-shadow: inset 1px 0px 0px -1px #1B8EB9;
     transition: box-shadow .1s, color .1s;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 }
 input[type="radio"] + label:hover, input[type="radio"]:focus + label {
     background-color: #E2E1DF;
@@ -528,73 +555,8 @@ input[type="radio"]:checked + label {
     background-position: 50% 50%;
     background-color: #1B8EB9;
 }
-/* Custom Dropdown Styling */
-.dropdown dd, .dropdown dt,
-.dropdown ul, .dropdown dl,
-dl, dd {
-    margin:0 !important;
-    padding:0 !important;
-    -webkit-margin-before: 0 !important;
-    -webkit-margin-after: 0 !important;
-}
-.dropdown dl {
-    width:100%;
-    font-family: 'Brown', sans-serif;
-    box-sizing: border-box;
-    height: 35px;
-}
-.dropdown dd {
-    position: relative;
-}
-.dropdown dt a {
-    background:rgba(0,0,0,0) url(/static/img/arrow_down.svg) no-repeat scroll right center;
-    background-size: 1em auto;
-    box-sizing: border-box;
-    height: 35px;
-    display: block;
-    padding: .65em .65em .65em 0;
-    box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
-    width: 100%;
-    color: #AAA;
-    transition: box-shadow .2s, padding .2s, color .2s;
-}
-.dropdown a {
-    font-weight: 300;
-    font-size: 1em;
-    line-height: normal;
-}
-.dropdown a:hover {
-    border: 0;
-}
-.dropdown dt a span {
-    cursor: pointer;
-    display: block;
-}
-.dropdown dd ul {
-    background-color: #404040;
-    height: auto;
-    max-height: 0;
-    overflow-y: hidden;
-    list-style: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    transition: max-height .2s;
-}
-.dropdown span.value {
-    display:none;
-}
-.dropdown dd ul li a {
-    padding:.65em;
-    color: white;
-    display:block;
-}
-.dropdown dd ul li {
-    transition: background-color .1s;
-}
-.dropdown dd ul li:hover {
-    background-color: #737373;
+.registration_form .ui.button {
+    margin-top: 15px;
 }
 /* Styling tags -- overthrowing a lot of tagit stuff */
 ul.tagit {
@@ -674,6 +636,90 @@ ul.tagit li.tagit-new {
     position: absolute;
     width: 1px;
 }
+/* Select2 Overrides - Custom Dropdown */
+.select2-container.drop {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1em;
+    height: 35px;
+    box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
+    transition: box-shadow .2s, padding .2s, color .2s;
+}
+
+.select2-container.drop .select2-choice {
+    border: 0;
+    padding: 5.9px .65em 5.9px 0;
+    border-radius: 0;
+    background-color: transparent;
+    height: auto;
+    line-height: 26px;
+    background-image: none;
+    transition: box-shadow .2s, padding .2s, color .2s;
+}
+
+.select2-container.drop .select2-choice .select2-arrow {
+    background-image: none;
+    top: 4px;
+}
+
+.select2-search {
+    padding: 0;
+}
+
+.select2-search input {
+    border: 0;
+}
+
+.select2-container.drop.select2-container-active {
+    background-image: none;
+    box-shadow: inset 1px -50px 0px -1px #404040 !important;
+}
+
+.select2-container.drop.chosen {
+    box-shadow: inset 1px -3px 0px -1px #1B8EB9;
+}
+
+.select2-container.drop.select2-container-active .select2-choice {
+    padding-left: .65em;
+    color: white;
+}
+
+.select2-drop {
+    border: 0;
+    background-color: #404040;
+    animation: fadein .2s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.select2-results {
+    padding: 0;
+    margin: 0;
+}
+
+.select2-result {
+    padding: 10.4px .65em 10.4px .65em;
+    line-height: 14.2px;
+    color: white;
+}
+
+.select2-results .select2-result-label {
+    line-height: 14.2px;
+    padding: 0;
+    font-weight: 300;
+}
+
+select2-choice.select2-default {
+    color: grey;
+}
+
+.select2-container.drop.select2-container-active .select2-choice.select2-default {
+    color: rgba(255, 255, 255, .95) !important;
+}
 /* Extra Form Styling */
 .focus {
     box-shadow: inset 1px -50px 0px -1px #404040 !important;
@@ -688,7 +734,6 @@ ul.tagit li.tagit-new {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     transition: transform 1s;
-    padding-bottom: 1200px;
 }
 
 .triangle {
@@ -862,7 +907,6 @@ section .background > .right {
 
 .sponsors {
     margin-top: 180px;
-    margin-bottom: 180px;
 }
 
 .sponsors h2 {
@@ -916,9 +960,35 @@ section .background > .right {
     max-height: 120px;
 }
 
+.faq {
+    margin-top: 180px;
+}
+
 .faq article h2 {
     margin-top: 1em;
     margin-bottom: -.2em;
+}
+
+footer {
+    margin-top: 180px;
+    margin-bottom: 50px;
+    font-weight: 300;
+}
+
+footer .coc {
+    margin-left: 0.5em;
+}
+
+footer .social-links {
+    list-style: none;
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+.social-links li {
+    display: inline-block;
+    margin-left: 0.5em;
 }
 
 /* SECONDARY BACKGROUND ELEMENTS */
@@ -1017,6 +1087,13 @@ section .background > .mid {
 @media screen and (max-width: 1150px) {
     .registration_form {
         width:80%;
+    }
+    
+    .schedule .background > .back {
+        width: 1447.2px;
+        margin-left: -750.4px;
+        height: 2520px;
+        background-image: url(/static/img/svgtriangles/0bg_1_fallback-sky-trapezoid.svg);
     }
 }
 @media screen and (max-width: 750px) {
