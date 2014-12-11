@@ -265,7 +265,7 @@
                             response = JSON.parse(response)
                             if (response.success === true) {
                                 console.log("displaying splash page")
-                                $(".panel .double_right").html(response.replace_splash_with_html);
+                                $(".splash .double_right").html(response.replace_splash_with_html);
                                 window.location.hash = "";
                             } else{
                                 $("#registration_form input[type=submit]").val("Email already Registered!").attr({
