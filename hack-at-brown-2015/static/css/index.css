@@ -727,7 +727,6 @@ select2-choice.select2-default {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     transition: transform 1s;
-    padding-bottom: 1200px;
 }
 
 .triangle {
@@ -901,7 +900,6 @@ section .background > .right {
 
 .sponsors {
     margin-top: 180px;
-    margin-bottom: 180px;
 }
 
 .sponsors h2 {
@@ -955,9 +953,35 @@ section .background > .right {
     max-height: 120px;
 }
 
+.faq {
+    margin-top: 180px;
+}
+
 .faq article h2 {
     margin-top: 1em;
     margin-bottom: -.2em;
+}
+
+footer {
+    margin-top: 180px;
+    margin-bottom: 50px;
+    font-weight: 300;
+}
+
+footer .coc {
+    margin-left: 0.5em;
+}
+
+footer .social-links {
+    list-style: none;
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+.social-links li {
+    display: inline-block;
+    margin-left: 0.5em;
 }
 
 /* SECONDARY BACKGROUND ELEMENTS */
