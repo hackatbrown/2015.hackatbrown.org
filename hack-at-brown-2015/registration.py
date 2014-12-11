@@ -62,7 +62,6 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 			print key + " " + self.request.get(key)
 			setattr(hacker, key, self.request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:
-			print "Already in DB"
 			self.response.write(json.dumps({"success":False}))
 			return
 		resume_files = self.get_uploads('resume')
