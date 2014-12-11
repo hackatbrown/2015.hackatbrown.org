@@ -1246,27 +1246,81 @@ nav.open .hamsvg {
     font-weight: 300;
     font-size: 1em;
     height: 35px;
+    box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
+    transition: box-shadow .2s, padding .2s, color .2s;
 }
 
 .select2-container.drop .select2-choice {
     border: 0;
-    padding: 10.4px .65em 10.4px 0;
+    padding: 5.9px .65em 5.9px 0;
     border-radius: 0;
     background-color: transparent;
     height: auto;
-    line-height: 14.2px;
+    line-height: 26px;
     background-image: none;
-}
-
-.select2-container.drop.select2-container-active {
-    box-shadow: none;
+    transition: box-shadow .2s, padding .2s, color .2s;
 }
 
 .select2-container.drop .select2-choice .select2-arrow {
     background-image: none;
+    top: 4px;
 }
 
+.select2-search {
+    padding: 0;
+}
 
-.select2-container.drop .select2-choice > .select2-chosen { {
-    
+.select2-search input {
+    border: 0;
+}
+
+.select2-container.drop.select2-container-active {
+    background-image: none;
+    box-shadow: inset 1px -50px 0px -1px #404040 !important;
+}
+
+.select2-container.drop.chosen {
+    box-shadow: inset 1px -3px 0px -1px #1B8EB9;
+}
+
+.select2-container.drop.select2-container-active .select2-choice {
+    padding-left: .65em;
+    color: white;
+}
+
+.select2-drop {
+    border: 0;
+    background-color: #404040;
+    animation: fadein .2s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.select2-results {
+    padding: 0;
+    margin: 0;
+}
+
+.select2-result {
+    padding: 10.4px .65em 10.4px .65em;
+    line-height: 14.2px;
+    color: white;
+}
+
+.select2-results .select2-result-label {
+    line-height: 14.2px;
+    padding: 0;
+    font-weight: 300;
+}
+
+select2-choice.select2-default {
+    color: grey;
+}
+
+.select2-container.drop.select2-container-active .select2-choice.select2-default {
+    color: rgba(255, 255, 255, .95) !important;
 }
