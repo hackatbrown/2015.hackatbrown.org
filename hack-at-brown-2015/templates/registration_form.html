@@ -178,15 +178,12 @@
             console.log("Invalid school");
         }
 
-
-        // Check if year chosen
-        //TODO
-//        if (!$(".dropdown dt a").hasClass("chosen")) {
-//            $(".dropdown dt a").addClass("invalid");
-//            addNag("Choose a year whydon'tcha.", $(".dropdown dt a").parent().parent().parent());
-//            validated = false;
-//            console.log("Invalid year");
-//        }
+        if (!$("select[name='year']").val()) {
+            $(".select2-container.drop").addClass("invalid");
+            addNag("Choose a year whydon'tcha.", $("select[name='year']").parent());
+            validated = false;
+            console.log("Invalid year");
+        }
 
         var shirt_valid = true;
 
@@ -386,7 +383,9 @@
         });
 
         $("#source").on("change", function() {
-            $(".select2-container.drop").addClass("chosen");
+            $("select[name='year']").addClass("valid");
+            $(".select2-container.drop").removeClass("invalid");
+            $(".select2-container.drop").addClass("valid");
         });
 
         /* Prevent horizontal scrolling of element into view on focus */
