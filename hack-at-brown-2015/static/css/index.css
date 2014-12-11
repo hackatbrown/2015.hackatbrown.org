@@ -296,6 +296,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     box-shadow: inset 1px 0px 0px -1px #404040;
     -webkit-appearance: none;
     transition: box-shadow .2s, border .2s, color .2s;
+    width: 250px;
 }
 .init_input::-webkit-input-placeholder, 
 .init_input::-moz-input-placeholder,
@@ -317,20 +318,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     -webkit-box-shadow: inset 1px -50px 0px -1px #404040;
     box-shadow: inset 1px -50px 0px -1px #404040;
     border-color: #404040;
-}
-.init_submit {
-    position: relative;
-    font-size: 1em;
-    background-color: #1b8fb9;
-    border: 2px solid #1B8EB9;
-    color: white;
-    padding: 6px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-.init_submit:hover {
-    background-color: #EF5D93;
-    border-color: #EF5D93;
 }
 .datetime {
     color: #EF5D93;
