@@ -383,8 +383,18 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     font-weight: 400;
     font-size:1.1em;
 }
+.registration_form label a {
+    border-bottom: 2px #1B8EB9 solid;
+}
+.registration_form label a:hover {
+    border-bottom: 2px #EF5D93 solid;
+}
 .row {
     margin-bottom:40px !important;
+}
+span.optional {
+    font-weight: 300;
+    color: #918f8c;
 }
 .two.fields .field {
     margin-bottom:0;
@@ -410,9 +420,38 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 /* Validation Styles */
 .registration_form input[type=email][required]:valid,
 .registration_form input[type=text][required]:valid,
-.registration_form input:not([type])[required]:valid {
+.registration_form input:not([type])[required]:valid,
+.dropdown dt a.valid {
     box-shadow: inset 1px -3px 0px -1px #1B8EB9;
     color: #121212;
+}
+.registration_form input[type=email][required]:valid + .nag,
+.registration_form input[type=text][required]:valid + div.nag,
+.registration_form input:not([type])[required]:valid + .nag,
+.valid + .nag {
+    max-height: 0;
+}
+.registration_form input[type=email]:invalid,
+.registration_form input[type=text].invalid,
+.registration_form input:not([type]).invalid,
+.invalid {
+    box-shadow:inset 1px -3px 0px -1px #F3C788 !important; /* To override the dropdown style */
+}
+.errorsPresent {
+    max-height: 0;
+    overflow-y: hidden;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+.nag {
+    width: 100%;
+    font-weight: 300;
+    color: #F2A73A;
+    box-sizing: border-box;
+    max-height: 150px;
+    margin-top: 2px;
+    overflow-y: hidden;
+    transition: max-height .2s;
 }
 /* Focus Styles */
 .registration_form input[type=email]:focus,
@@ -437,7 +476,11 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     border: 0;
 }
 input[type="radio"] {
-    display: none;
+    display: block;
+    clip: rect(0,0,0,0);
+    opacity: 0;
+    height: 0px;
+    width: 0px;
 }
 input[type="radio"] + label {
     background-color: #EBEBEB;
@@ -452,12 +495,12 @@ input[type="radio"] + label {
     box-shadow: inset 1px 0px 0px -1px #1B8EB9;
     transition: box-shadow .1s, color .1s;
 }
-input[type="radio"] + label:hover {
+input[type="radio"] + label:hover, input[type="radio"]:focus + label {
     background-color: #E2E1DF;
 }
 input[type="radio"]:checked + label {
     color:#fff;
-    box-shadow: inset 1px -38px 0px -1px #1B8EB9;
+    box-shadow: inset 1px -50px 0px -1px #1B8EB9;
 }
 .registration_form input[type="checkbox"] {
     appearance:none;
@@ -625,12 +668,6 @@ ul.tagit li.tagit-new {
     position: absolute;
     width: 1px;
 }
-
-.registration_form input[type=email]:invalid,
-.registration_form input[type=text].invalid,
-.registration_form input:not([type]).invalid {
-    box-shadow:inset 1px -3px 0px -1px #F3C788;
-}
 /* Extra Form Styling */
 .focus {
     box-shadow: inset 1px -50px 0px -1px #404040 !important;
@@ -787,11 +824,6 @@ section .background > .right {
 .schedule article {
     max-width: 482.4px;
     padding-bottom: calc(180px + 2em);
-/*
-    padding-top: 120px;
-    margin-top: -120px;
-    margin-bottom: -120px;
-*/
 }
 
 .schedule article h1 {
@@ -821,11 +853,12 @@ section .background > .right {
 }
 
 .sponsors {
-    margin-top: 0px;
+    margin-top: 180px;
+    margin-bottom: 180px;
 }
 
 .sponsors p {
-    margin-top: 0.5em;
+    margin-top: 1.5em;
 }
 
 .sponsors .sponsor-row {
@@ -858,20 +891,29 @@ section .background > .right {
     vertical-align: middle;
 }
 
-.sponsors .tera {
+.sponsors .sponsor-row.tera {
     word-spacing: 70px;
 }
 
-.sponsors .tera img {
+.sponsors .sponsor-row.tera img {
     max-height: 100px;
 }
 
-.sponsors .peta {
+.sponsors .sponsor-row.peta {
     margin-top: 30px;
 }
 
-.sponsors .peta img {
+.sponsors .sponsor-row.peta img {
     max-height: 120px;
+}
+
+.sponsors h2 {
+    font-weight: 300;
+    color: #918f8c;
+}
+
+.sponsors h2.other {
+    font-size: 1.2em;
 }
 
 .faq article h2 {

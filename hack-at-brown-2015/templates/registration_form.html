@@ -1,5 +1,6 @@
 <div class='panel double_right'>
-    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data">
+    <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form' method='POST' enctype="multipart/form-data" novalidate>
+        <div class="errorsPresent">Please fix all errors in the form.</div>
 
         <div class="two fields row">
             <div class="field">
@@ -21,11 +22,11 @@
                     </div>
                     <div class="six wide field yr">
                         <label for="year">Year</label>
-                        <select name="year" id="source" required />
-                            <option selected="selected" value="freshman">Freshman</option>
-                            <option value="sophomore">Sophomore</option>
-                            <option value="junior">Junior</option>
-                            <option value="senior">Senior</option>
+                        <select name="year" id="source" class="drop" required >
+                            <option selected="selected" value="freshman">First Year</option>
+                            <option value="sophomore">Second Year</option>
+                            <option value="junior">Third Year</option>
+                            <option value="senior">Fourth Year</option>
                             <option value="highschool">High School</option>
                         </select>
                     </div>
@@ -37,7 +38,7 @@
                     <table class="radio_select center">
                         <tr>
                             <td>
-                                <input type="radio" name="shirt_gen" id="sgM" value='M' required />
+                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
                                 <label for="sgM">Men's</label>
                             </td>
                             <td>
@@ -50,7 +51,7 @@
                     <table class="radio_select center">
                         <tr>
                             <td>
-                                <input type="radio" name="shirt_size" id="ssXS" value='XS' required />
+                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
                                 <label for="ssXS">XS</label>
                             </td>
                             <td>
@@ -80,22 +81,22 @@
         </div>
 
         <div class="field row">
-            <label for="dietary_restrictions">Dietary restrictions?</label>
+            <label for="dietary_restrictions">Dietary restrictions? <span class="optional">(Optional)</span></label>
             <input name="dietary_restrictions" class="tagit diet" />
         </div>
 
         <div class="field row">
-            <label for="teammates">Any Friends You'd Like to Work With? (Optional, Limit 3 Emails)</label>
+            <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
             <input name="teammates" class="tagit team" />
         </div>
 
         <div class="two fields row">
             <div class="field">
                 <label for="hardware_hack">Hardware Hack?</label>
-                <table class="radio_select">
+                <table class="radio_select" for="hardware_hack">
                     <tr>
                         <td>
-                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' required />
+                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
                             <label for="hardware_yes">Yes!</label>
                         </td>
                         <td>
@@ -115,18 +116,18 @@
 
         <div class="two fields row">
             <div class="field">
-                <label for="links">Link(s) (optional)</label>
+                <label for="links">Link(s) <span class="optional">(Optional)</span></label>
                 <div class="condor"></div>
                 <!--                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />-->
             </div>
         </div>
 
         <div class="inline field center row">
-            <input type="checkbox" name="agree" id="agree" required/>
-            <label for="agree" class="check_agree">I agree to the Code of Conduct</label>
+            <input type="checkbox" name="agree" id="agree" />
+            <label for="agree" class="check_agree">I agree to the <a href="http://confcodeofconduct.com/" target="_blank">Code of Conduct</a></label>
         </div>
         <div class="field center">
-            <input type="submit" class="ui button" value="REGISTER" />
+            <input type="submit" class="ui button" vlaue="REGISTER" />
         </div>
     </form>
 </div>
@@ -137,118 +138,167 @@
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="/static/Tagit/js/tag-it.js"></script>
 
-
-<script type="text/javascript">
-    // this function is completely unneccesary because of H5F
-    // function validateForm() {
-    //     // Check if name is filled out
-    //     if (!$("input[name='name']:checked").val()) {
-    //         $("input[name='name']").addClass("invalid");
-    //         /*var nag = document.createElement("div");
-    //         nag.css("width", "100%");
-    //         nag.css("border", "1px solid black");
-    //         $("input[name='name']").parents("div").appendChild(nag);*/
-    //         return false;
-    //     }
-    // 
-    //     // Check if they filled out shirt gender & size
-    //     !$("input[name='shirt_gen']:checked").val() && return false;
-    //     !$("input[name='shirt_size']:checked").val() && return false;
-    //     !$("input[name='hardware_hack']:checked").val() && return false;
-    //     // Check if they agree to the Code of Conduct
-    //     !$("input[name=agree]:checked").val() && return false;
-    // 
-    //     return true;
-    // }
-
-    function createDropDown(){
-        var source = $("#source");
-        var selected = source.find("option[selected]");  // get selected <option>
-        var options = $("option", source);  // get all <option> elements
-        // create <dl> and <dt> with selected value inside it
-        $(".yr").append('<dl id="target" class="dropdown"></dl>')
-        $("#target").append('<dt><a href="#">' + selected.text() + 
-            '<span class="value">' + selected.val() + 
-            '</span></a></dt>')
-        $("#target").append('<dd><ul></ul></dd>')
-        // iterate through all the <option> elements and create UL
-        options.each(function(){
-            $("#target dd ul").append('<li><a href="#">' + 
-                $(this).text() + '<span class="value">' + 
-                $(this).val() + '</span></a></li>');
-        });
-
-        source.hide();
+<script>
+    function addNag(msg, parent) {
+        var nags = parent.children(".nag");
+        if (nags.length == 0)
+            parent.append("<div class='nag'>" + msg + "</div>");
+        else {
+            parent.removeClass("valid");
+            parent.children().removeClass("valid");
+        }
     }
+
+    function validateForm() {
+        var validated = true;
+
+        // Check if name is filled out
+        if (!$("input[name='name']").val()) {
+            $("input[name='name']").addClass("invalid");
+            addNag("We're gonna need your name.", $("input[name='name']").parent());
+            validated = false;
+            console.log("Invalid name");
+        }
+
+        // Check if email is filled out
+        if (!$(".field input[name='email']").val()) {
+            $(".field input[name='email']").addClass("invalid");
+            addNag("We're gonna need your email.", $(".field input[name='email']").parent());
+            validated = false;
+            console.log("Invalid email");
+        }
+
+
+        // Check if school is filled out
+        if (!$("input[name='school']").val()) {
+            $("input[name='school']").addClass("invalid");
+            addNag("We're gonna need your school.", $("input[name='school']").parent());
+            validated = false;
+            console.log("Invalid school");
+        }
+
+
+        // Check if year chosen
+        if (!$(".dropdown dt a").hasClass("chosen")) {
+            $(".dropdown dt a").addClass("invalid");
+            addNag("Choose a year whydon'tcha.", $(".dropdown dt a").parent().parent().parent());
+            validated = false;
+            console.log("Invalid year");
+        }
+
+        var shirt_valid = true;
+
+        // Check if they filled out shirt gender & size
+        if (!$("input[name='shirt_gen']:checked").val()) {
+            shirt_valid = false;
+            validated = false;
+            console.log("Invalid shirt gender");
+        }
+
+        if (!$("input[name='shirt_size']:checked").val()) {
+            shirt_valid = false;
+            validated = false;
+            console.log("Invalid shirt size");
+        }
+
+        if (!shirt_valid) {
+            addNag("Choose a complete shirt size.", $("div.shirt_size").parent());
+        }
+
+        // Check if they filled out hardware hack
+        if (!$("input[name='hardware_hack']:checked").val()) {
+            addNag("Check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
+            validated = false;
+            console.log("Invalid hardware hack");
+        }
+
+        // Check if they agree to the Code of Conduct
+        if (!$("#agree").prop('checked')) {
+            addNag("You must agree to the Code of Conduct before registering.", $("#agree").parent());
+            validated = false;
+            console.log("Invalid agree");
+        }
+
+        return validated;
+    }
+
 
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
-            onInvalid: function (e) {
-                var nameIn = document.querySelectorAll("input[name='name']");
-                nameIn.checkValidity() && nameIn.classList.add(invalid);
-                alert("You didn't finish!"); // temp
-            },
-            // this shouldn't even happen if `e.form.checkValidity()` isn't true
             onSubmit: function (e) {
                 e.preventDefault();
-                // if (e.form.checkValidity()) { // might just be `this.checkValidity()`
-                $("#registration_form input[type=submit]").val("Registering you...").attr({
-                    disabled: true
-                });
-    
-                var form_data = {};
-                var a = $("#registration_form").serializeArray();
-                $.each(a, function() {
-                    if (form_data[this.name] !== undefined) {
-                        if (!form_data[this.name].push) {
-                            form_data[this.name] = [form_data[this.name]];
-                        }
-                        form_data[this.name].push(this.value || '');
+                if (validateForm()) {
+                    $("#registration_form input[type=submit]").val("Registering you...").attr({
+                        disabled: true
+                    });
+                    console.log("POSTing response");
+                    $("#registration_form").ajaxSubmit({
+                        success: function (response) {
+
+                            console.log("Javascript handling response");
+                            if (response.success) {
+                                $("#splash").html(response.replace_splash_with_html);
+                                window.location.hash = "";
+                            } else{
+                                $("#registration_form input[type=submit]").val("Email already Registered!").attr({
+                                    disabled: false
+                                });
+                            }
+                    return false;
+                    }});
                     } else {
-                        form_data[this.name] = this.value || '';
+                        $(".errorsPresent").addClass("nag");
+                        $('html,body').animate({scrollTop: 0}, 1000);
                     }
-                });
-                var register_url = $("#registration_form").attr('action');
-                $.ajax({
-                    type: "POST",
-                    url: register_url,
-                    cache: false,
-                    processData: false,
-                    data: JSON.stringify(form_data),
-                    success: function (response) {
-                        var response = JSON.parse(response);
-                        if (response.success) {
-                            console.log("success!")
-                            $("#splash").html(response.replace_splash_with_html);
-                            window.location.hash = "";
-                        }
-                        else{
-                            $("#registration_form input[type=submit]").val("Email already Registered!").attr({
-                                disabled: true
-                            });
-                        }
-                    }
-                })
             }
         });
 
-        // Do some validation color stuff
+
+        /* Validation Styling */
         function toggleInvalid(el) {
-            if (el.val() == "")
+            if (el.val() == "") {
                 el.addClass("invalid");
-            else
+                el.removeClass("valid");
+            } else {
                 el.removeClass("invalid");
+                el.addClass("valid");
+            }
         }
 
         $("input[name='name']").focusout(function () {
             toggleInvalid($(this));
-        })
+        });
+
+        $("input[name='email']").focusout(function () {
+            toggleInvalid($(this));
+        });
 
         $("input[name='school']").focusout(function () {
             toggleInvalid($(this));
-        })
+        });
 
-        // Get datas
+            // Check for shirt size validation
+        $(".shirt_size input[type='radio'][name='shirt_gen'] + label").click(function () {
+            if ($("input[name='shirt_size']:checked").val()) 
+                $("div.shirt_size").addClass("valid");
+        });
+
+        $(".shirt_size input[type='radio'][name='shirt_size'] + label").click(function () {
+            if($("input[name='shirt_gen']:checked").val())
+                $("div.shirt_size").addClass("valid");
+        });
+
+            // Check for hardware hack validation
+        $("input[type='radio'][name='hardware_hack'] + label").click(function () {
+            $("table[for='hardware_hack'").addClass("valid");
+        });
+
+            // Check for agreement with CoC
+        $("input[type='checkbox'][name='agree']").click(function () {
+            $("label[for='agree']").addClass("valid");
+        });
+
+        /* Get datas */
         var $diet_restrictions = [];
         $.getJSON("/static/data/dietary-restrictions.json", function (data) {
             $.each(data, function (key, val) {
@@ -263,11 +313,13 @@
             })
         });
 
-        // On email change & valid, check for university domain
+
+        /* On email change & valid, check for university domain */
         function searchUniversities(domain) {
             $universities.forEach(function (obj) {
                 if (domain == obj["domain"]) {
                     $(".registration_form input[name='school']").val(obj["label"]);
+                    $(".registration_form input[name='school']").removeClass("invalid");
                 }
             });
         }
@@ -281,7 +333,8 @@
             }
         });
 
-        // Setting up tagit for dietary restrictions and teammates
+
+        /* Setting up tagit for dietary restrictions and teammates */
         $(".tagit.diet").tagit({
             allowSpaces: true,
             availableTags: $diet_restrictions
@@ -301,66 +354,58 @@
                 $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
             } else {
                 $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
-            }         
+            }
             $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
         });
 
 
-        // Autocomplete suggestions for schools
+        /* Autocomplete suggestions for schools */
         $(function () {
             $(".schools").autocomplete({
                 source: $universities
             });
         });
 
-        // Condor dynamic link input stuff
+        /* Condor dynamic link input stuff */
         $(".condor").condor({
             uniqueNames: false,
             namePrefix: 'links',
             activeHint: 'Github, Dribbble, Behance, etc.',
             inactiveHint: 'add another link'
         });
-
-        // Custom dropdown
-        createDropDown();
-
-        function removeFocus() {
-            $(".dropdown dt a").removeClass("focus");
-            $(".dropdown dd ul").css("max-height", "0");
-        }
-
-        $(".dropdown dt a").click(function(e) {
-            e.preventDefault();
-            if ($(this).hasClass("focus")) {
-                removeFocus();
-            } else {
-                $(this).addClass("focus");
-                $(".dropdown dd ul").css("max-height", "400px");
-            }
-        });
-
-        $(".dropdown dd ul li a").click(function(e) {
-            e.preventDefault();
-            var text = $(this).html();
-            $(".dropdown dt a").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
-            $(".dropdown dt a").css("color", "#121212");
-            $(".dropdown dt a").html(text);
-            removeFocus();
-            var source = $("#source");
-            source.val($(this).find("span.value").html());
-        });
-
-        $(document).bind('click', function(e) {
-            var $clicked = $(e.target);
-            if (! $clicked.parents().hasClass("dropdown")) {
-                removeFocus();
-            }
-        });
-
-
-
         
+        //select2 dropdown
+        $("#source").select2({
+            width: "100%"
+        });
+
+
+
+        /* Prevent horizontal scrolling of element into view on focus */
+        $(document).on('keydown', ':focus', function (event) {
+            if ((event.keyCode || event.which) == 9) {
+                //TODO: Generalize and support selecting other kinds of input
+                var $inputs = $("input[type=text], input[type=email], input[type=radio]");
+                console.log($inputs);
+                var index = $inputs.index(this);
+                // Index previous or next input based on the shift key
+                index += event.shiftKey ? -1 : 1;
+                // If we are in the range of valid inputs (else browser takes focus)
+                if (index >= 0 && index < $inputs.length) {
+                    var $next = $inputs.eq(index);
+                    event.preventDefault();
+                    // Move, not scroll, to the next/prev item....
+                    //                    MoveIntoView($next);
+                    console.log($next);
+                    $next.focus();
+                    return false;
+                }
+            }
+        });
+
 
     })
+
+
 
 </script>

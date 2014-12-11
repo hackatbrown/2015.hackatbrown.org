@@ -58,11 +58,9 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		print "CALLING RegistrationHandler"
 		hacker = Hacker()
 
-		loaded_request = json.loads(self.request.body)
-		print loaded_request
 		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack' 'links']:
-			#print key + " " + loaded_request.get(key)
-			setattr(hacker, key, loaded_request.get(key))
+			print key + " " + self.request.get(key)
+			setattr(hacker, key, self.request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:
 			print "Already in DB"
 			self.response.write(json.dumps({"success":False}))
