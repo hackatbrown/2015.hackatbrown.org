@@ -285,6 +285,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     font-weight: 300;
     box-sizing: border-box;
     text-indent: 6px;
+    -webkit-box-shadow: inset 1px 0px 0px -1px #404040;
     box-shadow: inset 1px 0px 0px -1px #404040;
     -webkit-appearance: none;
     transition: box-shadow .2s, border .2s, color .2s;
@@ -306,6 +307,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 .init_input:focus {
     -webkit-appearance: none;
     color: #fff;
+    -webkit-box-shadow: inset 1px -50px 0px -1px #404040;
     box-shadow: inset 1px -50px 0px -1px #404040;
     border-color: #404040;
 }
@@ -416,6 +418,7 @@ span.optional {
 .registration_form ul.tagit {
     -webkit-appearance: none;
     border:none;
+    -webkit-box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     color: #121212;
     background: none;
@@ -434,6 +437,7 @@ span.optional {
 .registration_form input[type=text][required]:valid,
 .registration_form input:not([type])[required]:valid,
 .select2-container.drop.valid {
+    -webkit-box-shadow: inset 1px -3px 0px -1px #1B8EB9;
     box-shadow: inset 1px -3px 0px -1px #1B8EB9;
     color: #121212;
 }
@@ -447,6 +451,7 @@ span.optional {
 .registration_form input[type=text].invalid,
 .registration_form input:not([type]).invalid,
 .registration_form .invalid {
+    -webkit-box-shadow: inset 1px -3px 0px -1px #F3C788 !important;
     box-shadow:inset 1px -3px 0px -1px #F3C788 !important; /* To override the dropdown style */
 }
 .errorsPresent {
@@ -470,6 +475,7 @@ span.optional {
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
     -webkit-appearance: none;
+    -webkit-box-shadow: inset 1px -50px 0px -1px #404040 !important;
     box-shadow: inset 1px -50px 0px -1px #404040 !important; /* To override valid style */
     color: white !important;
     padding-left:.65em;
