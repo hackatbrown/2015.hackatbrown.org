@@ -161,9 +161,9 @@
         }
 
         // Check if email is filled out
-        if (!$(".field input[name='email']").val()) {
+        if (!validateEmail($(".field input[name='email']").val())) {
             $(".field input[name='email']").addClass("invalid");
-            addNag("We're gonna need your email.", $(".field input[name='email']").parent());
+            addNag("Please enter a valid email address.", $(".field input[name='email']").parent());
             validated = false;
             console.log("Invalid email");
         }
@@ -172,14 +172,14 @@
         // Check if school is filled out
         if (!$("input[name='school']").val()) {
             $("input[name='school']").addClass("invalid");
-            addNag("We're gonna need your school.", $("input[name='school']").parent());
+            addNag("Please enter your school.", $("input[name='school']").parent());
             validated = false;
             console.log("Invalid school");
         }
 
         if (!$("select[name='year']").val()) {
             $(".select2-container.drop").addClass("invalid");
-            addNag("Choose a year whydon'tcha.", $("select[name='year']").parent());
+            addNag("Please choose your current year.", $("select[name='year']").parent());
             validated = false;
             console.log("Invalid year");
         }
@@ -200,19 +200,19 @@
         }
 
         if (!shirt_valid) {
-            addNag("Choose a complete shirt size.", $("div.shirt_size").parent());
+            addNag("Please choose a complete shirt size.", $("div.shirt_size").parent());
         }
 
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
-            addNag("Check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
+            addNag("Please check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
             validated = false;
             console.log("Invalid hardware hack");
         }
 
         // Check for resume
         if (!$(".resume-upload").val()) {
-            addNag("Upload your resume, man.", $(".resume-upload").parent());
+            addNag("Upload your resume, man/woman/being/dog/mythical creature.", $(".resume-upload").parent());
             validated = false;
             console.log("Invalid resume");
         }
@@ -261,8 +261,14 @@
 
 
         /* Validation Styling */
-        function toggleInvalid(el) {
-            if (el.val() == "") {
+        function toggleInvalid(el, email) {
+            var validEmail = true;
+
+            if (email) {
+                validEmail = validateEmail(el.val());
+            }
+
+            if (el.val() == "" || !validEmail) {
                 el.addClass("invalid");
                 el.removeClass("valid");
             } else {
@@ -271,16 +277,16 @@
             }
         }
 
-        $("input[name='name']").focusout(function () {
-            toggleInvalid($(this));
+        $(".registration_form input[name='name']").focusout(function () {
+            toggleInvalid($(this), false);
         });
 
-        $("input[name='email']").focusout(function () {
-            toggleInvalid($(this));
+        $(".registration_form input[name='email']").focusout(function () {
+            toggleInvalid($(this), true);
         });
 
-        $("input[name='school']").focusout(function () {
-            toggleInvalid($(this));
+        $(".registration_form input[name='school']").focusout(function () {
+            toggleInvalid($(this), false);
         });
 
             // Check for shirt size validation
