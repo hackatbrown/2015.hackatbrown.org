@@ -620,26 +620,22 @@ ul.tagit li.tagit-new {
     position: absolute;
     width: 1px;
 }
-    /* Select2 Overrides - Custom Dropdown */
+    /* Select2 Overrides - Custom Dropdown and Tags */
 .select2-container {
     box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     transition: box-shadow .2s, padding .2s, color .2s;
     height: 35px;
 }
-
 .select2-container.select2-container-active {
     box-shadow: inset 1px -50px 0px -1px #404040 !important;
 }
-
 .select2-container.drop {
     font-weight: 300;
     font-size: 1em;
     height: 35px;
 }
-
 .select2-container-multi.stags {
 }
-
 .select2-container .select2-choice, .select2-container .select2-choices {
     border: 0;
     line-height: 26px;
@@ -647,88 +643,76 @@ ul.tagit li.tagit-new {
     background-image: none;
     transition: box-shadow .2s, padding .2s, color .2s;
 }
-
 .select2-container.drop .select2-choice {
     padding: 5.9px .65em 5.9px 0;
 }
-
 .select2-container-multi.stags .select2-choices  {
     padding: 0;
 }
-
 .select2-container-multi.stags .select2-choices .select2-search-field input {
     margin: 0;
     width: 100%;
 }
-
 .select2-container.drop .select2-choice .select2-arrow {
     background-image: none;
     top: 4px;
 }
-
 .select2-search {
     padding: 0;
 }
-
 .select2-search input {
     border: 0;
 }
-
-.select2-container-multi.stags .select2-search input {
-    box-shadow: none !Important;
+.select2-container-multi.stags .select2-search input,
+.select2-container-multi.stags input {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
-
+.select2-container-multi.stags input:focus {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
 .select2-container.drop.chosen {
     box-shadow: inset 1px -3px 0px -1px #1B8EB9;
 }
-
 .select2-container.drop.select2-container-active .select2-choice {
     padding-left: .65em;
     color: white;
 }
-
 .select2-container.drop.select2-container-active .select2-choice.select2-default {
     color: rgba(255, 255, 255, .95) !important;
 }
-
 .select2-drop {
     border: 0;
     background-color: #404040;
     animation: fadein .2s;
     animation-fill-mode: backwards;
 }
-
 @keyframes fadein {
     from {opacity: 0;}
     to {opacity: 1;}
 }
-
 .select2-results {
     padding: 0;
     margin: 0;
 }
-
 .select2-result {
     padding: 10.4px .65em 10.4px .65em;
     line-height: 14.2px;
     color: #404040;
 }
-
 .select2-results .select2-result-label {
     line-height: 14.2px;
     padding: 0;
     font-weight: 300;
 }
-
 select2-choice.select2-default {
     color: grey;
 }
-
 .select2-results .select2-highlighted {
     background: #1B8EB9;
     color: white !Important;
 }
-
 .select2-container-multi .select2-choices .select2-search-choice {
     margin-left: 0;
     margin-right: 5px;
@@ -740,16 +724,13 @@ select2-choice.select2-default {
     font-weight: 300;
     background-color: #1B8EB9;
 }
-
 .select2-container-multi.select2-container-active .select2-choices .select2-search-choice {
     color: grey;
     background-color: white;
 }
-
 .select2-container-multi .select2-choices .select2-search-choice.select2-search-choice-focus {
     background-color: #EF5D93;
 }
-
 .select2-container-multi .select2-search-choice-close {
     top: 30%;
     background-image: url(/static/img/close52.svg);
@@ -757,44 +738,35 @@ select2-choice.select2-default {
     background-repeat: no-repeat;
     background-size: contain;
 }
-
 .select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
     border: none;
     opacity: .8;
     background-position: center center;
 }
-
 .select2-container-multi .select2-choices .select2-search-choice.select2-search-choice-focus .select2-search-choice-close {
     background-position: center center;
 }
-
 .select2-container-multi.select2-container-active .select2-search-choice-close {
     background-image: url(/static/img/close52b.svg);
 }
-
 .select2-drop {
     background-color: #f4f4f4;
 }
-
 .select2-drop-override .select2-results {
     font-weight: 300;
     height: 30px;
     color: #404040;
 }
-
 .bigdrop .select2-result {
     font-weight: 300;
     color: #404040;
 }
-
 .select2-selection-limit {
     padding-top: 5px;
 }
-
 .select2-drop-override {
-/*    display: none !Important;*/
+/*    display: none !important;*/
 }
-
 .bigdrop {
 /*    height: 400px;*/
 }
