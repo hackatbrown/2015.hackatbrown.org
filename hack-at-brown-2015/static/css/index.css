@@ -1042,6 +1042,13 @@ section .background > .mid {
     .registration_form {
         width:80%;
     }
+    
+    .schedule .background > .back {
+        width: 1447.2px;
+        margin-left: -750.4px;
+        height: 2520px;
+        background-image: url(/static/img/svgtriangles/0bg_1_fallback-sky-trapezoid.svg);
+    }
 }
 @media screen and (max-width: 750px) {
     .logo {
