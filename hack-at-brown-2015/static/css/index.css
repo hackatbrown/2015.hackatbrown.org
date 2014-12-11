@@ -44,6 +44,10 @@ input[type="radio"] + label:hover,
 .dropdown:focus {
     outline: none;
 }
+.registration_form input[type="checkbox"]:focus {
+    border-color: #1B8EB9;
+}
+
 .light {
     /*  font-family: 'Brown';*/
     font-weight: 300;
@@ -513,14 +517,15 @@ input[type="radio"]:checked + label {
     padding:6px;
     box-shadow: inset 1px 0px 0px -1px rgba(59,142,185,0.5);
     background-image:url("/static/img/check52.svg");
-    background-size: 130% auto;
+    background-size: 120% auto;
     background-repeat: no-repeat;
     background-position: 50% -300%;
-    transition:box-shadow .1s, border .1s, background-position .1s;
+    transition:box-shadow .1s, border .1s, background-position .1s, border .2s;
 }
 .registration_form input[type="checkbox"]:checked {
     background-position: 50% 50%;
-    box-shadow: inset 1px -25px 0px -1px rgba(59,142,185,0.5);
+    background-color: #1B8EB9;
+/*    box-shadow: inset 1px -25px 0px -1px #1B8EB9;*/
 }
 /* Custom Dropdown Styling */
 .dropdown dd, .dropdown dt,
