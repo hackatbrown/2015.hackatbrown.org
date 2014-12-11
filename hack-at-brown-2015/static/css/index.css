@@ -31,8 +31,7 @@ input[type="radio"] + label:hover,
 .add_link:hover, 
 .registration_form input[type="checkbox"]:hover,
 .check_agree:hover,
-.dropdown:hover,
-.dropdown option:hover {
+.registration_form input[type="file"]:hover {
     cursor: pointer;
 }
 .init_input:focus,
@@ -41,7 +40,7 @@ input[type="radio"] + label:hover,
 .registration_form input[type=submit]:focus,
 .registration_form input:not([type]):focus,
 .registration_form input[type="checkbox"]:focus,
-.dropdown:focus {
+.registration_form input[type="file"]:focus {
     outline: none;
 }
 .registration_form input[type="checkbox"]:focus {
@@ -402,6 +401,9 @@ span.optional {
 }
 .two.fields .field {
     margin-bottom:0;
+}
+.registration_form input[type=file] { /* until replaced */
+    font-weight: 300;
 }
 .registration_form input[type=email],
 .registration_form input[type=text],
