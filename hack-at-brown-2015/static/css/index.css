@@ -201,12 +201,14 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     padding-bottom: 0px;
     margin-bottom:0;
     z-index:2;
+    -webkit-transform:(0, 0, 0);
     transform: translate3d(0, 0, 0);
     transition:height 2s, padding 1.2s, background-color 1.2s, transform 1s;
     height: auto;
     position: absolute;
 }
 .splash.reg {
+    -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
     overflow: visible;
 }
@@ -683,7 +685,8 @@ ul.tagit li.tagit-new {
 .panels {
     top: 0;
     padding-top: 870px;
-/*    transform: translate3d(0, 870px, 0);*/
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     transition: transform 1s;
     padding-bottom: 1200px;
 }
@@ -769,6 +772,7 @@ section .background > div {
     background-size: cover;
     background-repeat: no-repeat;
     top: 50%;
+    -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
     z-index: -9;
 }
@@ -1115,7 +1119,7 @@ section .background > .mid {
     }
     section .background {
 /*        transform: scale(1.5, 1.5);*/
-        transform-origin: center top;
+/*        transform-origin: center top;*/
     }
     
 }
@@ -1148,22 +1152,6 @@ nav.open .hamsvg > .bar:nth-of-type(3) {
 
 nav.open .hamsvg {
     transform: translate(5px, 0);
-}
-
-.parallax__layer.back {
-/*  transform: translateZ(-2px) scale(3) translateY(-50%);*/
-}
-
-.parallax__layer.mid {
-/*  transform: translateZ(-1px) scale(2) translateY(-50%);*/
-}
-
-.parallax__layer.fore {
-/*  transform: translateZ(0) translateY(-50%);*/
-}
-
-.parallax__layer {
-    position: absolute;
 }
 
 
@@ -1321,4 +1309,8 @@ select2-choice.select2-default {
 
 .select2-container.drop.select2-container-active .select2-choice.select2-default {
     color: rgba(255, 255, 255, .95) !important;
+}
+
+.select2-results .select2-highlighted {
+    background: #1B8EB9;
 }
