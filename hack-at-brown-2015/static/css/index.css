@@ -304,6 +304,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     color: #fff;
 }
 .init_input:focus {
+    -webkit-appearance: none;
     color: #fff;
     box-shadow: inset 1px -50px 0px -1px #404040;
     border-color: #404040;
@@ -468,6 +469,7 @@ span.optional {
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
+    -webkit-appearance: none;
     box-shadow: inset 1px -50px 0px -1px #404040 !important; /* To override valid style */
     color: white !important;
     padding-left:.65em;
