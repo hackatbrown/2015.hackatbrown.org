@@ -857,17 +857,18 @@ section .background > .right {
     margin-bottom: 180px;
 }
 
+.sponsors h2 {
+    font-size: 1.2em;
+    font-weight: 300;
+    color: #918f8c;
+}
+
 .sponsors p {
-    margin-top: 1.5em;
+    margin-top: 1em;
 }
 
 .sponsors .sponsor-row {
     word-spacing: 50px;
-}
-
-.sponsors .sponsor-row h3 {
-    text-transform: uppercase;
-    border-bottom: 1px solid #eee;
 }
 
 .sponsors a {
@@ -905,15 +906,6 @@ section .background > .right {
 
 .sponsors .sponsor-row.peta img {
     max-height: 120px;
-}
-
-.sponsors h2 {
-    font-weight: 300;
-    color: #918f8c;
-}
-
-.sponsors h2.other {
-    font-size: 1.2em;
 }
 
 .faq article h2 {
