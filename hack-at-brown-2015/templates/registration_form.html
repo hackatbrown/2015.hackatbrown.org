@@ -83,15 +83,14 @@
 
         <div class="field row">
             <label for="dietary_restrictions">Dietary restrictions? <span class="optional">(Optional)</span></label>
-            <input name="dietary_restrictions" class="tagit diet" />
-            <input type="hidden" id="e20" style="width:300px" value="brown"/>
+<!--            <input name="dietary_restrictions" class="tagit diet" />-->
+            <input type="hidden" id="diet" class="stags" style="width:100%"/>
         </div>
 
         <div class="field row">
             <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
 <!--            <input name="teammates" class="tagit team" />-->
-            <input type="hidden" id="teammates" class="stags" name="teammates" value=""/>
-<!--            <input type="hidden" id="teammates" style="width:300px" value="brown, red, green"/>-->
+            <input type="hidden" id="teammates" class="stags nodrop" name="teammates"/>
         </div>
 
         <div class="two fields row">
@@ -318,12 +317,12 @@
         });
 
         /* Get datas */
-        var $diet_restrictions = [];
-        $.getJSON("/static/data/dietary-restrictions.json", function (data) {
-            $.each(data, function (key, val) {
-                $diet_restrictions[key] = val;
-            })
-        });
+//        var $diet_restrictions = [];
+//        $.getJSON("/static/data/dietary-restrictions.json", function (data) {
+//            $.each(data, function (key, val) {
+//                $diet_restrictions[key] = val;
+//            })
+//        });
 
         var $universities = [];
         $.getJSON("/static/data/universities.json", function (data) {
@@ -354,28 +353,28 @@
 
 
         /* Setting up tagit for dietary restrictions and teammates */
-        $(".tagit.diet").tagit({
-            allowSpaces: true,
-            availableTags: $diet_restrictions
-        });
+//        $(".tagit.diet").tagit({
+//            allowSpaces: true,
+//            availableTags: $diet_restrictions
+//        });
 
-        $(".tagit.team").tagit({
-            maxTags: 3
-        });
-
-        $("ul.tagit input").focus(function () {
-            $(this).parents("ul").css("box-shadow", "inset 1px -50px 0px -1px #404040");
-            $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
-        });
-
-        $("ul.tagit input").focusout(function () {
-            if ($("ul.tagit").children("li").length > 2) {
-                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
-            } else {
-                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
-            }
-            $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
-        });
+//        $(".tagit.team").tagit({
+//            maxTags: 3
+//        });
+//
+//        $("ul.tagit input").focus(function () {
+//            $(this).parents("ul").css("box-shadow", "inset 1px -50px 0px -1px #404040");
+//            $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
+//        });
+//
+//        $("ul.tagit input").focusout(function () {
+//            if ($("ul.tagit").children("li").length > 2) {
+//                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
+//            } else {
+//                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
+//            }
+//            $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
+//        });
 
 
         /* Autocomplete suggestions for schools */
@@ -400,17 +399,35 @@
             placeholder: "Select Year",
         });
         
-        $("#teammates").select2({
-            width: "100%",
-            tags:[""]
-        });
-
-
         $("#source").on("change", function() {
             $("select[name='year']").addClass("valid");
             $(".select2-container.drop").removeClass("invalid");
             $(".select2-container.drop").addClass("valid");
         });
+        
+        $("#teammates").select2({
+            width: "100%",
+            tags:[""],
+            tokenSeparators: [",", " "],
+            dropdownCssClass: "select2-drop-override",
+            maximumSelectionSize: 3
+        });
+        
+        var $dRestrictions = ["Vegetarian", "Vegan", "Gluten Free", "Kosher", "Lactose Intolerant", "Nuts Allergy", "Treenuts Allergy", "Soy Allergy", 
+"Shellfish Allergy", "Corn Allergy", "No Pork", "No Ham", "No Beef", "No Mutton", "Halal", "No Red Meat", "None"];
+        
+        $("#diet").select2({
+            width: "100%",
+            tags: $dRestrictions,
+            tokenSeparators: [","],
+            dropdownCssClass: "bigdrop"
+        });
+
+//        $("#teammates").on("select2-opening", function(e) {
+//            e.preventDefault();
+//        });
+        
+        
 
         /* Prevent horizontal scrolling of element into view on focus */
         $(document).on('keydown', ':focus', function (event) {
