@@ -1304,7 +1304,7 @@ section .background > .mid {
 
 /*Hamburger animation doing its thing */
 
-. hamsvg > .bar {
+.hamsvg > .bar {
     transform: rotate(0) translateY(0) translateX(0);
     transform-origin: 0px 4px;
     transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out, fill .4s ease-in-out;
