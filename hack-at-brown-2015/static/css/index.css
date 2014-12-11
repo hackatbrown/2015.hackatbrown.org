@@ -900,7 +900,6 @@ section .background > .right {
 .schedule {
     height: 1740px;
     color: white;
-    text-align: justify;
 }
 .schedule article {
     max-width: 482.4px;
@@ -943,7 +942,7 @@ section .background > .right {
     word-spacing: 50px;
 }
 .sponsors a {
-    opacity: 0.8;
+    opacity: 0.9;
     border-bottom: none;
     -webkit-transition: opacity 0.2s ease-out;
     -moz-transition: opacity 0.2s ease-out;
