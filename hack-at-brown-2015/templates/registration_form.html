@@ -110,8 +110,7 @@
 
             <div class="field">
                 <label for="resume">Upload Resume</label>
-                <input id="resume" class="resume-upload" type="file" name="resume">
-                <!--                <input type="file" name="resume" id="resume" />-->
+                <input id="resume" class="resume-upload" type="file" name="resume" required />
             </div>
         </div>
 
@@ -119,7 +118,6 @@
             <div class="field">
                 <label for="links">Link(s) <span class="optional">(Optional)</span></label>
                 <div class="condor"></div>
-                <!--                <input type="text" name="links" id="link" placeholder="Github, Dribbble, Behance, etc." />-->
             </div>
         </div>
 
@@ -211,6 +209,13 @@
             console.log("Invalid hardware hack");
         }
 
+        // Check for resume
+        if (!$(".resume-upload").val()) {
+            addNag("Upload your resume, man.", $(".resume-upload").parent());
+            validated = false;
+            console.log("Invalid resume");
+        }
+
         // Check if they agree to the Code of Conduct
         if (!$("#agree").prop('checked')) {
             addNag("You must agree to the Code of Conduct before registering.", $("#agree").parent());
@@ -291,6 +296,11 @@
             // Check for hardware hack validation
         $("input[type='radio'][name='hardware_hack'] + label").click(function () {
             $("table[for='hardware_hack'").addClass("valid");
+        });
+
+            // Check for file upload
+        $("input[type='file']").change(function () {
+            $(this).addClass("valid");
         });
 
             // Check for agreement with CoC
