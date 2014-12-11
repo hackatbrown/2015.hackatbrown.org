@@ -286,6 +286,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     box-sizing: border-box;
     text-indent: 6px;
     box-shadow: inset 1px 0px 0px -1px #404040;
+    -webkit-appearance: none;
     transition: box-shadow .2s, border .2s, color .2s;
 }
 .init_input::-webkit-input-placeholder, 
@@ -412,6 +413,7 @@ span.optional {
 .registration_form input[type=text],
 .registration_form input:not([type]),
 .registration_form ul.tagit {
+    -webkit-appearance: none;
     border:none;
     box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     color: #121212;
