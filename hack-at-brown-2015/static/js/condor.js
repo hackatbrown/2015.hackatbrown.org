@@ -6,7 +6,9 @@
                 namePrefix: 'inputs',
                 inactiveHint: 'add input',
                 activeHint: '',
-                activeIcon: 'linkify'
+                activeIcon: 'linkify',
+                addCallback: function() {},
+                activateCallback: function() {}
             }, options),
             target = this,
             numInputs = 0;
@@ -64,7 +66,7 @@
                 }
             });
 
-
+            settings.activateCallback.call();
         }
 
         function addInactiveField(id) {
@@ -81,6 +83,7 @@
                 $(field).unbind("click");
                 makeActive(field);
             });
+            settings.addCallback.call();
             return field;
         }
 
