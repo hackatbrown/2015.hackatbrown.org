@@ -1239,3 +1239,34 @@ nav.open .hamsvg {
     font-size: x-large;
     margin: 0px;
 }
+
+/* Select2 Overrides */
+.select2-container.drop {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1em;
+    height: 35px;
+}
+
+.select2-container.drop .select2-choice {
+    border: 0;
+    padding: 10.4px .65em 10.4px 0;
+    border-radius: 0;
+    background-color: transparent;
+    height: auto;
+    line-height: 14.2px;
+    background-image: none;
+}
+
+.select2-container.drop.select2-container-active {
+    box-shadow: none;
+}
+
+.select2-container.drop .select2-choice .select2-arrow {
+    background-image: none;
+}
+
+
+.select2-container.drop .select2-choice > .select2-chosen { {
+    
+}

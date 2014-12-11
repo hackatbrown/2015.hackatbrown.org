@@ -22,7 +22,7 @@
                     </div>
                     <div class="six wide field yr">
                         <label for="year">Year</label>
-                        <select name="year" id="source" required >
+                        <select name="year" id="source" class="drop" required >
                             <option selected="selected" value="freshman">First Year</option>
                             <option value="sophomore">Second Year</option>
                             <option value="junior">Third Year</option>
@@ -386,8 +386,10 @@
             inactiveHint: 'add another link'
         });
         
-        //select2
-        $("#source").select2();
+        //select2 dropdown
+        $("#source").select2({
+            width: "100%"
+        });
 
         /* Custom dropdown */
 //        createDropDown();
