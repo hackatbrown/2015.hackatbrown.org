@@ -89,7 +89,9 @@
 
         <div class="field row">
             <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
-            <input name="teammates" class="tagit team" />
+<!--            <input name="teammates" class="tagit team" />-->
+            <input type="hidden" id="teammates" class="stags" name="teammates" value=""/>
+<!--            <input type="hidden" id="teammates" style="width:300px" value="brown, red, green"/>-->
         </div>
 
         <div class="two fields row">
@@ -389,7 +391,6 @@
             namePrefix: 'links',
             activeHint: 'Github, Dribbble, Behance, etc.',
             inactiveHint: 'add another link',
-            
         });
         
         //select2 dropdown
@@ -398,6 +399,12 @@
             minimumResultsForSearch: -1,
             placeholder: "Select Year",
         });
+        
+        $("#teammates").select2({
+            width: "100%",
+            tags:[""]
+        });
+
 
         $("#source").on("change", function() {
             $("select[name='year']").addClass("valid");
