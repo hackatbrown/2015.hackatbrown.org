@@ -1246,8 +1246,6 @@ nav.open .hamsvg {
 #thanks h4 {
     font-size: x-large;
     margin: 0px;
-<<<<<<< HEAD
-=======
 }
 
 /* Select2 Overrides */
@@ -1337,5 +1335,4 @@ select2-choice.select2-default {
 
 .select2-results .select2-highlighted {
     background: #1B8EB9;
->>>>>>> synth-tagbar
 }
