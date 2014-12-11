@@ -316,14 +316,6 @@
             $("label[for='agree']").addClass("valid");
         });
 
-        /* Get datas */
-//        var $diet_restrictions = [];
-//        $.getJSON("/static/data/dietary-restrictions.json", function (data) {
-//            $.each(data, function (key, val) {
-//                $diet_restrictions[key] = val;
-//            })
-//        });
-
         var $universities = [];
         $.getJSON("/static/data/universities.json", function (data) {
             $.each(data, function (key, val) {
@@ -350,32 +342,6 @@
                     $(".registration_form input.schools").val(univ);
             }
         });
-
-
-        /* Setting up tagit for dietary restrictions and teammates */
-//        $(".tagit.diet").tagit({
-//            allowSpaces: true,
-//            availableTags: $diet_restrictions
-//        });
-
-//        $(".tagit.team").tagit({
-//            maxTags: 3
-//        });
-//
-//        $("ul.tagit input").focus(function () {
-//            $(this).parents("ul").css("box-shadow", "inset 1px -50px 0px -1px #404040");
-//            $(this).parents("ul").children("li.tagit-choice").css("background-color", "#404040");
-//        });
-//
-//        $("ul.tagit input").focusout(function () {
-//            if ($("ul.tagit").children("li").length > 2) {
-//                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px #1B8EB9");
-//            } else {
-//                $(this).parents("ul").css("box-shadow", "inset 1px -3px 0px -1px rgba(145,143,140,0.3)");
-//            }
-//            $(this).parents("ul").children("li.tagit-choice").css("background-color", "rgb(59,142,185)");
-//        });
-
 
         /* Autocomplete suggestions for schools */
         $(function () {
