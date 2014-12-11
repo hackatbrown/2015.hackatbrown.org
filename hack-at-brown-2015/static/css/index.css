@@ -55,6 +55,11 @@ input[type="radio"] + label:hover,
     text-align: center;
 }
 
+input {
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
 input[type=submit] {
     position: relative;
     font-size: 1em;
@@ -513,6 +518,8 @@ input[type="radio"] + label {
     font-size: .9em;
     box-shadow: inset 1px 0px 0px -1px #1B8EB9;
     transition: box-shadow .1s, color .1s;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 input[type="radio"] + label:hover, input[type="radio"]:focus + label {
     background-color: #E2E1DF;
