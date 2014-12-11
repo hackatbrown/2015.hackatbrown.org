@@ -520,12 +520,11 @@ input[type="radio"]:checked + label {
     background-size: 120% auto;
     background-repeat: no-repeat;
     background-position: 50% -300%;
-    transition:box-shadow .1s, border .1s, background-position .1s, border .2s;
+    transition:box-shadow .1s, border .1s, background-position .1s, border .2s, background-color .2s;
 }
 .registration_form input[type="checkbox"]:checked {
     background-position: 50% 50%;
     background-color: #1B8EB9;
-/*    box-shadow: inset 1px -25px 0px -1px #1B8EB9;*/
 }
 /* Custom Dropdown Styling */
 .dropdown dd, .dropdown dt,
