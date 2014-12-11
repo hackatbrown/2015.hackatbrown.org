@@ -179,7 +179,6 @@
         }
 
 
-<<<<<<< HEAD
         // Check if year chosen
         //TODO
 //        if (!$(".dropdown dt a").hasClass("chosen")) {
@@ -188,16 +187,6 @@
 //            validated = false;
 //            console.log("Invalid year");
 //        }
-
-=======
-        // // Check if year chosen
-        // if (!$(".dropdown dt a").hasClass("chosen")) {
-        //     $(".dropdown dt a").addClass("invalid");
-        //     addNag("Choose a year whydon'tcha.", $(".dropdown dt a").parent().parent().parent());
-        //     validated = false;
-        //     console.log("Invalid year");
-        // }
->>>>>>> 51970b049dedf5203e9d5e5750b060dbf06d8d63
 
         var shirt_valid = true;
 
@@ -396,24 +385,16 @@
             placeholder: "Select Year",
         });
 
-<<<<<<< HEAD
         $("#source").on("change", function() {
             $(".select2-container.drop").addClass("chosen");
         });
-=======
->>>>>>> 51970b049dedf5203e9d5e5750b060dbf06d8d63
 
         /* Prevent horizontal scrolling of element into view on focus */
         $(document).on('keydown', ':focus', function (event) {
             if ((event.keyCode || event.which) == 9) {
                 //TODO: Generalize and support selecting other kinds of input
-<<<<<<< HEAD
                 var $inputs = $("input[type=text], input[type=email], input[type=radio], input[type=checkbox]");
                 console.log($inputs);
-=======
-                var $inputs = $("input[type=text], input[type=email], input[type=radio]");
-                //console.log($inputs);
->>>>>>> 51970b049dedf5203e9d5e5750b060dbf06d8d63
                 var index = $inputs.index(this);
                 // Index previous or next input based on the shift key
                 index += event.shiftKey ? -1 : 1;
