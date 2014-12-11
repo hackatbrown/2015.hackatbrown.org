@@ -89,7 +89,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
       return;
     };
 
-    $http.post('/__manual', {change: action, emails: $scope.emails}).
+    $http.post('/__manual', {change: action, emails: emails}).
     success(function(data, status, headers, config) {
         console.log("successfully changed status for emails");
         $scope.manualStatus = action + " Success!";

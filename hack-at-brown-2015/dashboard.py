@@ -15,14 +15,21 @@ class DashboardHandler(webapp2.RequestHandler):
 class ManualRegistrationHandler(webapp2.RequestHandler):
     def post(self):
         parsed_request = json.loads(self.request.body)
+        print parsed_request
         emails = parsed_request.get('emails')
         for address in emails:
             hacker = Hacker.query(Hacker.email == address).fetch()
             if hacker:
                 for h in hacker: # should only be one
-                    logging.debug(h)
-                    if h.admitted_email_sent_date == None:
-                        accept_hacker(h)
+                    if parsed_request.get('change') == "Register":
+                        logging.debug(h)
+                        if h.admitted_email_sent_date == None:
+                            accept_hacker(h)
+
+                    if parsed_request.get('change') == "Remove":
+                        logging.debug(h)
+                        if h.admitted_email_sent_date == None:
+                            h.key.delete()
 
 
 class DashboardBackgroundHandler(webapp2.RequestHandler):
