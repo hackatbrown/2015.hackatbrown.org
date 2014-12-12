@@ -55,10 +55,9 @@ def accept_hacker(hacker):
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
-		print "CALLING RegistrationHandler"
 		hacker = Hacker()
 
-		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack' 'links']:
+		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links']:
 			print key + " " + self.request.get(key)
 			setattr(hacker, key, self.request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:

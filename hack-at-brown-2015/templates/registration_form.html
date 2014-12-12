@@ -112,7 +112,7 @@
 
             <div class="field">
                 <label for="resume">Upload Resume</label>
-                <input id="resume" class="resume-upload" type="file" name="resume" required />
+                <input id="resume" class="resume-upload" type="file" name="resume" />
             </div>
         </div>
 
@@ -227,17 +227,17 @@
 
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
-            addNag("Please check if you're doing a hardware hack or not.", $("label[for='hardware_hack']").parent());
+            addNag("Please indicate whether or not you're thinking of hacking with hardware.", $("label[for='hardware_hack']").parent());
             validated = false;
             console.log("Invalid hardware hack");
         }
 
-        // Check for resume
+       /* // Check for resume
         if (!$(".resume-upload").val()) {
             addNag("Upload your resume, man/woman/being/dog/mythical creature.", $(".resume-upload").parent());
             validated = false;
             console.log("Invalid resume");
-        }
+        }*/
 
         // Check if they agree to the Code of Conduct
         if (!$("#agree").prop('checked')) {
