@@ -1,51 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel='stylesheet' href='/static/font/Brown/stylesheet.css'>
 	<style>
+	body {
+		font-family: 'Brown', sans-serif;
+		background-color: #646464;
+		margin: 0;
+		height: 100%;
+	}
 	#content {
 		color: #111;
-		font-family: sans-serif;
+		background-color: white;
 		line-height: 1.4;
 		width: 90%;
 		max-width: 700px;
+		text-align: center;
 		margin: auto;
+		height: 100%;
+	}
+	#email-body{
+		border-radius: 3px;
+		padding: 5px;
+		text-align: left;
+		max-width: 500px;
+		display: inline-block;
 	}
 	a {
-		color: #FF3057;
+		color: #EF5D93;
 	}
 	h1, h2, h3, h4, h5 {
-		font-family: "HelveticaNeueLight", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-		font-weight: 200;
+		font-family: 'Brown', sans-serif;
+
 	}
 	h1 {
-		border-bottom: 2px solid #FF3057;
+		color:#EF5D93;
+		
 		text-align: center;
 	}
 	#logo {
 		text-align: center;
 	}
-	.cta {
-		background-color: #FF3057;
-		color: white;
-		padding: 10px;
-		display: inline-block;
-		margin: auto;
-		font-weight: bold;
+
+	.social-links a:hover {
+    opacity: 1.0;
+    border: none;
 	}
+
+  .social-links {
+    list-style: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+	}
+	.social-links li {
+    float: left;
+	}
+
+	.social-links a {
+    display: inline-block;
+    padding: 0 0.7em;
+    text-align: center;
+
+    height: 1.2em;
+    width: 1.2em;
+
+    background-size: 1.2em 1.2em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.8;
+
+    vertical-align: text-top;
+	}
+	.email {
+	    padding-top: 0.1em !important;
+	    background: url("/static/img/social-icons/email.svg");
+	}
+
+	.facebook {
+	    background: url("/static/img/social-icons/facebook.svg");
+	}
+
+	.twitter {
+	    background: url("/static/img/social-icons/twitter.svg");
+	}
+
+	.blog {
+	    background: url("/static/img/social-icons/medium.svg");
+	}
+
+
 	</style>
 	<meta charset='utf-8'/>
 </head>
 <body>
 	<div id='content'>
 		<div id='logo'>
-			<img src='http://2015.hackatbrown.org/static/img/logo-medium.png' style='width: 150px' />
+			<img src='http://hackatbrown2015-dev.appspot.com/static/img/logo-poly.svg' style='width: 150px' />
 		</div>
+		<div id="email-body">
 		{% block content %}
 		{% endblock %}
 		{% if hacker %}
+		</div>
 		<p>
-			<a href='http://hackatbrown2015-dev.appspot.com/secret/{{ hacker.secret }}'>To cancel or make changes to your registration, visit your dashboard by clicking this link.</a>
+			<a href='http://hackatbrown2015-dev.appspot.com/secret/{{ hacker.secret }}'>To view your registration, visit your dashboard by clicking this link.</a>
 		</p>
+		<ul class="social-links">
+                    <li></li>
+                    <li><a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook"></a></li>
+                    <li><a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter"></a></li>
+                    <li><a href="http://medium.com/hack-at-brown" title="Blog" class="blog"></a></li>
+                </ul>
 		{% endif %}
 	</div>
 </body>
