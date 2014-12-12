@@ -1004,8 +1004,15 @@ footer {
     font-weight: 300;
 }
 footer .coc {
+    color: #918f8c;
     margin-left: 0.5em;
 }
+
+.coc:hover {
+    border: none;
+    color: inherit;
+}
+
 footer .social-links {
     list-style: none;
     float: right;
