@@ -188,6 +188,11 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     height: 2px;
 }
 
+/* COMMON */
+.content_container {
+    width: 80%;
+    max-width: 964px;
+}
 
 /* SPLASH */
 .splash {
@@ -363,16 +368,15 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 
 
 /* REGISTRATION FORM */
-.registration_form {
+.registration_form.ui.form {
     display: none;
-    width: 80%;
-    max-width: 964px !important;
+    max-width: 964px;
     height: 100%;
     margin: 0 auto;
     top: 0;
     text-align: left;
 }
-.registration_form.active {
+.registration_form.ui.form.active {
     display: block;
 }
 .registration_form label { 
@@ -777,6 +781,9 @@ select2-choice.select2-default {
     color: white !important;
 }
 
+/* REGISTRATION SUCCESS*/
+.registration_success {
+}
 
 /* PANEL GENERAL */
 .panels {
@@ -810,8 +817,6 @@ select2-choice.select2-default {
     margin-left: auto;
     margin-right: auto;
     display:table;
-    width: 80%;
-    max-width: 964.8px;
     height: inherit;
 }
 .triangle > div > div {
@@ -835,10 +840,6 @@ select2-choice.select2-default {
     margin-top: 0;
 }
 section .foreground {
-/*
-    height: 80%;
-    margin-top: 10%;
-*/
 }
 section .background {
     position: absolute;
@@ -915,6 +916,10 @@ section .background > .right {
 .schedule article h2 > span {
     font-weight: 300;
     float: right;
+}
+.schedule article p {
+    text-align: justify;
+    text-align-last: left;
 }
 .schedule article > .day {
     margin-top: 30px;
@@ -1126,9 +1131,12 @@ nav.open .hamsvg {
   }
 }
 @media screen and (max-width: 1150px) {
+/*
+    TODO: Why?
     .registration_form {
         width:80%;
     }
+*/
     
     .schedule .background > .back {
         width: 1447.2px;
