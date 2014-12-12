@@ -11,12 +11,11 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 <link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css"/>
 <link rel="stylesheet" href="/static/css/select2.css"/>
 <link rel='stylesheet' href='/static/css/index.css'/>
+{% if registration_status == "sign_up_for_updates" %}
+<link rel='stylesheet' href='/static/css/index-supdates.css'/>
+{% endif %}
+
 <script type="text/javascript" src='/static/js/prefixfree.min.js'></script>
-<!--
-<script type="text/javascript" src="/static/js/vendor/jquery.ui.widget.js"></script>
-<script type="text/javascript" src="/static/js/jquery.iframe-transport.js"></script>
-<script type="text/javascript" src="/static/js/jquery.fileupload.js"></script>
--->
 {% endblock %}
 
 {% block nav %}
@@ -29,7 +28,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
         </g>
     </svg>
 </div>
-<div class="hamburger"></div>
+<div class="hamburger over"></div>
 <ul class="top-bar_ul" data-0="" data-1="">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Cancel</a></li>
     <li class="top-bar_li active" id="hello_top"><a href="#hero">Hello</a></li>
@@ -248,6 +247,8 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
     </div>
 </div>
 
+
+<script type="text/javascript" src='/static/js/gutabslider.js'></script>
 <script type="text/javascript" src="/static/js/skrollr.js"></script>
 
 <!--These are only for the registration form, so we can load them here-->

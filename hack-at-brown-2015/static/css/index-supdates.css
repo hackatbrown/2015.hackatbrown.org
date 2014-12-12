@@ -1,0 +1,58 @@
+/* SIGN UP FOR UPDATES -- old stuff underneath here, look out*/
+#sign-up-for-updates input[type=email] {
+    outline: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+/* turn placeholder text white */
+
+#sign-up-for-updates input[type=email]::-webkit-input-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]::-ms-input-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]::-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:focus {
+    background-color: white;
+    box-shadow: inset 0px -3px 0px #EF5D93;
+}
+/* turn placeholder text gray on focus */
+
+#sign-up-for-updates input[type=email]:focus::-webkit-input-placeholder {
+    color: gray;
+}
+#sign-up-for-updates input[type=email]:focus::-ms-input-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:focus:-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates input[type=email]:focus::-moz-placeholder {
+    color: white;
+}
+#sign-up-for-updates.signed-up input[type=email] {
+    transition: background-color 0.3s, box-shadow 1.0s;
+    box-shadow: inset 0px -100px 0px #6d7;
+}
+/* after registering */
+
+.toast {
+    display: none;
+    position: absolute;
+    background-color: rgba(53, 195, 71, 0.9);
+    color: white;
+    padding: 20px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+}
+#thanks h4 {
+    font-size: x-large;
+    margin: 0px;
+}
