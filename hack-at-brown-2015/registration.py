@@ -25,6 +25,7 @@ class Hacker(ndb.Model):
 	links = ndb.StringProperty(default=None)
 	teammates = ndb.StringProperty(default=None)
 	hardware_hack = ndb.StringProperty()
+	first_hackathon = ndb.StringProperty()
 
 
 	secret = ndb.StringProperty()
@@ -58,7 +59,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		hacker = Hacker()
 
-		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links']:
+		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']:
 			print key + " " + self.request.get(key)
 			setattr(hacker, key, self.request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:
