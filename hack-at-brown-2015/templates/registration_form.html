@@ -1,6 +1,6 @@
 <div class='panel double_right'>
     <form action='{{ registration_post_url }}' id='registration_form' class='registration_form ui form content_container' method='POST' enctype="multipart/form-data" novalidate>
-        <div class="errorsPresent">Please fix all errors in the form.</div>
+        <div class="errorsPresent">Please fix all issues in the form.</div>
 
         <div class="two fields row">
             <div class="field">
@@ -227,7 +227,7 @@
 
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
-            addNag("Please indicate whether or not you're thinking of hacking with hardware.", $("label[for='hardware_hack']").parent());
+            addNag("Please indicate whether you're interested in hardware hacking.", $("label[for='hardware_hack']").parent());
             validated = false;
             console.log("Invalid hardware hack");
         }

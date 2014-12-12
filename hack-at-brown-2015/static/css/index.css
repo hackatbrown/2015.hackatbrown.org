@@ -192,6 +192,8 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 .content_container {
     width: 80%;
     max-width: 964px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* SPLASH */
