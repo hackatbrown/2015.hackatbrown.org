@@ -1197,8 +1197,8 @@ nav.open .hamsvg {
     .row {
         margin-bottom:0 !important;
     }
-    .two.fields .field {
-        margin-bottom:16px;
+    .two.fields .field, .ui.form .field.row {
+        margin-bottom:16px !important;
     }
     input[type="radio"] + label {
         font-size:1em;
