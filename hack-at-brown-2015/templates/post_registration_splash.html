@@ -1,9 +1,11 @@
 {# this is loaded directly inside #splash on index.html after a successful registration #}
 <div class="registration_success content_container">
 	<h1 style="color: #EF5D93; font-size: 5em;">HUZZAH!</h1>
-	<h1>Thanks, {{ name }}!</h1>
+	<h1>Thanks for registering, {{ name }}!</h1>
 	<p> Though we're space limited, we want to make sure everyone has a fair chance to attend. We'll get back to you after registrations close with your lottery results!</p>
-	<p>In the meantime, make sure you got an email from hello@hackatbrown.org, you'll be able to check your status and information at the special link we sent you. You'll want to make sure you have a resume uploaded before the end of registration so we can pass it off to all of our sponsors!</p>
+    <p>In the meantime, make sure you got an email from <a href="mailto:hello@hackatbrown.org?subject=Hi%from%20{{ name }}!">hello@hackatbrown.org</a>—you'll be able to check your status and information at the special link we sent you.</p> 
+    
+    <p>You'll want to make sure you have a resume uploaded before the end of registration so we can pass it off to all of our sponsors!</p>
 	
 	<a  style="font-size: 2em;"href='http://facebook.com/hackatbrown'>
 		Find teammates and more on our Facebook page
