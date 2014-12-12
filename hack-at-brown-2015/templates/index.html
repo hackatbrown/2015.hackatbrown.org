@@ -102,8 +102,8 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                 </div>
             </div>
             <div class="background">
-                <div class="back" data-bottom-top="transform: translate3d(0,-50%,0);" data-top-bottom="transform: translate3d(0,-40 %,0);"></div>
-                <div class="right mid pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-60%,0);"></div>
+                <div class="back" data-bottom-top="transform: translate3d(0,-60%,0);" data-top-bottom="transform: translate3d(0,-45 %,0);"></div>
+                <div class="right mid pink" data-bottom-top="transform: translate3d(0,-40%,0);" data-top-bottom="transform: translate3d(0,-55%,0);"></div>
             </div>
         </section>
 
@@ -272,7 +272,9 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
             height = (Math.ceil(splash.offsetHeight/60) * 60) - 840;
         }
         $(".panels").css("transform", "translate3d(0," + height + "px, 0)");
+        $("#skrollr-body").css("padding-bottom", (height) + "px");
     }
+        
   
     function initalizeNavMenu(selector) {
       $(selector).onePageNav({
