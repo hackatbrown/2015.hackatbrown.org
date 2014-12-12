@@ -109,12 +109,28 @@
             </div>
 
             <div class="field">
-                <label for="resume">Upload Resume <span class="optional">(Optional)</span></label>
+                <label for="resume">Upload Resume <span class="optional">(Optional; Recommended)</span></label>
                 <input id="resume" class="resume-upload" type="file" name="resume" />
             </div>
         </div>
 
         <div class="two fields row">
+            <div class="field">
+                <label for="first_hackathon">Will this be your first hackathon?</label>
+                <table class="radio_select" for="first_hackathon">
+                    <tr>
+                        <td>
+                            <input type="radio" name="first_hackathon" id="first_hackathon_yes" value='yes' />
+                            <label for="first_hackathon_yes">Yeah!</label>
+                        </td>
+                        <td>
+                            <input type="radio" name="first_hackathon" id="first_hackathon_no" value='no' />
+                            <label for="first_hackathon_no">Nope</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
             <div class="field">
                 <label for="links">Links <span class="optional">(Optional)</span></label>
                 <div class="condor"></div>
