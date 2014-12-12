@@ -13,14 +13,19 @@
   float: right;
 }
 
-h1 {
-  border-bottom: 3px solid orange;
+h1,h2,h3,h4,h5{
+   font-weight: inherit;
+}
+
+h2 {
+ 
+  border-bottom: 3px solid #EF5D93;
 }
 </style>
 
 <div class="wrapper">
   <div class="info">
-    <h1>Hello, {{ hacker.name }}</h1>
+    <h2>Hello, {{ hacker.name }}</h2>
     <h3>Here's what we got from you:</h3>
     <ul>
       <li>Name: {{ hacker.name }}</li>
@@ -40,7 +45,7 @@ h1 {
     </ul>
   </div>
   <div class="status">
-    <h1>Your Status: <br></h1><h3><strong>{{ status }} </strong></h3>
+    <h2>Your Status: <br></h2><h3><strong>{{ status }} </strong></h3>
   </div>
 </div>
 {% endblock %}

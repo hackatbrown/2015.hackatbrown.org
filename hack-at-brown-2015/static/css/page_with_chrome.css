@@ -1,15 +1,15 @@
 #header {
 	right: 10px;
 	top: 10px;
-	font-family: 'Raleway', sans-serif;
+	
 	vertical-align: middle;
 	text-align: center;
 }
 #header a {
 	text-decoration: none;
-	color: black;
-	font-size: 2em;
-	border-bottom: 2px solid #FF3057;
+	color: #EF5D93;
+/*	font-size: 2em;
+	border-bottom: 2px solid #EF5D93;*/
 	display: inline-block;
 	padding: 0 1em;
 }
@@ -19,7 +19,7 @@
 	display: block;
 }
 a {
-	color: #FF3057;
+	color: #EF5D93;
 }
 #centered {
 	width: 90%;
