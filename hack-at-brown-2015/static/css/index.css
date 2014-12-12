@@ -1013,8 +1013,44 @@ footer .social-links {
     padding: 0;
 }
 .social-links li {
+    float: left;
+}
+
+.social-links a {
     display: inline-block;
-    margin-left: 0.5em;
+    padding: 0 0.7em;
+
+    height: 1.2em;
+    width: 1.2em;
+
+    background-size: 1.2em 1.2em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.8;
+
+    vertical-align: text-top;
+}
+
+.social-links a:hover {
+    opacity: 1.0;
+    border: none;
+}
+
+.email {
+    padding-top: 0.1em !important;
+    background: url("/static/img/social-icons/email.svg");
+}
+
+.facebook {
+    background: url("/static/img/social-icons/facebook.svg");
+}
+
+.twitter {
+    background: url("/static/img/social-icons/twitter.svg");
+}
+
+.blog {
+    background: url("/static/img/social-icons/medium.svg");
 }
 
 
@@ -1246,7 +1282,24 @@ nav.open .hamsvg {
 /*        transform: scale(1.5, 1.5);*/
 /*        transform-origin: center top;*/
     }
-    
+
+    footer {
+        text-align: center;
+        margin-top: 0px;
+    }
+
+    footer .copyright, footer .coc {
+        display: block;
+    }
+
+    footer .coc {
+        margin: 0.7em 0 1.2em 0;
+    }
+
+    footer .social-links {
+        float: none;
+        display: inline-block;
+    }
 }
 
 
