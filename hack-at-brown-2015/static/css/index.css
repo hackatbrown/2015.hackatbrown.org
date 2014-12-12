@@ -953,6 +953,11 @@ section .background > .right {
     margin: 25px 0px;
     vertical-align: middle;
 }
+
+#akamai-logo {
+    max-height: 75px;
+}
+
 .sponsors .sponsor-row.tera {
     word-spacing: 70px;
 }
