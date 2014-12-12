@@ -897,6 +897,8 @@ section .background > .right {
     width: 2572.8px;
     margin-right: -643.2px;
     height: 2520px;
+    width: calc(50vw + 643.2px);
+    height: calc(100vw + 643.2px);
     background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg);
 }
 
@@ -997,6 +999,8 @@ section .background > .right {
     width: 2304.8px;
     margin-right: -1018.4px;
     height: 2460px;
+    width: calc(50vw + 1018.4px);
+    height: calc(100vw + 1018.4px);
     background-image: url(/static/img/svgtriangles/0bg_2_darkgrey-triangle.svg);
 }
 
@@ -1123,7 +1127,7 @@ section .background > .mid {
     height: 1320px;
     background-image: url(/static/img/svgtriangles/1bg_0_pink-triangle.svg);
     top: 210px;
-    margin-left: 160.8px;
+    margin-left: 214.4px;
 }
 .mid.fallback-orange {
     width: 1179.2px;
