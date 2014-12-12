@@ -865,11 +865,12 @@ section .background > .right {
 
 /* PANEL SPECIFIC */
 .about {
-    margin-top: 90px;
+    margin-top: 180px;
     height: 660px;
 }
 .about article {
     max-width: 589.6px;
+    margin-top: -360px;
     padding-bottom: 210px;
 }
 .about article h2 {
@@ -879,10 +880,10 @@ section .background > .right {
 }
 .about .background > .back {
     width: 2572.8px;
-    margin-right: -643.2px;
+    margin-right: -804px;
     height: 2520px;
-    width: calc(50vw + 643.2px);
-    height: calc(100vw + 643.2px);
+    width: calc(50vw + 804px);
+    height: calc(100vw + 804px);
     background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg);
 }
 
@@ -1110,7 +1111,7 @@ section .background > .mid {
     width: 1179.2px;
     height: 1320px;
     background-image: url(/static/img/svgtriangles/1bg_0_pink-triangle.svg);
-    top: 210px;
+    top: 120px;
     width: calc(50vw + 214.4px);
     height: calc(100vw + 214.4px);
     margin-left: 214.4px;

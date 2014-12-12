@@ -151,8 +151,6 @@ function initalizeHamburger() {
 $(document).ready(function () {
     var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
 
-
-
     // Make sure splash height is good on doc ready
     fixSplashHeight();
 
