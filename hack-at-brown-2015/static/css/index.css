@@ -539,7 +539,8 @@ input[type="radio"]:checked + label {
 .registration_form .ui.button {
     margin-top: 15px;
 }
-    /* Styling tags -- overthrowing a lot of tagit stuff */
+/*     Styling tags -- overthrowing a lot of tagit stuff */
+/*
 ul.tagit {
     height: auto !important;
     max-height: 75px;
@@ -573,6 +574,7 @@ ul.tagit li.tagit-new {
     padding: 0 !important;
     margin-top: 2px !important;
 }
+*/
     /* Styling Autocomplete */
 .ui-autocomplete {
     position: absolute;
