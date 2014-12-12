@@ -14,9 +14,6 @@ handlers:
 - url: /static
   static_dir: static
 
-- url: .*
-  script: main.app
-
 - url: /dashboard
   script: main.app
   login: admin
@@ -24,6 +21,9 @@ handlers:
 - url: /dashboard(/.*)?
   script: main.app
   login: admin
+
+- url: .*
+  script: main.app
 
 libraries:
 - name: webapp2

@@ -63,7 +63,7 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                 </form>
                 {% endif %}
                 {% if registration_status == "registration_open" %}
-                <form class="init_reg" novalidate>
+                <form id="registration_email" action="/__check_registered" class="init_reg" novalidate>
                     <input type="email" name="email" placeholder="EMAIL" class="init_input" required/>
                     <input type="submit" value="REGISTER" class="init_submit light" />
                 </form>
@@ -310,6 +310,23 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                 console.log("Splash Page: Invalid email!");
                 return;
             } else {
+                var registered = false;
+                $("#registration_email").ajaxSubmit({
+                        async: false,
+                        success: function (response) {
+                            //$('#submit_button').removeAttr('disabled');
+                            response = JSON.parse(response)
+                            if (response.registered === true) {
+                                console.log("you already registered!")
+                                addNag("You've already registered!", $(".init_reg input[type='email']").parent());
+                                registered = true;
+                                return;
+                            } 
+                    }});
+                if (registered) {
+                    return;
+                };
+                
                 $(".init_reg .init_submit").addClass("valid");
             }
            

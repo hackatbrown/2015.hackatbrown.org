@@ -8,6 +8,7 @@ from template import template
 from google.appengine.api import memcache
 import os
 import base64
+import webapp2
 
 memcache_expiry = 10 * 60
 
@@ -75,3 +76,12 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		name = hacker.name.split(" ")[0] # TODO: make it better
 		confirmation_html = template("post_registration_splash.html", {"name": name})
 		self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
+
+class CheckRegistrationHandler(webapp2.RequestHandler):
+	def get(self):
+		email = self.request.get('email')
+		if Hacker.query(Hacker.email == email).count() > 0:
+				self.response.write(json.dumps({"registered":True}))
+		else:
+			self.response.write(json.dumps({"registered":False}))
+		
