@@ -288,7 +288,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     text-indent: 6px;
     -webkit-box-shadow: inset 1px 0px 0px -1px #404040;
     box-shadow: inset 1px 0px 0px -1px #404040;
-    -webkit-appearance: none;
     transition: box-shadow .2s, border .2s, color .2s;
     width: 250px;
 }
@@ -301,7 +300,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     text-transform: capitalize;
 }
 .init_input:focus {
-    -webkit-appearance: none;
     color: #fff;
     -webkit-box-shadow: inset 1px -50px 0px -1px #404040;
     box-shadow: inset 1px -50px 0px -1px #404040;
@@ -406,7 +404,6 @@ span.optional {
 .registration_form input[type=text],
 .registration_form input:not([type]),
 .registration_form ul.tagit {
-    -webkit-appearance: none;
     border:none;
     -webkit-box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
     box-shadow: inset 1px -3px 0px -1px rgba(145,143,140,0.3);
@@ -438,7 +435,6 @@ span.optional {
 .registration_form input[type=text].invalid,
 .registration_form input:not([type]).invalid,
 .registration_form .invalid {
-    -webkit-box-shadow: inset 1px -3px 0px -1px #F3C788 !important;
     box-shadow:inset 1px -3px 0px -1px #F3C788 !important; /* To override the dropdown style */
 }
 .errorsPresent {
@@ -461,8 +457,6 @@ span.optional {
 .registration_form input[type=email]:focus,
 .registration_form input[type=text]:focus,
 .registration_form input:not([type]):focus {
-    -webkit-appearance: none;
-    -webkit-box-shadow: inset 1px -50px 0px -1px #404040 !important;
     box-shadow: inset 1px -50px 0px -1px #404040 !important; /* To override valid style */
     color: white !important;
     padding-left:.65em;
@@ -517,9 +511,6 @@ input[type="radio"]:checked + label {
     box-shadow: inset 1px -50px 0px -1px #1B8EB9;
 }
 .registration_form input[type="checkbox"] {
-    appearance:none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     display: inline-block;
     margin-top:1px !important;
     border:2px solid rgba(59,142,185,0.5);
@@ -1259,6 +1250,7 @@ nav.open .hamsvg {
         width: 80%;
         z-index: 1200;
     }
+/*    Fade in the navbar background when scrolled*/
     .top-bar_ul.skrollable-between {
       background-color: rgba(255, 255, 255, 0);
     }
