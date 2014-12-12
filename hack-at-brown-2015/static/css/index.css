@@ -1127,6 +1127,8 @@ section .background > .mid {
     height: 1320px;
     background-image: url(/static/img/svgtriangles/1bg_0_pink-triangle.svg);
     top: 210px;
+    width: calc(50vw + 214.4px);
+    height: calc(100vw + 214.4px);
     margin-left: 214.4px;
 }
 .mid.fallback-orange {
