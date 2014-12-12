@@ -11,11 +11,12 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 <link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css"/>
 <link rel="stylesheet" href="/static/css/select2.css"/>
 <link rel='stylesheet' href='/static/css/index.css'/>
+<script type="text/javascript" src='/static/js/prefixfree.min.js'></script>
+<!--
 <script type="text/javascript" src="/static/js/vendor/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="/static/js/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="/static/js/jquery.fileupload.js"></script>
-<script type="text/javascript" src="/static/js/condor.js"></script>
-<script type="text/javascript" src="/static/js/select2.min.js"></script>
+-->
 {% endblock %}
 
 {% block nav %}
@@ -376,6 +377,10 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
     
     $(document).ready(function() {
         var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+        
+//        These are only for the registration form, so we can load them here
+        <script type="text/javascript" src="/static/js/condor.js"></script>
+        <script type="text/javascript" src="/static/js/select2.min.js"></script>
       
         // Make sure splash height is good on doc ready
         fixSplashHeight();
