@@ -4,7 +4,7 @@
 Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 {% endblock %}
 
-{% block head %}
+{% block headcss %}
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic/minified/collections/form.min.css' />
 <link rel='stylesheet' href='/static/semantic/minified/collections/grid.min.css' />
@@ -14,8 +14,16 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 {% if registration_status == "sign_up_for_updates" %}
 <link rel='stylesheet' href='/static/css/index-supdates.css'/>
 {% endif %}
+{% endblock %}
 
-<script type="text/javascript" src='/static/js/prefixfree.min.js'></script>
+{% block headjs %}
+{{ super() }}
+
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+
 {% endblock %}
 
 {% block nav %}
