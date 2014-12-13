@@ -265,6 +265,12 @@
             $("select[name='year']").addClass("valid");
             $(".select2-container.drop").removeClass("invalid");
             $(".select2-container.drop").addClass("valid");
+
+            if($(this).val() == "highschool") {
+                $(".hs-warning").show();
+            } else {
+                $(".hs-warning").hide();
+            }
         });
         
         $("#teammates").select2({
