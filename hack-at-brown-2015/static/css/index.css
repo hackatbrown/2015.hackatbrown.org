@@ -412,6 +412,8 @@ span.optional {
     font-weight: 300;
     font-size: .9em;
     transition: box-shadow .2s, color .2s;
+    height: 35px;
+    line-height: 1.8em;
 }
 .registration_form .file-name {
     font-weight: 300;
@@ -501,6 +503,7 @@ input[type="radio"] {
     width: 0px;
 }
 input[type="radio"] + label {
+    line-height: 1.8em;
     background-color: #EBEBEB;
     text-transform: none;
     height: 18px;
@@ -787,19 +790,30 @@ select2-choice.select2-default {
 
 /* REGISTRATION SUCCESS*/
 .registration_success {
-   max-width: 589.6px;
+    max-width: 643.2px;
+    margin-top: 60px;
 }
 
 .registration_success h1 {
     font-size: 2.2em;
     font-weight: bold;
+    margin-top: 0;
     margin-bottom: 0;
-    margin-top: 1.5em;
 }
 
 .registration_success p {
-    font-size: 1.5em;
+    font-size: 19px;
     font-weight: 300;
+}
+
+.registration_success footer {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    float: none;
+}
+
+.registration_success footer > .social-links {
+    float: none;
 }
 
 /* PANEL GENERAL */
@@ -827,7 +841,7 @@ select2-choice.select2-default {
     font-size: 1.5em;
     font-weight: 300;
 }
-.triangle.verbose p {
+.verbose p {
     font-size: 1em;
 }
 .triangle > div {
@@ -1047,7 +1061,7 @@ footer .social-links {
     padding: 0;
 }
 .social-links li {
-    float: left;
+    display: inline;
 }
 
 .social-links a {
