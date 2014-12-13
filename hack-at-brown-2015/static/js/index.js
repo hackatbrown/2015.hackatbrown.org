@@ -125,7 +125,10 @@ function initalizeReg() {
 
     $(".cancel_reg").click(function () {
         $(".splash").removeClass("reg");
-        $(this).removeClass("reg");
+        $(this).fadeOut(200, function () {
+                $(this).removeClass("reg");
+                $(this).fadeIn(0);
+          });
         $(".splash .background > .fore").removeClass("translated");
         $(".top-bar_li#hello_top a").fadeOut(500, function () {
             $(this).text("Hello");
