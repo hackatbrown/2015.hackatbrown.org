@@ -82,12 +82,14 @@ def getAll():
     firstHack = {}
     diet = {}
     year = {}
-
+    if not hackers:
+        return
     for hacker in hackers:
         schools[hacker.school] = schools.setdefault(hacker.school, 0) + 1
         year[hacker.year] = year.setdefault(hacker.year, 0) + 1
         shirts[hacker.shirt_gen] = shirts.setdefault(hacker.shirt_gen, 0) + 1
-        shirts[hacker.shirt_gen + hacker.shirt_size] =  shirts.setdefault(hacker.shirt_gen + hacker.shirt_size, 0) + 1
+        if hacker.shirt_gen and hacker.shirt_size:
+            shirts[hacker.shirt_gen + hacker.shirt_size] =  shirts.setdefault(hacker.shirt_gen + hacker.shirt_size, 0) + 1
         hardware[hacker.hardware_hack] = hardware.setdefault(hacker.hardware_hack, 0) + 1
         firstHack[hacker.first_hackathon] = firstHack.setdefault(hacker.first_hackathon, 0) + 1
         if hacker.dietary_restrictions == "":
