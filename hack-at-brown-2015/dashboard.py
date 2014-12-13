@@ -85,7 +85,8 @@ def getAll():
     if not hackers:
         return
     for hacker in hackers:
-        schools[hacker.school] = schools.setdefault(hacker.school, 0) + 1
+        hacker_school = (str(hacker.school)).replace("University", " ").replace("College", " ").strip()
+        schools[hacker_school] = schools.setdefault(hacker_school, 0) + 1
         year[hacker.year] = year.setdefault(hacker.year, 0) + 1
         shirts[hacker.shirt_gen] = shirts.setdefault(hacker.shirt_gen, 0) + 1
         if hacker.shirt_gen and hacker.shirt_size:
