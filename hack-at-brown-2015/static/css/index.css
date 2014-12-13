@@ -549,7 +549,7 @@ input[type="radio"]:checked + label,
 
 .hs-warning {
     display: none;
-    max-height: 100%;
+    max-height: 100% !important;
 }
 
 .registration_form input[type="checkbox"] {
