@@ -536,6 +536,22 @@ input[type="radio"]:checked + label,
     color:#fff;
     box-shadow: inset 1px -50px 0px -1px #1B8EB9;
 }
+
+.upload-later {
+    display: none;
+}
+
+@media (max-width: 750px) {
+    .upload-later {
+        display: block;
+    }
+}
+
+.hs-warning {
+    display: none;
+    max-height: 100%;
+}
+
 .registration_form input[type="checkbox"] {
     display: inline-block;
     margin-top:1px !important;

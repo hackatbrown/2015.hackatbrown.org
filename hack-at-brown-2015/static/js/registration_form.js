@@ -15,7 +15,7 @@
         // Check if name is filled out
         if (!$("input[name='name']").val()) {
             $("input[name='name']").addClass("invalid");
-            addNag("We're gonna need your name.", $("input[name='name']").parent());
+            addNag("Please enter your full name.", $("input[name='name']").parent());
             validated = false;
             console.log("Invalid name");
         }
@@ -89,6 +89,13 @@
             addNag("Please indicate whether you're interested in hardware hacking.", $("label[for='hardware_hack']").parent());
             validated = false;
             console.log("Invalid hardware hack");
+        }
+
+        // Check if they filled out first time question
+        if (!$("input[name='first_hackathon']:checked").val()) {
+            addNag("Please indicate if this will be your first hackathon.", $("label[for='first_hackathon']").parent());
+            validated = false;
+            console.log("Invalid first hackathon");
         }
 
        /* // Check for resume
@@ -266,6 +273,12 @@
             $("select[name='year']").addClass("valid");
             $(".select2-container.drop").removeClass("invalid");
             $(".select2-container.drop").addClass("valid");
+
+            if($(this).val() == "highschool") {
+                $(".hs-warning").show();
+            } else {
+                $(".hs-warning").hide();
+            }
         });
         
         $("#teammates").select2({
