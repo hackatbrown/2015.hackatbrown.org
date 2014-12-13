@@ -1379,6 +1379,12 @@ nav.open .hamsvg {
 /*        transform: scale(1.5, 1.5);*/
 /*        transform-origin: center top;*/
     }
+    
+    .schedule article h2 > span {
+        float: none;
+        display: block;
+        text-align: left;
+    }
 
     footer {
         text-align: center;
