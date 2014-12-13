@@ -151,9 +151,6 @@ function initalizeHamburger() {
 $(document).ready(function () {
     var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
 
-    // Make sure splash height is good on doc ready
-    fixSplashHeight();
-
     // P-P-P- 
     if (!iOS) {
         skrollr.init({
@@ -174,5 +171,8 @@ $(document).ready(function () {
     initalizeHamburger();
 
     initalizeNavMenu('.top-bar_ul');
+  
+    // Make sure splash height is good on doc ready
+    fixSplashHeight();
 
 });

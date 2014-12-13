@@ -1,18 +1,23 @@
 {# this is loaded directly inside #splash on index.html after a successful registration #}
 <div class="registration_success content_container">
-	<h1 style="color: #EF5D93; font-size: 5em;">HUZZAH!</h1>
+	<h1 style="color: #EF5D93; font-size: 5em;">YAY</h1>
 	<h1>Thanks for registering, {{ name }}!</h1>
-	<p> Though we're space limited, we want to make sure everyone has a fair chance to attend. We'll get back to you after registrations close with your lottery results!</p>
-    <p>In the meantime, make sure you got an email from <a href="mailto:hello@hackatbrown.org?subject=Hi%from%20{{ name }}!">hello@hackatbrown.org</a>—you'll be able to check your status and information at the special link we sent you.</p> 
+	<p>Though we're space limited, we want to make sure everyone has a fair chance to attend, and we'll be using a lottery system.</p>
+    <p>Make sure you receive an email from <a href="mailto:hello@hackatbrown.org?subject=Hi%from%20{{ name }}!">hello@hackatbrown.org</a>—you'll be able to check your status and change your information at the link we send you.</p> 
     
-    <p>You'll want to make sure you have a resume uploaded before the end of registration so we can pass it off to all of our sponsors!</p>
+    <p>You'll want to make sure you have a resume uploaded before the end of registration (Dec 31st at 11:59 pm) so we can pass it off to all of our sponsors!</p>
 	
-	<a  style="font-size: 2em;"href='http://facebook.com/hackatbrown'>
-		Find teammates and more on our Facebook page
+	<!-- <a  style="font-size: 2em;"href='http://facebook.com/hackatbrown'>
+		Check for updates and more on our Facebook page -->
 	</a>
 	
-	<div id='footer'>
-		<h2 id='tagline'>Make, Play, Learn.</h2>
-		<h3><a href='http://facebook.com/hackatbrown'>Like us on Facebook</a> | <a href='http://twitter.com/hackatbrown'>Follow us on Twitter</a></h3>
-	</div>
+	<footer id='footer'>
+		<h2 class='slogan'>Make, Play, Learn.</h2>
+		<ul class="social-links">
+                    <li><a href="mailto:hello@hackatbrown.org" title="Email" class="email"></a></li>
+                    <li><a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook"></a></li>
+                    <li><a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter"></a></li>
+                    <li><a href="http://medium.com/hack-at-brown" title="Blog" class="blog"></a></li>
+        </ul>
+	</footer>
 </div>
