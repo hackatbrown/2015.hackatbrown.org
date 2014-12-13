@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<title>Hack@Brown 2015 — Breakdowns</title>
+<link rel='stylesheet' href='/static/css/dashboard.css'/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
+<!-- <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script> -->
+<script src='/static/js/dashboard.js'></script>
+{% endblock %}
+
+{% block content %}
+  <div ng-app='breakdownsApp' ng-init="getBreakdowns()" ng-controller="MainCtrl" >
+    <h1 style="color: #EF5D93;"> Schools </h1>
+    <div ng-repeat="(key, value) in schools">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style="color: #EF5D93;"> Year </h1>
+    <div ng-repeat="(key, value) in years">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style="color: #EF5D93;"> Dietary Restrictions </h1>
+    <div ng-repeat="(key, value) in diet">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style="color: #EF5D93;"> Gender and Shirt Sizes </h1>
+    <div ng-repeat="(key, value) in shirts">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style="color: #EF5D93;"> Hardware Hack? </h1>
+    <div ng-repeat="(key, value) in hardware">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style="color: #EF5D93;"> First Hackathon? </h1>
+    <div ng-repeat="(key, value) in firstHack">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    
+
+   <!-- <div id='charts'>
+      <h2 class='option'>Breakdown</h2>
+      <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
+      </select>
+        <div id='chart_1' ng-init="populateCharts()"></div>
+        <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
+    </div>  -->
+
+
+{% endblock %}
