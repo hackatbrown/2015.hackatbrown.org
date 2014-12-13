@@ -35,7 +35,8 @@ input[type="radio"] + label:hover,
 .registration_form input[type=submit]:focus,
 .registration_form input:not([type]):focus,
 .registration_form input[type="checkbox"]:focus,
-.registration_form input[type="file"]:focus {
+.registration_form input[type="file"]:focus, 
+.registration_form .resume-button:focus {
     outline: none;
 }
 .registration_form input[type="checkbox"]:focus {
@@ -397,8 +398,24 @@ span.optional {
 .two.fields .field {
     margin-bottom:0;
 }
-.registration_form input[type=file] { /* until replaced */
+.registration_form input[type=file] { 
+    display: none;
+}
+.registration_form .resume-button {
+    box-shadow: inset 1px 0px 0px -1px #1B8EB9;
+    background-color: #EBEBEB;
+    border: none;
+    padding: 11px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    color: #404042;
     font-weight: 300;
+    font-size: .9em;
+    transition: box-shadow .2s, color .2s;
+}
+.registration_form .file-name {
+    font-weight: 300;
+    margin-left: 5px;
 }
 .registration_form input[type=email],
 .registration_form input[type=text],
@@ -506,7 +523,8 @@ input[type="radio"] + label {
 input[type="radio"] + label:hover, input[type="radio"]:focus + label {
     background-color: #E2E1DF;
 }
-input[type="radio"]:checked + label {
+input[type="radio"]:checked + label,
+.registration_form .resume-button.on {
     color:#fff;
     box-shadow: inset 1px -50px 0px -1px #1B8EB9;
 }

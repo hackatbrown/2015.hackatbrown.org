@@ -203,6 +203,21 @@
             })
         });
 
+        // Attach resume upload button with actual file input & style
+        $("#resume-over").click(function () { 
+            $("#resume").click();
+        });
+        $("#resume").change(function() {
+            if ($("#resume").val()) {
+                var $parsed_val = $("#resume").val().split("\\");
+                $(".file-name").html($parsed_val[$parsed_val.length - 1]);
+                $(".resume-button").addClass("on");
+            } else {
+                $(".file-name").html("No file chosen.");
+                $(".resume-button").removeClass("on");
+            }
+        });
+
 
         /* On email change & valid, check for university domain */
         function searchUniversities(domain) {
