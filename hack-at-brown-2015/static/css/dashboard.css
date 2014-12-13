@@ -8,7 +8,9 @@ html, body {
   text-align: center;
 
 }
-
+h1, h2{
+  /*color: #EF5D93;*/
+}
 #header {
   display: inline-block;
   margin-bottom: 10px;

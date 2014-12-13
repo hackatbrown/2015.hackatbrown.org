@@ -3,6 +3,18 @@ var dashApp = angular.module('dashApp', []).config(function($interpolateProvider
     }
 );
 
+var breakdownsApp = angular.module('breakdownsApp', []).config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('%%').endSymbol('%%');
+    }
+);
+
+breakdownsApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
+
+  $scope.schools = {};
+  
+}]);
+
+
 dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.content = "";
   $scope.header = "";
@@ -21,6 +33,8 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.acceptedCount = 0;
   $scope.waitlistCount = 0;
   $scope.declinedCount = 0;
+
+  $scope.showBreakdowns = false;
 
   $scope.charts = [{
       name : 'By School',
@@ -99,6 +113,33 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
     });
 
   };
+
+
+  $scope.getBreakdowns = function(){
+    $scope.showBreakdowns = !$scope.showBreakdowns ;
+    if ($scope.schools){
+      return;
+    }
+    $http({method: 'GET', url: '/__breakdown/' + "all"}).
+        success(function(data, status) {
+         
+
+          if (data != "null") {
+            $scope.schools = data.schools;
+            $scope.shirts = data.shirts;
+            $scope.hardware = data.hardware;
+            $scope.firstHack = data.firstHack;
+            $scope.diet = data.diet;
+            $scope.years = data.year;
+          }
+
+        }).
+        error(function(data, status) {
+          $scope.data = data || "Request failed";
+          $scope.status = status;
+
+      });
+  }
 
   $scope.populateCharts = function() {
 

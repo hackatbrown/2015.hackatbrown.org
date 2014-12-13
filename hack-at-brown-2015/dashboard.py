@@ -55,10 +55,16 @@ class SendEmail(webapp2.RequestHandler):
     send_email(recipients=send_to, html=body, subject=subject)
     self.response.write(json.dumps({"success": True, "recipients": send_to }))
 
+class ViewBreakdownsHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write(template("breakdowns.html"))
+
 class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
         if type == 'school':
             data = getBySchool()
+        elif type == 'all':
+            data = getAll()
         elif type == 'shirt':
             data = getByShirtSize()
         elif type == 'diet':
@@ -68,13 +74,34 @@ class BreakdownHandler(webapp2.RequestHandler):
 
         self.response.write(json.dumps(data))
 
+def getAll():
+    hackers =  Hacker.query().fetch()
+    schools = {}
+    shirts = {}
+    hardware = {}
+    firstHack = {}
+    diet = {}
+    year = {}
+
+    for hacker in hackers:
+        schools[hacker.school] = schools.setdefault(hacker.school, 0) + 1
+        year[hacker.year] = year.setdefault(hacker.year, 0) + 1
+        shirts[hacker.shirt_gen] = shirts.setdefault(hacker.shirt_gen, 0) + 1
+        shirts[hacker.shirt_gen + hacker.shirt_size] =  shirts.setdefault(hacker.shirt_gen + hacker.shirt_size, 0) + 1
+        hardware[hacker.hardware_hack] = hardware.setdefault(hacker.hardware_hack, 0) + 1
+        firstHack[hacker.first_hackathon] = firstHack.setdefault(hacker.first_hackathon, 0) + 1
+        if hacker.dietary_restrictions == "":
+            diet["No Info"] = diet.setdefault("No Info", 0) + 1
+        else:
+            diet[hacker.dietary_restrictions] = diet.setdefault(hacker.dietary_restrictions, 0) + 1
+    return {"schools": schools, "shirts":shirts, "hardware": hardware, "firstHack": firstHack, "diet":diet, "year": year}
+
 def getBySchool():
-    return [
-          {'name' : 'Brown', 'y' : 30},
-          {'name' : 'MIT', 'y' : 25},
-          {'name' : 'Yale', 'y' : 15},
-          {'name' : 'UPenn', 'y' : 25},
-          {'name' : 'Boston University', 'y' : 5}]
+    hackers =  Hacker.query().fetch()
+    data = {}
+    for hacker in hackers:
+        data[hacker.school] = data.setdefault(hacker.school, 0) + 1
+    return data
 def getByShirtSize():
     return None
 def getByDietaryPreferences():
