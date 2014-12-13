@@ -8,13 +8,14 @@
                 activeHint: '',
                 activeIcon: 'linkify',
                 addCallback: function() {},
-                activateCallback: function() {}
+                activateCallback: function() {},
+                inputType: 'text'
             }, options),
             target = this,
             numInputs = 0;
 
         function addField(hint, parentclass, childclass) {
-            target.append("<div class='field " + parentclass + " '><div class='ui left icon input " + childclass + "'><input type='text' placeholder='" + settings.inactiveHint + "'><i class='plus icon'></i></div></div>");
+            target.append("<div class='field " + parentclass + " '><div class='ui left icon input " + childclass + "'><input type='" + settings.inputType + "' placeholder='" + settings.inactiveHint + "'><i class='plus icon'></i></div></div>");
         }
 
         function makeActive(field) {

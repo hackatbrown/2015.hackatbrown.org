@@ -252,6 +252,7 @@
             activeHint: 'Github, Dribbble, Behance, etc.',
             inactiveHint: 'add another link',
             addCallback: fixSplashHeight,
+            inputType: 'url',
         });
         
         //select2 dropdown
@@ -295,7 +296,7 @@
         $(document).on('keydown', ':focus', function (event) {
             if ((event.keyCode || event.which) == 9) {
                 //TODO: Generalize and support selecting other kinds of input
-                var $inputs = $("input[type=text], input[type=email], input[type=radio], input[type=checkbox]");
+                var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox]");
 //                console.log($inputs);
                 var index = $inputs.index(this);
                 // Index previous or next input based on the shift key
