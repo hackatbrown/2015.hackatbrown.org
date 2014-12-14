@@ -101,7 +101,7 @@ function transitionToForm() {
     fixSplashHeight();
     document.getElementById('hero').addEventListener("transitionend",
       function() {
-//        document.getElementById('name').focus();
+        document.getElementById('name').focus();
         this.removeEventListener('transitionend');
     }, false);
 }
