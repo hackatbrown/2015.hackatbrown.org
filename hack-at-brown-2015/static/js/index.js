@@ -103,6 +103,8 @@ function whichTransitionEvent(){
             return transitions[t];
         }
     }
+  
+    return null;
 }
 
 function transitionToForm() {
@@ -119,17 +121,13 @@ function transitionToForm() {
   
     fixSplashHeight();
     var transitionEvent = whichTransitionEvent();
-    transitionEvent && document.getElementById('hero').addEventListener(transitionEvent,
-      function() {
-        
-        document.getElementById('name').focus();
-        this.removeEventListener(transitionEvent);
-    }, false);
+    console.log(transitionEvent);
+    setTimeout("document.getElementById('name').focus();", 900);
 }
 
 function transitionFromForm() {
     var transitionEvent = whichTransitionEvent();
-    transitionEvent && document.getElementById('hero').addEventListener(transitionEvent,
+    document.getElementById('hero').addEventListener(transitionEvent,
       function() {
         $(".registration_form").removeClass("active");
         this.removeEventListener(transitionEvent);
