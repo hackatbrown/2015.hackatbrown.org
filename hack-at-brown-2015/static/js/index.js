@@ -127,11 +127,6 @@ function transitionToForm() {
 
 function transitionFromForm() {
     var transitionEvent = whichTransitionEvent();
-    document.getElementById('hero').addEventListener(transitionEvent,
-      function() {
-        $(".registration_form").removeClass("active");
-        this.removeEventListener(transitionEvent);
-    }, false);
   
     $('html,body').animate({scrollTop: 0}, 1000);
     $(".splash").removeClass("reg translated");
@@ -143,6 +138,8 @@ function transitionFromForm() {
     });
   
     fixSplashHeight();
+  
+    setTimeout("$('.registration_form').removeClass('active')", 2000);
 }
 
 function initalizeReg() {
