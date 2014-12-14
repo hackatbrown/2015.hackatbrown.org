@@ -1,6 +1,8 @@
 import webapp2
 import template
 import registration
+import logging
+import json
 
 class HackerPageHandler(webapp2.RequestHandler):
     def get(self, secret):
@@ -15,14 +17,14 @@ class HackerPageHandler(webapp2.RequestHandler):
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
         #TODO - use memcached?
-        logging.info("HERE")
+        parsed_request = json.loads(self.request.body)
+        logging.info(secret)
 
         hacker = registration.Hacker.WithSecret(secret)
 
-        parsed_request = json.loads(self.request.body)
-        for key in registration.hacker_keys:
-            parsed_request.get(key)
-            setattr(hacker, key, self.request.get(key))
+        for key in parsed_request:
+            if key in registration.hacker_keys:
+                setattr(hacker, key, parsed_request.get(key))
 
         hacker.put()
         self.response.write(json.dumps({"success": True}))
