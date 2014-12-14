@@ -1,13 +1,4 @@
 
-    function addNag(msg, parent) {
-        var nags = parent.children(".nag");
-        if (nags.length == 0)
-            parent.append("<div class='nag'>" + msg + "</div>");
-        else {
-            parent.removeClass("valid");
-            parent.children().removeClass("valid");
-        }
-    }
 
     function validateForm() {
         var validated = true;
@@ -149,10 +140,10 @@
 
 
         /* Validation Styling */
-        function toggleInvalid(el, email) {
+        function toggleInvalid(el, isEmail) {
             var validEmail = true;
 
-            if (email) {
+            if (isEmail) {
                 validEmail = validateEmail(el.val());
             }
 
