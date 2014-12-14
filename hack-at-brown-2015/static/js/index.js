@@ -139,7 +139,7 @@ function transitionFromForm() {
   
     fixSplashHeight();
   
-    setTimeout("$('.registration_form').removeClass('active')", 2000);
+//    setTimeout("$('.registration_form').removeClass('active')", 2000);
 }
 
 function initalizeReg() {

@@ -179,9 +179,14 @@
                 $("div.shirt_size").addClass("valid");
         });
 
-            // Check for hardware hack validation
+        // Check for hardware hack validation
         $("input[type='radio'][name='hardware_hack'] + label").click(function () {
             $("table[for='hardware_hack'").addClass("valid");
+        });
+      
+        // Check for first hackathon validation
+        $("input[type='radio'][name='first_hackathon'] + label").click(function () {
+            $("table[for='first_hackathon'").addClass("valid");
         });
 
             // Check for file upload
