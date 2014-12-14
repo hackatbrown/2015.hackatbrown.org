@@ -77,9 +77,10 @@ function addNag(msg, parent) {
     if (nags.length == 0) {
         parent.append("<div class='nag'>" + msg + "</div>");
         parent.removeClass("valid");
+        parent.children().removeClass("valid");
     }
     else {
-        $(nag).text("<div class='nag'>" + msg + "</div>");
+        $(nags).text(msg);
         parent.removeClass("valid");
         parent.children().removeClass("valid");
     }
