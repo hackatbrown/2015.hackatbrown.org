@@ -222,7 +222,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     margin: 0 auto;
     margin-top: 8%;
     background-image: url(../img/logo-poly.svg);
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
 }
