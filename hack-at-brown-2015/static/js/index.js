@@ -70,12 +70,66 @@ function validateEmail(sEmail) {
     }
 }
 
+// Function to add validation nags to input
+function addNag(msg, parent) {
+    console.log("nag added");
+    var nags = parent.children(".nag");
+    if (nags.length == 0) {
+        parent.append("<div class='nag'>" + msg + "</div>");
+        parent.removeClass("valid");
+        parent.children().removeClass("valid");
+    }
+    else {
+        $(nags).text(msg);
+        parent.removeClass("valid");
+        parent.children().removeClass("valid");
+    }
+}
+
+function transitionToForm() {
+    $(".registration_form").addClass("active");
+  
+    $('html,body').animate({scrollTop: 0}, 1000);
+    
+    $(".splash, .cancel_reg").addClass("reg translated");
+    $(".top-bar_li#hello_top a").fadeOut(500, function () {
+        $(this).text("Registration");
+        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+        $(this).fadeIn(800);
+    });
+  
+    fixSplashHeight();
+    document.getElementById('hero').addEventListener("transitionend",
+      function() {
+//        document.getElementById('name').focus();
+        this.removeEventListener('transitionend');
+    }, false);
+}
+
+function transitionFromForm() {
+  
+    document.getElementById('hero').addEventListener("transitionend",
+      function() {
+        $(".registration_form").removeClass("active");
+        this.removeEventListener('transitionend');
+    }, false);
+  
+    $('html,body').animate({scrollTop: 0}, 1000);
+    $(".splash").removeClass("reg translated");
+  
+    $(".top-bar_li#hello_top a").fadeOut(500, function () {
+        $(this).text("Hello");
+        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+        $(this).fadeIn(800);
+    });
+  
+    fixSplashHeight();
+}
+
 function initalizeReg() {
-    // Toggle between form and splash
+    // Add event handlers for inital registration toggle
     $("form.init_reg").submit(function (e) {
         e.preventDefault();
-
-        
 
         // Validate
         if (!validateEmail($(".init_reg input[type='email']").val())) {
@@ -83,6 +137,7 @@ function initalizeReg() {
             console.log("Splash Page: Invalid email!");
             return;
         } else {
+            $(".init_reg .init_submit").addClass("valid");
             var registered = false;
             $("#registration_email").ajaxSubmit({
                 async: false,
@@ -90,36 +145,17 @@ function initalizeReg() {
                     //$('#submit_button').removeAttr('disabled');
                     response = JSON.parse(response)
                     if (response.registered === true) {
-                        console.log("you already registered!")
+                        console.log("you already registered!");
                         addNag("You've already registered!", $(".init_reg input[type='email']").parent());
                         registered = true;
                         return;
                     }
                 }
             });
-            if (registered) {
-                return;
-            };
-          
-            $(".registration_form").addClass("active");
-
-            $(".init_reg .init_submit").addClass("valid");
-          
-            transferInitInfo();
-            $('html,body').animate({
-                scrollTop: 0
-            }, 1000);
-            $(".splash").addClass("reg");
-            $(".cancel_reg").addClass("reg");
-            $(".splash .background > .fore").addClass("translated");
-            $(".top-bar_li#hello_top a").fadeOut(500, function () {
-                $(this).text("Registration");
-                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
-                $(this).fadeIn(800);
-            });
-            fixSplashHeight();
-            //TODO: Replace this with a callback
-            setTimeout("document.getElementById('name').focus();", 900);
+            if (!registered) {
+                transitionToForm();
+                transferInitInfo();
+            }
         }
 
 
@@ -127,21 +163,12 @@ function initalizeReg() {
         
     });
 
-    $(".cancel_reg").click(function () {
-        $(".splash").removeClass("reg");
-        $(this).fadeOut(200, function () {
-                $(this).removeClass("reg");
-                $(this).fadeIn(0);
-          });
-        $(".splash .background > .fore").removeClass("translated");
-        $(".top-bar_li#hello_top a").fadeOut(500, function () {
-            $(this).text("Hello");
-            setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
-            $(this).fadeIn(800);
-        });
-        fixSplashHeight();
-        setTimeout("$('.registration_form').removeClass('active')", 2000);
-
+    $(".cancel_reg").click(function() { 
+      $(e).fadeOut(200, function () {
+            $(this).removeClass("reg");
+            $(this).fadeIn(0);
+      });
+      transitionFromForm();
     });
 }
 
