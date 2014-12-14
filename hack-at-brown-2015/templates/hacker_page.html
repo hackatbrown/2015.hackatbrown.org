@@ -26,14 +26,213 @@
     </svg>
 </div>
 <div class="hamburger over"></div>
-<ul class="top-bar_ul" data-0="" data-1="">
+<ul class="top-bar_ul transparent skrollable-between" data-0="" data-1="">
     <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Close</a></li>
-    <li class="top-bar_li active" id="hello_top"><a href="#hero">Status</a></li>
-    <li class="top-bar_li" id="schedule_top"><a href="#about">My Info</a></li>
+    <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
+    <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
 </ul>
 {% endblock %}
 
 {% block content %}
+
+<div id="skrollr-body" class="trigrid container darkgrey">
+    <div class="outer_container">
+        <div class="double panes">
+            <div class="double_left white">
+                <section id="status" class="panel hero">
+                    <div class="inner_container">
+                            <h1 class="hi">Hey {{ name }}!</h1>
+                            <p>your admission status is</p>
+                            <div class="admit_status pending">
+                                Pending
+                            </div>
+                    </div>
+                </section>
+                <section id="messages" class="panel grey secondary">
+                    <div class="inner_container">
+                        <h4 class="label grey">Messages</h4>
+                        <h3 class="secondary">None yet!</h3>
+<!--
+                        <div class="message items">
+                            <div class="message item prompt">
+                                <h3>You haven't uploaded your resume yet!</h3>
+                                <p>We give our sponsors your resume for potential recruitment opportunities.</p>
+                                <div class="upload field">
+                                    <input id="resume" class="resume-upload" type="file" name="resume" />
+                                    <input id="resume-over" class="resume-button" type="button" value="Upload Resume" />
+                                    <span class="file-name"></span>
+                                </div>
+                            </div>
+                        </div>
+-->
+                    </div>
+                </section>
+            </div>
+            <div class='double_right white'>
+                <form id='update_form' class='registration_form ui form content_container' method='POST' enctype="multipart/form-data" novalidate>
+                    <div class="errorsPresent">Please fix all issues in the form.</div>
+
+                    <div class="two fields row">
+                        <div class="field">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name" placeholder="Josiah Carberry" required/>
+                        </div>
+                        <div class="field">
+                            <label for="name">Email</label>
+                            <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
+                        </div>
+                    </div>
+
+                    <div class="two fields row">
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="ten wide field ui-widget">
+                                    <label for="school">School</label>
+                                    <input type="text" name="school" class="schools" placeholder="Beige University" required/>
+                                </div>
+                                <div class="six wide field yr">
+                                    <label for="year">Year</label>
+                                    <select name="year" id="source" class="drop" required >
+                                        <option></option>
+                                        <option value="freshman">First Year</option>
+                                        <option value="sophomore">Second Year</option>
+                                        <option value="junior">Third Year</option>
+                                        <option value="senior">Fourth Year</option>
+                                        <option value="highschool">High School</option>
+                                    </select>
+                                    <div class="nag hs-warning">
+                                        If you're going to be under 18 as of February 7,
+                                        we'll need parental consent on a form we'll email to you!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>T-Shirt Size</label>
+                            <div class="shirt_size">
+                                <table class="radio_select center">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                            <label for="sgM">Men's</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="shirt_gen" id="sgW" value='W' />
+                                            <label for="sgW">Women's</label>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <table class="radio_select center">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                            <label for="ssXS">XS</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="shirt_size" id="ssS" value='S' />
+                                            <label for="ssS">S</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="shirt_size" id="ssM" value='M' />
+                                            <label for="ssM">M</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="shirt_size" id="ssL" value='L' />
+                                            <label for="ssL">L</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="shirt_size" id="ssXL" value='XL' />
+                                            <label for="ssXL">XL</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
+                                            <label for="ssXXL">XXL</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field row">
+                        <label for="dietary_restrictions">Dietary restrictions? <span class="optional">(Optional)</span></label>
+                        <input name="dietary_restrictions"type="hidden" id="diet" class="stags" style="width:100%"/>
+                    </div>
+
+                    <div class="field row">
+                        <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
+                        <input type="hidden" id="teammates" class="stags nodrop" name="teammates"/>
+                    </div>
+
+                    <div class="two fields row">
+                        <div class="field">
+                            <label for="hardware_hack">Hardware Hack?</label>
+                            <table class="radio_select" for="hardware_hack">
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
+                                        <label for="hardware_yes">Yes!</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
+                                        <label for="hardware_no">No</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="field">
+                            <label for="resume">Upload Resume <span class="optional">(Optional; Recommended)</span></label>
+                            <input id="resume" class="resume-upload" type="file" name="resume" />
+                            <input id="resume-over" class="resume-button" type="button" value="Browse files" />
+                            <span class="file-name">No file chosen.</span>
+                            <div class="nag upload-later">You can always upload it later!</div>
+                        </div>
+                    </div>
+
+                    <div class="two fields row">
+                        <div class="field">
+                            <label for="first_hackathon">Will this be your first hackathon?</label>
+                            <table class="radio_select" for="first_hackathon">
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="first_hackathon" id="first_hackathon_yes" value='yes' />
+                                        <label for="first_hackathon_yes">Yes!</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="first_hackathon" id="first_hackathon_no" value='no' />
+                                        <label for="first_hackathon_no">No</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="field">
+                            <label for="links">Links <span class="optional">(Optional)</span></label>
+                            <div class="condor"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchToMyInfo() {
+        $(".update_form").addClass("active");
+
+        $(".panes").addClass("in-pane1");
+    }
+    
+    $("#info_top").click(function() { 
+        this.preventDefault;
+        switchToMyInfo();
+    });
+</script>
+
+<!--
 <div class="ui page grid">
     <div class="sixteen column white row">
         <div class="two wide column"></div>
@@ -77,7 +276,7 @@
                                 <div class="extra">
                                     <div class="ui left floated primary button">
                                         Upload
-                                        <i class="right  icon"></i>
+                                        <i class="right upload icon"></i>
                                     </div>
                                 </div>
                             </div>
@@ -246,6 +445,7 @@
         </div>
     </div>
 </div>
+-->
 
 
 
@@ -278,6 +478,7 @@ h2 {
 
 
 
+<!--
 <div class="wrapper">
   <div class="info">
     <h2>Hello, {{ hacker.name }}</h2>
@@ -287,8 +488,7 @@ h2 {
       <li>Email: {{ hacker.email }}</li>
       <li>School: {{ hacker.school }} </li>
       <li>Class Year: {{ hacker.year }}</li>
-<!--       <li>Resume: {{ hacker.resume }}</li>
- -->      <li>Personal Links: {{ hacker.links }}</li>
+      <li>Personal Links: {{ hacker.links }}</li>
       <li>Requested Teammates: {{ hacker.teammates }}</li>
       <li>Hardware Hacking: {{ hacker.hardware_hack }} </li>
       <li>First Hackathon?: {{ hacker.first_hackathon }} </li>
@@ -303,4 +503,5 @@ h2 {
     <h2>Your Status: <br></h2><h3><strong>{{ status }} </strong></h3>
   </div>
 </div>
+-->
 {% endblock %}
