@@ -30,6 +30,9 @@
     <h2>Your Status: <br></h2><h3><strong>{{ status }} </strong></h3>
   </div>
 
-    <input id="school" type="text" onblur="saveChange(this.id, this.value)" name="school"/>
+<div class="ui icon input loading">
+  <input id="school" type="text" onBlur="saveChange(this.id, this.value)">
+  <i class="search icon"></i>
+</div>
 </div>
 {% endblock %}
