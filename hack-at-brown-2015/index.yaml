@@ -26,3 +26,8 @@ indexes:
   properties:
   - name: checked_in
   - name: name
+
+- kind: Hacker
+  properties:
+  - name: email
+  - name: secret

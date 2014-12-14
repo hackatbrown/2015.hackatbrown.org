@@ -47,6 +47,7 @@ app = webapp2.WSGIApplication([
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
+		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
 		('/(.+)', short_urls.Serve)
