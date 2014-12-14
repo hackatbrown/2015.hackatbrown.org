@@ -5,7 +5,6 @@ from registration import Hacker, accept_hacker
 from send_email import send_email
 from template import template
 from email_list import EmailListEntry
-
 import logging
 
 class DashboardHandler(webapp2.RequestHandler):

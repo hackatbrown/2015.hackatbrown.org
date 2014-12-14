@@ -12,6 +12,17 @@ class HackerPageHandler(webapp2.RequestHandler):
         status = computeStatus(hacker)
         self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status}))
 
+class HackerUpdateHandler(webapp2.RequestHandler):
+    def post(self, secret):
+        hacker = registration.Hacker.WithSecret(secret)
+
+        parsed_request = json.loads(self.request.body)
+        for key in registration.hacker_keys:
+            parsed_request.get(key)
+            setattr(hacker, key, self.request.get(key))
+
+
+
 def computeStatus(hacker):
     if hacker is None:
         return "Not Found"

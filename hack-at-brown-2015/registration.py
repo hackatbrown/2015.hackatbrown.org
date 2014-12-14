@@ -11,6 +11,7 @@ import base64
 import webapp2
 
 memcache_expiry = 10 * 60
+hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
 class Hacker(ndb.Model):
 	name = ndb.StringProperty()
@@ -59,7 +60,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		hacker = Hacker()
 
-		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']:
+		for key in hacker_keys:
 			print key + " " + self.request.get(key)
 			setattr(hacker, key, self.request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:
@@ -85,4 +86,4 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
 				self.response.write(json.dumps({"registered":True}))
 		else:
 			self.response.write(json.dumps({"registered":False}))
-		
+
