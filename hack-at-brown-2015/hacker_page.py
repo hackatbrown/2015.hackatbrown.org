@@ -14,6 +14,9 @@ class HackerPageHandler(webapp2.RequestHandler):
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
+        #TODO - use memcached?
+        logging.info("HERE")
+
         hacker = registration.Hacker.WithSecret(secret)
 
         parsed_request = json.loads(self.request.body)
@@ -21,7 +24,8 @@ class HackerUpdateHandler(webapp2.RequestHandler):
             parsed_request.get(key)
             setattr(hacker, key, self.request.get(key))
 
-
+        hacker.put()
+        self.response.write(json.dumps({"success": True}))
 
 def computeStatus(hacker):
     if hacker is None:

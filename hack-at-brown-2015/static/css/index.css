@@ -528,13 +528,19 @@ input[type="radio"] + label {
           -ms-user-select: none;
               user-select: none;
 }
-input[type="radio"] + label:hover, input[type="radio"]:focus + label {
+input[type="radio"] + label:hover, input[type="radio"]:focus + label, .resume-button:hover {
     background-color: #E2E1DF;
 }
 input[type="radio"]:checked + label,
 .registration_form .resume-button.on {
     color:#fff;
     box-shadow: inset 1px -50px 0px -1px #1B8EB9;
+}
+
+.resume-button:active {
+    background-color: #404040;
+    color: #fff;
+    transition: none;
 }
 
 .upload-later {

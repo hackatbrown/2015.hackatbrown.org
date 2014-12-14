@@ -2,7 +2,8 @@
 
 {% block centered %}
 
-<link rel='stylesheet' href='/static/css/dashboard.css'/>
+<link rel='stylesheet' href='/static/css/hacker_page.css'/>
+<script src='/static/js/hacker_page.js'></script>
 
 <div class="wrapper">
   <div class="info">
@@ -28,5 +29,7 @@
   <div class="status">
     <h2>Your Status: <br></h2><h3><strong>{{ status }} </strong></h3>
   </div>
+
+    <input id="school" type="text" onblur="saveChange(this.id, this.value)" name="school"/>
 </div>
 {% endblock %}
