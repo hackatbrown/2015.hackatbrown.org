@@ -20,7 +20,7 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
             hacker = Hacker.query(Hacker.email == address).fetch()
             if hacker:
                 for h in hacker: # should only be one
-                    if parsed_request.get('change') == "Register":    
+                    if parsed_request.get('change') == "Register":
                         if h.admitted_email_sent_date == None:
                             accept_hacker(h)
 
@@ -39,6 +39,21 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
     data['declined_count'] = 0
 
     self.response.write(json.dumps(data))
+
+class LookupHackerHandler(webapp2.RequestHandler):
+    def get(self, emails):
+        emails = emails.split(',')
+
+        response = {'found' : [], 'notFound' : []}
+
+        for email in emails:
+            hacker = Hacker.query(Hacker.email == email).fetch(projection=Hacker.secret)
+            if len(hacker) > 0:
+                response['found'].append({'email' : email, 'secret' : hacker[0].secret})
+            else:
+                response['notFound'].append(email)
+
+        self.response.write(json.dumps(response))
 
 class SendEmail(webapp2.RequestHandler):
   def post(self):
@@ -105,14 +120,13 @@ def getBySchool():
     for hacker in hackers:
         data[hacker.school] = data.setdefault(hacker.school, 0) + 1
     return data
+
 def getByShirtSize():
-    return None
+    return {"Small" : 1, "Medium" : 40, "Large" : 30, "Capacious" : 10}
+
 def getByDietaryPreferences():
-    return None
+    return {"Babies" : 10, "Vegetables" : 40, "Bajas" : 30, "Gluten-Free" : 10}
 
-
-
-    #######
 '''
     def entries_that_fit(offset):
     entries = 0

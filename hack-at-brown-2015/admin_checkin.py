@@ -13,34 +13,43 @@ divider = ' - '
 class CheckinPageHandler(webapp2.RequestHandler):
 
     def get(self):
-
-        #Can't use statements in lambdas :(
-        def formatter(hacker):
-            formattedString = ''
-            first = True
-            for key in hackerFormat:
-                if not first:
-                    formattedString += divider
-
-                formattedString += getattr(hacker, key)
-                first = False
-            return formattedString
-
-        source = map(formatter, getHackersToBeChecked())
-
-        response = template(
-            "checkin_page.html", {"source": json.dumps(source)})
-
-        self.response.write(response)
+        self.response.write(page_response())
 
     def post(self):
-        nameNemail = self.request.get('name/email').split(divider)
-        hacker = Hacker.query(Hacker.name == nameNemail[0]
-                              and Hacker.email == nameNemail[1]).fetch(1)[0]
-        hacker.checked_in = True
-        hacker.put()
+        nameAndEmail = self.request.get('name/email').split(divider)
+        matches = filter(lambda hacker: hacker.name == nameAndEmail[0] and nameAndEmail[1], getHackersToBeChecked())
+        if len(matches) == 0:
+            success = False
+        else:
+            success = True
+            matches[0].checked_in = True
+            matches[0].put()
+
+        successMsg = "successfully checked in " + nameAndEmail[0]
+        failureMsg = "failed to check in " + nameAndEmail[0]
+
+        success = True
+
+        self.response.write(page_response(success, successMsg if success else failureMsg))
+
         self.redirect('/admin_checkin')
 
+def page_response(success=None, message=""):
+    def formatter(hacker):
+        formattedString = ''
+        first = True
+        for key in hackerFormat:
+            if not first:
+                formattedString += divider
+
+            formattedString += getattr(hacker, key)
+            first = False
+        return formattedString
+
+    source = map(formatter, getHackersToBeChecked())
+
+    return template("checkin_page.html", {"source" : json.dumps(source),
+                    "status" : json.dumps(success), "message" : message})
 
 def getHackersToBeChecked():
     # Cache this value, results don't need to be updated quickly.

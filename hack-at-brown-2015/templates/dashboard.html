@@ -29,6 +29,14 @@
 <br>
 <div ng-click='getBreakdowns()'class='button'> Show Breakdowns</div>
   <div id="breakdowns" ng-show='showBreakdowns'>
+      <h2 class='option'>Breakdown</h2>
+
+<!--    <div id='charts'>
+      <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
+      </select>
+        <div id='chart_1' ng-init="populateCharts()"></div>
+        <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
+    </div> -->
 
     <h1 style=""> Schools </h1>
     <div ng-repeat="(key, value) in schools">
@@ -61,17 +69,6 @@
     </div>
 
   </div>
-
-  
-   <!-- <div id='charts'>
-      <h2 class='option'>Breakdown</h2>
-      <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
-      </select>
-        <div id='chart_1' ng-init="populateCharts()"></div>
-        <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
-    </div>  -->
-
-
 
   <div id='menu_2nd_row' class='menu' >
     <div id="downloads" class='panel' >
@@ -108,11 +105,19 @@
         <div ng-click='changeStatus("Register")' class='button'>Sign Up</div>
         <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
+        <div ng-click='lookupHacker()' class='button'>Lookup</div>
         <a style="text-decoration:none" class='button' href="/admin_checkin">Go To Checkin</a>
       </div>
+      <div class="found" ng-repeat="hacker in lookupResult.found">
+        <span><b>Found <a ng-href="secret/%%hacker.secret%%">%%hacker.email%%</a></b></span><br>
+      </div>
+      <div class="notFound" ng-repeat="hacker in lookupResult.notFound">
+        <span><b>Could not find %%hacker%%</b></span><br>
+      </div>
+
+
     </div>
   </div>
 </div>
-
 
 {% endblock %}

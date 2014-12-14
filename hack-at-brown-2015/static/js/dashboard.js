@@ -11,7 +11,7 @@ var breakdownsApp = angular.module('breakdownsApp', []).config(function($interpo
 breakdownsApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
   $scope.schools = {};
-  
+
 }]);
 
 
@@ -61,7 +61,6 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
     $http({method: 'GET', url: '/__get_dash_stats'}).
         success(function(data, status) {
-          console.log('successfully hit __get_dash_stats!')
           $scope.status = status;
           $scope.signupCount = data.signup_count;
           $scope.registerCount = data.registered_count;
@@ -114,15 +113,28 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
   };
 
+  $scope.lookupHacker = function(){
+    $scope.manualEmails = $scope.manualEmails.toLowerCase();
+    emails = $scope.manualEmails.trim().replace(/\s+/g, '');
+    $http({method: 'GET', url: '/__lookup_hacker/' + emails}).
+        success(function(data) {
+          $scope.lookupResult = data;
+        }).
+        error(function(data) {
+          $scope.manualStatus = data;
+          $scope.showManualStatus = true;
+        });
+  };
+
 
   $scope.getBreakdowns = function(){
-    $scope.showBreakdowns = !$scope.showBreakdowns ;
+    $scope.showBreakdowns = !$scope.showBreakdowns;
     if ($scope.schools){
       return;
     }
     $http({method: 'GET', url: '/__breakdown/' + "all"}).
         success(function(data, status) {
-         
+
 
           if (data != "null") {
             $scope.schools = data.schools;
@@ -143,9 +155,6 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
   $scope.populateCharts = function() {
 
-    function toggleChart(toggle) {
-    }
-
     $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
@@ -153,18 +162,21 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
           $('#chart_1').toggle(data != "null");
 
           if (data != "null") {
+            var series = [];
+            $.each(data, function(key, value) {
+              series.push({"name" : key, "y": value});
+            });
             $('#chart_1').highcharts({
                   title : {
                     text : $scope.currentChart.name
                   },
                   series: [{
-                      type : 'pie',
+                      type : $scope.currentChart.hc_type,
                       name: 'Hackers',
-                      data: data
+                      data: series
                   }]
                 });
           }
-
         }).
         error(function(data, status) {
           $scope.data = data || "Request failed";

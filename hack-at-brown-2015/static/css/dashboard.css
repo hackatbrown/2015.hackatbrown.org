@@ -33,6 +33,14 @@ h1, h2{
   margin : 20px;
 }
 
+.notFound {
+  color: red;
+}
+
+.found {
+  color: lightgreen;
+}
+
 #menu_1st_row div {
   margin-left: 20px;
   margin-right: 20px;
