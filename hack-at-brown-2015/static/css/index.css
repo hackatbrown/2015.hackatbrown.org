@@ -1051,12 +1051,23 @@ section .background > .right {
 .faq article {
     max-width: 589.6px;
     padding-bottom: 300px;
-    margin-top: -240px
+    margin-top: -240px;
 }
+
 .faq article h2 {
     margin-top: 1em;
     margin-bottom: -.2em;
 }
+
+.faq article a {
+    color: white;
+    border-bottom: 1px #fff solid;
+}
+
+.faq article a:hover {
+    border-bottom-width: 2px;
+}
+
 .faq .background > .back {
     width: 2304.8px;
     margin-right: -1018.4px;
