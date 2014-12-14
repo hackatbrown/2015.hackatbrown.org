@@ -1141,7 +1141,7 @@ section .background > .fore {
     top: 120px;
     margin-right: 536px;
 }
-.fore.blue-staggered.translated {
+.translated .fore.blue-staggered {
     margin-right: 0px;
 }
 .fore.pink-overlapping {
@@ -1151,7 +1151,7 @@ section .background > .fore {
     top: 675px;
     margin-right: 428.8px;
 }
-.fore.pink-overlapping.translated {
+.translated .fore.pink-overlapping {
     margin-right: 900px;
 }
 .fore.green-backtoback {
@@ -1161,7 +1161,7 @@ section .background > .fore {
     top: 480px;
     margin-left: 268px;
 }
-.fore.green-backtoback.translated {
+.translated .fore.green-backtoback {
     margin-left: 150px;
 }
 .fore.green-facing {
@@ -1171,7 +1171,7 @@ section .background > .fore {
     top: 975px;
     margin-left: 428.8px;
 }
-.fore.green-facing.translated {
+.translated .fore.green-facing {
     margin-left: -400px;
 }
 .fore.white-tower {
