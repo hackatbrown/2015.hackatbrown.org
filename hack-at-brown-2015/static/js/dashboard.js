@@ -118,14 +118,13 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
     emails = $scope.manualEmails.trim().replace(/\s+/g, '');
     $http({method: 'GET', url: '/__lookup_hacker/' + emails}).
         success(function(data, status) {
-          $scope.manualStatus = data;
-          $scope.showManualStatus = true;
+          $scope.lookupResult = data;
         });
   };
 
 
   $scope.getBreakdowns = function(){
-    $scope.showBreakdowns = !$scope.showBreakdowns ;
+    $scope.showBreakdowns = !$scope.showBreakdowns;
     if ($scope.schools){
       return;
     }
