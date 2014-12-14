@@ -86,5 +86,6 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
 		if Hacker.query(Hacker.email == email).count() > 0:
 				self.response.write(json.dumps({"registered":True}))
 		else:
+            #            TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))

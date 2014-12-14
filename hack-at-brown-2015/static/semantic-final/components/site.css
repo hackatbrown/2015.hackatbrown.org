@@ -8,7 +8,6 @@
  * http://opensource.org/licenses/MIT
  *
  */
-@import 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin';
 
 
 
@@ -28,14 +27,14 @@ body {
   height: 100%;
 }
 html {
-  font-size: 14px;
+  font-size: 100%;
 }
 body {
   margin: 0px;
   padding: 0px;
   min-width: 278px;
   background: #f7f7f7;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Brown', sans-serif;
   font-size: 14px;
   line-height: 1.33;
   color: rgba(0, 0, 0, 0.8);
@@ -52,7 +51,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Brown', sans-serif;
   line-height: 1.33em;
   margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
   margin: calc(2rem -  0.165em ) 0em 1rem;

@@ -1,9 +1,54 @@
 {% extends "page_with_chrome.html" %}
 
-{% block centered %}
+{% block headcss %}
+{{ super() }}
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+{% endblock %}
 
-<link rel='stylesheet' href='/static/css/hacker_page.css'/>
-<script src='/static/js/hacker_page.js'></script>
+{% block headjs %}
+{{ super() }}
+<script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="ui page grid">
+    <div class="sixteen wide column">
+        <div class="ui icon input loading">
+          <input id="school" type="text" onBlur="saveChange(this.id, this.value)">
+          <i class="search icon"></i>
+        </div>
+    </div>
+</div>
+
+
+{{ super() }}
+{% endblock %}
+
+
+{% block centered %}
+<style>
+.wrapper {
+}
+
+.info {
+  float: left;
+}
+
+.status {
+  float: right;
+}
+
+h1,h2,h3,h4,h5{
+   font-weight: inherit;
+}
+
+h2 {
+ 
+  border-bottom: 3px solid #EF5D93;
+}
+</style>
+
+
 
 <div class="wrapper">
   <div class="info">
@@ -29,10 +74,5 @@
   <div class="status">
     <h2>Your Status: <br></h2><h3><strong>{{ status }} </strong></h3>
   </div>
-
-<div class="ui icon input loading">
-  <input id="school" type="text" onBlur="saveChange(this.id, this.value)">
-  <i class="search icon"></i>
-</div>
 </div>
 {% endblock %}
