@@ -4,6 +4,7 @@ import json
 import logging
 import datetime
 from send_email import send_email
+from email_list import EmailListEntry
 from template import template
 from google.appengine.api import memcache
 import os
@@ -84,5 +85,5 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
 		if Hacker.query(Hacker.email == email).count() > 0:
 				self.response.write(json.dumps({"registered":True}))
 		else:
+			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
-		
