@@ -171,7 +171,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
                     text : $scope.currentChart.name
                   },
                   series: [{
-                      type : $scope.currentChart.pie
+                      type : $scope.currentChart.hc_type,
                       name: 'Hackers',
                       data: series
                   }]
