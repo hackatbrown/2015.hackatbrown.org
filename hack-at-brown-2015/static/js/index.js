@@ -70,6 +70,27 @@ function validateEmail(sEmail) {
     }
 }
 
+function transitionToForm() {
+    $(".registration_form").addClass("active");
+    $(".init_reg .init_submit").addClass("valid");
+
+    transferInitInfo();
+    $('html,body').animate({
+        scrollTop: 0
+    }, 1000);
+    $(".splash").addClass("reg");
+    $(".cancel_reg").addClass("reg");
+    $(".splash .background > .fore").addClass("translated");
+    $(".top-bar_li#hello_top a").fadeOut(500, function () {
+        $(this).text("Registration");
+        setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
+        $(this).fadeIn(800);
+    });
+    fixSplashHeight();
+    //TODO: Replace this with a callback
+    setTimeout("document.getElementById('name').focus();", 900);
+}
+
 function initalizeReg() {
     // Toggle between form and splash
     $("form.init_reg").submit(function (e) {
@@ -97,29 +118,9 @@ function initalizeReg() {
                     }
                 }
             });
-            if (registered) {
-                return;
-            };
-          
-            $(".registration_form").addClass("active");
-
-            $(".init_reg .init_submit").addClass("valid");
-          
-            transferInitInfo();
-            $('html,body').animate({
-                scrollTop: 0
-            }, 1000);
-            $(".splash").addClass("reg");
-            $(".cancel_reg").addClass("reg");
-            $(".splash .background > .fore").addClass("translated");
-            $(".top-bar_li#hello_top a").fadeOut(500, function () {
-                $(this).text("Registration");
-                setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
-                $(this).fadeIn(800);
-            });
-            fixSplashHeight();
-            //TODO: Replace this with a callback
-            setTimeout("document.getElementById('name').focus();", 900);
+            if (!registered) {
+                transitionToForm();
+            }
         }
 
 
