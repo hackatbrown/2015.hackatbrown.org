@@ -86,6 +86,25 @@ function addNag(msg, parent) {
     }
 }
 
+/* From Modernizr */
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+//      fuck vendor prefixes!
+      'transition':'transitionend',
+      'OTransition':'oTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( el.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
+
 function transitionToForm() {
     $(".registration_form").addClass("active");
   
@@ -99,19 +118,21 @@ function transitionToForm() {
     });
   
     fixSplashHeight();
-    document.getElementById('hero').addEventListener("transitionend",
+    var transitionEvent = whichTransitionEvent();
+    transitionEvent && document.getElementById('hero').addEventListener(transitionEvent,
       function() {
+        
         document.getElementById('name').focus();
-        this.removeEventListener('transitionend');
+        this.removeEventListener(transitionEvent);
     }, false);
 }
 
 function transitionFromForm() {
-  
-    document.getElementById('hero').addEventListener("transitionend",
+    var transitionEvent = whichTransitionEvent();
+    transitionEvent && document.getElementById('hero').addEventListener(transitionEvent,
       function() {
         $(".registration_form").removeClass("active");
-        this.removeEventListener('transitionend');
+        this.removeEventListener(transitionEvent);
     }, false);
   
     $('html,body').animate({scrollTop: 0}, 1000);
