@@ -117,8 +117,12 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
     $scope.manualEmails = $scope.manualEmails.toLowerCase();
     emails = $scope.manualEmails.trim().replace(/\s+/g, '');
     $http({method: 'GET', url: '/__lookup_hacker/' + emails}).
-        success(function(data, status) {
+        success(function(data) {
           $scope.lookupResult = data;
+        }).
+        error(function(data) {
+          $scope.manualStatus = data;
+          $scope.showManualStatus = true;
         });
   };
 
