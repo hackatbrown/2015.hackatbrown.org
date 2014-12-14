@@ -39,6 +39,8 @@ class Hacker(ndb.Model):
 	rsvpd = ndb.BooleanProperty(default=False)
 	checked_in = ndb.BooleanProperty(default=False)
 
+	ip = ndb.StringProperty()
+
 	@classmethod
 	def WithSecret(cls, secret):
 		results = cls.query(cls.secret == secret).fetch(1)
@@ -59,9 +61,9 @@ def accept_hacker(hacker):
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		hacker = Hacker()
-
+		hacker.ip = self.request.remote_addr
 		for key in ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']:
-			print key + " " + self.request.get(key)
+			#print key + " " + self.request.get(key)
 			setattr(hacker, key, self.request.get(key))
 		if Hacker.query(Hacker.email == hacker.email).count() > 0:
 			self.response.write(json.dumps({"success":False}))

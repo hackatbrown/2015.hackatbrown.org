@@ -124,13 +124,11 @@
                     $("#registration_form input[type=submit]").val("Registering you...").attr({
                         disabled: true
                     });
-                    console.log("POSTing response");
                     $("#registration_form").ajaxSubmit({
                         success: function (response) {
                             //$('#submit_button').removeAttr('disabled');
                             response = JSON.parse(response)
                             if (response.success === true) {
-                                console.log("displaying splash page")
                                 $(".splash .double_right").html(response.replace_splash_with_html);
                                 window.location.hash = "";
                             } else{
