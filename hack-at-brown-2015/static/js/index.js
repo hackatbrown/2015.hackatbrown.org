@@ -158,13 +158,10 @@ function initalizeReg() {
             }
         }
 
-
-
-        
     });
 
     $(".cancel_reg").click(function() { 
-      $(e).fadeOut(200, function () {
+      $(this).fadeOut(200, function () {
             $(this).removeClass("reg");
             $(this).fadeIn(0);
       });
