@@ -40,12 +40,11 @@ input[type="submit"] {
 <div id='source' style='display:none'>
    {{ source }}
 </div>
-  <script>
-  console.log({{status}});
-  var source = JSON.parse($("#source").text());
-  $('#search').autocomplete({
-    source: source
-  });
-  </script>
-</div>
+<script>
+console.log({{status}});
+var source = JSON.parse($("#source").text());
+$('#search').autocomplete({
+ source: source
+});
+</script>
 {% endblock %}
