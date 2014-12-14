@@ -179,7 +179,7 @@
 
             // Check for shirt size validation
         $(".shirt_size input[type='radio'][name='shirt_gen'] + label").click(function () {
-            if ($("input[name='shirt_size']:checked").val()) 
+            if ($("input[name='shirt_size']:checked").val())
                 $("div.shirt_size").addClass("valid");
         });
 
@@ -211,7 +211,7 @@
         });
 
         // Attach resume upload button with actual file input & style
-        $("#resume-over").click(function () { 
+        $("#resume-over").click(function () {
             $("#resume").click();
         });
         $("#resume").change(function() {
@@ -261,14 +261,14 @@
             addCallback: fixSplashHeight,
             inputType: 'url',
         });
-        
+
         //select2 dropdown
         $("#source").select2({
             width: "100%",
             minimumResultsForSearch: -1,
             placeholder: "Select Year",
         });
-        
+
         $("#source").on("change", function() {
             $("select[name='year']").addClass("valid");
             $(".select2-container.drop").removeClass("invalid");
@@ -280,7 +280,7 @@
                 $(".hs-warning").hide();
             }
         });
-        
+
         $("#teammates").select2({
             width: "100%",
             tags:[""],
@@ -288,10 +288,10 @@
             dropdownCssClass: "select2-drop-override",
             maximumSelectionSize: 3
         });
-        
-        var $dRestrictions = ["Vegetarian", "Vegan", "Gluten Free", "Kosher", "Lactose Intolerant", "Nuts Allergy", "Treenuts Allergy", "Soy Allergy", 
+
+        var $dRestrictions = ["Vegetarian", "Vegan", "Gluten Free", "Kosher", "Lactose Intolerant", "Nuts Allergy", "Treenuts Allergy", "Soy Allergy",
 "Shellfish Allergy", "Corn Allergy", "No Pork", "No Ham", "No Beef", "No Mutton", "Halal", "No Red Meat", "None"];
-        
+
         $("#diet").select2({
             width: "100%",
             tags: $dRestrictions,
@@ -302,8 +302,8 @@
 //        $("#teammates").on("select2-opening", function(e) {
 //            e.preventDefault();
 //        });
-        
-        
+
+
 
         /* Prevent horizontal scrolling of element into view on focus */
         $(document).on('keydown', ':focus', function (event) {

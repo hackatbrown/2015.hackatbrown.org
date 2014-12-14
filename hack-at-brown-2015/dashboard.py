@@ -20,7 +20,7 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
             hacker = Hacker.query(Hacker.email == address).fetch()
             if hacker:
                 for h in hacker: # should only be one
-                    if parsed_request.get('change') == "Register":    
+                    if parsed_request.get('change') == "Register":
                         if h.admitted_email_sent_date == None:
                             accept_hacker(h)
 
@@ -40,6 +40,21 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
 
     self.response.write(json.dumps(data))
 
+class LookupHackerHandler(webapp2.RequestHandler):
+    def get(self, emails):
+        emails = emails.split(',')
+
+        response = {'found' : [], 'notFound' : []}
+
+        for email in emails:
+            hacker = Hacker.query(Hacker.email == email).fetch(projection=Hacker.secret)
+            if len(hacker) > 0:
+                response['found'].append({'email' : email, 'secret' : hacker[0].secret})
+            else:
+                response['notFound'].append(email)
+
+        self.response.write(json.dumps(response))
+
 class SendEmail(webapp2.RequestHandler):
   def post(self):
     parsed_request = json.loads(self.request.body)
@@ -55,10 +70,16 @@ class SendEmail(webapp2.RequestHandler):
     send_email(recipients=send_to, html=body, subject=subject)
     self.response.write(json.dumps({"success": True, "recipients": send_to }))
 
+class ViewBreakdownsHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write(template("breakdowns.html"))
+
 class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
         if type == 'school':
             data = getBySchool()
+        elif type == 'all':
+            data = getAll()
         elif type == 'shirt':
             data = getByShirtSize()
         elif type == 'diet':
@@ -68,21 +89,44 @@ class BreakdownHandler(webapp2.RequestHandler):
 
         self.response.write(json.dumps(data))
 
+def getAll():
+    hackers =  Hacker.query().fetch()
+    schools = {}
+    shirts = {}
+    hardware = {}
+    firstHack = {}
+    diet = {}
+    year = {}
+    if not hackers:
+        return
+    for hacker in hackers:
+        hacker_school = (str(hacker.school)).replace("University", " ").replace("College", " ").strip()
+        schools[hacker_school] = schools.setdefault(hacker_school, 0) + 1
+        year[hacker.year] = year.setdefault(hacker.year, 0) + 1
+        shirts[hacker.shirt_gen] = shirts.setdefault(hacker.shirt_gen, 0) + 1
+        if hacker.shirt_gen and hacker.shirt_size:
+            shirts[hacker.shirt_gen + hacker.shirt_size] =  shirts.setdefault(hacker.shirt_gen + hacker.shirt_size, 0) + 1
+        hardware[hacker.hardware_hack] = hardware.setdefault(hacker.hardware_hack, 0) + 1
+        firstHack[hacker.first_hackathon] = firstHack.setdefault(hacker.first_hackathon, 0) + 1
+        if hacker.dietary_restrictions == "":
+            diet["No Info"] = diet.setdefault("No Info", 0) + 1
+        else:
+            diet[hacker.dietary_restrictions] = diet.setdefault(hacker.dietary_restrictions, 0) + 1
+    return {"schools": schools, "shirts":shirts, "hardware": hardware, "firstHack": firstHack, "diet":diet, "year": year}
+
 def getBySchool():
-    return [
-          {'name' : 'Brown', 'y' : 30},
-          {'name' : 'MIT', 'y' : 25},
-          {'name' : 'Yale', 'y' : 15},
-          {'name' : 'UPenn', 'y' : 25},
-          {'name' : 'Boston University', 'y' : 5}]
+    hackers =  Hacker.query().fetch()
+    data = {}
+    for hacker in hackers:
+        data[hacker.school] = data.setdefault(hacker.school, 0) + 1
+    return data
+
 def getByShirtSize():
-    return None
+    return {"Small" : 1, "Medium" : 40, "Large" : 30, "Capacious" : 10}
+
 def getByDietaryPreferences():
-    return None
+    return {"Babies" : 10, "Vegetables" : 40, "Bajas" : 30, "Gluten-Free" : 10}
 
-
-
-    #######
 '''
     def entries_that_fit(offset):
     entries = 0

@@ -7,21 +7,41 @@
   border: 2px solid black;
 }
 
+.status {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  padding: 2px;
+  color: white;
+}
+
+input[type="submit"] {
+  display: flex;
+  margin: 2px auto;
+}
+
 </style>
 <script src='//code.jquery.com/jquery-1.10.2.min.js'></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css'/>
 
+
+{% if status == "true" %}
+  <div class="status" style="background:lightgreen">{{ message }}</div>
+{% endif %}
+{% if status == "false" %}
+  <div class="status" style="background:red">{{ message }}</div>
+{% endif %}
 <form id='checkin' method='POST' >
   <input name="name/email" id='search'/>
   <input type='submit' value='Check in'</input>
 </form>
 <div>
   <script>
+  console.log({{status}});
   $('#search').autocomplete({
     source: {{ source|safe }}
   });
   </script>
 </div>
-
 {% endblock %}

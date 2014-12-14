@@ -1,4 +1,0 @@
-handlers:
-- url: /admin_checkin
-  script: admin_checkin.app
-  login: admin
