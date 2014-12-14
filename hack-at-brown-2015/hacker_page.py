@@ -3,6 +3,9 @@ import template
 import registration
 import logging
 import json
+from google.appengine.api import memcache
+
+cacheTime = 6 * 10
 
 class HackerPageHandler(webapp2.RequestHandler):
     def get(self, secret):
@@ -16,17 +19,22 @@ class HackerPageHandler(webapp2.RequestHandler):
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
-        #TODO - use memcached?
+        memcachedKey = 'hacker_update/' + secret
         parsed_request = json.loads(self.request.body)
-        logging.info(secret)
 
-        hacker = registration.Hacker.WithSecret(secret)
+        hacker = memcache.get(memcachedKey)
+        if hacker is None:
+            hacker = registration.Hacker.WithSecret(secret)
 
         for key in parsed_request:
             if key in registration.hacker_keys:
                 setattr(hacker, key, parsed_request.get(key))
 
+        if not memcache.set(memcachedKey, hacker, cacheTime):
+            logging.error('Memcache set failed')
+
         hacker.put()
+
         self.response.write(json.dumps({"success": True}))
 
 def computeStatus(hacker):
