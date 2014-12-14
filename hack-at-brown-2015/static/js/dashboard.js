@@ -155,9 +155,6 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
   $scope.populateCharts = function() {
 
-    function toggleChart(toggle) {
-    }
-
     $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
@@ -165,18 +162,21 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
           $('#chart_1').toggle(data != "null");
 
           if (data != "null") {
+            var series = [];
+            $.each(data, function(key, value) {
+              series.push({"name" : key, "y": value});
+            });
             $('#chart_1').highcharts({
                   title : {
                     text : $scope.currentChart.name
                   },
                   series: [{
-                      type : 'pie',
+                      type : $scope.currentChart.pie
                       name: 'Hackers',
-                      data: data
+                      data: series
                   }]
                 });
           }
-
         }).
         error(function(data, status) {
           $scope.data = data || "Request failed";

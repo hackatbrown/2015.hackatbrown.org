@@ -120,14 +120,13 @@ def getBySchool():
     for hacker in hackers:
         data[hacker.school] = data.setdefault(hacker.school, 0) + 1
     return data
+
 def getByShirtSize():
-    return None
+    return {"Small" : 1, "Medium" : 40, "Large" : 30, "Capacious" : 10}
+
 def getByDietaryPreferences():
-    return None
+    return {"Babies" : 10, "Vegetables" : 40, "Bajas" : 30, "Gluten-Free" : 10}
 
-
-
-    #######
 '''
     def entries_that_fit(offset):
     entries = 0
