@@ -72,31 +72,25 @@ function validateEmail(sEmail) {
 
 function transitionToForm() {
     $(".registration_form").addClass("active");
-    $(".init_reg .init_submit").addClass("valid");
 
     transferInitInfo();
     $('html,body').animate({
         scrollTop: 0
     }, 1000);
-    $(".splash").addClass("reg");
-    $(".cancel_reg").addClass("reg");
-    $(".splash .background > .fore").addClass("translated");
+    $(".splash, .cancel_reg").addClass("reg translated");
     $(".top-bar_li#hello_top a").fadeOut(500, function () {
         $(this).text("Registration");
         setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
         $(this).fadeIn(800);
     });
     fixSplashHeight();
-    //TODO: Replace this with a callback
-    setTimeout("document.getElementById('name').focus();", 900);
+    document.getElementById('hero').addEventListener("transitionend", function() { document.getElementById('name').focus() }, false);
 }
 
 function initalizeReg() {
-    // Toggle between form and splash
+    // Add event handlers for inital registration toggle
     $("form.init_reg").submit(function (e) {
         e.preventDefault();
-
-        
 
         // Validate
         if (!validateEmail($(".init_reg input[type='email']").val())) {
@@ -104,6 +98,7 @@ function initalizeReg() {
             console.log("Splash Page: Invalid email!");
             return;
         } else {
+            $(".init_reg .init_submit").addClass("valid");
             var registered = false;
             $("#registration_email").ajaxSubmit({
                 async: false,
