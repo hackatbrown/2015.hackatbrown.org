@@ -15,7 +15,8 @@ class HackerPageHandler(webapp2.RequestHandler):
             self.redirect('/')
 
         status = computeStatus(hacker)
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status}))
+        name = hacker.name.split(" ")[0] # TODO: make it better
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name}))
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
@@ -50,4 +51,4 @@ def computeStatus(hacker):
     elif hacker.waitlist_email_sent_date != None:
         return "Waitlisted"
     else:
-        return "Not Currently Admitted"
+        return "Pending"

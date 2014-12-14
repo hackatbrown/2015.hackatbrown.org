@@ -8,7 +8,6 @@
  * http://opensource.org/licenses/MIT
  *
  */
-@import 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin';
 
 
 
@@ -28,17 +27,17 @@ body {
   height: 100%;
 }
 html {
-  font-size: 14px;
+  font-size: 100%;
 }
 body {
   margin: 0px;
   padding: 0px;
   min-width: 278px;
   background: #f7f7f7;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Brown', sans-serif;
   font-size: 14px;
   line-height: 1.33;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   font-smoothing: antialiased;
 }
 
@@ -52,10 +51,9 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Brown', sans-serif;
   line-height: 1.33em;
-  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
-  margin: calc(2rem -  0.165em ) 0em 1rem;
+  margin: 1em 0em 1rem;
   font-weight: bold;
   padding: 0em;
 }
@@ -97,11 +95,11 @@ p:last-child {
 --------------------*/
 
 a {
-  color: #009fda;
+  color: #1b8eb9;
   text-decoration: none;
 }
 a:hover {
-  color: #00b2f3;
+  color: #1e9fcf;
 }
 
 
@@ -110,16 +108,16 @@ a:hover {
 *******************************/
 
 ::-webkit-selection {
-  background-color: rgba(255, 255, 160, 0.4);
-  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(239, 93, 147, 0.2);
+  color: #404040;
 }
 ::-moz-selection {
-  background-color: rgba(255, 255, 160, 0.4);
-  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(239, 93, 147, 0.2);
+  color: #404040;
 }
 ::selection {
-  background-color: rgba(255, 255, 160, 0.4);
-  color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(239, 93, 147, 0.2);
+  color: #404040;
 }
 
 

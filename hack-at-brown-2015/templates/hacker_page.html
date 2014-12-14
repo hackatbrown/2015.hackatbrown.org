@@ -1,38 +1,93 @@
-{% extends "page_with_chrome.html" %}
+{% extends "base.html" %}
 
-{% block centered %}
+{% block title %}
+{{ hacker.name }} - Hack@Brown 2015
+{% endblock %}
 
-<link rel='stylesheet' href='/static/css/hacker_page.css'/>
-<script src='/static/js/hacker_page.js'></script>
+{% block headcss %}
+{{ super() }}
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<link rel="stylesheet" href="/static/css/hacker_page.css" />
+{% endblock %}
 
-<div class="wrapper">
-  <div class="info">
-    <h2>Hello, {{ hacker.name }}</h2>
-    <h3>Here's what we got from you:</h3>
-    <ul>
-      <li>Name: {{ hacker.name }}</li>
-      <li>Email: {{ hacker.email }}</li>
-      <li>School: {{ hacker.school }} </li>
-      <li>Class Year: {{ hacker.year }}</li>
-<!--       <li>Resume: {{ hacker.resume }}</li>
- -->      <li>Personal Links: {{ hacker.links }}</li>
-      <li>Requested Teammates: {{ hacker.teammates }}</li>
-      <li>Hardware Hacking: {{ hacker.hardware_hack }} </li>
-      <li>First Hackathon?: {{ hacker.first_hackathon }} </li>
-    </ul>
-    <h3>Logistics</h3>
-    <ul>
-      <li>Shirt Gender/Size: {{ hacker.shirt_gen }}/{{ hacker.shirt_size }}</li>
-      <li>Dietary Restrictions: {{ hacker.dietary_restrictions }}</li>
-    </ul>
-  </div>
-  <div class="status">
-    <h2>Your Status: <br></h2><h3><strong>{{ status }} </strong></h3>
-  </div>
+{% block headjs %}
+{{ super() }}
+<script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+{% endblock %}
 
-<div class="ui icon input loading">
-  <input id="school" type="text" onBlur="saveChange(this.id, this.value)">
-  <i class="search icon"></i>
+{% block nav %}
+<div class="hamburger">
+    <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+        <g class="hamsvg" sketch:type="MSLayerGroup">
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+        </g>
+    </svg>
 </div>
+<div class="hamburger over"></div>
+<ul class="top-bar_ul transparent skrollable-between" data-0="" data-1="">
+    <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
+    <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div id="skrollr-body" class="trigrid container darkgrey">
+    <div class="outer_container">
+        <div class="double panes">
+            <div class="double_left white">
+                <section id="status" class="panel hero">
+                    <div class="inner_container">
+                            <h1 class="hi">Hey {{ name }}!</h1>
+                            <p>your admission status is</p>
+                            <div class="admit_status pending">
+                                {{ status }}
+                            </div>
+                            
+                    </div>
+                </section>
+                <section id="messages" class="panel grey secondary">
+                    <div class="inner_container">
+                        <h4 class="label grey">My Info (Editable Soon)</h4>
+                        <ul>
+                            <li>Name: {{ hacker.name }}</li>
+                            <li>Email: {{ hacker.email }}</li>
+                            <li>School: {{ hacker.school }} </li>
+                            <li>Class Year: {{ hacker.year }}</li>
+                            <li>Personal Links: {{ hacker.links }}</li>
+                            <li>Requested Teammates: {{ hacker.teammates }}</li>
+                            <li>Hardware Hacking: {{ hacker.hardware_hack }} </li>
+                            <li>First Hackathon?: {{ hacker.first_hackathon }} </li>
+                        </ul>
+                        <h4 class="label grey">Logistics</h4>
+                        <ul>
+                            <li>Shirt Size: {{ hacker.shirt_gen }}/{{ hacker.shirt_size }}</li>
+                            <li>Dietary Restrictions: {{ hacker.dietary_restrictions }}</li>
+                        </ul>                            
+<!--                        <h3 class="secondary">None yet!</h3>-->
+<!--
+                        <div class="message items">
+                            <div class="message item prompt">
+                                <h3>You haven't uploaded your resume yet!</h3>
+                                <p>We give our sponsors your resume for potential recruitment opportunities.</p>
+                                <div class="upload field">
+                                    <input id="resume" class="resume-upload" type="file" name="resume" />
+                                    <input id="resume-over" class="resume-button" type="button" value="Upload Resume" />
+                                    <span class="file-name"></span>
+                                </div>
+                            </div>
+                        </div>
+-->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+{{ super() }}
 {% endblock %}
