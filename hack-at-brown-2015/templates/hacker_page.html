@@ -1,8 +1,13 @@
 {% extends "page_with_chrome.html" %}
 
+{% block title %}
+{{ hacker.name }} - Hack@Brown 2015
+{% endblock %}
+
 {% block headcss %}
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<link rel="stylesheet" href="/static/css/hacker_page.css" />
 {% endblock %}
 
 {% block headjs %}
@@ -10,15 +15,238 @@
 <script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
 {% endblock %}
 
+{% block nav %}
+<div class="hamburger">
+    <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+        <g class="hamsvg" sketch:type="MSLayerGroup">
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+        </g>
+    </svg>
+</div>
+<div class="hamburger over"></div>
+<ul class="top-bar_ul" data-0="" data-1="">
+    <li class="top-bar_li left cancel_reg" id="back_top"><a class="secondary">Close</a></li>
+    <li class="top-bar_li active" id="hello_top"><a href="#hero">Status</a></li>
+    <li class="top-bar_li" id="schedule_top"><a href="#about">My Info</a></li>
+</ul>
+{% endblock %}
+
 {% block content %}
 <div class="ui page grid">
-    <div class="sixteen wide column">
-        <div class="ui icon input loading">
-          <input id="school" type="text" onBlur="saveChange(this.id, this.value)">
-          <i class="search icon"></i>
+    <div class="sixteen column white row">
+        <div class="two wide column"></div>
+        <div class="twelve wide column">
+            <div class="ui grid">
+                <div class="two wide column"></div>
+                <div class="twelve wide column">
+                    <h1 class="ui header">Hey {{ name }}!</h1>
+                    <p>your admission status is</p>
+                    <div class="ui inverted blue segment">
+                        <h1 class="ui header">
+                            PENDING
+                        </h1>
+                    </div>
+                    <div class="ui icon input loading">
+                      <input id="school" type="text" onBlur="saveChange(this.id, this.value)">
+                      <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sixteen column grey row">
+        <div class="two wide column"></div>
+        <div class="twelve wide column">
+            <div class="ui grid">
+                <div class="two wide column"></div>
+                <div class="twelve wide column">
+                    <h4 class="ui dividing header">Messages</h4>
+                    <div class="ui relaxed divided items">
+                        <div class="item">
+
+                            <div class="content">
+                                <a class="header">You haven't uploaded your resume yet!</a>
+                                <div class="meta">
+                                    <a>12.12.2014</a>
+                                </div>
+                                <div class="description">
+                                    A description which may flow for several lines and give context to the content.
+                                </div>
+                                <div class="extra">
+                                    <div class="ui left floated primary button">
+                                        Upload
+                                        <i class="right  icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="ui page grid">
+    <div class="sixteen column white row">
+        <div class="two wide column"></div>
+        <div class="twelve wide column">
+            <div class="ui grid">
+                <div class="two wide column"></div>
+                <div class="twelve wide column">
+                    <div class="ui form">
+                        <div class="errorsPresent">Please fix all issues in the form.</div>
+
+                        <div class="two fields row">
+                            <div class="field">
+                                <label for="name">Name</label>
+                                <input id="name" type="text" name="name" placeholder="Josiah Carberry" required/>
+                            </div>
+                            <div class="field">
+                                <label for="name">Email</label>
+                                <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
+                            </div>
+                        </div>
+
+                        <div class="two fields row">
+                            <div class="field">
+                                <div class="two fields">
+                                    <div class="ten wide field ui-widget">
+                                        <label for="school">School</label>
+                                        <input type="text" name="school" class="schools" placeholder="Beige University" required/>
+                                    </div>
+                                    <div class="six wide field yr">
+                                        <label for="year">Year</label>
+                                        <div class="ui selection dropdown">
+                                            <input type="hidden" name="year">
+                                            <div class="default text">Select a Year</div>
+                                            <i class="dropdown icon"></i>
+                                            <div class="menu">
+                                                <div class="item" data-value="freshman">First Year</div>
+                                                <div class="item" data-value="sophomore">Second Year</div>
+                                                <div class="item" data-value="sophomore">Third Year</div>
+                                                <div class="item" data-value="sophomore">Fourth Year</div>
+                                                <div class="item" data-value="sophomore">High School</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>T-Shirt Size</label>
+                                <div class="shirt_size">
+                                    <table class="radio_select center">
+                                        <tr>
+                                            <td>
+                                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                                <label for="sgM">Men's</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_gen" id="sgW" value='W' />
+                                                <label for="sgW">Women's</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <table class="radio_select center">
+                                        <tr>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                                <label for="ssXS">XS</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssS" value='S' />
+                                                <label for="ssS">S</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssM" value='M' />
+                                                <label for="ssM">M</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssL" value='L' />
+                                                <label for="ssL">L</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssXL" value='XL' />
+                                                <label for="ssXL">XL</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
+                                                <label for="ssXXL">XXL</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field row">
+                            <label for="dietary_restrictions">Dietary restrictions? <span class="optional">(Optional)</span></label>
+                            <input name="dietary_restrictions"type="hidden" id="diet" class="stags" style="width:100%"/>
+                        </div>
+
+                        <div class="field row">
+                            <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
+                            <input type="hidden" id="teammates" class="stags nodrop" name="teammates"/>
+                        </div>
+
+                        <div class="two fields row">
+                            <div class="field">
+                                <label for="hardware_hack">Hardware Hack?</label>
+                                <table class="radio_select" for="hardware_hack">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
+                                            <label for="hardware_yes">Yes!</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
+                                            <label for="hardware_no">No</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="field">
+                                <label for="resume">Upload Resume <span class="optional">(Optional; Recommended)</span></label>
+                                <input id="resume" class="resume-upload" type="file" name="resume" />
+                                <input id="resume-over" class="resume-button" type="button" value="Browse files" />
+                                <span class="file-name">No file chosen.</span>
+                                <div class="nag upload-later">You can always upload it later!</div>
+                            </div>
+                        </div>
+
+                        <div class="two fields row">
+                            <div class="field">
+                                <label for="first_hackathon">Will this be your first hackathon?</label>
+                                <table class="radio_select" for="first_hackathon">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="first_hackathon" id="first_hackathon_yes" value='yes' />
+                                            <label for="first_hackathon_yes">Yes!</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="first_hackathon" id="first_hackathon_no" value='no' />
+                                            <label for="first_hackathon_no">No</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="field">
+                                <label for="links">Links <span class="optional">(Optional)</span></label>
+                                <div class="condor"></div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 {{ super() }}
