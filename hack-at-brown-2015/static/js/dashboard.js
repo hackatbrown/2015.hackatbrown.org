@@ -35,7 +35,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.declinedCount = 0;
 
   $scope.showBreakdowns = false;
-  $scope.displayEmail = null;
+  $scope.displayEmail = false;
 
   $scope.charts = [{
       name : 'By School',
@@ -95,7 +95,19 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
         console.log("sent emails!");
         $scope.emailStatus = "Sent Email to " + $scope.emailRecipient + "!";
         if (data.html) {
-          $scope.displayEmail = $sce.trustAsHtml(data.html);
+          //$scope.displayEmail = $sce.trustAsHtml(data.html);
+          $scope.displayEmail = true;
+          var iframe = document.getElementById("email-display")
+          var doc = iframe.document;
+          if(iframe.contentDocument)
+            doc = iframe.contentDocument;
+          else if(iframe.contentWindow)
+            doc = iframe.contentWindow.document;
+          // Put the content in the iframe
+          doc.open();
+          doc.writeln(data.html);
+          doc.close();
+          iframe.style.height = doc.body.scrollHeight + "px";
         };
       }
       else{
