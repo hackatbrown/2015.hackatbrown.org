@@ -1,116 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-	body {
-		font-family: 'Helvecita', arial, sans-serif;
-		margin: 0;
-		height: 100%;
-	}
-	#content {
-		color: #111;
-		background-color: white;
-		line-height: 1.4;
-		width: 90%;
-		max-width: 700px;
-		text-align: center;
-		margin: auto;
-		height: 100%;
-	}
-	#email-body{
-		border-radius: 3px;
-		padding: 5px;
-		text-align: left;
-		max-width: 500px;
-		display: inline-block;
-	}
-	a {
-		color: #EF5D93;
-	}
-	h1, h2, h3, h4, h5 {
-		font-family: 'Brown', sans-serif;
+    <style>
+    body {
+        font-family: 'Helvetica Neue', 'Helvetica', arial, sans-serif;
+        margin: 0;
+        height: 100%;
+        background-color: #EDF4FA;
 
-	}
-	h1 {
-		color:#EF5D93;
-		
-		text-align: center;
-	}
-	#logo {
-		text-align: center;
-	}
+        font-size: 0.9em;
+    }
+    #content {
+        height: 60%;
+        width: 90%;
+        max-width: 500px;
+        margin: auto;
+        text-align: center;
 
-	.social-links a:hover {
-    opacity: 1.0;
-    border: none;
-	}
+        padding-bottom: 30px;
+    }
 
-  .social-links {
-    list-style: none;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-	}
-	.social-links li {
-    float: left;
-	}
+    #logo {
+        padding: 30px;
+    }
 
-	.social-links a {
-    display: inline-block;
-    padding: 0 0.7em;
-    text-align: center;
+    #email_body {
+        color: #111;
+        border: 1px solid #4c93ce;
+        border-radius: 3px;
+        background-color: white;
 
-    height: 1.2em;
-    width: 1.2em;
+        padding: 5%;
+        margin: auto;
 
-    background-size: 1.2em 1.2em;
-    background-repeat: no-repeat;
-    background-position: center center;
-    opacity: 0.8;
+        line-height: 1.4;
+        text-align: left;
+    }
 
-    vertical-align: text-top;
-	}
-	.email {
-	    padding-top: 0.1em !important;
-	    background: url("/static/img/social-icons/email.svg");
-	}
+    a {
+        color: #EF5D93;
+    }
 
-	.facebook {
-	    background: url("/static/img/social-icons/facebook.svg");
-	}
+    h1, h2, h3, h4, h5 {
+        font-size: 1.8em;
+    }
 
-	.twitter {
-	    background: url("/static/img/social-icons/twitter.svg");
-	}
+    h1 {
+        color:#EF5D93;
+        text-align: center;
+    }
 
-	.blog {
-	    background: url("/static/img/social-icons/medium.svg");
-	}
+    #logo {
+        text-align: center;
+    }
 
+    #footer {
+        text-align: center;
+    }
 
-	</style>
-	<meta charset='utf-8'/>
+    #social-links a:hover {
+        opacity: 1.0;
+        border: none;
+    }
+
+    #social-links {
+        list-style: none;
+        text-align: center;
+        margin: 0;
+        padding: 20px 0px 5px 0px;
+    }
+
+    #social-links li {
+        display: inline-block;
+        padding: 5px;
+    }
+
+    #reason, #end {
+        color: #666666;
+    }
+
+    #reason {
+        padding: 5px;
+    }
+
+    .email {
+        padding-top: 0.1em !important;
+    }
+    </style>
+    <meta charset='utf-8'/>
 </head>
 <body>
-	<div id='content'>
-		<div id='logo'>
-			<img src='http://hackatbrown.org/static/img/logo.png' style='width: 150px' />
-		</div>
-		<div id="email-body">
-		{% block content %}
-		{% endblock %}
-		{% if hacker %}
-		</div>
-		<p>
-			<a href='http://hackatbrown.org/secret/{{ hacker.secret }}'>To view your registration, visit your dashboard by clicking this link.</a>
-		</p>
-		<ul class="social-links">
-                    <li></li>
-                    <li><a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook"></a></li>
-                    <li><a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter"></a></li>
-                    <li><a href="http://medium.com/hack-at-brown" title="Blog" class="blog"></a></li>
-                </ul>
-		{% endif %}
-	</div>
+    <div id='logo'>
+        <img src='http://hackatbrown.org/static/img/logo.png' style='width: 100px' />
+    </div>
+    <div id="content">
+        <div id='email_body'>
+            {% block content %}
+            {% endblock %}
+
+            {% if hacker %}
+            <p>
+                <a href='http://hackatbrown.org/secret/{{ hacker.secret }}'>To view your registration, visit your dashboard by clicking this link.</a>
+            </p>
+            {% endif %}
+        </div>
+
+        <div id="footer">
+            <ul id="social-links">
+                <li><a href="mailto:hello@hackatbrown.org" title="Email" class="email">
+                    <img src='http://hackatbrown.org/static/img/social-icons/email-small.png' height="15px"/>
+                </a></li>
+                <li><a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook">
+                    <img src='http://hackatbrown.org/static/img/social-icons/facebook-small.png' height="15px"/>
+                </a></li>
+                <li><a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter">
+                    <img src='http://hackatbrown.org/static/img/social-icons/twitter-small.png' height="15px"/>
+                </a></li>
+                <li><a href="http://medium.com/hack-at-brown" title="Blog" class="blog">
+                    <img src='http://hackatbrown.org/static/img/social-icons/medium-small.png' height="15px"/>
+                </a></li>
+            </ul>
+            <div id="reason">You received this email because you registered for Hack@Brown.</div>
+            <div id="end"><a href="http://hackatbrown.org">hackatbrown.org</a></div>
+        </div>
+    </div>
 </body>
 </html>

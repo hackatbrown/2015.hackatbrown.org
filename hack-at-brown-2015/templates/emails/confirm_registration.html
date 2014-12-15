@@ -1,17 +1,22 @@
 {% extends "emails/base.html" %}
 
 {% block content %}
-<h1>You've applied to Hack@Brown</h1>
+<h1>You've applied to Hack@Brown!</h1>
 <p>Hi {{name}},</p>
 <p>
-	Thanks for registering for Hack@Brown!
+    Thanks for registering for Hack@Brown!
 </p>
 <p>
-	We're getting ready to create the best hackathon experience possible for everyone. Acceptances will be emailed out in early January based on a random lottery.
-	Thanks for waiting, and in the meantime, make sure to follow us on <a href='http://facebook.com/hackatbrown'>Facebook</a> and <a href='http://twitter.com/hackatbrown'>Twitter</a>.
-	If you have any questions, feel free to send us an email at hello@hackatbrown.org. Have a great day!
+    We're working hard on making sure Hack@Brown is a great experience for everyone. However, since we're limited by space, we'll be using a random lottery to accept registrants.
 </p>
 <p>
-	Team Hack@Brown
+    Thanks for waiting, and in the meantime, make sure to follow us on <a href='http://facebook.com/hackatbrown'>Facebook</a> and <a href='http://twitter.com/hackatbrown'>Twitter</a> for important updates.
+</p>
+<p>
+    If you have any questions, feel free to send us an email at <a href="mailto:hello@hackatbrown.org">hello@hackatbrown.org</a>.
+</p>
+<p>
+    Have a great day!<br/>
+    Team Hack@Brown
 </p>
 {% endblock %}
