@@ -50,23 +50,8 @@
                 </section>
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
-                        <h4 class="label grey">My Info (Editable Soon)</h4>
-                        <ul>
-                            <li>Name: {{ hacker.name }}</li>
-                            <li>Email: {{ hacker.email }}</li>
-                            <li>School: {{ hacker.school }} </li>
-                            <li>Class Year: {{ hacker.year }}</li>
-                            <li>Personal Links: {{ hacker.links }}</li>
-                            <li>Requested Teammates: {{ hacker.teammates }}</li>
-                            <li>Hardware Hacking: {{ hacker.hardware_hack }} </li>
-                            <li>First Hackathon?: {{ hacker.first_hackathon }} </li>
-                        </ul>
-                        <h4 class="label grey">Logistics</h4>
-                        <ul>
-                            <li>Shirt Size: {{ hacker.shirt_gen }}/{{ hacker.shirt_size }}</li>
-                            <li>Dietary Restrictions: {{ hacker.dietary_restrictions }}</li>
-                        </ul>                            
-<!--                        <h3 class="secondary">None yet!</h3>-->
+                        <h4 class="label grey">Messages</h4>
+                        <h3 class="secondary">None yet!</h3>
 <!--
                         <div class="message items">
                             <div class="message item prompt">
@@ -87,7 +72,16 @@
     </div>
 </div>
 
+<script>
+    function switchToMyInfo() {
+        $(".update_form").addClass("active");
 
-
-{{ super() }}
+        $(".panes").addClass("in-pane1");
+    }
+    
+    $("#info_top").click(function() { 
+        this.preventDefault;
+        switchToMyInfo();
+    });
+</script>
 {% endblock %}
