@@ -31,6 +31,7 @@ class Hacker(ndb.Model):
 
 
 	secret = ndb.StringProperty()
+	post_registration_email_sent_date = ndb.DateTimeProperty()
 
 	admit_priority = ndb.FloatProperty(default=0)
 	admitted_email_sent_date = ndb.DateTimeProperty()
@@ -73,11 +74,13 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         if len(resume_files) > 0:
             hacker.resume = resume_files[0].key()
         hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
+        try:
+       		email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
+       		send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
+       		hacker.post_registration_email_sent_date = datetime.datetime.now()
+       	except Exception, e:
+       		pass
         hacker.put()
-
-        #email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
-        #send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
-
         name = hacker.name.split(" ")[0] # TODO: make it better
         confirmation_html = template("post_registration_splash.html", {"name": name})
         self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
