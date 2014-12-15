@@ -17,18 +17,18 @@ hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'di
 class Hacker(ndb.Model):
 	name = ndb.StringProperty()
 	school = ndb.StringProperty()
-	year = ndb.StringProperty()
+	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior'])
 	email = ndb.StringProperty()
-	shirt_gen = ndb.StringProperty()
-	shirt_size = ndb.StringProperty()
+	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
+	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 	dietary_restrictions = ndb.StringProperty()
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
 	teammates = ndb.StringProperty(default=None)
 	teammates_emailed = ndb.BooleanProperty(default=False)
-	hardware_hack = ndb.StringProperty()
-	first_hackathon = ndb.StringProperty()
+	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
+	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
 
 
 	secret = ndb.StringProperty()
