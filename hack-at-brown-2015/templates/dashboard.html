@@ -83,15 +83,18 @@
       <h2 class='option'> Email</h2>
       <label ng-show='showEmailStatus' style='display: block' ><b>%%emailStatus%%</b></label>
       <ul ng-init='emailOption = "all"' id='email-options' class='panel-content'>
-        <li ng-click='emailOption = "all"' ng-class='emailOption == "all" ? "selected" : "unselected"'> All </li>
+        <!-- <li ng-click='emailOption = "all"' ng-class='emailOption == "all" ? "selected" : "unselected"'> All </li>
         <li ng-click='emailOption = "accepted"' ng-class='emailOption == "accepted" ? "selected" : "unselected"'>Accepted</li>
-        <li ng-click='emailOption = "waitlisted"' ng-class='emailOption == "waitlisted" ? "selected" : "unselected"'>Waitlisted</li>
+        <li ng-click='emailOption = "waitlisted"' ng-class='emailOption == "waitlisted" ? "selected" : "unselected"'>Waitlisted</li> -->
+        <label>Recipient</label>
+        <input ng-model= "emailRecipient" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
       </ul>
       <div>
         <label>Subject</label>
         <input ng-model= "emailSubject" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-        <label>Body</label>
-        <textarea ng-model="emailBody" name='body' style='width: 100%; height: 300px'></textarea>
+        <label>Email name</label>
+        <input ng-model= "emailName" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
+        <!-- <textarea ng-model="emailBody" name='body' style='width: 100%; height: 300px'></textarea> -->
         <div id="send_emails" class="button" ng-click='sendEmails()'> Send Emails</div>
       </div>
     </div>

@@ -77,14 +77,20 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   };
 
   $scope.sendEmails = function(){
-    if ($scope.emailSubject == "" || $scope.emailBody == "" || $scope.emailOption == "unselected") {
+    if ($scope.emailSubject == "" || $scope.emailName == "" || $scope.emailRecpient == "") {
       console.log("Failed")
       return "Failed";
     };
-    $http.post('/__send_email', {recipients: $scope.emailOption, subject: $scope.emailSubject,body:$scope.emailBody }).
+    $http.post('/__send_email', {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }).
     success(function(data, status, headers, config) {
-      console.log("sent emails!");
-      $scope.emailStatus = "Sent Email to " + $scope.emailOption + "!";
+      if(data.success = true){
+        console.log("sent emails!");
+        $scope.emailStatus = "Sent Email to " + $scope.emailRecipient + "!";
+      }
+      else{
+        console.log('failed to send emails');
+        $scope.emailStatus = "Send failed...";
+      }
       $scope.showEmailStatus = true;
     }).
     error(function(data, status, headers, config) {
