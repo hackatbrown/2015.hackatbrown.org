@@ -109,10 +109,49 @@
                                 
                             </div>
                             <div class="field">
-                                <label for="email">Email</label>
-                                <div class="ui icon input">
-                                    <input type="email" name="email" placeholder="handle@schooldomain.edu" value="{{ hacker.email }}"/>
-                                    <i class="icon"></i>
+                                <label>T-Shirt Size</label>
+                                <div class="shirt_size">
+                                    <table class="radio_select center">
+                                        <tr>
+                                            <td>
+                                                <input type="radio" name="shirt_gen" id="sgM" value='M' />
+                                                <label for="sgM">Men's</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_gen" id="sgW" value='W' />
+                                                <label for="sgW">Women's</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <table class="radio_select center">
+                                        <tr>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssXS" value='XS' />
+                                                <label for="ssXS">XS</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssS" value='S' />
+                                                <label for="ssS">S</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssM" value='M' />
+                                                <label for="ssM">M</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssL" value='L' />
+                                                <label for="ssL">L</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssXL" value='XL' />
+                                                <label for="ssXL">XL</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="shirt_size" id="ssXXL" value='XXL' />
+                                                <label for="ssXXL">XXL</label>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +189,7 @@
         });
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
-            saveChange(this.id, this.value, this.parentNode, "{{ secret }}" );
+            saveChange(this.name, this.value, this.parentNode, "{{ secret }}" );
         });
         
         var $universities = [];
@@ -159,6 +198,10 @@
                 $universities[key] = val;
             })
         });
+        
+        // Populate the radio buttons
+        populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
+        populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
         
         /* Autocomplete suggestions for schools */
         $(function () {

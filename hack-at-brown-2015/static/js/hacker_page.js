@@ -29,7 +29,10 @@ function saveChange(key, value, uiinput, secret) {
           setTimeout(function() {$(uiinput).children("i").removeClass('checkmark fade')}, 2000)
       }
     });
+}
 
+function populateDefaultRadio(key, value) {
+    $('input:radio[name='+key+'][value='+value+']').attr('checked', true);
 }
 
 /* Prevent horizontal scrolling of element into view on focus */
