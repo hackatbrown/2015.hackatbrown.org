@@ -10,15 +10,28 @@ from google.appengine.api import memcache
 import os
 import base64
 import webapp2
+#Validation
+from google.appengine.api import datastore_errors
+from template import utils
+
 
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
+
+def stringValidator(prop, value):
+    lowerValue = value.lower()
+    stripped = str(utils.escape(lowerValue))
+
+    if stripped is not lowerValue:
+        raise datastore_errors.BadValueError(value)
+
+    return stripped
 
 class Hacker(ndb.Model):
 	name = ndb.StringProperty()
 	school = ndb.StringProperty()
 	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior'])
-	email = ndb.StringProperty()
+	email = ndb.StringProperty(validator=stringValidator)
 	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 	dietary_restrictions = ndb.StringProperty()
@@ -67,9 +80,14 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         hacker.ip = self.request.remote_addr
         for key in hacker_keys:
             print key + " " + self.request.get(key)
-            setattr(hacker, key, self.request.get(key))
+            try:
+                setattr(hacker, key, self.request.get(key))
+            except datastore_errors.BadValueError:
+                self.response.write(json.dumps({"success":False, "msg":"Email Invalid"}))
+                return
+
         if Hacker.query(Hacker.email == hacker.email).count() > 0:
-            self.response.write(json.dumps({"success":False}))
+            self.response.write(json.dumps({"success":False, "msg": "Email Already Registered!"}))
             return
         resume_files = self.get_uploads('resume')
         if len(resume_files) > 0:
