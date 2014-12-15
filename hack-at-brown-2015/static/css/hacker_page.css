@@ -88,7 +88,7 @@ input[type=file] {
     color: #404040;
     font-weight: 300;
     font-size: .9em;
-    transition: box-shadow .2s, color .2s;
+    transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
     height: 35px;
     line-height: 1.8em;
 }
@@ -99,7 +99,7 @@ h3.secondary {
 }
 
 .panes {
-    transition: transform .5s;
+    transition: transform .8s cubic-bezier(.55,0,.1,1);
     position: relative;
     width: 200%;
     height: auto;
@@ -141,7 +141,7 @@ h3.secondary {
     top: 0;
     z-index: 999;
     background-color: rgba(255, 255, 255, .95);
-    transition: background-color .5s;
+    transition: background-color .5s cubic-bezier(.55,0,.1,1);
 }
 .top-bar_ul.skrollable-between, .top-bar_ul.transparent {
     background-color: rgba(255, 255, 255, 0);
@@ -189,7 +189,7 @@ h3.secondary {
 }
 .gu-sliding-bar {
     /* Nav sliding bar */
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(.55,0,.1,1);
     background: #EF5D93;
     height: 2px;
 }
@@ -377,7 +377,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     top: 0;
     z-index: 999;
     background-color: rgba(255, 255, 255, .95);
-    transition: background-color .5s;
+    transition: background-color .5s cubic-bezier(.55,0,.1,1);
 }
 .top-bar_ul.skrollable-between {
     background-color: rgba(255, 255, 255, 0);
@@ -425,7 +425,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 .gu-sliding-bar {
     /* Nav sliding bar */
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(.55,0,.1,1);
     background: #EF5D93;
     height: 2px;
 }
@@ -449,7 +449,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     z-index:2;
     -webkit-transform:(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    transition:height 2s, padding 1.2s, background-color 1.2s, transform 1s;
+    transition:height 2s cubic-bezier(.55,0,.1,1), padding 1.2s cubic-bezier(.55,0,.1,1), background-color 1.2s cubic-bezier(.55,0,.1,1), transform 1s cubic-bezier(.55,0,.1,1);
     height: auto;
     position: absolute;
 }
@@ -531,7 +531,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     text-indent: 6px;
     -webkit-box-shadow: inset 1px 0px 0px -1px #404040;
     box-shadow: inset 1px 0px 0px -1px #404040;
-    transition: box-shadow .2s, border .2s, color .2s;
+    transition: box-shadow .2s cubic-bezier(.55,0,.1,1), border .2s, color .2s cubic-bezier(.55,0,.1,1);
     width: 250px;
 }
 .init_input::-webkit-input-placeholder, 
