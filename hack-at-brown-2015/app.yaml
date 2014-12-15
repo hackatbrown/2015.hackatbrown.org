@@ -19,9 +19,6 @@ handlers:
   script: admin_checkin.app
   login: admin
 
-- url: .*
-  script: main.app
-
 - url: /dashboard
   script: main.app
   login: admin
@@ -29,6 +26,9 @@ handlers:
 - url: /dashboard(/.*)
   script: main.app
   login: admin
+
+- url: .*
+  script: main.app
 
 libraries:
 - name: webapp2
