@@ -64,6 +64,12 @@ class SendEmail(webapp2.RequestHandler):
     template_name = template_hacker.name.split(" ")[0]
 
     html = template("emails/" + email_name + ".html", {"hacker": template_hacker, "name": template_name})
+    try:
+        if parsed_request.get("display"):
+            self.response.write(json.dumps({"success": True, "html": html }))
+            return
+    except Exception, e:
+        raise e
     send_to = [recipient]
     # if parsed_request.get("recipients") == "ALL":
     #     send_to = [hacker.email for hacker in Hacker.query()]
@@ -74,7 +80,7 @@ class SendEmail(webapp2.RequestHandler):
     
 
     send_email(recipients=send_to, html=html, subject=subject)
-    self.response.write(json.dumps({"success": True, "recipients": send_to }))
+    self.response.write(json.dumps({"success": True, "html":None }))
 
 class ViewBreakdownsHandler(webapp2.RequestHandler):
     def get(self):

@@ -5,8 +5,8 @@
 <title>Hack@Brown 2015 — Dashboard</title>
 <link rel='stylesheet' href='/static/css/dashboard.css'/>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-sanitize.js"></script>
+
 <script src='/static/js/dashboard.js'></script>
 {% endblock %}
 
@@ -95,7 +95,8 @@
         <label>Email name</label>
         <input ng-model= "emailName" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
         <!-- <textarea ng-model="emailBody" name='body' style='width: 100%; height: 300px'></textarea> -->
-        <div id="send_emails" class="button" ng-click='sendEmails()'> Send Emails</div>
+        <div id="send_email" class="button" ng-click='sendEmail()'> Send Email</div>
+        <div id="show_email" class="button" ng-click='showEmail()'> Show Email</div>
       </div>
     </div>
     <div id="manual-panel" class='panel' >
@@ -121,6 +122,10 @@
 
     </div>
   </div>
+
+  <div id="email-display" ng-show="displayEmail" ng-bind-html="displayEmail">
+  </div>
+  <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
 </div>
 
 {% endblock %}

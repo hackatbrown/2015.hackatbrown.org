@@ -15,7 +15,7 @@ breakdownsApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http
 }]);
 
 
-dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
+dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $http, $sce){
   $scope.content = "";
   $scope.header = "";
 
@@ -35,6 +35,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.declinedCount = 0;
 
   $scope.showBreakdowns = false;
+  $scope.displayEmail = null;
 
   $scope.charts = [{
       name : 'By School',
@@ -76,16 +77,26 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
         //return $scope.signup_count;
   };
 
-  $scope.sendEmails = function(){
+  $scope.showEmail = function(){
+      $scope.sendEmail(true);
+  }
+  $scope.sendEmail = function(display){
     if ($scope.emailSubject == "" || $scope.emailName == "" || $scope.emailRecpient == "") {
       console.log("Failed")
       return "Failed";
     };
-    $http.post('/__send_email', {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }).
+    var request = {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }
+    if (display === true){ 
+          request.display = true;
+        }
+    $http.post('/__send_email', request).
     success(function(data, status, headers, config) {
       if(data.success = true){
         console.log("sent emails!");
         $scope.emailStatus = "Sent Email to " + $scope.emailRecipient + "!";
+        if (data.html) {
+          $scope.displayEmail = $sce.trustAsHtml(data.html);
+        };
       }
       else{
         console.log('failed to send emails');
