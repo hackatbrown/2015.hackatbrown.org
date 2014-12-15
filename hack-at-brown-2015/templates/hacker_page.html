@@ -101,7 +101,7 @@
                                     <div class="six wide field">
                                         <label for="year">Year</label>
                                         <div class="ui icon input">
-                                            <input id="year" type="text" name="name" placeholder="Select Year" value="{{ hacker.year }}"/>
+                                            <input id="year" type="text" name="year" placeholder="Select Year" value="{{ hacker.year }}"/>
                                             <i class="icon"></i>
                                         </div>
                                     </div>
@@ -153,6 +153,31 @@
                                         </tr>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="two fields row">
+                            <div class="field">
+                                <label for="hardware_hack">Hardware Hack?</label>
+                                <table class="radio_select radiobuttons" for="hardware_hack">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="hardware_hack" id="hardware_yes" value='yes' />
+                                            <label for="hardware_yes">Yes!</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="hardware_hack" id="hardware_no" value='no' />
+                                            <label for="hardware_no">No</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="field">
+                                <label for="resume">Upload Resume <span class="optional">(Optional; Recommended)</span></label>
+                                <input id="resume" class="resume-upload" type="file" name="resume" />
+                                <input id="resume-over" class="resume-button" type="button" value="Browse files" />
+                                <span class="file-name">No file chosen.</span>
+                                <div class="nag upload-later">You can always upload it later!</div>
                             </div>
                         </div>
                     </form>

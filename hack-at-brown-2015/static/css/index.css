@@ -115,6 +115,9 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     width: 100%;
     top: 0;
     overflow: hidden;
+    opacity: 0;
+    animation: fadein 1s ease 0s 1;
+    animation-fill-mode: forwards;
 }
 
 
@@ -933,6 +936,11 @@ section .background > .left {
 section .background > .right {
     background-position: left center;
     left: 0;
+}
+
+@keyframes fadein {
+    from {opacity: 0}
+    to {opacity: 100}
 }
 
 /* PANEL SPECIFIC */
