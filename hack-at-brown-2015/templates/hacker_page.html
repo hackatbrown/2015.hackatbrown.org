@@ -153,6 +153,20 @@
             console.log("detected change");
             saveChange($(this).attr("name"), $(this).text, this.parentNode, "{{ secret }}" );
         });
+        
+        var $universities = [];
+        $.getJSON("/static/data/universities.json", function (data) {
+            $.each(data, function (key, val) {
+                $universities[key] = val;
+            })
+        });
+        
+        /* Autocomplete suggestions for schools */
+        $(function () {
+            $(".schools").autocomplete({
+                source: $universities
+            });
+        });
     });
 </script>
 {% endblock %}

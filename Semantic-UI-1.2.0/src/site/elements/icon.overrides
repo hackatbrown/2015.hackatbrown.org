@@ -1,3 +1,10 @@
 /*******************************
          Site Overrides
 *******************************/
+i.icon.fade {
+    animation: fade 1s ease 1s 1 normal both!important;
+}
+
+@keyframes fade {
+    to {opacity: 0}
+}

@@ -20,6 +20,7 @@ class HackerPageHandler(webapp2.RequestHandler):
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
+        logging.debug("Request for hacker update recieved")
         memcachedKey = 'hacker_update/' + secret
         parsed_request = json.loads(self.request.body)
 
@@ -29,7 +30,10 @@ class HackerUpdateHandler(webapp2.RequestHandler):
 
         for key in parsed_request:
             if key in registration.hacker_keys:
+                logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + parsed_request.get(key))
                 setattr(hacker, key, parsed_request.get(key))
+            else:
+                logging.info("Key not found")
 
         if not memcache.set(memcachedKey, hacker, cacheTime):
             logging.error('Memcache set failed')

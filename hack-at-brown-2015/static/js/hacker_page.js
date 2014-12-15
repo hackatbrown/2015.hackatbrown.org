@@ -15,8 +15,6 @@ function switchFromMyInfo() {
 }
 
 function saveChange(key, value, uiinput, secret) {
-    console.log("saving changes");
-    console.log(uiinput);
     var data = {};
     data[key] = value;
     $(uiinput).addClass('loading');
@@ -26,7 +24,8 @@ function saveChange(key, value, uiinput, secret) {
       data : JSON.stringify(data),
       success : function(data, status) {
           $(uiinput).removeClass('loading');
-          $(uiinput).children("i").addClass('checkmark');
+          $(uiinput).children("i").addClass('checkmark fade');
+          setTimeout(function() {$(uiinput).children("i").removeClass('checkmark fade')}, 2000)
       }
     });
 
@@ -34,7 +33,7 @@ function saveChange(key, value, uiinput, secret) {
 
 /* Prevent horizontal scrolling of element into view on focus */
 $(document).on('keydown', ':focus', function (event) {
-    if ((event.keyCode || event.which) == 9) {
+    if ((event.keyCode || event.which) === 9) {
         //TODO: Generalize and support selecting other kinds of input
         var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox]");
         //                console.log($inputs);
@@ -51,5 +50,9 @@ $(document).on('keydown', ':focus', function (event) {
             $next.focus();
             return false;
         }
+    }
+    
+    if ((event.keyCode || event.which) == 13) {
+        $("input").blur();
     }
 });

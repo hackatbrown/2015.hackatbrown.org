@@ -2123,3 +2123,17 @@ i.icon.weixin:before {
          Site Overrides
 *******************************/
 
+i.icon.fade {
+  -webkit-animation: fade 1s ease 1s 1 normal both!important;
+          animation: fade 1s ease 1s 1 normal both!important;
+}
+@-webkit-keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
