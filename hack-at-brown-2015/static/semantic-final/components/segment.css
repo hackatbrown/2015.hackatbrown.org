@@ -360,10 +360,10 @@
 --------------------*/
 
 .ui.black.segment:not(.inverted) {
-  border-top: 2px solid #1b1c1d;
+  border-top: 2px solid #404040;
 }
 .ui.blue.segment:not(.inverted) {
-  border-top: 2px solid #3b83c0;
+  border-top: 2px solid #1b8eb9;
 }
 .ui.green.segment:not(.inverted) {
   border-top: 2px solid #5bbd72;
@@ -375,13 +375,13 @@
   border-top: 2px solid #d9499a;
 }
 .ui.purple.segment:not(.inverted) {
-  border-top: 2px solid #564f8a;
+  border-top: 2px solid #8c537f;
 }
 .ui.red.segment:not(.inverted) {
   border-top: 2px solid #d95c5c;
 }
 .ui.teal.segment:not(.inverted) {
-  border-top: 2px solid #00b5ad;
+  border-top: 2px solid #26a59f;
 }
 .ui.yellow.segment:not(.inverted) {
   border-top: 2px solid #f2c61f;
@@ -429,11 +429,11 @@
 
 .ui.inverted.segment,
 .ui.inverted.black.segment {
-  background-color: #1b1c1d !important;
+  background-color: #404040 !important;
   color: #ffffff !important;
 }
 .ui.inverted.blue.segment {
-  background-color: #3b83c0 !important;
+  background-color: #1b8eb9 !important;
   color: #ffffff !important;
 }
 .ui.inverted.green.segment {
@@ -449,7 +449,7 @@
   color: #ffffff !important;
 }
 .ui.inverted.purple.segment {
-  background-color: #564f8a !important;
+  background-color: #8c537f !important;
   color: #ffffff !important;
 }
 .ui.inverted.red.segment {
@@ -457,7 +457,7 @@
   color: #ffffff !important;
 }
 .ui.inverted.teal.segment {
-  background-color: #00b5ad !important;
+  background-color: #26a59f !important;
   color: #ffffff !important;
 }
 .ui.inverted.yellow.segment {
@@ -502,14 +502,14 @@
   box-shadow: none;
 }
 .ui.inverted.segment .segment {
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 .ui.inverted.segment .inverted.segment {
   color: #ffffff;
 }
 .ui.inverted.segment,
 .ui.primary.inverted.segment {
-  background-color: #1b1c1d;
+  background-color: #404040;
   color: #ffffff;
 }
 .ui.inverted.block.segment,
@@ -523,11 +523,11 @@
 
 .ui.secondary.segment {
   background: #faf9fa;
-  color: rgba(0, 0, 0, 0.8);
+  color: #1b8eb9;
 }
 .ui.tertiary.segment {
   background: #ebebeb;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 .ui.secondary.inverted.segment {
   background: -webkit-linear-gradient(rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%);

@@ -16,8 +16,8 @@
     Base Sizes
 --------------------*/
 
-/*@emSize      : 14px;
-@fontSize    : 14px;*/
+@emSize      : 100%;
+@fontSize    : 1em;
 
 /*-------------------
     Site Colors
@@ -27,18 +27,19 @@
 @blue             : #1B8EB9;
 @pink             : #D9499A;
 @magenta		  : #EF5D93;
-@purple           : #564F8A;
+@purple           : #8c537f;
 @red              : #D95C5C;
-@teal             : #00B5AD;
+@teal             : #26a59f;
 @yellow           : #F2C61F;
 
-@black            : #1B1C1D;
-@grey             : #CCCCCC;
+@black            : #404040;
+@grey             : #918f8c;
+@lightgrey        : #666666;
 @white            : #FFFFFF;
 
 /*---  Brand Colors  ---*/
-@primaryColor        : @blue;
-@secondaryColor      : @black;
+@primaryColor        : @magenta;
+@secondaryColor      : @blue;
 /*-------------------
       Sizes
 --------------------*/
@@ -57,12 +58,12 @@
       Page
 --------------------*/
 
-@pageBackground      : #F7F7F7;
+@pageBackground      : @white;
 @pageOverflowX       : hidden;
 
-@fontSize            : 14px;
-@lineHeight          : 1.33;
-@textColor           : rgba(0, 0, 0, 0.8);
+@fontSize            : 100%;
+@lineHeight          : 100%;
+@textColor           : @black;
 
 @headerMargin        : 1em 0em 1rem;
 @paragraphMargin     : 0em 0em 1em;

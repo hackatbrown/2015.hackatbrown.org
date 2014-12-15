@@ -112,7 +112,7 @@
   margin: 0em;
   font-size: 1em;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 
 /* Summary Image */
@@ -167,7 +167,7 @@
   margin: 0.5em 0em 0em;
   background: none;
   padding: 0em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 
 /* Images */
@@ -255,13 +255,13 @@
 *******************************/
 
 .ui.small.feed {
-  font-size: 0.9em;
+  font-size: 0.9285rem;
 }
 .ui.feed {
-  font-size: 1em;
+  font-size: 1rem;
 }
 .ui.large.feed {
-  font-size: 1.1em;
+  font-size: 1.1428rem;
 }
 
 

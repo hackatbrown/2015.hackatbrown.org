@@ -29,7 +29,7 @@
 <ul class="top-bar_ul transparent" data-0="" data-1="">
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
-    <li class="top-bar_li active" id="info_top"><a href="#info">My Info</a></li>
+    <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
 </ul>
 {% endblock %}
 
@@ -38,7 +38,7 @@
 <div id="skrollr-body" class="trigrid container darkgrey">
     <div class="outer_container">
         <div class="double panes">
-            <div class="double_left white">
+            <div class="double_left pane pane0 active white">
                 <section id="status" class="panel hero">
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
@@ -69,19 +69,62 @@
                     </div>
                 </section>
             </div>
+            <div class="double_right pane pane1 white">
+                <section id="myinfo" class="panel">
+                    <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
+                        <div class="two fields row">
+                            <div class="field">
+                                <label for="name">Name</label>
+                                <input id="name" type="text" name="name" placeholder="Josiah Carberry" required/>
+                            </div>
+                            <div class="field">
+                                <label for="name">Email</label>
+                                <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
         </div>
     </div>
 </div>
 
+
+<script type="text/javascript" src="/static/js/condor.js"></script>
+<script type="text/javascript" src="/static/js/select2.min.js"></script>
+<script src='/static/js/H5F.js'></script>
+<!-- a polyfill that adds HTML5 form validation features to older browsers -->
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
 <script>
+//    Navigation
+    function switchPanes(paneNumber) {
+        var $panes = $(".panes");
+        $($panes).removeClass("in-pane0 in-pane1");
+        $($panes).addClass("in-pane"+paneNumber);
+        $(".pane"+paneNumber).addClass("active");
+    }
+    
     function switchToMyInfo() {
-        $(".update_form").addClass("active");
-        $(".panes").addClass("in-pane1");
+        switchPanes(1);
+    }
+    
+    function switchFromMyInfo() {
+        switchPanes(0);
     }
     
     $("#info_top").click(function() { 
         this.preventDefault;
+        $(".top-bar_li").removeClass("active");
+        $(this).addClass("active");
         switchToMyInfo();
     });
+    $("#status_top").click(function() { 
+        this.preventDefault;
+        $(".top-bar_li").removeClass("active");
+        $(this).addClass("active");
+        switchFromMyInfo();
+    });
+//    Form stuff
 </script>
 {% endblock %}

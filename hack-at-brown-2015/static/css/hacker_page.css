@@ -1,5 +1,10 @@
 
 /*Shim*/
+h1.hi {
+    font-weight: 300;
+    text-transform: capitalize;
+}
+
 .admit_status {
     background-color: #404040;
     padding: .5em;
@@ -13,6 +18,14 @@
 
 .admit_status.pending {
     background-color: #1B8EB9;
+}
+
+.panes .pane {
+    display: none;
+}
+
+.panes .pane.active {
+    display: block;
 }
 
 .panel.grey {
@@ -43,6 +56,7 @@
     max-width: 964px;
     margin-left: auto;
     margin-right: auto;
+    overflow-x: hidden;
 }
 
 .inner_container {
@@ -52,7 +66,7 @@
     margin-right: auto;
 }
 
-.double_left.white {
+.pane.white {
     background-color: white;
 }
 
@@ -85,18 +99,23 @@ h3.secondary {
 }
 
 .panes {
-    transition: transform 1s;
+    transition: transform .5s;
     position: relative;
     width: 200%;
-    height: 100%;
+    height: auto;
     height: auto;
     left: 0; /* 0 = Splash, -100% = Registration */
     top: 0;
 }
 
 .panes.in-pane1 {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-50%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
+}
+
+.panes.in-pane0 {
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
 }
 /*Page*/
 
@@ -579,7 +598,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 
 /* REGISTRATION FORM */
 .registration_form.ui.form {
-    display: none;
     max-width: 964px;
     height: 100%;
     margin: 0 auto;

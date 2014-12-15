@@ -30,7 +30,7 @@
 ---------------------*/
 
 .ui.form > p {
-  margin: 1em 0em;
+  margin: 0em 0em 1em;
 }
 
 /*--------------------
@@ -53,14 +53,14 @@
 .ui.form .field > label {
   display: block;
   margin: 0em 0em 0.2857rem 0em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   font-size: 0.7857em;
   font-weight: bold;
   text-transform: uppercase;
 }
 .ui.form .grouped.fields > label {
   margin: 0em 0em 0.2857rem 0em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   font-size: 0.7857em;
   font-weight: bold;
   text-transform: none;
@@ -69,7 +69,7 @@
   display: inline-block;
   vertical-align: middle;
   margin: 0em 1em 0em 0em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   font-size: 0.7857em;
   font-weight: bold;
   text-transform: uppercase;
@@ -109,7 +109,7 @@
   font-size: 1em;
   background: transparent;
   border: none;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   border-radius: 0em;
   box-shadow: none;
   -webkit-transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -124,7 +124,7 @@
   background: transparent;
   border: 1px solid #dddddd;
   outline: none;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   border-radius: 0em;
   box-shadow: none;
   -webkit-transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -162,7 +162,7 @@
   border-radius: 0em;
   box-shadow: none;
   padding: 0.62em 0.5em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   -webkit-transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
           transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -240,16 +240,16 @@
 
 /* browsers require these rules separate */
 .ui.form ::-webkit-input-placeholder {
-  color: rgba(140, 140, 140, 0.8);
+  color: #cccccc;
 }
 .ui.form ::-moz-placeholder {
-  color: rgba(140, 140, 140, 0.8);
+  color: #cccccc;
 }
 .ui.form :focus::-webkit-input-placeholder {
-  color: rgba(89, 89, 89, 0.8);
+  color: #999999;
 }
 .ui.form :focus::-moz-placeholder {
-  color: rgba(89, 89, 89, 0.8);
+  color: #999999;
 }
 
 /* Error Placeholder */
@@ -818,22 +818,22 @@
 
 /* Standard */
 .ui.small.form {
-  font-size: 0.875em;
+  font-size: 0.9285rem;
 }
 
 /* Medium */
 .ui.form {
-  font-size: auto;
+  font-size: 1rem;
 }
 
 /* Large */
 .ui.large.form {
-  font-size: 1.125em;
+  font-size: 1.1428rem;
 }
 
 /* Huge */
 .ui.huge.form {
-  font-size: 1.2em;
+  font-size: 1.4285rem;
 }
 
 
@@ -865,3 +865,33 @@
          Site Overrides
 *******************************/
 
+.ui.form input[type="text"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
+.ui.form input[type="url"],
+.ui.form input[type="tel"] {
+  border: none;
+  box-shadow: inset 1px -3px 0px -1px #918f8c;
+}
+.ui.form input[type="text"]:focus,
+.ui.form input[type="email"]:focus,
+.ui.form input[type="date"]:focus,
+.ui.form input[type="password"]:focus,
+.ui.form input[type="number"]:focus,
+.ui.form input[type="url"]:focus,
+.ui.form input[type="tel"]:focus {
+  box-shadow: inset 1px -50px 0px -1px #404040 !important;
+  color: white !important;
+  padding-left: .65em;
+}
+.ui.form .selection.dropdown {
+  border: none;
+  box-shadow: none !important;
+  border-bottom: 1px solid #DDDDDD;
+  border-radius: 0em !important;
+}
+.ui.form .ui.icon.input > .icon {
+  width: 1em;
+}

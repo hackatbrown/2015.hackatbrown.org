@@ -121,7 +121,7 @@
 /* Selected Icon */
 .ui.rating .icon.selected,
 .ui.rating .icon.selected.active {
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 
 /*-------------------
@@ -154,25 +154,25 @@
 *******************************/
 
 .ui.mini.rating .icon {
-  font-size: 0.7rem;
+  font-size: 0.7142rem;
 }
 .ui.tiny.rating .icon {
-  font-size: 0.8rem;
+  font-size: 0.8571rem;
 }
 .ui.small.rating .icon {
-  font-size: 0.875rem;
+  font-size: 0.9285rem;
 }
 .ui.rating .icon {
   font-size: 1rem;
 }
 .ui.large.rating .icon {
-  font-size: 1.1rem;
+  font-size: 1.1428rem;
 }
 .ui.huge.rating .icon {
-  font-size: 1.5rem;
+  font-size: 1.4285rem;
 }
 .ui.massive.rating .icon {
-  font-size: 2rem;
+  font-size: 1.7142rem;
 }
 
 /* Realign */

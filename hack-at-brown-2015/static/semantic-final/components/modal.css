@@ -77,10 +77,10 @@
 
 .ui.modal > .header {
   display: block;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Brown', Arial, Helvetica, sans-serif;
   background: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05)) #ffffff;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.05)) #ffffff;
-  margin: 0em;
+  margin: 1em 0em 1rem;
   padding: 1.2rem 2rem;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 1.6em;
@@ -193,9 +193,9 @@
     padding-right: 2.25rem;
   }
   .ui.modal > .close {
-    top: 0.905rem;
+    top: 99.575rem;
     right: 1rem;
-    color: rgba(0, 0, 0, 0.8);
+    color: #404040;
   }
 }
 
@@ -332,9 +332,9 @@
   padding-right: 2.25rem;
 }
 .ui.fullscreen.modal > .close {
-  top: 0.905rem;
+  top: 99.575rem;
   right: 1rem;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 @media only screen and (max-width: 767px) {
   .ui.fullscreen.modal {

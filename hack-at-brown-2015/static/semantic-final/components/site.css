@@ -27,17 +27,17 @@ body {
   height: 100%;
 }
 html {
-  font-size: 14px;
+  font-size: 100%;
 }
 body {
   margin: 0px;
   padding: 0px;
-  min-width: 278px;
-  background: #f7f7f7;
+  min-width: 20px;
+  background: #ffffff;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.33;
-  color: rgba(0, 0, 0, 0.8);
+  font-size: 100%;
+  line-height: 100%;
+  color: #404040;
   font-smoothing: antialiased;
 }
 
@@ -81,7 +81,7 @@ h5 {
 
 p {
   margin: 0em 0em 1em;
-  line-height: 1.33;
+  line-height: 100%;
 }
 p:first-child {
   margin-top: 0em;
@@ -109,15 +109,15 @@ a:hover {
 
 ::-webkit-selection {
   background-color: rgba(255, 255, 160, 0.4);
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 ::-moz-selection {
   background-color: rgba(255, 255, 160, 0.4);
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 ::selection {
   background-color: rgba(255, 255, 160, 0.4);
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
 }
 
 

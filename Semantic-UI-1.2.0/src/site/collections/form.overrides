@@ -1,3 +1,36 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.form input[type="text"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
+.ui.form input[type="url"],
+.ui.form input[type="tel"] {
+    border: none;
+    box-shadow: inset 1px -3px 0px -1px @grey;
+}
+
+.ui.form input[type="text"]:focus,
+.ui.form input[type="email"]:focus,
+.ui.form input[type="date"]:focus,
+.ui.form input[type="password"]:focus,
+.ui.form input[type="number"]:focus,
+.ui.form input[type="url"]:focus,
+.ui.form input[type="tel"]:focus {
+    box-shadow: inset 1px -50px 0px -1px #404040 !important;
+    color: white !important;
+    padding-left: .65em;
+}
+
+.ui.form .selection.dropdown {
+border: none;
+box-shadow: none !important;
+border-bottom: 1px solid #DDDDDD;
+border-radius: 0em !important;
+}
+
+.ui.form .ui.icon.input > .icon {
+    width: 1em;
+}

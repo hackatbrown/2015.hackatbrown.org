@@ -105,7 +105,7 @@
   height: auto;
   border-top: none;
   line-height: 1.2em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   padding: 0.65rem 1.25rem !important;
   font-size: 1rem;
   text-transform: none;
@@ -318,7 +318,7 @@
   background: #ffffff;
   display: inline-block;
   padding: 0.8em 1.1em;
-  color: rgba(0, 0, 0, 0.8);
+  color: #404040;
   box-shadow: none;
   border: 1px solid rgba(39, 41, 43, 0.15);
   border-radius: 0.2857rem;

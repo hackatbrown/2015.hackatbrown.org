@@ -29,7 +29,7 @@
   vertical-align: middle;
   background: rgba(0, 0, 0, 0.85);
   opacity: 0;
-  line-height: 1;
+  line-height: 100%;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   -webkit-animation-duration: 0.5s;
@@ -57,7 +57,7 @@
 .ui.dimmer > .content > div {
   display: table-cell;
   vertical-align: middle;
-  color: #ffffff;
+  color: #404040;
 }
 
 /* Loose Coupling */
@@ -141,7 +141,7 @@ body.dimmed.dimmable > :not(.dimmer) {
   background: rgba(255, 255, 255, 0.85);
 }
 .ui.inverted.dimmer > .content > * {
-  color: #ffffff;
+  color: #404040;
 }
 
 /*--------------
