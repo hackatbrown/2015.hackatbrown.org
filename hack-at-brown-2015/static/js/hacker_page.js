@@ -30,12 +30,6 @@ function saveChange(key, value, uiinput, secret) {
       }
     });
 
-//     success(function(data, status, headers, config) {
-//       console.log('success');
-//     }).
-//     error(function(data, status, headers, config) {
-//       console.log('failed');
-//     });
 }
 
 /* Prevent horizontal scrolling of element into view on focus */
