@@ -36,12 +36,15 @@ input[type="submit"] {
   <input name="name/email" id='search'/>
   <input type='submit' value='Check in'</input>
 </form>
-<div>
-  <script>
-  console.log({{status}});
-  $('#search').autocomplete({
-    source: {{ source|safe }}
-  });
-  </script>
+
+<div id='source' style='display:none'>
+   {{ source }}
 </div>
+<script>
+console.log({{status}});
+var source = JSON.parse($("#source").text());
+$('#search').autocomplete({
+ source: source
+});
+</script>
 {% endblock %}

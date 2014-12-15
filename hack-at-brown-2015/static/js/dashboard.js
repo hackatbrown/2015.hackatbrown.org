@@ -15,7 +15,7 @@ breakdownsApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http
 }]);
 
 
-dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
+dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $http, $sce){
   $scope.content = "";
   $scope.header = "";
 
@@ -35,6 +35,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   $scope.declinedCount = 0;
 
   $scope.showBreakdowns = false;
+  $scope.displayEmail = false;
 
   $scope.charts = [{
       name : 'By School',
@@ -76,15 +77,43 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
         //return $scope.signup_count;
   };
 
-  $scope.sendEmails = function(){
-    if ($scope.emailSubject == "" || $scope.emailBody == "" || $scope.emailOption == "unselected") {
+  $scope.showEmail = function(){
+      $scope.sendEmail(true);
+  }
+  $scope.sendEmail = function(display){
+    if ($scope.emailSubject == "" || $scope.emailName == "" || $scope.emailRecpient == "") {
       console.log("Failed")
       return "Failed";
     };
-    $http.post('/__send_email', {recipients: $scope.emailOption, subject: $scope.emailSubject,body:$scope.emailBody }).
+    var request = {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }
+    if (display === true){ 
+          request.display = true;
+        }
+    $http.post('/__send_email', request).
     success(function(data, status, headers, config) {
-      console.log("sent emails!");
-      $scope.emailStatus = "Sent Email to " + $scope.emailOption + "!";
+      if(data.success = true){
+        console.log("sent emails!");
+        $scope.emailStatus = "Sent Email to " + $scope.emailRecipient + "!";
+        if (data.html) {
+          //$scope.displayEmail = $sce.trustAsHtml(data.html);
+          $scope.displayEmail = true;
+          var iframe = document.getElementById("email-display")
+          var doc = iframe.document;
+          if(iframe.contentDocument)
+            doc = iframe.contentDocument;
+          else if(iframe.contentWindow)
+            doc = iframe.contentWindow.document;
+          // Put the content in the iframe
+          doc.open();
+          doc.writeln(data.html);
+          doc.close();
+          iframe.style.height = doc.body.scrollHeight + "px";
+        };
+      }
+      else{
+        console.log('failed to send emails');
+        $scope.emailStatus = "Send failed...";
+      }
       $scope.showEmailStatus = true;
     }).
     error(function(data, status, headers, config) {

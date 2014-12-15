@@ -51,4 +51,4 @@ def computeStatus(hacker):
     elif hacker.waitlist_email_sent_date != None:
         return "Waitlisted"
     else:
-        return "Not Currently Admitted"
+        return "Pending"

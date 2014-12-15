@@ -139,7 +139,8 @@
 .ui.cards > .card > .content > .header,
 .ui.card > .content > .header {
   display: block;
-  margin: 0em;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   color: rgba(0, 0, 0, 0.85);
 }
@@ -149,7 +150,7 @@
 .ui.card > .content > .header:not(.ui) {
   font-weight: bold;
   font-size: 1.2em;
-  margin-top: -0.165em;
+  margin-top: 0.165em;
   line-height: 1.33em;
 }
 .ui.cards > .card > .content > .meta + .description,
@@ -742,7 +743,7 @@ a.ui.card:hover,
 ---------------*/
 
 .ui.cards > .card {
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 

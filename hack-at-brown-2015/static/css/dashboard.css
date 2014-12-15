@@ -78,3 +78,10 @@ h1, h2{
 .option {
   border-bottom: 2px solid orange;
 }
+
+#email-display{
+  max-width: 500px;
+  display: inline-block;
+  padding: 10px;
+  border: solid 3px black;
+}

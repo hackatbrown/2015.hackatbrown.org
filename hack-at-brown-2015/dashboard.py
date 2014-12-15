@@ -58,17 +58,29 @@ class SendEmail(webapp2.RequestHandler):
   def post(self):
     parsed_request = json.loads(self.request.body)
     subject = parsed_request.get("subject")
-    body = parsed_request.get("body")
-    send_to = []
-    if parsed_request.get("recipients") == "all":
-        send_to = [hacker.email for hacker in Hacker.query()]
-    elif parsed_request.get("recipients") == "waitlisted":
-        send_to = [hacker.email for hacker in Hacker.query(Hacker.waitlist_email_sent_date != None)]
-    elif parsed_request.get("recipients") == "accepted":
-        send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
+    email_name = parsed_request.get("emailName")
+    recipient = parsed_request.get("recipient")
+    template_hacker = Hacker.query(Hacker.email == recipient).fetch()[0]
+    template_name = template_hacker.name.split(" ")[0]
+
+    html = template("emails/" + email_name + ".html", {"hacker": template_hacker, "name": template_name})
+    try:
+        if parsed_request.get("display"):
+            self.response.write(json.dumps({"success": True, "html": html }))
+            return
+    except Exception, e:
+        raise e
+    send_to = [recipient]
+    # if parsed_request.get("recipients") == "ALL":
+    #     send_to = [hacker.email for hacker in Hacker.query()]
+    # elif parsed_request.get("recipients") == "WAITLISTED":
+    #     send_to = [hacker.email for hacker in Hacker.query(Hacker.waitlist_email_sent_date != None)]
+    # elif parsed_request.get("recipients") == "ACCEPTED":
+    #     send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
     
-    send_email(recipients=send_to, html=body, subject=subject)
-    self.response.write(json.dumps({"success": True, "recipients": send_to }))
+
+    send_email(recipients=send_to, html=html, subject=subject)
+    self.response.write(json.dumps({"success": True, "html":None }))
 
 class ViewBreakdownsHandler(webapp2.RequestHandler):
     def get(self):

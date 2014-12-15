@@ -31,6 +31,7 @@ class Hacker(ndb.Model):
 
 
 	secret = ndb.StringProperty()
+	post_registration_email_sent_date = ndb.DateTimeProperty()
 
 	admit_priority = ndb.FloatProperty(default=0)
 	admitted_email_sent_date = ndb.DateTimeProperty()
@@ -40,6 +41,8 @@ class Hacker(ndb.Model):
 
 	rsvpd = ndb.BooleanProperty(default=False)
 	checked_in = ndb.BooleanProperty(default=False)
+
+	ip = ndb.StringProperty()
 
 	@classmethod
 	def WithSecret(cls, secret):
@@ -59,30 +62,29 @@ def accept_hacker(hacker):
 	memcache.add("admitted:{0}".format(hacker.key.id()), "1", memcache_expiry)
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
-	def post(self):
-		hacker = Hacker()
-
-		for key in hacker_keys:
-			print key + " " + self.request.get(key)
-			setattr(hacker, key, self.request.get(key))
-		if Hacker.query(Hacker.email == hacker.email).count() > 0:
-			self.response.write(json.dumps({"success":False}))
-			return
-		resume_files = self.get_uploads('resume')
-		if len(resume_files) > 0:
-			hacker.resume = resume_files[0].key()
-		hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
-		hacker.put()
-		try:
-			email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
-			send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
-			hacker.post_registration_email_sent_date = datetime.datetime.now()
-		except Exception, e:
-			pass
-		
-		name = hacker.name.split(" ")[0] # TODO: make it better
-		confirmation_html = template("post_registration_splash.html", {"name": name})
-		self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
+    def post(self):
+        hacker = Hacker()
+        hacker.ip = self.request.remote_addr
+        for key in hacker_keys:
+            print key + " " + self.request.get(key)
+            setattr(hacker, key, self.request.get(key))
+        if Hacker.query(Hacker.email == hacker.email).count() > 0:
+            self.response.write(json.dumps({"success":False}))
+            return
+        resume_files = self.get_uploads('resume')
+        if len(resume_files) > 0:
+            hacker.resume = resume_files[0].key()
+        hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
+        # try:
+       	# 	email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
+       	# 	send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
+       	# 	hacker.post_registration_email_sent_date = datetime.datetime.now()
+       	# except Exception, e:
+       	# 	pass
+        hacker.put()
+        name = hacker.name.split(" ")[0] # TODO: make it better
+        confirmation_html = template("post_registration_splash.html", {"name": name})
+        self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
 
 class CheckRegistrationHandler(webapp2.RequestHandler):
 	def get(self):

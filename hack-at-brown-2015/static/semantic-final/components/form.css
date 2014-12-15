@@ -54,14 +54,14 @@
   display: block;
   margin: 0em 0em 0.2857rem 0em;
   color: rgba(0, 0, 0, 0.8);
-  font-size: 0.9285em;
+  font-size: 0.7857em;
   font-weight: bold;
-  text-transform: none;
+  text-transform: uppercase;
 }
 .ui.form .grouped.fields > label {
   margin: 0em 0em 0.2857rem 0em;
   color: rgba(0, 0, 0, 0.8);
-  font-size: 0.9285em;
+  font-size: 0.7857em;
   font-weight: bold;
   text-transform: none;
 }
@@ -70,9 +70,9 @@
   vertical-align: middle;
   margin: 0em 1em 0em 0em;
   color: rgba(0, 0, 0, 0.8);
-  font-size: 0.9285em;
+  font-size: 0.7857em;
   font-weight: bold;
-  text-transform: none;
+  text-transform: uppercase;
 }
 
 /*--------------------
@@ -105,13 +105,13 @@
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   line-height: 1.2142em;
-  padding: 0.67861em 1em;
+  padding: 0.6786em 0.5em;
   font-size: 1em;
-  background: #ffffff;
-  border: 1px solid rgba(39, 41, 43, 0.15);
+  background: transparent;
+  border: none;
   color: rgba(0, 0, 0, 0.8);
-  border-radius: 0.2857rem;
-  box-shadow: 0em 0em 0em 0em transparent inset;
+  border-radius: 0em;
+  box-shadow: none;
   -webkit-transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
           transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -120,13 +120,13 @@
   margin: 0em;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  padding: 0.78571em 1em;
-  background: #ffffff;
-  border: 1px solid rgba(39, 41, 43, 0.15);
+  padding: 1em;
+  background: transparent;
+  border: 1px solid #dddddd;
   outline: none;
   color: rgba(0, 0, 0, 0.8);
-  border-radius: 0.2857rem;
-  box-shadow: 0em 0em 0em 0em transparent inset;
+  border-radius: 0em;
+  box-shadow: none;
   -webkit-transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
           transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   font-size: 1em;
@@ -158,10 +158,10 @@
   height: auto;
   width: 100%;
   background: #ffffff;
-  border: 1px solid rgba(39, 41, 43, 0.15);
-  border-radius: 0.2857rem;
-  box-shadow: 0em 0em 0em 0em transparent inset;
-  padding: 0.62em 1em;
+  border: none;
+  border-radius: 0em;
+  box-shadow: none;
+  padding: 0.62em 0.5em;
   color: rgba(0, 0, 0, 0.8);
   -webkit-transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
           transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -280,16 +280,16 @@
 .ui.form input[type="tel"]:focus {
   color: rgba(0, 0, 0, 0.85);
   border-color: rgba(39, 41, 43, 0.3);
-  border-radius: 0em 0.2857rem 0.2857rem 0em;
-  background: #ffffff;
-  box-shadow: 1px 0em 0em 0em rgba(39, 41, 43, 0.3) inset;
+  border-radius: 0em 0em 0em 0em;
+  background: transparent;
+  box-shadow: 0px 0em 0em 0em rgba(39, 41, 43, 0.3) inset;
 }
 .ui.form textarea:focus {
   color: rgba(0, 0, 0, 0.85);
   border-color: rgba(39, 41, 43, 0.3);
-  border-radius: 0em 0.2857rem 0.2857rem 0em;
-  background: #ffffff;
-  box-shadow: 1px 0em 0em 0em rgba(39, 41, 43, 0.3) inset;
+  border-radius: 0em 0em 0em 0em;
+  background: #eeeeee;
+  box-shadow: 0px 0em 0em 0em rgba(39, 41, 43, 0.3) inset;
   -webkit-appearance: none;
 }
 
@@ -356,8 +356,8 @@
   background: #fff0f0;
   border-color: #dbb1b1;
   color: #d95c5c;
-  border-radius: 0em 0.2857rem 0.2857rem 0em;
-  box-shadow: 2px 0em 0em 0em #d95c5c inset;
+  border-radius: 0em 0em 0em 0em;
+  box-shadow: 0px 0em 0em 0em #d95c5c inset;
 }
 .ui.form .field.error textarea:focus,
 .ui.form .field.error input[type="text"]:focus,
@@ -372,7 +372,7 @@
   border-color: #dbb1b1;
   color: #dc6868;
   -webkit-appearance: none;
-  box-shadow: 2px 0em 0em 0em #dc6868 inset;
+  box-shadow: 0px 0em 0em 0em #dc6868 inset;
 }
 
 /*------------------
@@ -578,7 +578,7 @@
   margin-bottom: 0em;
 }
 .ui.form .grouped.fields > label {
-  font-size: 0.9285em;
+  font-size: 0.7857em;
 }
 .ui.form .grouped.fields .field {
   display: block;
@@ -607,8 +607,8 @@
 .ui.form .fields > .field {
   clear: none;
   float: left;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
 }
 .ui.form .fields > .field:first-child {
   border-left: none;
@@ -678,8 +678,8 @@
 /* Sizing Combinations */
 .ui.form .fields .wide.field {
   width: 6.25%;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
 }
 .ui.form .fields .wide.field:first-child {
   padding-left: 0%;
@@ -791,11 +791,11 @@
   margin-top: 0em;
   margin-bottom: 0em;
   vertical-align: middle;
-  font-size: 0.9285em;
+  font-size: 0.7857em;
 }
 .ui.form .inline.fields .field > input,
 .ui.form .inline.field > input {
-  font-size: 0.9285em;
+  font-size: 0.7857em;
 }
 .ui.form .inline.fields .field > .ui.checkbox label {
   padding-left: 1.75em;
@@ -838,9 +838,27 @@
 
 
 /*******************************
-         Theme Overrides
+           Overrides
 *******************************/
 
+.ui.form input[type="text"],
+.ui.form input[type="email"],
+.ui.form input[type="date"],
+.ui.form input[type="password"],
+.ui.form input[type="number"],
+.ui.form input[type="url"],
+.ui.form input[type="tel"] {
+  border-bottom: 1px solid #DDDDDD;
+}
+.ui.form .selection.dropdown {
+  border: none;
+  box-shadow: none !important;
+  border-bottom: 1px solid #DDDDDD;
+  border-radius: 0em !important;
+}
+.ui.form .ui.icon.input > .icon {
+  width: 1em;
+}
 
 
 /*******************************

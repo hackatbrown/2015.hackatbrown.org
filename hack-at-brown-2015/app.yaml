@@ -1,5 +1,5 @@
 application: hackatbrown2015
-version: 1
+version: 9
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -19,9 +19,6 @@ handlers:
   script: admin_checkin.app
   login: admin
 
-- url: .*
-  script: main.app
-
 - url: /dashboard
   script: main.app
   login: admin
@@ -29,6 +26,9 @@ handlers:
 - url: /dashboard(/.*)
   script: main.app
   login: admin
+
+- url: .*
+  script: main.app
 
 libraries:
 - name: webapp2
