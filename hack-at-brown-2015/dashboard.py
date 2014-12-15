@@ -66,6 +66,7 @@ class SendEmail(webapp2.RequestHandler):
         send_to = [hacker.email for hacker in Hacker.query(Hacker.waitlist_email_sent_date != None)]
     elif parsed_request.get("recipients") == "accepted":
         send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
+    
     send_email(recipients=send_to, html=body, subject=subject)
     self.response.write(json.dumps({"success": True, "recipients": send_to }))
 
