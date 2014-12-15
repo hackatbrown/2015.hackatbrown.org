@@ -733,10 +733,9 @@ span.optional {
 .radio_select td {
     border: 0;
 }
-input[type="radio"] + label:hover, input[type="radio"]:focus + label, .resume-button:hover {
+.resume-button:hover {
     background-color: #E2E1DF;
 }
-input[type="radio"]:checked + label,
 .registration_form .resume-button.on {
     color:#fff;
     box-shadow: inset 1px -50px 0px -1px #1B8EB9;

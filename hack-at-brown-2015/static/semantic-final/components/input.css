@@ -481,3 +481,7 @@
 input[type="radio"]:focus + label {
   background-color: #E2E1DF;
 }
+input[type="radio"]:checked + label {
+  color: #ffffff;
+  box-shadow: inset 1px -50px 0px -1px #1b8eb9;
+}
