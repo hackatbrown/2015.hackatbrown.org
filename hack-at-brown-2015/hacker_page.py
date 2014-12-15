@@ -20,15 +20,16 @@ class HackerPageHandler(webapp2.RequestHandler):
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
-        logging.debug("Request for hacker update recieved")
         memcachedKey = 'hacker_update/' + secret
         parsed_request = json.loads(self.request.body)
-
+    
         hacker = memcache.get(memcachedKey)
         if hacker is None:
             hacker = registration.Hacker.WithSecret(secret)
 
+        logging.info("Request for hacker update recieved: " + hacker.name)
         for key in parsed_request:
+            logging.info("key: " + key)
             if key in registration.hacker_keys:
                 logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + parsed_request.get(key))
                 setattr(hacker, key, parsed_request.get(key))

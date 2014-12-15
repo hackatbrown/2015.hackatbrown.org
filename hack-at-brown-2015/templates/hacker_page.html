@@ -150,8 +150,7 @@
         });
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
-            console.log("detected change");
-            saveChange($(this).attr("name"), $(this).text, this.parentNode, "{{ secret }}" );
+            saveChange(this.id, this.value, this.parentNode, "{{ secret }}" );
         });
         
         var $universities = [];

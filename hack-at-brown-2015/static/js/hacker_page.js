@@ -15,6 +15,7 @@ function switchFromMyInfo() {
 }
 
 function saveChange(key, value, uiinput, secret) {
+    console.log("key: " + key + " value: " + value);
     var data = {};
     data[key] = value;
     $(uiinput).addClass('loading');
