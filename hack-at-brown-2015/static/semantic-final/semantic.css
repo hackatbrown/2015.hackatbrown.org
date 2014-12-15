@@ -3112,6 +3112,21 @@
   box-shadow: inset 1px -50px 0 -1px #ade0f3;
 }
 
+.ui.primary.button:hover {
+  background-color: #ef5d93;
+  color: #ffffff;
+}
+
+.ui.primary.button:active {
+  background-color: #d1155a;
+  color: #ffffff;
+}
+
+.ui.primary.button.active {
+  background-color: #ef5d93;
+  color: #ffffff;
+}
+
 /*
  * # Semantic UI
  * https://github.com/Semantic-Org/Semantic-UI
