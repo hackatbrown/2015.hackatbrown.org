@@ -116,8 +116,11 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     top: 0;
     overflow: hidden;
     opacity: 0;
-    animation: fadein 1s ease 0s 1;
-    animation-fill-mode: forwards;
+    transition: opacity 1s;
+}
+
+.trigrid.active {
+    opacity: 1;
 }
 
 
@@ -920,6 +923,8 @@ section .background > div {
     -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
     z-index: -9;
+    animation: fadein .5s ease 0s 1;
+    animation-fill-mode: backwards;
 }
 .triangle.left .background > .back {
     background-position: right center;
@@ -1333,7 +1338,7 @@ nav.open .hamsvg {
     nav.open .top-bar_ul {
         height: 225px;
         width: 100%;
-        background-color: rgba(255, 255, 255, .95);
+        background-color: rgba(255, 255, 255, 0);  
     }
     .splash {
         transition: background-color .5s, transform .5s;
@@ -1348,8 +1353,8 @@ nav.open .hamsvg {
         z-index: 1200;
     }
 /*    Fade in the navbar background when scrolled*/
-    .top-bar_ul.skrollable-between {
-      background-color: rgba(255, 255, 255, 0);
+    .top-bar_ul.skrollable-after {
+        background-color: rgba(255, 255, 255, .95);
     }
     .gu-sliding-bar {
         display: none
