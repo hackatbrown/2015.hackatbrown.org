@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body {
+        font-family: 'Helvetica Neue', 'Helvetica', arial, sans-serif;
+        margin: 0;
+        height: 100%;
+        background-color: #EDF4FA;
+
+        font-size: 0.9em;
+    }
+    #content {
+        height: 60%;
+        width: 80%;
+        max-width: 500px;
+        margin: auto;
+        text-align: center;
+
+        padding-bottom: 30px;
+    }
+
+    #logo {
+        padding: 30px;
+    }
+
+    #email_body {
+        color: #111;
+        border: 1px solid #4c93ce;
+        border-radius: 3px;
+        background-color: white;
+
+        padding: 5%;
+        margin: auto;
+
+        line-height: 1.4;
+        text-align: left;
+    }
+
+    a {
+        color: #EF5D93;
+    }
+
+    h1, h2, h3, h4, h5 {
+        font-family: 'Brown';
+        font-size: 1.8em;
+    }
+
+    h1 {
+        color:#EF5D93;
+        text-align: center;
+    }
+
+    #logo {
+        text-align: center;
+    }
+
+    #footer {
+        text-align: center;
+    }
+
+    #social-links a:hover {
+        opacity: 1.0;
+        border: none;
+    }
+
+    #social-links {
+        list-style: none;
+        text-align: center;
+        margin: 0;
+        padding: 20px 0px 5px 0px;
+    }
+
+    #social-links li {
+        display: inline-block;
+        padding: 5px;
+    }
+
+    #reason, #end {
+        color: #666666;
+    }
+
+    #reason {
+        padding: 5px;
+    }
+
+    .email {
+        padding-top: 0.1em !important;
+    }
+    </style>
+    <meta charset='utf-8'/>
+</head>
+<body>
+    <div id='logo'>
+        <img src='http://hackatbrown.org/static/img/logo.png' style='width: 100px' />
+    </div>
+    <div id="content">
+        <div id='email_body'>
+            {% block content %}
+            {% endblock %}
+
+            {% if hacker %}
+            <p>
+                <a href='http://hackatbrown.org/secret/{{ hacker.secret }}'>To view your registration, visit your dashboard by clicking this link.</a>
+            </p>
+            {% endif %}
+        </div>
+
+        <div id="footer">
+            <ul id="social-links">
+                <li><a href="mailto:hello@hackatbrown.org" title="Email" class="email">
+                    <img src='http://hackatbrown.org/static/img/social-icons/email-small.png' height="15px"/>
+                </a></li>
+                <li><a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook">
+                    <img src='http://hackatbrown.org/static/img/social-icons/facebook-small.png' height="15px"/>
+                </a></li>
+                <li><a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter">
+                    <img src='http://hackatbrown.org/static/img/social-icons/twitter-small.png' height="15px"/>
+                </a></li>
+                <li><a href="http://medium.com/hack-at-brown" title="Blog" class="blog">
+                    <img src='http://hackatbrown.org/static/img/social-icons/medium-small.png' height="15px"/>
+                </a></li>
+            </ul>
+            <div id="reason">You received this email because you registered for Hack@Brown.</div>
+            <div id="end"><a href="http://hackatbrown.org">hackatbrown.org</a></div>
+        </div>
+    </div>
+</body>
+</html>
