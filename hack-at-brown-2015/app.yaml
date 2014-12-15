@@ -27,6 +27,10 @@ handlers:
   script: main.app
   login: admin
 
+- url: /__background_work
+  script: main.app
+  login: admin
+
 - url: .*
   script: main.app
 

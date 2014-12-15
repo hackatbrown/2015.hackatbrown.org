@@ -26,6 +26,7 @@ class Hacker(ndb.Model):
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
 	teammates = ndb.StringProperty(default=None)
+	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty()
 	first_hackathon = ndb.StringProperty()
 
