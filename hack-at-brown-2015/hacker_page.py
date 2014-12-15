@@ -6,10 +6,15 @@ import json
 from google.appengine.api import memcache
 
 cacheTime = 6 * 10
+memcachedBase = 'hacker_update/'
+
 
 class HackerPageHandler(webapp2.RequestHandler):
     def get(self, secret):
-        hacker = registration.Hacker.WithSecret(secret)
+        memcachedKey = memcachedBase + secret
+        hacker = memcache.get(memcachedKey)
+        if hacker is None:
+            hacker = registration.Hacker.WithSecret(secret)
 
         if hacker is None:
             self.redirect('/')
@@ -20,9 +25,9 @@ class HackerPageHandler(webapp2.RequestHandler):
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
-        memcachedKey = 'hacker_update/' + secret
+        memcachedKey = memcachedBase + secret
         parsed_request = json.loads(self.request.body)
-    
+
         hacker = memcache.get(memcachedKey)
         if hacker is None:
             hacker = registration.Hacker.WithSecret(secret)
