@@ -176,10 +176,9 @@
                                 <input id="resume" class="resume-upload" type="file" name="resume" />
                                 <input id="resume-over" class="resume-button" type="button" value="Browse files" />
                                 <span class="file-name">No file chosen.</span>
-                                <div class="nag upload-later">You can always upload it later!</div>
                             </div>
                         </div>
-                        <div class="ui submit button">
+                        <div class="ui submit button active">
                             Button
                         </div>
                     </form>
@@ -207,6 +206,10 @@
             setTabActive($("#info_top"));
             switchToMyInfo();
         }
+        
+        $(".button").click(function() {
+            $(this).toggleClass("active");
+        });
         
         $("#status_top").click(function() { 
             this.preventDefault;

@@ -4,7 +4,8 @@
 .ui.button {
         transition: @transition, border .15s @defaultEasing;
         height: @height !important;
-        padding: 7px, 11px, 7px;
+        padding: 7px 11px 10px;
+        line-height: 1.8em;
 }
 
 .ui.active.button {
@@ -16,8 +17,6 @@
 }
 
 .ui.active.button:active {
-        background-color: #918f8c;
-        background-image: none;
         color: @white;
         box-shadow: inset 1px -50px 0 -1px lighten(@blue, 40%);
 }

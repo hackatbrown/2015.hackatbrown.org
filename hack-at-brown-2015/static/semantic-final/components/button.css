@@ -2377,7 +2377,8 @@
   -webkit-transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
           transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px !important;
-  padding: 7px, 11px, 7px;
+  padding: 7px 11px 10px;
+  line-height: 1.8em;
 }
 .ui.active.button {
   color: #ffffff !important;
@@ -2386,8 +2387,6 @@
   box-shadow: inset 1px -50px 0 -1px #54bee6;
 }
 .ui.active.button:active {
-  background-color: #918f8c;
-  background-image: none;
   color: #ffffff;
   box-shadow: inset 1px -50px 0 -1px #ade0f3;
 }
