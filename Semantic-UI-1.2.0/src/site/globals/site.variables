@@ -34,7 +34,8 @@
 
 @black            : #404040;
 @grey             : #918f8c;
-@lightgrey        : #666666;
+@darkgrey         : #666666;
+@lightgrey        : rgba(145,143,140,0.3);
 @white            : #FFFFFF;
 
 /*---  Brand Colors  ---*/
@@ -122,8 +123,8 @@ Background Colors
 --------------------*/
 
 /* 4px @ default em */
-@relativeBorderRadius: 0.2857em;
-@absoluteBorderRadius: 0.2857rem;
+@relativeBorderRadius: 0;
+@absoluteBorderRadius: 0;
 @defaultBorderRadius: @absoluteBorderRadius;
 
 /* Used for differentiating neutrals */

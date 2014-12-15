@@ -24,7 +24,7 @@
   box-shadow: none;
   background: rgba(0, 0, 0, 0.03);
   padding: 0.2857em;
-  border-radius: 0.2857rem;
+  border-radius: 0;
 }
 .ui.progress:first-child {
   margin: 0em 0em 2.5em;
@@ -116,7 +116,7 @@
   width: 0%;
   min-width: 2em;
   background: #888888;
-  border-radius: 0.2857rem;
+  border-radius: 0;
   -webkit-transition: width 0.2s linear, background-color 0.2s linear;
           transition: width 0.2s linear, background-color 0.2s linear;
 }
@@ -227,7 +227,7 @@
   right: 0px;
   bottom: 0px;
   background: #ffffff;
-  border-radius: 0.2857rem;
+  border-radius: 0;
   -webkit-animation: progress-active 2s ease infinite;
           animation: progress-active 2s ease infinite;
 }
@@ -316,7 +316,7 @@
   height: 3px;
   padding: 0px;
   overflow: hidden;
-  border-radius: 0em 0em 0.2857rem 0.2857rem;
+  border-radius: 0em 0em 0 0;
 }
 .ui.progress.attached .bar {
   border-radius: 0em;
@@ -326,7 +326,7 @@
 .ui.progress.top.attached,
 .ui.progress.top.attached .bar {
   top: 0px;
-  border-radius: 0.2857rem 0.2857rem 0em 0em;
+  border-radius: 0 0 0em 0em;
 }
 .ui.progress.top.attached .bar {
   border-radius: 0em;

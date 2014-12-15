@@ -37,7 +37,7 @@
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.15);
   color: #404040;
-  border-radius: 0.2857rem;
+  border-radius: 0;
   -webkit-transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
           transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   box-shadow: none;
@@ -209,7 +209,7 @@
   height: 100%;
   width: 1.18em;
   opacity: 0.5;
-  border-radius: 0em 0.2857rem 0.2857rem 0em;
+  border-radius: 0em 0 0 0em;
   -webkit-transition: opacity 0.3s ease;
           transition: opacity 0.3s ease;
 }
@@ -237,7 +237,7 @@
 .ui[class*="left icon"].input > .icon {
   right: auto;
   left: 1px;
-  border-radius: 0.2857rem 0em 0em 0.2857rem;
+  border-radius: 0 0em 0em 0;
 }
 .ui[class*="left icon"].input > .circular.icon {
   right: auto;
@@ -313,7 +313,7 @@
   top: 1px;
   right: 1px;
   font-size: 0.75em;
-  border-radius: 0em 0.2857rem 0em 0em;
+  border-radius: 0em 0 0em 0em;
 }
 .ui.labeled.input input {
   padding-right: 2.5em !important;

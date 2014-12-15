@@ -75,11 +75,17 @@
                         <div class="two fields row">
                             <div class="field">
                                 <label for="name">Name</label>
-                                <input id="name" type="text" name="name" placeholder="Josiah Carberry" required/>
+                                <div class="ui icon input">
+                                    <input id="name" type="text" name="name" placeholder="Josiah Carberry" value="{{ hacker.name }}"/>
+                                    <i class="icon"></i>
+                                </div>
                             </div>
-                            <div class="field">
-                                <label for="name">Email</label>
-                                <input type="email" name="email" placeholder="handle@schooldomain.edu" required/>
+                            <div class="field success">
+                                <label for="email">Email</label>
+                                <div class="ui icon input">
+                                    <input type="email" name="email" placeholder="handle@schooldomain.edu" value="{{ hacker.email }}"/>
+                                    <i class="icon"></i>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -92,39 +98,33 @@
 
 <script type="text/javascript" src="/static/js/condor.js"></script>
 <script type="text/javascript" src="/static/js/select2.min.js"></script>
-<script src='/static/js/H5F.js'></script>
+<script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
-<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script type="text/javascript" src="/static/js/hacker_page.js"></script>
+
 
 <script>
-//    Navigation
-    function switchPanes(paneNumber) {
-        var $panes = $(".panes");
-        $($panes).removeClass("in-pane0 in-pane1");
-        $($panes).addClass("in-pane"+paneNumber);
-        $(".pane"+paneNumber).addClass("active");
-    }
-    
-    function switchToMyInfo() {
-        switchPanes(1);
-    }
-    
-    function switchFromMyInfo() {
-        switchPanes(0);
-    }
-    
-    $("#info_top").click(function() { 
-        this.preventDefault;
-        $(".top-bar_li").removeClass("active");
-        $(this).addClass("active");
-        switchToMyInfo();
+
+    $(document).ready(function() {
+        $("#info_top").click(function() { 
+            this.preventDefault;
+            $(".top-bar_li").removeClass("active");
+            $(this).addClass("active");
+            switchToMyInfo();
+        });
+        $("#status_top").click(function() { 
+            this.preventDefault;
+            $(".top-bar_li").removeClass("active");
+            $(this).addClass("active");
+            switchFromMyInfo();
+        });
+        //    Form stuff. Needs to stay in the html for jinja to do its thing
+        $("#update_form input").change( function() {
+            console.log("detected change");
+            saveChange($(this).attr("name"), $(this).text, this.parentNode, "{{ secret }}" );
+        });
     });
-    $("#status_top").click(function() { 
-        this.preventDefault;
-        $(".top-bar_li").removeClass("active");
-        $(this).addClass("active");
-        switchFromMyInfo();
-    });
-//    Form stuff
 </script>
 {% endblock %}

@@ -62,7 +62,7 @@
   background: #ffffff;
   padding: 0em;
   border: none;
-  border-radius: 0.2857rem;
+  border-radius: 0;
   box-shadow: 0px 0.2em 0px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5;
   -webkit-transition: box-shadow 0.2s ease;
           transition: box-shadow 0.2s ease;
@@ -82,11 +82,11 @@
 
 .ui.cards > .card > :first-child,
 .ui.card > :first-child {
-  border-radius: 0.2857rem 0.2857rem 0em 0em !important;
+  border-radius: 0 0 0em 0em !important;
 }
 .ui.cards > .card > :last-child,
 .ui.card > :last-child {
-  border-radius: 0em 0em 0.2857rem 0.2857rem !important;
+  border-radius: 0em 0em 0 0 !important;
 }
 
 /*--------------
@@ -105,12 +105,12 @@
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 0.2857rem 0.2857rem 0em 0em;
+  border-radius: 0 0 0em 0em;
   border: none;
 }
 .ui.cards > .card > .image:only-child > img,
 .ui.card > .image:only-child > img {
-  border-radius: 0.2857rem;
+  border-radius: 0;
 }
 
 /*--------------
