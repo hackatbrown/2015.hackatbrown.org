@@ -35,7 +35,10 @@
 @black            : #404040;
 @grey             : #918f8c;
 @darkgrey         : #666666;
-@lightgrey        : rgba(145,143,140,0.3);
+@lightgrey        : #E2E1DF;
+
+@lightgreyalpha        : rgba(145,143,140,0.3);
+@offwhite      : #EBEBEB;
 @white            : #FFFFFF;
 
 /*---  Brand Colors  ---*/
@@ -296,7 +299,7 @@ Background Colors
 --------------------*/
 
 @transitionDuration : 0.2s;
-@transitionEasing   : ease;
+@transitionEasing   : @defaultEasing;
 /*-------------------
   Derived Values
 --------------------*/

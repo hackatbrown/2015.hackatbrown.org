@@ -152,8 +152,8 @@
   text-shadow: none;
   margin-top: 0.2em;
   text-align: center;
-  -webkit-transition: color 0.4s ease;
-          transition: color 0.4s ease;
+  -webkit-transition: color 0.4s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: color 0.4s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 
@@ -228,8 +228,8 @@
   bottom: 0px;
   background: #ffffff;
   border-radius: 0;
-  -webkit-animation: progress-active 2s ease infinite;
-          animation: progress-active 2s ease infinite;
+  -webkit-animation: progress-active 2s cubic-bezier(0.55, 0, 0.1, 1) infinite;
+          animation: progress-active 2s cubic-bezier(0.55, 0, 0.1, 1) infinite;
 }
 @-webkit-keyframes progress-active {
   0% {

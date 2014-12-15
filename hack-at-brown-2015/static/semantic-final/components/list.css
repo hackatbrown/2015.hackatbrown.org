@@ -372,8 +372,8 @@ ol.ui.list ol,
 .ui.link.list a.item,
 .ui.link.list .item a {
   color: rgba(0, 0, 0, 0.4);
-  -webkit-transition: 0.2s color ease;
-          transition: 0.2s color ease;
+  -webkit-transition: 0.2s color cubic-bezier(0.55, 0, 0.1, 1);
+          transition: 0.2s color cubic-bezier(0.55, 0, 0.1, 1);
 }
 .ui.link.list a.item:hover,
 .ui.link.list .item a:hover {
@@ -419,8 +419,8 @@ ol.ui.list ol,
   margin: 0em;
   color: rgba(0, 0, 0, 0.4);
   border-radius: 0.5em;
-  -webkit-transition: 0.2s color ease, 0.2s padding-left ease, 0.2s background-color ease;
-          transition: 0.2s color ease, 0.2s padding-left ease, 0.2s background-color ease;
+  -webkit-transition: 0.2s color cubic-bezier(0.55, 0, 0.1, 1), 0.2s padding-left cubic-bezier(0.55, 0, 0.1, 1), 0.2s background-color cubic-bezier(0.55, 0, 0.1, 1);
+          transition: 0.2s color cubic-bezier(0.55, 0, 0.1, 1), 0.2s padding-left cubic-bezier(0.55, 0, 0.1, 1), 0.2s background-color cubic-bezier(0.55, 0, 0.1, 1);
 }
 .ui.selection.list .list > .item:last-child,
 .ui.selection.list > .item:last-child {

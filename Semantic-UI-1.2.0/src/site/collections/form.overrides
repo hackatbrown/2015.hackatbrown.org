@@ -21,7 +21,7 @@
 .ui.form input[type="url"],
 .ui.form input[type="tel"] {
     border: none;
-    box-shadow: inset 1px -3px 0px -1px @lightgrey;
+    box-shadow: inset 1px -3px 0px -1px @lightgreyalpha;
     padding-left: 0;
     font-weight: 300;
     transition: box-shadow .2s @defaultEasing, padding .2s @defaultEasing;
