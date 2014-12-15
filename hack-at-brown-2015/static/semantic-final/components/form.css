@@ -886,8 +886,8 @@
   box-shadow: inset 1px -3px 0px -1px rgba(145, 143, 140, 0.3);
   padding-left: 0;
   font-weight: 300;
-  -webkit-transition: box-shadow 0.2s, padding 0.2s;
-          transition: box-shadow 0.2s, padding 0.2s;
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px;
 }
 .ui.form input[type="text"]:focus,

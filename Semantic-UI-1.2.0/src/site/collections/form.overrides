@@ -24,7 +24,7 @@
     box-shadow: inset 1px -3px 0px -1px @lightgrey;
     padding-left: 0;
     font-weight: 300;
-    transition: box-shadow .2s, padding .2s;
+    transition: box-shadow .2s @defaultEasing, padding .2s @defaultEasing;
     height: 35px;
 }
 

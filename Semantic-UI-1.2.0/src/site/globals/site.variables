@@ -169,7 +169,8 @@ Background Colors
      Easing
 --------------------*/
 
-@defaultEasing: ease;
+@swiftOut: cubic-bezier(.55,0,.1,1);
+@defaultEasing: @swiftOut;
 
 /*---   Neutrals  ---*/
 @fullBlack        : #000000;

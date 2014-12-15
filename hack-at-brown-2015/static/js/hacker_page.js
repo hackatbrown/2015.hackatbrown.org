@@ -1,4 +1,9 @@
 //    Navigation
+function setTabActive(tab) {
+    $(".top-bar_li").removeClass("active");
+    $(tab).addClass("active");
+}
+
 function switchPanes(paneNumber) {
     var $panes = $(".panes");
     $($panes).removeClass("in-pane0 in-pane1");

@@ -94,7 +94,7 @@
                                     <div class="ten wide field ui-widget">
                                         <label for="school">School</label>
                                         <div class="ui icon input">
-                                            <input id="name" type="text" name="school" placeholder="Beige University" value="{{ hacker.school }}"/>
+                                            <input id="school" type="text" name="school" placeholder="Beige University" value="{{ hacker.school }}"/>
                                             <i class="icon"></i>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                             </div>
 
                             <div class="field">
-                                <label for="resume">Upload Resume <span class="optional">(Optional; Recommended)</span></label>
+                                <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
                                 <input id="resume" class="resume-upload" type="file" name="resume" />
                                 <input id="resume-over" class="resume-button" type="button" value="Browse files" />
                                 <span class="file-name">No file chosen.</span>
@@ -200,18 +200,24 @@
 <script>
 
     $(document).ready(function() {
-        $("#info_top").click(function() { 
-            this.preventDefault;
-            $(".top-bar_li").removeClass("active");
-            $(this).addClass("active");
+        
+        if(location.hash === '#info') {
+            setTabActive($("#info_top"));
             switchToMyInfo();
-        });
+        }
+        
         $("#status_top").click(function() { 
             this.preventDefault;
-            $(".top-bar_li").removeClass("active");
-            $(this).addClass("active");
+            setTabActive(this);
             switchFromMyInfo();
         });
+        
+        $("#info_top").click(function() {
+            this.preventDefault;
+            setTabActive(this);
+            switchToMyInfo();
+        });
+        
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
             saveChange(this.name, this.value, this.parentNode, "{{ secret }}" );
@@ -227,6 +233,7 @@
         // Populate the radio buttons
         populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
         populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
+        populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
         
         /* Autocomplete suggestions for schools */
         $(function () {
