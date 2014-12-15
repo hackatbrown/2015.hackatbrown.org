@@ -221,5 +221,7 @@ $(document).ready(function () {
   
     // Make sure splash height is good on doc ready
     fixSplashHeight();
+    
+    $(".trigrid").addClass("active");
 
 });

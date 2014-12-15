@@ -116,8 +116,11 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     top: 0;
     overflow: hidden;
     opacity: 0;
-    animation: fadein 1s ease 0s 1;
-    animation-fill-mode: forwards;
+    transition: opacity 1s;
+}
+
+.trigrid.active {
+    opacity: 1;
 }
 
 
