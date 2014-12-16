@@ -71,7 +71,9 @@
             </div>
             <div class="double_right pane pane1 white">
                 <section id="myinfo" class="panel">
+                    
                     <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
+                        <p>View and update your information:</p>
                         <div class="two fields row">
                             <div class="field">
                                 <label for="name">Name</label>
@@ -155,6 +157,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="field">
+                            <label for="dietary_restrictions">Dietary Restrictions?</label>
+                            <div class="ui icon input">
+                                <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}"/>
+                                <i class="icon"></i>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="teammates">Any Friends You'd Like to Work With?</label>
+                            <div class="ui icon input">
+                                <input id="teammates" type="text" name="teammates" value="{{ hacker.teammates }}"/>
+                                <i class="icon"></i>
+                            </div>
+                        </div>
                         <div class="two fields row">
                             <div class="field">
                                 <label for="hardware_hack">Hardware Hack?</label>
@@ -171,16 +187,40 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="field">
+                            <div class="field disabled">
                                 <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
-                                <input id="resume" class="resume-upload" type="file" name="resume" />
-                                <input id="resume-over" class="resume-button" type="button" value="Browse files" />
+                                <input id="resume" class="resume-upload" type="file" name="resume" disabled/>
+                                <input id="resume-over" class="resume-button" type="button" value="Browse files" disabled/>
                                 <span class="file-name">No file chosen.</span>
                             </div>
                         </div>
+                        <div class="two fields row">
+                            <div class="field">
+                                <label for="first_hackathon">Will this be your first hackathon?</label>
+                                <table class="radio_select radiobuttons" for="first_hackathon">
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="first_hackathon" id="first_hackathon_yes" value='yes' />
+                                            <label for="first_hackathon_yes">Yes!</label>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="first_hackathon" id="first_hackathon_no" value='no' />
+                                            <label for="first_hackathon_no">No</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="field">
+                                <label for="links">Links <span class="optional">(Optional)</span></label>
+                                <div class="condor"></div>
+                            </div>
+                        </div>
+<!--
                         <div class="ui submit button active">
                             Button
                         </div>
+-->
                     </form>
                 </section>
             </div>
@@ -239,12 +279,22 @@
         populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
         populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
         populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
+        populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
         
         /* Autocomplete suggestions for schools */
-        $(function () {
-            $(".schools").autocomplete({
-                source: $universities
-            });
+        
+        $(".schools").autocomplete({
+            source: $universities
+        });
+        
+        //Repeater list
+        $(".condor").condor({
+            uniqueNames: false,
+            namePrefix: 'links',
+            activeHint: 'Github, Dribbble, Behance, etc.',
+            inactiveHint: 'add another link',
+            inputType: 'url',
+            prepopulate: ['a', 'b', 'c']
         });
     });
 </script>

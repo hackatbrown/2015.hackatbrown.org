@@ -32,6 +32,9 @@ function saveChange(key, value, uiinput, secret) {
           $(uiinput).removeClass('loading');
           $(uiinput).children("i").addClass('checkmark fade');
           setTimeout(function() {$(uiinput).children("i").removeClass('checkmark fade')}, 2000)
+      },
+      failure : function(data, status) {
+          
       }
     });
 }
