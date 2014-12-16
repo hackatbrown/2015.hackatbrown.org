@@ -123,8 +123,10 @@
     $.fn.condor.getvalues = function(element, options) {
       var values = [], i = 0;
       $(target).children(".condor-active input").each( function() {
-          values[i] = this.value;
-          i++;
+          if(this.value.length !== 0) {
+            values[i] = this.value;
+            i++;
+          }
       });
       return values;
     }
