@@ -115,14 +115,21 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     width: 100%;
     top: 0;
     overflow: hidden;
+}
+
+.fader {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: white;
+    transition: opacity .5s cubic-bezier(.55,0,.1,1);
+    animation: fadein .2s cubic-bezier(.55,0,.1,1) 2 1 reverse backwards;
+}
+
+.fader.inactive {
     opacity: 0;
-    transition: opacity 1s;
 }
-
-.trigrid.active {
-    opacity: 1;
-}
-
 
 /* NAV */
 .top-bar_ul {
@@ -282,6 +289,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 }
 .init_reg {
     margin-top: 1.5%;
+    animation: fadein .2s cubic-bezier(.55,0,.1,1) .5 1 normal backwards;
 }
 .init_reg * {
     margin-bottom: 10px;
@@ -893,6 +901,7 @@ select2-choice.select2-default {
     padding-bottom: 180px;
     margin-top: -180px;
     margin-bottom: -180px;
+    animation: fadein .2s cubic-bezier(.55,0,.1,1) 0 1 normal backwards;
 }
 .triangle.right article {
     float: right;

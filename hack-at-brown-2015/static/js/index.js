@@ -196,8 +196,13 @@ function initalizeHamburger() {
 }
 
 $(document).ready(function () {
-    var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+    var iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent),
+        $fader = $(".fader");
 
+    setTimeout(function() {
+        $($fader).remove();
+    }, 2200);
+    
     // P-P-P- 
     if (!iOS) {
         skrollr.init({
@@ -222,6 +227,10 @@ $(document).ready(function () {
     // Make sure splash height is good on doc ready
     fixSplashHeight();
     
-    $(".trigrid").addClass("active");
+    $($fader).addClass("inactive");
+    
+    setTimeout(function() {
+        $($fader).remove();
+    }, 500);
 
 });
