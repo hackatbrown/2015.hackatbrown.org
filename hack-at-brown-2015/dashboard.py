@@ -13,7 +13,7 @@ class DashboardHandler(webapp2.RequestHandler):
 
 class ManualRegistrationHandler(webapp2.RequestHandler):
     def post(self):
-        parsed_request = json.loads(self.request.body)
+        parsed_request = json.loads(self.request.body) # Angular apparently only sends json as text not as 'JSON'
         emails = parsed_request.get('emails')
         for address in emails:
             hacker = Hacker.query(Hacker.email == address).fetch()
