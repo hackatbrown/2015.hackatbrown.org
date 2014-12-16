@@ -21,9 +21,11 @@ function switchFromMyInfo() {
 
 //  Form processing out
 
-function saveChange(key, value, uiinput, secret) {
+function saveChange(key, value, uiinput, secret, responseStatus) {
     console.log("key: " + key + " value: " + value);
-    var data = {};
+    var data = {}, 
+        $icon = $(uiinput).children(".icon"),
+        oldIcon = $icon.attr('class');
     data[key] = value;
     $(uiinput).addClass('loading');
     $.ajax({
@@ -32,15 +34,68 @@ function saveChange(key, value, uiinput, secret) {
         data: JSON.stringify(data),
         success: function (data, status) {
             $(uiinput).removeClass('loading');
-            $(uiinput).children("i").addClass('checkmark fade');
-            setTimeout(function () {
-                $(uiinput).children("i").removeClass('checkmark fade');
-            }, 2000);
+            if (responseStatus) {
+                $(uiinput).addClass('fade');
+                $($icon).attr('class', "checkmark icon");
+                setTimeout(function () {
+                    $(uiinput).removeClass('fade');
+                    if ((oldIcon !== "checkmark icon") || (oldIcon !== "remove icon")) {
+                        $($icon).attr('class', oldIcon);
+                    }
+                }, 1500);
+            }
         },
         failure: function (data, status) {
-
+            $(uiinput).removeClass('loading');
+            if (responseStatus) {
+                $(uiinput).addClass('error fade');
+                $icon.className = "remove icon";
+                setTimeout(function () {
+                    $(uiinput).removeClass('fade');
+                    if ((oldIcon !== "checkmark icon") || (oldIcon !== "remove icon")) {
+                        $($icon).attr('class', oldIcon);
+                    }
+                }, 1500);
+            }
         }
     });
+}
+
+function trim1 (str) {
+    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
+function domainMatch(uiIcon, url) {
+    var recognizedDomains = {
+        'dribbble.com': "dribbble",
+        'facebook.com': "facebook",
+        'linkedin.com': "linkedin",
+        'github.com': "github",
+        'jsfiddle.net': "jsfiddle",
+        'behance.com': "behance",
+        'soundcloud.com': "soundcloud",
+        'deviantart.com': "deviantart"
+    };
+    for (domain in recognizedDomains) {
+        if(url.indexOf(domain) > -1) {
+            console.log("matched with " + domain);
+            console.log(uiIcon);
+            $(uiIcon).attr('class', "icon " + recognizedDomains[domain]);
+            return;
+        }
+    }
+    $(uiIcon).attr('class', "icon linkify");
+}
+
+function trackCondor(condorObject) {
+    var detectedChange = function () {
+        var icon = $(this).siblings(".icon"),
+            links = condorObject.condor("getValues");
+        this.value = this.value.trim().replace(/^.*?:\/\//, "");
+        domainMatch(icon, this.value);
+        saveChange("links", links.toString(), $(condorObject).find(".condor-active > .input"), secret, false);
+    }
+    $(condorObject).on( "change", ".condor-active > .input > input", detectedChange);
 }
 
 //  Form processing in

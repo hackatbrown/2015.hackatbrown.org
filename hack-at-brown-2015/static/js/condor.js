@@ -1,19 +1,23 @@
 (function ($) {
-    $.fn.condor = function (options) {
-        var settings = $.extend({
-                maxInputs: 10,
-                uniqueNames: true,
-                namePrefix: 'inputs',
-                inactiveHint: 'add input',
-                activeHint: '',
-                activeIcon: 'linkify',
-                addCallback: function () {},
-                activateCallback: function () {},
-                inputType: 'text',
-                prepopulate: []
-            }, options),
+  
+    $.fn.condor = function (command) {
+        var settings,
             target = this,
-            numInputs = 0;
+            numInputs = 0,
+            publicMethods = {
+                getValues: function () {
+                    console.log("getting values");
+                    var values = [], i = 0;
+                    $(target).find(".condor-active input").each(function () {
+                        if (this.value.length !== 0) {
+                            values[i] = this.value;
+                            i += 1;
+                        }
+                    });
+                    return values;
+                }
+            };
+        
         
         function refreshNumInputs() {
             numInputs = $(target).children(".condor-active").length;
@@ -43,7 +47,7 @@
             }
             $(field).unbind();
             $(input).unbind();
-            $(field).addClass('.condor-active');
+            $(field).addClass('condor-active');
             $(field).removeClass('condor-add');
 
             //Bind a thing that detects when the field gets filled
@@ -82,7 +86,7 @@
         }
         
         function prepopulate() {
-            settings.prepopulate.forEach(function(value, index, ar) {
+            settings.prepopulate.forEach(function (value, index, ar) {
                 var field = addActiveField(refreshNumInputs()),
                     input = $(field).find("input");
                 $(input).val(value);
@@ -93,7 +97,7 @@
                                          
         function addActiveField(id) {
             addField('', 'condor-active', '');
-            return $(target).children(".condor-active").filter(function() { return $(this).find("input").val().length === 0; }).first();
+            return $(target).children(".condor-active").filter(function () { return $(this).find("input").val().length === 0; }).first();
         }
 
         function addInactiveField(id) {
@@ -114,9 +118,27 @@
             return field;
         }
         
+        if (publicMethods[command]) {
+            return publicMethods[command].apply(this, []);
+        } else {
+            settings = $.extend({
+                maxInputs: 10,
+                uniqueNames: true,
+                namePrefix: 'inputs',
+                inactiveHint: 'add input',
+                activeHint: '',
+                activeIcon: 'linkify',
+                addCallback: function () {},
+                activateCallback: function () {},
+                inputType: 'text',
+                prepopulate: []
+            }, command);
+        }
+        
         prepopulate();
         addInactiveField(numInputs);
         makeActive($(target).children(".condor-add"));
-    }
+        return this;
+    };
 
 }(jQuery));

@@ -449,7 +449,20 @@ span.optional {
     padding: .65em .65em .65em 0;
     transition: box-shadow .2s, padding .2s, color .2s;
 }
-.ui.form ::input-placeholder {color:#AAA;}
+
+.ui.input input {
+    line-height: normal !important;
+}
+.ui.form input::input-placeholder {
+    color:#AAAAAA !important;
+}
+
+.ui.form :focus::-webkit-input-placeholder {
+    color: #AAAAAA;
+}
+.ui.form :focus::-moz-placeholder {
+    color: #AAAAAA;
+}
     /* Validation Styles */
 .registration_form input[type=email][required]:valid,
 .registration_form input[type=text][required]:valid,
@@ -1048,8 +1061,11 @@ section .background > .right {
     vertical-align: middle;
 }
 
-#akamai-logo {
-    max-height: 75px;
+.sponsors .sponsor-row.peta {
+    margin-top: 30px;
+}
+.sponsors .sponsor-row.peta img {
+    max-height: 120px;
 }
 
 .sponsors .sponsor-row.tera {
@@ -1058,12 +1074,15 @@ section .background > .right {
 .sponsors .sponsor-row.tera img {
     max-height: 100px;
 }
-.sponsors .sponsor-row.peta {
-    margin-top: 30px;
+
+#akamai-logo {
+    max-height: 75px;
 }
-.sponsors .sponsor-row.peta img {
-    max-height: 120px;
+
+.sponsors .special img {
+    max-height: 80px;
 }
+
 .faq {
     margin-top: 600px;
     margin-bottom: 420px;
@@ -1391,7 +1410,12 @@ nav.open .hamsvg {
     }
     
     .faq {
-        margin-top: 300px;
+        margin-top: 540px;
+    }
+    .faq > .background > .back {
+        margin-right: -1232.8px;
+        width: calc(50vw + 1232.8px);
+        height: calc(100vw + 1232.8px);
     }
 }
 @media screen and (max-width: 500px) {

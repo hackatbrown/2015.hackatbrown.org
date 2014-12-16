@@ -1,7 +1,7 @@
 /*******************************
          Site Overrides
 *******************************/
-i.icon.fade {
+.fade i.icon {
     animation: fade 1s ease 1s 1 normal both!important;
 }
 

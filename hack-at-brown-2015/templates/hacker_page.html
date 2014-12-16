@@ -216,7 +216,7 @@
                                 </table>
                             </div>
 
-                            <div class="field disabled">
+                            <div class="field">
                                 <label for="links">Links <span class="optional">(Optional)</span></label>
                                 <div class="condor"></div>
                             </div>
@@ -244,6 +244,8 @@
 
 
 <script>
+    var linkRepeater,
+        secret = "{{ hacker.secret }}";
 
     $(document).ready(function() {
         
@@ -271,7 +273,7 @@
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
             console.log(this.name + " changed to " + this.value);
-            saveChange(this.name, this.value, this.parentNode, "{{ secret }}" );
+            saveChange(this.name, this.value, this.parentNode, "{{ secret }}", true);
         });
         
         var $universities = [];
@@ -297,7 +299,7 @@
         });
         
         //Repeater list
-        $(".condor").condor({
+        linkRepeater = $(".condor").condor({
             uniqueNames: false,
             namePrefix: 'links',
             activeHint: 'Github, Dribbble, Behance, etc.',
@@ -306,8 +308,13 @@
             prepopulate: linkArray
         });
         
-        //Temp to disable repeaters for now
-        $(".condor input").prop('disabled', true);
+        $(linkRepeater).find(".condor-active").each(function(i, uiInput) {
+            var icon = $(uiInput).find("i.icon"),
+                input = $(uiInput).find("input");
+            domainMatch(icon, $(input).val());
+        });
+      
+        trackCondor(linkRepeater);
     });
 </script>
 {% endblock %}
