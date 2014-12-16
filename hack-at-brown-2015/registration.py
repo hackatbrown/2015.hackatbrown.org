@@ -22,8 +22,8 @@ def stringValidator(prop, value):
     lowerValue = value.lower()
     stripped = str(utils.escape(lowerValue))
 
-    if stripped is not lowerValue:
-        raise datastore_errors.BadValueError(value)
+    if stripped != lowerValue:
+        raise datastore_errors.BadValueError(prop)
 
     return stripped
 
@@ -79,16 +79,17 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         hacker = Hacker()
         hacker.ip = self.request.remote_addr
         for key in hacker_keys:
-            print key + " " + self.request.get(key)
+            # print key + " " + self.request.get(key)
             try:
                 setattr(hacker, key, self.request.get(key))
-            except datastore_errors.BadValueError:
-                self.response.write(json.dumps({"success":False, "msg":"Email Invalid"}))
+            except datastore_errors.BadValueError as err:
+                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : "email"}))
                 return
 
         if Hacker.query(Hacker.email == hacker.email).count() > 0:
             self.response.write(json.dumps({"success":False, "msg": "Email Already Registered!"}))
             return
+
         resume_files = self.get_uploads('resume')
         if len(resume_files) > 0:
             hacker.resume = resume_files[0].key()

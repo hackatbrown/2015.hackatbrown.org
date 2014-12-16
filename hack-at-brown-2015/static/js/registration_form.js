@@ -1,38 +1,90 @@
+    function fieldInvalid(fieldName) {
+        var $element;
+        var msg;
+        switch (fieldName) {
+            case 'email':
+                msg = "Please enter a valid email address.";
+                console.log("Invalid email");
+                break;
+            case 'name':
+                msg = "Please enter your full name";
+                console.log("Invalid name");
+                break;
+            case 'school':
+                msg = "Please enter your school";
+                console.log("Invalid school");
+                break;
+            case 'year':
+                $element = $("select[name='year']");
+                msg = "Please choose your current year.";
+                console.log("Invalid year");
+                $(".select2-container.drop").addClass("invalid");
+                break;
+            case 'shirt_size':
+                msg = "Please choose a complete shirt size.";
+                $element = $("div.shirt_size");
+                break;
+            case 'teammates':
+                msg = "Please make sure all your teammates' emails are valid.";
+                $element = $("#teammates");
+                console.log("Invalid teammate email(s)");
+                break;
+            case 'hardware_hack':
+                msg = "Please indicate whether youre interested in hardware hacking.";
+                $element = $("label[for='hardware_hack']");
+                console.log("Invalid hardware hack");
+                break;
+            case 'first_hackathon':
+                msg = "Please indicate if this will be your first hackathon.";
+                $element = $("label[for='first_hackathon']");
+                console.log("Invalid first hackathon");
+                break;
+            case 'agree':
+                msg = "You must agree to the Code of Conduct before registering."
+                $element = $("#agree");
+                console.log("Invalid agree");
+                break;
+            default:
+                break;
+
+            if (!$element) {
+                $element = $("input[name='" + fieldName + "']");
+                $element.addClass("invalid");
+            }
+
+            addNag(msg, $element.parent());
+
+        }
+
+    }
 
 
     function validateForm() {
         var validated = true;
+        return true;
 
         // Check if name is filled out
         if (!$("input[name='name']").val()) {
-            $("input[name='name']").addClass("invalid");
-            addNag("Please enter your full name.", $("input[name='name']").parent());
+            fieldInvalid('name');
             validated = false;
-            console.log("Invalid name");
         }
 
         // Check if email is filled out
         if (!validateEmail($(".field input[name='email']").val())) {
-            $(".field input[name='email']").addClass("invalid");
-            addNag("Please enter a valid email address.", $(".field input[name='email']").parent());
+            fieldInvalid('email');
             validated = false;
-            console.log("Invalid email");
         }
 
 
         // Check if school is filled out
         if (!$("input[name='school']").val()) {
-            $("input[name='school']").addClass("invalid");
-            addNag("Please enter your school.", $("input[name='school']").parent());
+            fieldInvalid('school');
             validated = false;
-            console.log("Invalid school");
         }
 
         if (!$("select[name='year']").val()) {
-            $(".select2-container.drop").addClass("invalid");
-            addNag("Please choose your current year.", $("select[name='year']").parent());
+            fieldInvalid('year');
             validated = false;
-            console.log("Invalid year");
         }
 
         var shirt_valid = true;
@@ -51,7 +103,7 @@
         }
 
         if (!shirt_valid) {
-            addNag("Please choose a complete shirt size.", $("div.shirt_size").parent());
+            fieldInvalid('shirt_size');
         }
 
         // Check for valid teammate emails
@@ -66,8 +118,7 @@
             });
 
             if (!validEmails) {
-                console.log("Invalid teammate email(s)");
-                addNag("Please make sure all your teammates' emails are valid.", $("#teammates").parent());
+                fieldInvalid('teammates');
             } else {
                 $("#teammates").addClass("valid");
             }
@@ -77,16 +128,14 @@
 
         // Check if they filled out hardware hack
         if (!$("input[name='hardware_hack']:checked").val()) {
-            addNag("Please indicate whether you're interested in hardware hacking.", $("label[for='hardware_hack']").parent());
+            fieldInvalid('hardware_hack');
             validated = false;
-            console.log("Invalid hardware hack");
         }
 
         // Check if they filled out first time question
         if (!$("input[name='first_hackathon']:checked").val()) {
-            addNag("Please indicate if this will be your first hackathon.", $("label[for='first_hackathon']").parent());
+            fieldInvalid('first_hackathon');
             validated = false;
-            console.log("Invalid first hackathon");
         }
 
        /* // Check for resume
@@ -98,9 +147,8 @@
 
         // Check if they agree to the Code of Conduct
         if (!$("#agree").prop('checked')) {
-            addNag("You must agree to the Code of Conduct before registering.", $("#agree").parent());
+            fieldInvalid('agree');
             validated = false;
-            console.log("Invalid agree");
         }
 
         return validated;
@@ -122,19 +170,30 @@
                             if (response.success === true) {
                                 $(".splash .double_right").html(response.replace_splash_with_html);
                                 window.location.hash = "";
-                            } else{
-                                $("#registration_form input[type=submit]").val("Email already Registered!").attr({
-                                    disabled: false
-                                });
+                            } else {
+                                if (response.msg) {
+                                    $("#registration_form input[type=submit]").val(response.msg).attr({
+                                        disabled: false
+                                    });
+                                }
+                                if (response.field) {
+                                    fieldInvalid(response.field);
+                                }
+                                indicateFailure();
+
                             }
                     return false;
                     }});
                     } else {
-                        $(".errorsPresent").addClass("nag");
-                        $('html,body').animate({scrollTop: 0}, 1000);
+                        indicateFailure();
                     }
             }
         });
+
+        function indicateFailure() {
+            $(".errorsPresent").addClass("nag");
+            $('html,body').animate({scrollTop: 0}, 1000);
+        }
 
 
         /* Validation Styling */
@@ -181,7 +240,7 @@
         $("input[type='radio'][name='hardware_hack'] + label").click(function () {
             $("table[for='hardware_hack'").addClass("valid");
         });
-      
+
         // Check for first hackathon validation
         $("input[type='radio'][name='first_hackathon'] + label").click(function () {
             $("table[for='first_hackathon'").addClass("valid");
