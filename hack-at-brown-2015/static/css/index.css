@@ -1410,7 +1410,12 @@ nav.open .hamsvg {
     }
     
     .faq {
-        margin-top: 300px;
+        margin-top: 540px;
+    }
+    .faq > .background > .back {
+        margin-right: -1232.8px;
+        width: calc(50vw + 1232.8px);
+        height: calc(100vw + 1232.8px);
     }
 }
 @media screen and (max-width: 500px) {
