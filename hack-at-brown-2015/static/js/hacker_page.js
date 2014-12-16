@@ -72,7 +72,7 @@ function domainMatch(uiIcon, url) {
         'linkedin.com': "linkedin",
         'github.com': "github",
         'jsfiddle.net': "jsfiddle",
-        'behance.com': "behance",
+        'behance.net': "behance",
         'soundcloud.com': "soundcloud",
         'deviantart.com': "deviantart"
     };
