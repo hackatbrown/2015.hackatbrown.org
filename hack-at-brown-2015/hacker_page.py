@@ -21,7 +21,7 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         status = computeStatus(hacker)
         name = hacker.name.split(" ")[0] # TODO: make it better
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "secret": secret}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name}))
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):

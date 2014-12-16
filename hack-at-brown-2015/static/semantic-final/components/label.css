@@ -706,33 +706,33 @@ a.ui.teal.label:hover:before {
 
 .ui.yellow.labels .label,
 .ui.yellow.label {
-  background-color: #f2c61f !important;
-  border-color: #f2c61f !important;
+  background-color: #f2a73a !important;
+  border-color: #f2a73a !important;
   color: #ffffff !important;
 }
 .ui.labels .yellow.label:before,
 .ui.yellow.labels .label:before,
 .ui.yellow.label:before {
-  background-color: #f2c61f !important;
+  background-color: #f2a73a !important;
 }
 a.ui.yellow.labels .label:hover,
 .ui.yellow.labels a.label:hover,
 a.ui.yellow.label:hover {
-  background-color: #f3ca2d !important;
-  border-color: #f3ca2d !important;
+  background-color: #f3ad48 !important;
+  border-color: #f3ad48 !important;
   color: #ffffff !important;
 }
 .ui.labels a.yellow.label:hover:before,
 .ui.yellow.labels a.label:hover:before,
 a.ui.yellow.label:hover:before {
-  background-color: #f3ca2d !important;
+  background-color: #f3ad48 !important;
 }
 .ui.yellow.corner.label,
 .ui.yellow.corner.label:hover {
   background-color: transparent !important;
 }
 .ui.yellow.ribbon.label {
-  border-color: #d2a90c !important;
+  border-color: #ea910f !important;
 }
 
 /*-------------------

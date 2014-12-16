@@ -45,3 +45,8 @@ input[type="radio"]:checked + label {
     color: @white;
     box-shadow: inset 1px -50px 0px -1px @blue;
 }
+
+.ui[class*="left icon"].input>input {
+    padding-left: 1.6em!important;
+    padding-right: 1em!important;
+}
