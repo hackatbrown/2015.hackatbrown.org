@@ -210,7 +210,9 @@ $(document).ready(function () {
                 return false;
             },
             forceHeight: false,
-        })
+        });
+    } else {
+        $(".top-bar_ul").addClass("skrollable-after");
     }
 
     // Fix splash height if the browser resizes
