@@ -737,9 +737,6 @@ span.optional {
 .radio_select td {
     border: 0;
 }
-.resume-button:hover {
-    background-color: #E2E1DF;
-}
 .registration_form .resume-button.on {
     color:#fff;
     box-shadow: inset 1px -50px 0px -1px #1B8EB9;
