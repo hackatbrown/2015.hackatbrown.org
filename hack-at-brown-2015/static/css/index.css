@@ -965,10 +965,10 @@ section .background > .right {
 }
 .about .background > .back {
     width: 2572.8px;
-    margin-right: -804px;
+    margin-right: -911.2px;
     height: 2520px;
-    width: calc(50vw + 804px);
-    height: calc(100vw + 804px);
+    width: calc(50vw + 911.2px);
+    height: calc(100vw + 911.2px);
     background-image: url(/static/img/svgtriangles/0bg_0_grey-triangle.svg);
 }
 
@@ -1368,12 +1368,6 @@ nav.open .hamsvg {
     
     .about {
         margin-bottom: 60px;
-    }
-    
-    .about .background > .back {
-        margin-right: -911.2px;
-        width: calc(50vw + 911.2px);
-        height: calc(100vw + 911.2px);
     }
     
     .about article {
