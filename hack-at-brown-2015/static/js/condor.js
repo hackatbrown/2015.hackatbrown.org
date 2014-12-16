@@ -1,4 +1,5 @@
 (function ($) {
+  
     $.fn.condor = function (options) {
         var settings = $.extend({
                 maxInputs: 10,
@@ -117,6 +118,15 @@
         prepopulate();
         addInactiveField(numInputs);
         makeActive($(target).children(".condor-add"));
+    }
+    
+    $.fn.condor.getvalues = function(element, options) {
+      var values = [], i = 0;
+      $(target).children(".condor-active input").each( function() {
+          values[i] = this.value;
+          i++;
+      });
+      return values;
     }
 
 }(jQuery));
