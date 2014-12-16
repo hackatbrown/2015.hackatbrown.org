@@ -90,7 +90,7 @@ function domainMatch(uiIcon, url) {
 function trackCondor(condorObject) {
     var detectedChange = function () {
         var icon = $(this).siblings(".icon"),
-            links = linkRepeater.condor("getValues");
+            links = condorObject.condor("getValues");
         this.value = this.value.trim().replace(/^.*?:\/\//, "");
         domainMatch(icon, this.value);
         saveChange("links", links.toString(), $(condorObject).find(".condor-active > .input"), secret, false);

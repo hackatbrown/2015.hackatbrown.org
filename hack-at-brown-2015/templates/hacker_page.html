@@ -312,12 +312,9 @@
             var icon = $(uiInput).find("i.icon"),
                 input = $(uiInput).find("input");
             domainMatch(icon, $(input).val());
-        })
+        });
       
         trackCondor(linkRepeater);
-        
-        //Temp to disable repeaters for now
-//        $(".condor input").prop('disabled', true);
     });
 </script>
 {% endblock %}

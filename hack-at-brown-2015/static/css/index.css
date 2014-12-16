@@ -449,7 +449,20 @@ span.optional {
     padding: .65em .65em .65em 0;
     transition: box-shadow .2s, padding .2s, color .2s;
 }
-.ui.form ::input-placeholder {color:#AAA;}
+
+.ui.input input {
+    line-height: normal !important;
+}
+.ui.form input::input-placeholder {
+    color:#AAAAAA !important;
+}
+
+.ui.form :focus::-webkit-input-placeholder {
+    color: #AAAAAA;
+}
+.ui.form :focus::-moz-placeholder {
+    color: #AAAAAA;
+}
     /* Validation Styles */
 .registration_form input[type=email][required]:valid,
 .registration_form input[type=text][required]:valid,
