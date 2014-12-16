@@ -17,7 +17,6 @@
         
         function refreshNumInputs() {
             numInputs = $(target).children(".condor-active").length;
-            console.log("numinputs:" + numInputs);
             return numInputs;
         }
 
@@ -26,8 +25,6 @@
         }
 
         function makeActive(field) {
-            console.log("making active");
-            console.log($(field));
             var index,
                 name,
                 input = $(field).find('input'),
@@ -51,7 +48,6 @@
 
             //Bind a thing that detects when the field gets filled
             input.bind("propertychange keyup input paste", function (event) {
-                console.log("detected field filled");
                 // If no longer an empty string
                 if (this.value !== '') {
                     input.unbind("propertychange keyup input paste blur");
@@ -88,20 +84,17 @@
         function prepopulate() {
             settings.prepopulate.forEach(function(value, index, ar) {
                 var field = addActiveField(refreshNumInputs());
-                console.log("prepopulating");
-                console.log(field);
                 $(field).find("input").val(value);
-//                makeActive(field);
+                makeActive(field);
             });
         }
                                          
         function addActiveField(id) {
             addField('', 'condor-active', '');
-            return $(target).children(".condor-active").filter(function() { return $(this).find("input").val().length===0; }).first();
+            return $(target).children(".condor-active").filter(function() { return $(this).find("input").val().length === 0; }).first();
         }
 
         function addInactiveField(id) {
-            console.log("adding inactive field");
             addField('add another link', 'condor-add', 'inverted');
             var field = $(target).children().children(".condor-add"),
                 input = $(field).find("input");

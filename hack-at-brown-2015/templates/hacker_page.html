@@ -73,7 +73,8 @@
                 <section id="myinfo" class="panel">
                     
                     <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
-                        <p>View and update your information:</p>
+                        <h3>View and update your information:</h3>
+                        <p class="caption">(Some info isn't yet editable; we'll let you know as soon as it is)</p>
                         <div class="two fields row">
                             <div class="field">
                                 <label for="name">Name</label>
@@ -100,10 +101,10 @@
                                             <i class="icon"></i>
                                         </div>
                                     </div>
-                                    <div class="six wide field">
+                                    <div class="six wide field disabled">
                                         <label for="year">Year</label>
                                         <div class="ui icon input">
-                                            <input id="year" type="text" name="year" placeholder="Select Year" value="{{ hacker.year }}"/>
+                                            <input id="year" type="text" name="year" placeholder="Select Year" value="{{ hacker.year }}" disabled/>
                                             <i class="icon"></i>
                                         </div>
                                     </div>
@@ -157,17 +158,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="field disabled">
                             <label for="dietary_restrictions">Dietary Restrictions?</label>
                             <div class="ui icon input">
-                                <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}"/>
+                                <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}" disabled/>
                                 <i class="icon"></i>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="field disabled">
                             <label for="teammates">Any Friends You'd Like to Work With?</label>
                             <div class="ui icon input">
-                                <input id="teammates" type="text" name="teammates" value="{{ hacker.teammates }}"/>
+                                <input id="teammates" type="text" name="teammates" value="{{ hacker.teammates }}" disabled/>
                                 <i class="icon"></i>
                             </div>
                         </div>
@@ -211,7 +212,7 @@
                                 </table>
                             </div>
 
-                            <div class="field">
+                            <div class="field disabled">
                                 <label for="links">Links <span class="optional">(Optional)</span></label>
                                 <div class="condor"></div>
                             </div>
@@ -265,6 +266,7 @@
         
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
+            console.log(this.name + " changed to " + this.value);
             saveChange(this.name, this.value, this.parentNode, "{{ secret }}" );
         });
         
@@ -281,6 +283,9 @@
         populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
         populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
         
+        // Split the links into an array
+        var linkArray = processCSV(" {{ hacker.links }} ");
+        
         /* Autocomplete suggestions for schools */
         
         $(".schools").autocomplete({
@@ -294,7 +299,7 @@
             activeHint: 'Github, Dribbble, Behance, etc.',
             inactiveHint: 'add another link',
             inputType: 'url',
-            prepopulate: ['a', 'b', 'c']
+            prepopulate: linkArray
         });
     });
 </script>

@@ -5,6 +5,10 @@ h1.hi {
     text-transform: capitalize;
 }
 
+p.caption {
+    font-weight: 300;
+}
+
 .admit_status {
     background-color: #404040;
     padding: .5em;
