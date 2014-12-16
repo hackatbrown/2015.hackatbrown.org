@@ -1048,8 +1048,11 @@ section .background > .right {
     vertical-align: middle;
 }
 
-#akamai-logo {
-    max-height: 75px;
+.sponsors .sponsor-row.peta {
+    margin-top: 30px;
+}
+.sponsors .sponsor-row.peta img {
+    max-height: 120px;
 }
 
 .sponsors .sponsor-row.tera {
@@ -1058,12 +1061,15 @@ section .background > .right {
 .sponsors .sponsor-row.tera img {
     max-height: 100px;
 }
-.sponsors .sponsor-row.peta {
-    margin-top: 30px;
+
+#akamai-logo {
+    max-height: 75px;
 }
-.sponsors .sponsor-row.peta img {
-    max-height: 120px;
+
+.sponsors .special img {
+    max-height: 80px;
 }
+
 .faq {
     margin-top: 600px;
     margin-bottom: 420px;
