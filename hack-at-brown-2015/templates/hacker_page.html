@@ -216,7 +216,7 @@
                                 </table>
                             </div>
 
-                            <div class="field">
+                            <div class="field disabled">
                                 <label for="links">Links <span class="optional">(Optional)</span></label>
                                 <div class="condor"></div>
                             </div>
@@ -305,6 +305,9 @@
             inputType: 'url',
             prepopulate: linkArray
         });
+        
+        //Temp to disable repeaters for now
+        $(".condor input").prop('disabled', true);
     });
 </script>
 {% endblock %}
