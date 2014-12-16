@@ -154,6 +154,11 @@
         return validated;
     }
 
+    $(".top-bar_li#hello_top a").fadeOut(500, function () {
+        $(this).text("Register");
+        $(this).fadeIn(800);
+    });
+
 
     $(document).ready(function () {
         H5F.setup(document.getElementById("registration_form"), {
@@ -171,15 +176,16 @@
                                 $(".splash .double_right").html(response.replace_splash_with_html);
                                 window.location.hash = "";
                             } else {
+                                indicateFailure();
                                 if (response.msg) {
-                                    $("#registration_form input[type=submit]").val(response.msg).attr({
-                                        disabled: false
-                                    });
+                                    $("#registration_form input[type=submit]").fadeOut(500, function() {
+                                        $(this).text("Register");
+                                        $this.prop('disabled', false);
+                                    })
                                 }
                                 if (response.field) {
                                     fieldInvalid(response.field);
                                 }
-                                indicateFailure();
 
                             }
                     return false;
