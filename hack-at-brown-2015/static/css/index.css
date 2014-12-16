@@ -1367,13 +1367,13 @@ nav.open .hamsvg {
     }
     
     .about {
-        margin-top: 0;
+        margin-bottom: 60px;
     }
     
     .about .background > .back {
-        margin-right: -696.8px;
-        width: calc(50vw + 696.8px);
-        height: calc(100vw + 696.8px);
+        margin-right: -911.2px;
+        width: calc(50vw + 911.2px);
+        height: calc(100vw + 911.2px);
     }
     
     .about article {
