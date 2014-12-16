@@ -83,9 +83,11 @@
         
         function prepopulate() {
             settings.prepopulate.forEach(function(value, index, ar) {
-                var field = addActiveField(refreshNumInputs());
-                $(field).find("input").val(value);
+                var field = addActiveField(refreshNumInputs()),
+                    input = $(field).find("input");
+                $(input).val(value);
                 makeActive(field);
+                $(input).unbind();
             });
         }
                                          
@@ -96,7 +98,7 @@
 
         function addInactiveField(id) {
             addField('add another link', 'condor-add', 'inverted');
-            var field = $(target).children().children(".condor-add"),
+            var field = $(target).find(".condor-add"),
                 input = $(field).find("input");
             $(input).click(function () {
                 $(this).unbind("click");
