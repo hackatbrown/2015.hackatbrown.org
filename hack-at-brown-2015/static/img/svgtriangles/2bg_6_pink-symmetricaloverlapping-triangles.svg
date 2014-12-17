@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 214.4 300">
+    <polygon fill="#EF5D93" opacity="0.7" points="214.4,60 214.4,300 0,180 "/>
+    <polygon fill="#EF5D93" opacity="0.8" points="107.2,180 214.4,240 107.2,300 "/>
+    <polygon fill="#EF5D93" opacity="0.5" points="107.2,0 214.4,60 107.2,120 "/>
+    <polygon fill="#EF5D93" points="53.6,90 107.2,60 107.2,120 "/>
+</svg>

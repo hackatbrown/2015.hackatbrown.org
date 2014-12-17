@@ -919,9 +919,6 @@ select2-choice.select2-default {
 .triangle.right article {
     float: right;
 }
-.triangle.right h1,h2>span {
-    text-align: right;
-}
 .triangle article h1:first-child {
     margin-top: 0;
 }
@@ -1030,6 +1027,7 @@ section .background > .right {
 
 .sponsors {
     margin-top: 180px;
+    height: 1170px;
 }
 .sponsors h2 {
     font-size: 1.2em;
@@ -1042,41 +1040,50 @@ section .background > .right {
 .sponsors .sponsor-row {
     word-spacing: 50px;
 }
-.sponsors a {
-    opacity: 0.9;
+.sponsor-row a {
     border-bottom: none;
     -webkit-transition: opacity 0.2s ease-out;
     -moz-transition: opacity 0.2s ease-out;
     -o-transition: opacity 0.2s ease-out;
     transition: opacity 0.2s ease-out;
 }
-.sponsors a:hover {
-    opacity: 1.0;
-}
-.sponsors img {
+
+.sponsor-row img {
     height: auto;
-    max-height: 50px;
+    max-height: 52px;
     max-width: 100%;
     margin: 25px 0px;
     vertical-align: middle;
 }
 
-.sponsors .sponsor-row.peta {
+.sponsor-row.peta {
     margin-top: 30px;
 }
-.sponsors .sponsor-row.peta img {
-    max-height: 120px;
+.sponsor-row.peta img {
+    max-height: 80px;
 }
 
-.sponsors .sponsor-row.tera {
+.sponsor-row.tera {
     word-spacing: 70px;
 }
-.sponsors .sponsor-row.tera img {
-    max-height: 100px;
+.sponsor-row.tera img {
+    max-height: 80px;
 }
 
-#akamai-logo {
+#akamai {
     max-height: 75px;
+}
+
+#uber {
+    max-height: 30px;
+}
+
+#thalmic-labs {
+    max-height: 45px;
+}
+
+#tessel {
+    max-height: 70px;
 }
 
 .sponsors .special img {
@@ -1232,6 +1239,28 @@ section .background > .fore {
     background-image: url(/static/img/svgtriangles/2bg_4_white-tower-triangles.svg);
     top: 1350px;
     margin-right: 321.6px;
+}
+.fore.green-folded-a {
+    z-index: -11 !important;
+    width: 268px;
+    height: 180px;
+    background-image: url(/static/img/svgtriangles/2bg_5_green-folded-trianglea.svg);
+    top: 0;
+    margin-left: 214.4px;
+}
+.fore.green-folded-b {
+    width: 268px;
+    height: 180px;
+    background-image: url(/static/img/svgtriangles/2bg_5_green-folded-triangleb.svg);
+    top: 0;
+    margin-left: 214.4px;
+}
+.fore.pink-symmetrical {
+    width: 214.4px;
+    height: 300px;
+    background-image: url(/static/img/svgtriangles/2bg_6_pink-symmetricaloverlapping-triangles.svg);
+    top: 540px;
+    margin-left: 428.8px;
 }
 section .background > .mid {
     z-index: -8;
