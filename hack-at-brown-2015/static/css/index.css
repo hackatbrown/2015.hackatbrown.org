@@ -922,8 +922,6 @@ select2-choice.select2-default {
 .triangle article h1:first-child {
     margin-top: 0;
 }
-section .foreground {
-}
 section .background {
     position: absolute;
     top: 0;
@@ -1027,6 +1025,9 @@ section .background > .right {
 
 .sponsors {
     margin-top: 180px;
+}
+#sponsors {
+    max-width: 80vw; /* Fix for Firefox and IE */
 }
 .sponsors h2 {
     font-size: 1.2em;
