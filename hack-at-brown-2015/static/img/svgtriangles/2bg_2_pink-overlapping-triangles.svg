@@ -3,9 +3,9 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 268 390">
 <g>
-	<polygon opacity="0.6" fill="#EF5D93" points="107.2,0 107.2,180 268,90 	"/>
-	<polygon fill="#EF5D93" points="107.2,120 268,30 268,209 	"/>
-	<polygon opacity="0.4" fill="#EF5D93" points="268,390 268,90 0,240 	"/>
-	<polygon opacity="0.2" fill="#EF5D93" points="107.2,180 107.2,270 187.6,225 	"/>
+	<polygon opacity="0.6" fill="#EF5D93" points="107.2,0 107.2,180 268,90"/>
+	<polygon fill="#EF5D93" points="107.2,120 268,30 268,209"/>
+	<polygon opacity="0.4" fill="#EF5D93" points="268,390 268,90 0,"/>
+	<polygon opacity="0.2" fill="#EF5D93" points="107.2,180 107.2,270 187.6,225"/>
 </g>
 </svg>
