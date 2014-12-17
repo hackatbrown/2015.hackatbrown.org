@@ -20,7 +20,8 @@ memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
 def stringValidator(prop, value):
-    lowerValue = value.lower()
+    trimmedValue = value.strip()
+    lowerValue = trimmedValue.lower()
     stripped = str(utils.escape(lowerValue))
 
     if stripped != lowerValue:
