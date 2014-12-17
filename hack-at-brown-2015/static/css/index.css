@@ -1030,6 +1030,7 @@ section .background > .right {
 
 .sponsors {
     margin-top: 180px;
+    height: 990px;
 }
 .sponsors h2 {
     font-size: 1.2em;
@@ -1232,6 +1233,28 @@ section .background > .fore {
     background-image: url(/static/img/svgtriangles/2bg_4_white-tower-triangles.svg);
     top: 1350px;
     margin-right: 321.6px;
+}
+.fore.green-folded-a {
+    z-index: -11 !important;
+    width: 268px;
+    height: 180px;
+    background-image: url(/static/img/svgtriangles/2bg_5_green-folded-trianglea.svg);
+    top: 0;
+    margin-left: 214.4px;
+}
+.fore.green-folded-b {
+    width: 268px;
+    height: 180px;
+    background-image: url(/static/img/svgtriangles/2bg_5_green-folded-triangleb.svg);
+    top: 0;
+    margin-left: 214.4px;
+}
+.fore.pink-symmetrical {
+    width: 214.4px;
+    height: 300px;
+    background-image: url(/static/img/svgtriangles/2bg_6_pink-symmetricaloverlapping-triangles.svg);
+    top: 540px;
+    margin-left: 428.8px;
 }
 section .background > .mid {
     z-index: -8;
