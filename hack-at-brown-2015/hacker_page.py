@@ -18,6 +18,7 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         if hacker is None:
             self.redirect('/')
+            return
 
         status = computeStatus(hacker)
         name = hacker.name.split(" ")[0] # TODO: make it better
