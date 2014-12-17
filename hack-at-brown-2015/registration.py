@@ -11,6 +11,7 @@ import os
 import base64
 import webapp2
 #Validation
+from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
 from template import utils
 
@@ -85,7 +86,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
             try:
                 setattr(hacker, key, self.request.get(key))
             except datastore_errors.BadValueError as err:
-                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0])}))
+                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0]), "newURL" : blobstore.create_upload_url('/register')}))
                 return
 
         if Hacker.query(Hacker.email == hacker.email).count() > 0:

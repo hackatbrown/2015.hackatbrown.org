@@ -178,6 +178,10 @@
                                 if (response.field) {
                                     fieldInvalid(response.field);
                                 }
+                                //We need a new blobstore url for each time we submit the form.
+                                if (response.newURL) {
+                                    $('#registration_form').get(0).setAttribute('action', response.newURL);
+                                }
 
                             }
                     return false;
