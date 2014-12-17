@@ -20,16 +20,15 @@ memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
 def stringValidator(prop, value):
-    trimmedValue = value.strip()
-    lowerValue = trimmedValue.lower()
-    stripped = str(utils.escape(lowerValue))
+    lowerValue = value.lower()
+    cleanValue = lowerValue.strip()
+    cleanValue = str(utils.escape(cleanValue))
 
-    if stripped != lowerValue:
+    if cleanValue != lowerValue:
         raise datastore_errors.BadValueError(prop._name)
 
     #TODO - talk about lower case.
-
-    return stripped
+    return cleanValue
 
 class Hacker(ndb.Model):
 	name = ndb.StringProperty(validator=stringValidator)
