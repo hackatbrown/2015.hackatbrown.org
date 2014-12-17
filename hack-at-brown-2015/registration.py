@@ -67,8 +67,10 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         hacker = Hacker()
         hacker.ip = self.request.remote_addr
         for key in hacker_keys:
-            print key + " " + self.request.get(key)
-            setattr(hacker, key, self.request.get(key))
+            vals = self.request.get_all(key)
+            val =', '.join(vals)
+            print key + " " + val
+            setattr(hacker, key, val)
         if Hacker.query(Hacker.email == hacker.email).count() > 0:
             self.response.write(json.dumps({"success":False}))
             return
