@@ -1025,7 +1025,7 @@ section .background > .right {
 
 .sponsors {
     margin-top: 180px;
-    height: 1170px;
+    height: 1350px;
 }
 #sponsors {
     max-width: 80vw; /* Fix for Firefox and IE */
@@ -1321,18 +1321,9 @@ nav.open .hamsvg {
 
 /* RESPONSIVE */
 @media screen and (max-width:1280px) {
-  html {
-    font-size: 80%;
-  }
-}
-@media screen and (max-width: 1150px) {
-/*
-    TODO: Why?
-    .registration_form {
-        width:80%;
-    }
-*/
-    
+      html {
+        font-size: 80%;
+      }
     .schedule .background > .back {
         width: 1447.2px;
         margin-left: -750.4px;
@@ -1340,6 +1331,7 @@ nav.open .hamsvg {
         background-image: url(/static/img/svgtriangles/0bg_1_fallback-sky-trapezoid.svg);
     }
 }
+
 @media screen and (max-width: 750px) {
     .logo {
         margin-top: 5%;
@@ -1436,15 +1428,8 @@ nav.open .hamsvg {
         z-index: 10;
     }
     
-    .schedule {
-    }
-    
-    .sponsors {
-/*        margin-top: 60px;*/
-    }
-    
     .faq {
-        margin-top: 540px;
+        margin-top: 960px;
     }
     .faq > .background > .back {
         margin-right: -1232.8px;
@@ -1461,14 +1446,6 @@ nav.open .hamsvg {
     }
     .init_reg * {
         width: 80%;
-    }
-    section.triangle {
-/*        padding-top: 300px;*/
-/*        padding-bottom: 300px;*/
-    }
-    section .background {
-/*        transform: scale(1.5, 1.5);*/
-/*        transform-origin: center top;*/
     }
     
     .schedule article h2 > span {
