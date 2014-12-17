@@ -1481,3 +1481,8 @@ nav.open .hamsvg {
         display: inline-block;
     }
 }
+@media screen and (max-width: 320px) {
+    .about {
+        margin-bottom: 120px;
+    }
+}
