@@ -23,22 +23,24 @@ def stringValidator(prop, value):
     stripped = str(utils.escape(lowerValue))
 
     if stripped != lowerValue:
-        raise datastore_errors.BadValueError(prop)
+        raise datastore_errors.BadValueError(prop._name)
+
+    #TODO - talk about lower case.
 
     return stripped
 
 class Hacker(ndb.Model):
-	name = ndb.StringProperty()
-	school = ndb.StringProperty()
+	name = ndb.StringProperty(validator=stringValidator)
+	school = ndb.StringProperty(validator=stringValidator)
 	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior'])
 	email = ndb.StringProperty(validator=stringValidator)
 	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
-	dietary_restrictions = ndb.StringProperty()
+	dietary_restrictions = ndb.StringProperty(validator=stringValidator)
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
-	teammates = ndb.StringProperty(default=None)
+	teammates = ndb.StringProperty(default=None, validator=stringValidator)
 	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
@@ -66,7 +68,7 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	logging.debug("addmitting a hacker\n")
+	logging.debug("admitting a hacker\n")
 	email = template("emails/admitted.html", {"hacker": hacker})
 	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown")
 
@@ -79,11 +81,11 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         hacker = Hacker()
         hacker.ip = self.request.remote_addr
         for key in hacker_keys:
-            # print key + " " + self.request.get(key)
+            print key + " " + self.request.get(key)
             try:
                 setattr(hacker, key, self.request.get(key))
             except datastore_errors.BadValueError as err:
-                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : "email"}))
+                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0])}))
                 return
 
         if Hacker.query(Hacker.email == hacker.email).count() > 0:
