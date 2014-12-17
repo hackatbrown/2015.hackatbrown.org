@@ -1,7 +1,13 @@
 /* GENERAL */
+/*
+* {
+    transition: font-size cubic-bezier(.55,0,.1,1) .5s, margin .5s cubic-bezier(.55,0,.1,1), width .5s cubic-bezier(.55,0,.1,1);
+}
+*/
+
 html {
     overflow-x: hidden;
-    transition: font-size .5s;
+    transition: font-size cubic-bezier(.55,0,.1,1) .5s;
 }
 body {
     top: 0;
@@ -1428,10 +1434,13 @@ nav.open .hamsvg {
         z-index: 10;
     }
     
-    .faq {
+    .triangle.faq {
         margin-top: 960px;
     }
-    .faq > .background > .back {
+    .triangle.faq article {
+        margin-top: -240px;
+    }
+    .triangle.faq > .background > .back {
         margin-right: -1232.8px;
         width: calc(50vw + 1232.8px);
         height: calc(100vw + 1232.8px);
