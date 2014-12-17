@@ -1432,6 +1432,10 @@ nav.open .hamsvg {
         padding-bottom: 120px;
     }
     
+    .about article > {
+        z-index: 10;
+    }
+    
     .schedule {
     }
     
