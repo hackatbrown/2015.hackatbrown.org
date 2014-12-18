@@ -36,7 +36,13 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
   $scope.showBreakdowns = false;
 
-  $scope.charts = [{
+  $scope.charts = [
+    {
+      name : 'No Chart',
+      value : 'none',
+      hc_type : 'pie'
+    },
+    {
       name : 'By School',
       value : 'school',
       hc_type : 'pie'
@@ -174,14 +180,16 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
   }
 
   $scope.populateCharts = function() {
+    if ($scope.currentChart.value == "none") {
+      $('#chart_1').toggle(false);
+      return;
+    }
 
     $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
           $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
           $('#chart_1').toggle(data != "null");
-
-          console.log(data);
 
           if (data != "null") {
             var series = [];
