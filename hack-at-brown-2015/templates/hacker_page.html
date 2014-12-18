@@ -46,7 +46,7 @@
                             <div class="admit_status pending">
                                 {{ status }}
                             </div>
-                            
+
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">
@@ -71,7 +71,7 @@
             </div>
             <div class="double_right pane pane1 white">
                 <section id="myinfo" class="panel">
-                    
+
                     <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
                         <h3>View and update your information:</h3>
                         <p class="caption">(Some info isn't editable yet; we'll let you know as soon as it is)</p>
@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="field">
                                 <label>T-Shirt Size</label>
@@ -192,11 +192,17 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="field disabled">
+                            <div class="field">
                                 <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
-                                <input id="resume" class="resume-upload" type="file" name="resume" disabled/>
-                                <input id="resume-over" class="resume-button" type="button" value="Browse files" disabled/>
-                                <span class="file-name">No file chosen.</span>
+                                <input id="resume" class="resume-upload" type="file" name="resume"/>
+                                <input id="resume-over" class="resume-button" type="button" onclick="document.getElementById('resume').click()" value="Upload Resume"/>
+                                <span class="file-name">
+                                {% if hacker.resume %}
+                                    <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
+                                {% else %}
+                                    No file chosen.
+                                {% endif %}
+                                </span>
                             </div>
                         </div>
                         <div class="two fields row">
@@ -246,58 +252,59 @@
 <script>
     var linkRepeater,
         secret = "{{ hacker.secret }}";
+    var newResumeURL = "{{ newResumeURL }}";
 
     $(document).ready(function() {
-        
-        if(location.hash === '#info') {
+
+    if(location.hash === '#info') {
             setTabActive($("#info_top"));
             switchToMyInfo();
         }
-        
+
         $(".button").click(function() {
             $(this).toggleClass("active");
         });
-        
-        $("#status_top").click(function() { 
+
+        $("#status_top").click(function() {
             this.preventDefault;
             setTabActive(this);
             switchFromMyInfo();
         });
-        
+
         $("#info_top").click(function() {
             this.preventDefault;
             setTabActive(this);
             switchToMyInfo();
         });
-        
+
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
             console.log(this.name + " changed to " + this.value);
             saveChange(this.name, this.value, this.parentNode, secret, true);
         });
-        
+
         var $universities = [];
         $.getJSON("/static/data/universities.json", function (data) {
             $.each(data, function (key, val) {
                 $universities[key] = val;
             })
         });
-        
+
         // Populate the radio buttons
         populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
         populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
         populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
         populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
-        
+
         // Split the links into an array
         var linkArray = processCSV("{{ hacker.links }}");
-        
+
         /* Autocomplete suggestions for schools */
-        
+
         $(".schools").autocomplete({
             source: $universities
         });
-        
+
         //Repeater list
         linkRepeater = $(".condor").condor({
             uniqueNames: false,
@@ -307,13 +314,14 @@
             inputType: 'url',
             prepopulate: linkArray
         });
-        
+
         $(linkRepeater).find(".condor-active").each(function(i, uiInput) {
             var icon = $(uiInput).find("i.icon"),
                 input = $(uiInput).find("input");
             domainMatch(icon, $(input).val());
         });
-      
+        requestNewUploadURL();
+
         trackCondor(linkRepeater);
     });
 </script>

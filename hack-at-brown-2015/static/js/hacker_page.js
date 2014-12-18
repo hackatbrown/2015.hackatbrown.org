@@ -19,11 +19,46 @@ function switchFromMyInfo() {
     switchPanes(0);
 }
 
+function requestNewUploadURL() {
+    $.ajax({
+        type: 'GET',
+        url: '/secret/__newurl/' + secret,
+        success: function(response) {
+            response = JSON.parse(response);
+            newResumeURL = response.newURL;
+        }
+    });
+}
+
+function updateResume(value, uiinput, secret, responseStatus) {
+    var data = new FormData();
+    data.append("resume", file = $('.resume-upload')[0].files[0]);
+    $.ajax({
+        url: newResumeURL,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function(response){
+            response = JSON.parse(response)
+            $resumeView = $('.view-resume');
+            $resumeView.attr('href', response.downloadLink);
+            $resumeView[0].innerHTML = response.fileName;
+        }
+    });
+}
+
 //  Form processing out
 
 function saveChange(key, value, uiinput, secret, responseStatus) {
+    if (key == 'resume') {
+        updateResume(value, uiinput, secret, responseStatus);
+        requestNewUploadURL();
+    }
+
     console.log("key: " + key + " value: " + value);
-    var data = {}, 
+    var data = {},
         $icon = $(uiinput).children(".icon"),
         oldIcon = $icon.attr('class');
     data[key] = value;
@@ -79,7 +114,6 @@ function domainMatch(uiIcon, url) {
     for (domain in recognizedDomains) {
         if(url.indexOf(domain) > -1) {
             console.log("matched with " + domain);
-            console.log(uiIcon);
             $(uiIcon).attr('class', "icon " + recognizedDomains[domain]);
             return;
         }

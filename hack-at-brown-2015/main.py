@@ -17,6 +17,7 @@
 import webapp2
 from template import template
 import config
+import resume
 import dashboard
 import email_list
 import registration
@@ -41,8 +42,11 @@ app = webapp2.WSGIApplication([
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/__check_registered', registration.CheckRegistrationHandler),
+		('/secret/__change/(.+)', resume.ChangeHandler),
+		('/secret/__newurl/(.+)', resume.NewURLHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
+		('/__serve/([^/]+)?', resume.ServeHandler),
 		('/__get_dash_stats', dashboard.DashboardBackgroundHandler),
 		('/__send_email', dashboard.SendEmail),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
@@ -54,4 +58,3 @@ app = webapp2.WSGIApplication([
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)
-
