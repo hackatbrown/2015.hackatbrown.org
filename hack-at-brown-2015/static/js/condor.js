@@ -1,3 +1,5 @@
+// CONDOR EXPERIMENTAL HACK@BROWN VERSION
+
 (function ($) {
   
     $.fn.condor = function (command) {
