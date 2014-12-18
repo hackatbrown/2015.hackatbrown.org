@@ -195,10 +195,10 @@
                             <div class="field">
                                 <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
                                 <input id="resume" class="resume-upload" type="file" name="resume"/>
-                                <input id="resume-over" class="resume-button" type="button" onclick="document.getElementById('resume').click()" value="Browse files"/>
+                                <input id="resume-over" class="resume-button" type="button" onclick="document.getElementById('resume').click()" value="Upload Resume"/>
                                 <span class="file-name">
                                 {% if hacker.resume %}
-                                    <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">View Current Resume</a>
+                                    <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
                                 {% else %}
                                     No file chosen.
                                 {% endif %}

@@ -20,9 +20,14 @@ class HackerPageHandler(webapp2.RequestHandler):
             self.redirect('/')
 
         status = computeStatus(hacker)
+        fileName = ""
+
+        if hacker.resume:
+            fileName = resume.getFileName(hacker.resume)
+
         name = hacker.name.split(" ")[0] # TODO: make it better
         newResumeURL = resume.newURL(secret)
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL, "resumeFileName" : fileName}))
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):

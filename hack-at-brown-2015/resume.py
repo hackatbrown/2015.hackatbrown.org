@@ -16,6 +16,7 @@ class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
 
         resume_files = self.get_uploads('resume')
         if (len(resume_files) > 0):
+            print(resume_files)
             newResume = resume_files[0].key()
             if hacker.resume:
                 blobstore.delete(hacker.resume)
@@ -24,14 +25,18 @@ class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
         hacker_page.putHacker(hacker)
 
         downloadLink = getDownloadLink(hacker)
+        fileName = getFileName(hacker.resume)
 
-        self.response.write(json.dumps({"success": True, "downloadLink": downloadLink}))
+        self.response.write(json.dumps({"success": True, "downloadLink": downloadLink, "fileName" : fileName}))
 
 def getDownloadLink(hacker):
     return '/__serve/' + str(hacker.resume)
 
 def newURL(secret):
     return blobstore.create_upload_url('/secret/__change/' + secret)
+
+def getFileName(blobKey):
+    return blobstore.BlobInfo.get(blobKey).filename
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
   def get(self, resource):

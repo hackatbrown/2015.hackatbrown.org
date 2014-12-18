@@ -42,7 +42,9 @@ function updateResume(value, uiinput, secret, responseStatus) {
         type: 'POST',
         success: function(response){
             response = JSON.parse(response)
-            $('.view-resume').attr('href', response.downloadLink);
+            $resumeView = $('.view-resume');
+            $resumeView.attr('href', response.downloadLink);
+            $resumeView[0].innerHTML = response.fileName;
         }
     });
 }
