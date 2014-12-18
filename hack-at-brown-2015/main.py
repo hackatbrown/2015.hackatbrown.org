@@ -42,6 +42,8 @@ app = webapp2.WSGIApplication([
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/__check_registered', registration.CheckRegistrationHandler),
+		('/secret/__change/(.+)', resume.ChangeHandler),
+		('/secret/__newurl/(.+)', resume.NewURLHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
 		('/__serve/([^/]+)?', resume.ServeHandler),
