@@ -114,7 +114,6 @@ function domainMatch(uiIcon, url) {
     for (domain in recognizedDomains) {
         if(url.indexOf(domain) > -1) {
             console.log("matched with " + domain);
-            console.log(uiIcon);
             $(uiIcon).attr('class', "icon " + recognizedDomains[domain]);
             return;
         }
