@@ -273,7 +273,7 @@
         //    Form stuff. Needs to stay in the html for jinja to do its thing
         $("#update_form input").change( function() {
             console.log(this.name + " changed to " + this.value);
-            saveChange(this.name, this.value, this.parentNode, "{{ secret }}", true);
+            saveChange(this.name, this.value, this.parentNode, secret, true);
         });
         
         var $universities = [];
@@ -290,7 +290,7 @@
         populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
         
         // Split the links into an array
-        var linkArray = processCSV(" {{ hacker.links }} ");
+        var linkArray = processCSV("{{ hacker.links }}");
         
         /* Autocomplete suggestions for schools */
         
