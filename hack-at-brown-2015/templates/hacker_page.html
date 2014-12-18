@@ -192,13 +192,13 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="field disabled">
+                            <div class="field">
                                 <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
-                                <input id="resume" class="resume-upload" type="file" name="resume" disabled/>
-                                <input id="resume-over" class="resume-button" type="button" value="Browse files" disabled/>
+                                <input id="resume" class="resume-upload" type="file" name="resume"/>
+                                <input id="resume-over" class="resume-button" type="button" onclick="document.getElementById('resume').click()" value="Upload Resume"/>
                                 <span class="file-name">
                                 {% if hacker.resume %}
-                                    <a href='/__serve/{{ hacker.resume }}' target="_blank">View Current Resume</a>
+                                    <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
                                 {% else %}
                                     No file chosen.
                                 {% endif %}
@@ -252,10 +252,11 @@
 <script>
     var linkRepeater,
         secret = "{{ hacker.secret }}";
+    var newResumeURL = "{{ newResumeURL }}";
 
     $(document).ready(function() {
 
-        if(location.hash === '#info') {
+    if(location.hash === '#info') {
             setTabActive($("#info_top"));
             switchToMyInfo();
         }
@@ -319,6 +320,7 @@
                 input = $(uiInput).find("input");
             domainMatch(icon, $(input).val());
         });
+        requestNewUploadURL();
 
         trackCondor(linkRepeater);
     });

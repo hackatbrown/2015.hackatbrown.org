@@ -4,6 +4,8 @@ import registration
 import logging
 import json
 from google.appengine.api import memcache
+import resume
+
 
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
@@ -11,26 +13,27 @@ memcachedBase = 'hacker_update/'
 
 class HackerPageHandler(webapp2.RequestHandler):
     def get(self, secret):
-        memcachedKey = memcachedBase + secret
-        hacker = memcache.get(memcachedKey)
-        if hacker is None:
-            hacker = registration.Hacker.WithSecret(secret)
+
+        hacker = getHacker(secret)
 
         if hacker is None:
             self.redirect('/')
 
         status = computeStatus(hacker)
+        fileName = ""
+
+        if hacker.resume:
+            fileName = resume.getFileName(hacker.resume)
+
         name = hacker.name.split(" ")[0] # TODO: make it better
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name}))
+        newResumeURL = resume.newURL(secret)
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL, "resumeFileName" : fileName}))
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
-        memcachedKey = memcachedBase + secret
         parsed_request = json.loads(self.request.body)
 
-        hacker = memcache.get(memcachedKey)
-        if hacker is None:
-            hacker = registration.Hacker.WithSecret(secret)
+        hacker = getHacker(secret)
 
         logging.info("Request for hacker update recieved: " + hacker.name)
         for key in parsed_request:
@@ -41,12 +44,27 @@ class HackerUpdateHandler(webapp2.RequestHandler):
             else:
                 logging.info("Key not found")
 
-        if not memcache.set(memcachedKey, hacker, cacheTime):
-            logging.error('Memcache set failed')
 
-        hacker.put()
+        putHacker(hacker)
 
         self.response.write(json.dumps({"success": True}))
+
+def getHacker(secret):
+    logging.info(secret)
+    memcachedKey = memcachedBase + secret
+    hacker = memcache.get(memcachedKey)
+    if hacker is None:
+        hacker = registration.Hacker.WithSecret(secret)
+
+    return hacker
+
+def putHacker(hacker):
+    memcachedKey = memcachedBase + hacker.secret
+
+    if not memcache.set(memcachedKey, hacker, cacheTime):
+        logging.error('Memcache set failed')
+
+    hacker.put()
 
 def computeStatus(hacker):
     if hacker is None:
