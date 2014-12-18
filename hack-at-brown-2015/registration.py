@@ -68,7 +68,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         hacker.ip = self.request.remote_addr
         for key in hacker_keys:
             vals = self.request.get_all(key)
-            val =', '.join(vals)
+            val =','.join(vals)
             print key + " " + val
             setattr(hacker, key, val)
         if Hacker.query(Hacker.email == hacker.email).count() > 0:
