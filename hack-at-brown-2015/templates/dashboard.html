@@ -38,7 +38,7 @@
   <div id="breakdowns" ng-show='showBreakdowns'>
 
     <h1 style=""> Schools </h1>
-    <div ng-repeat="(key, value) in schools">
+    <div ng-repeat="(key, value) in school">
       <span><b>%%key%%:</b> %%value%%</span>
     </div>
     <br>
@@ -52,18 +52,28 @@
       <span><b>%%key%%:</b> %%value%%</span>
     </div>
     <br>
-    <h1 style=""> Gender and Shirt Sizes </h1>
-    <div ng-repeat="(key, value) in shirts">
+    <h1 style=""> Shirt Sizes </h1>
+    <div ng-repeat="(key, value) in shirt">
       <span><b>%%key%%:</b> %%value%%</span>
     </div>
     <br>
     <h1 style=""> Hardware Hack? </h1>
-    <div ng-repeat="(key, value) in hardware">
+    <div ng-repeat="(key, value) in hardware_hack">
       <span><b>%%key%%:</b> %%value%%</span>
     </div>
     <br>
     <h1 style=""> First Hackathon? </h1>
-    <div ng-repeat="(key, value) in firstHack">
+    <div ng-repeat="(key, value) in first_hackathon">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style=""> Gender </h1>
+    <div ng-repeat="(key, value) in shirt_gen">
+      <span><b>%%key%%:</b> %%value%%</span>
+    </div>
+    <br>
+    <h1 style=""> Status </h1>
+    <div ng-repeat="(key, value) in h_status">
       <span><b>%%key%%:</b> %%value%%</span>
     </div>
 

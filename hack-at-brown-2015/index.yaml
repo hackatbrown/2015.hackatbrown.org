@@ -31,3 +31,8 @@ indexes:
   properties:
   - name: email
   - name: secret
+
+- kind: Hacker
+  properties:
+  - name: shirt_gen
+  - name: shirt_size

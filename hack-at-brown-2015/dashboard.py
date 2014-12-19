@@ -11,7 +11,7 @@ from google.appengine.api import memcache
 import logging
 
 cacheTime = 6 * 10 * 2
-memcachedKey = 'all_hackers_for_dashboard'
+memcachedBase = 'all_hackers_with_prop'
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
@@ -99,55 +99,49 @@ class ViewBreakdownsHandler(webapp2.RequestHandler):
 
 class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
-        if type == 'all':
-            data = getAll()
-        elif type == 'diet':
-            data = getByDietaryPreferences()
-        elif type == 'shirt':
-            data = getByShirtSize()
-        elif type == 'status':
-            data = getByStatus()
-        else:
-            data = getGeneric(type)
-
+        data = getBreakdown(type)
         self.response.write(json.dumps(data))
 
+def getBreakdown(type):
+    if type == 'all':
+        data = getAll()
+    elif type == 'diet':
+        data = getByDietaryRestrictions()
+    elif type == 'shirt':
+        data = getByShirtSize()
+    elif type == 'h_status':
+        data = getByStatus()
+    else:
+        data = getGeneric(type)
 
-def getAllHackers():
-    hackers = memcache.get(memcachedKey)
-    if hackers is None:
+    return data
+
+def getAllHackers(projection=None):
+
+    if projection:
+        memcachedKey = memcachedBase + str(projection)
+        hackers = memcache.get(memcachedKey)
+        if hackers is None:
+            hackers = Hacker.query(projection=projection).fetch()
+            if not memcache.set(memcachedKey, hackers, cacheTime):
+                logging.error("Memcache set failed")
+    else:
         hackers = Hacker.query().fetch()
-        if not memcache.set(memcachedKey, hackers, cacheTime):
-            logging.error("Memcache set failed")
 
     return hackers
+
 def getAll():
-    hackers =  getAllHackers()
-    schools = {}
-    shirts = {}
-    hardware = {}
-    firstHack = {}
-    diet = {}
-    year = {}
-    if not hackers:
-        return
-    for hacker in hackers:
-        hacker_school = (str(hacker.school)).replace("University", " ").replace("College", " ").strip()
-        schools[hacker_school] = schools.setdefault(hacker_school, 0) + 1
-        year[hacker.year] = year.setdefault(hacker.year, 0) + 1
-        shirts[hacker.shirt_gen] = shirts.setdefault(hacker.shirt_gen, 0) + 1
-        if hacker.shirt_gen and hacker.shirt_size:
-            shirts[hacker.shirt_gen + hacker.shirt_size] =  shirts.setdefault(hacker.shirt_gen + hacker.shirt_size, 0) + 1
-        hardware[hacker.hardware_hack] = hardware.setdefault(hacker.hardware_hack, 0) + 1
-        firstHack[hacker.first_hackathon] = firstHack.setdefault(hacker.first_hackathon, 0) + 1
-        if hacker.dietary_restrictions == "":
-            diet["No Info"] = diet.setdefault("No Info", 0) + 1
-        else:
-            diet[hacker.dietary_restrictions] = diet.setdefault(hacker.dietary_restrictions, 0) + 1
-    return {"schools": schools, "shirts":shirts, "hardware": hardware, "firstHack": firstHack, "diet":diet, "year": year}
+    keys = ["school", "shirt", "hardware_hack", "first_hackathon", "diet",
+    "year", "shirt_gen", "h_status"]
+    data = {}
+    for key in keys:
+        data[key] = getBreakdown(key)
+
+    return data
+
 
 def getGeneric(value):
-    hackers = getAllHackers()
+    hackers = getAllHackers([value])
     data = {}
     for hacker in hackers:
         key = getattr(hacker, value).title()
@@ -155,15 +149,15 @@ def getGeneric(value):
     return data
 
 def getByShirtSize():
-    hackers =  getAllHackers()
+    hackers =  getAllHackers(["shirt_gen", "shirt_size"])
     data = {}
     for hacker in hackers:
         key = hacker.shirt_gen + hacker.shirt_size
         data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByDietaryPreferences():
-    hackers =  getAllHackers()
+def getByDietaryRestrictions():
+    hackers =  getAllHackers(["dietary_restrictions"])
     data = {}
     for hacker in hackers:
         multikey = hacker.dietary_restrictions

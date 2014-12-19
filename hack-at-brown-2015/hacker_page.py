@@ -45,7 +45,6 @@ class HackerUpdateHandler(webapp2.RequestHandler):
             else:
                 logging.info("Key not found")
 
-
         putHacker(hacker)
 
         self.response.write(json.dumps({"success": True}))

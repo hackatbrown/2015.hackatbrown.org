@@ -10,7 +10,7 @@ var breakdownsApp = angular.module('breakdownsApp', []).config(function($interpo
 
 breakdownsApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
 
-  $scope.schools = {};
+  $scope.school = {};
 
 }]);
 
@@ -73,7 +73,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       hc_type : 'pie'
     }, {
       name : 'By Status',
-      value : 'status',
+      value : 'h_status',
       hc_type : 'pie'
     }];
   $scope.currentChart = $scope.charts[0];
@@ -112,7 +112,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       return "Failed";
     };
     var request = {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }
-    if (display === true){ 
+    if (display === true){
           request.display = true;
         }
     $http.post('/__send_email', request).
@@ -184,7 +184,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
   $scope.getBreakdowns = function(){
     $scope.showBreakdowns = !$scope.showBreakdowns;
-    if ($scope.schools){
+    if ($scope.school){
       return;
     }
     $http({method: 'GET', url: '/__breakdown/' + "all"}).
@@ -192,12 +192,14 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
 
           if (data != "null") {
-            $scope.schools = data.schools;
-            $scope.shirts = data.shirts;
-            $scope.hardware = data.hardware;
-            $scope.firstHack = data.firstHack;
+            $scope.school = data.school;
+            $scope.shirt = data.shirt;
+            $scope.hardware_hack = data.hardware_hack;
+            $scope.first_hackathon = data.first_hackathon;
             $scope.diet = data.diet;
             $scope.years = data.year;
+            $scope.shirt_gen = data.shirt_gen
+            $scope.h_status = data.h_status
           }
 
         }).
