@@ -85,24 +85,12 @@ class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
         if type == 'all':
             data = getAll()
-        elif type == 'school':
-            data = getBySchool()
-        elif type == 'gender':
-            data = getByGender()
-        elif type == 'shirt':
-            data = getByShirtSize()
         elif type == 'diet':
             data = getByDietaryPreferences()
-        elif type == 'year':
-            data = getByYear()
-        elif type == 'first_hackathon':
-            data = getByExperience()
-        elif type == 'hardware_hack':
-            data = getByHardware()
         elif type == 'status':
             data = getByStatus()
         else:
-            data = {}
+            data = getGeneric(type)
 
         self.response.write(json.dumps(data))
 
@@ -131,11 +119,11 @@ def getAll():
             diet[hacker.dietary_restrictions] = diet.setdefault(hacker.dietary_restrictions, 0) + 1
     return {"schools": schools, "shirts":shirts, "hardware": hardware, "firstHack": firstHack, "diet":diet, "year": year}
 
-def getBySchool():
-    hackers =  Hacker.query().fetch()
+def getGeneric(value):
+    hackers = Hacker.query().fetch()
     data = {}
     for hacker in hackers:
-        key = hacker.school.title()
+        key = getattr(hacker, value).title()
         data[key] = data.setdefault(key, 0) + 1
     return data
 
@@ -144,14 +132,6 @@ def getByShirtSize():
     data = {}
     for hacker in hackers:
         key = hacker.shirt_gen + hacker.shirt_size
-        data[key] = data.setdefault(key, 0) + 1
-    return data
-
-def getByGender():
-    hackers =  Hacker.query().fetch()
-    data = {}
-    for hacker in hackers:
-        key = hacker.shirt_gen
         data[key] = data.setdefault(key, 0) + 1
     return data
 
@@ -166,30 +146,6 @@ def getByDietaryPreferences():
         for key in multikey.split(','):
             key = key.title()
             data[key] = data.setdefault(key, 0) + 1
-    return data
-
-def getByYear():
-    hackers =  Hacker.query().fetch()
-    data = {}
-    for hacker in hackers:
-        key = hacker.year.title()
-        data[key] = data.setdefault(key, 0) + 1
-    return data
-
-def getByExperience():
-    hackers =  Hacker.query().fetch()
-    data = {}
-    for hacker in hackers:
-        key = hacker.first_hackathon.title()
-        data[key] = data.setdefault(key, 0) + 1
-    return data
-
-def getByHardware():
-    hackers =  Hacker.query().fetch()
-    data = {}
-    for hacker in hackers:
-        key = hacker.hardware_hack.title()
-        data[key] = data.setdefault(key, 0) + 1
     return data
 
 def getByStatus():

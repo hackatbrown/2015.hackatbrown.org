@@ -56,7 +56,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', function ($scope, $http){
       hc_type : 'pie'
     }, {
       name : 'By Gender',
-      value : 'gender',
+      value : 'shirt_gen',
       hc_type : 'pie'
     }, {
       name : 'By Year',
