@@ -26,7 +26,6 @@ import background_work
 import hacker_page
 import short_urls
 import m
-from google.appengine.api import memcache
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):

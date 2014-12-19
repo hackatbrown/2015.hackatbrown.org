@@ -7,8 +7,11 @@ from template import template
 from email_list import EmailListEntry
 from hacker_page import computeStatus
 from background_work import waitlist_hacker
-
+from google.appengine.api import memcache
 import logging
+
+cacheTime = 6 * 10 * 2
+memcachedKey = 'all_hackers_for_dashboard'
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
@@ -85,7 +88,7 @@ class SendEmail(webapp2.RequestHandler):
     #     send_to = [hacker.email for hacker in Hacker.query(Hacker.waitlist_email_sent_date != None)]
     # elif parsed_request.get("recipients") == "ACCEPTED":
     #     send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
-    
+
 
     send_email(recipients=send_to, html=html, subject=subject)
     self.response.write(json.dumps({"success": True, "html":None }))
@@ -109,8 +112,17 @@ class BreakdownHandler(webapp2.RequestHandler):
 
         self.response.write(json.dumps(data))
 
+
+def getAllHackers():
+    hackers = memcache.get(memcachedKey)
+    if hackers is None:
+        hackers = Hacker.query().fetch()
+        if not memcache.set(memcachedKey, hackers, cacheTime):
+            logging.error("Memcache set failed")
+
+    return hackers
 def getAll():
-    hackers =  Hacker.query().fetch()
+    hackers =  getAllHackers()
     schools = {}
     shirts = {}
     hardware = {}
@@ -135,7 +147,7 @@ def getAll():
     return {"schools": schools, "shirts":shirts, "hardware": hardware, "firstHack": firstHack, "diet":diet, "year": year}
 
 def getGeneric(value):
-    hackers = Hacker.query().fetch()
+    hackers = getAllHackers()
     data = {}
     for hacker in hackers:
         key = getattr(hacker, value).title()
@@ -143,7 +155,7 @@ def getGeneric(value):
     return data
 
 def getByShirtSize():
-    hackers =  Hacker.query().fetch()
+    hackers =  getAllHackers()
     data = {}
     for hacker in hackers:
         key = hacker.shirt_gen + hacker.shirt_size
@@ -151,7 +163,7 @@ def getByShirtSize():
     return data
 
 def getByDietaryPreferences():
-    hackers =  Hacker.query().fetch()
+    hackers =  getAllHackers()
     data = {}
     for hacker in hackers:
         multikey = hacker.dietary_restrictions
@@ -164,7 +176,7 @@ def getByDietaryPreferences():
     return data
 
 def getByStatus():
-    hackers = Hacker.query().fetch()
+    hackers = getAllHackers()
     data = {}
     for hacker in hackers:
         key = computeStatus(hacker)
