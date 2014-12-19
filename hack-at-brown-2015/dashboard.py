@@ -87,6 +87,8 @@ class BreakdownHandler(webapp2.RequestHandler):
             data = getAll()
         elif type == 'diet':
             data = getByDietaryPreferences()
+        elif type == 'shirt':
+            data = getByShirtSize()
         elif type == 'status':
             data = getByStatus()
         else:
