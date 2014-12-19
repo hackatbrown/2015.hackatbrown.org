@@ -20,7 +20,16 @@ def run(property, jsonKeys):
                 hacker.put()
                 numChanges++
             except Exception as err
-                return self.response.write(json.dumps({"success":False, "msg": str(err.args[0])}))
+                return {"success":False, "msg": str(err.args[0])}
 
     successMsg = "Changed the schools of " + numChanges + " hackers."
-    return self.response.write(json.dumps({"success":True, "msg": successMsg}))
+    return {"success":True, "msg": successMsg}
+
+
+def CleanupHandler(webapp2.RequestHandler):
+    def post(self):
+        parsed_request = json.loads(self.request.body)
+        property = parsed_request.get('property')
+        jsonKeys = parsed_request.get('jsonKeys')
+        result =  run(property, jsonKeys)
+        return self.response.write(json.dumps(result))

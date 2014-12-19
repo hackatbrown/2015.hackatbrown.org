@@ -24,6 +24,7 @@ import registration
 from google.appengine.ext import blobstore
 import background_work
 import hacker_page
+import db_cleanup
 import short_urls
 import m
 
