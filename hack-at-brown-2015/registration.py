@@ -32,7 +32,6 @@ class Hacker(ndb.Model):
 
 
 	secret = ndb.StringProperty()
-	post_registration_email_sent_date = ndb.DateTimeProperty()
 
 	admit_priority = ndb.FloatProperty(default=0)
 	admitted_email_sent_date = ndb.DateTimeProperty()
@@ -60,7 +59,7 @@ def accept_hacker(hacker):
 
 	hacker.admitted_email_sent_date = datetime.datetime.now()
 	hacker.put()
-	memcache.add("admitted:{0}".format(hacker.key.id()), "1", memcache_expiry)
+	memcache.add("admitted:{0}".format(hacker.secret), "1", memcache_expiry)
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
@@ -98,3 +97,4 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
             #            TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
+

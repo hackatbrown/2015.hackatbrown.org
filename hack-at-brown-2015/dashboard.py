@@ -5,6 +5,9 @@ from registration import Hacker, accept_hacker
 from send_email import send_email
 from template import template
 from email_list import EmailListEntry
+from hacker_page import computeStatus
+from background_work import waitlist_hacker
+
 import logging
 
 class DashboardHandler(webapp2.RequestHandler):
@@ -26,6 +29,11 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
                     if parsed_request.get('change') == "Remove":
                         if h.admitted_email_sent_date == None:
                             h.key.delete()
+
+                    if parsed_request.get('change') == 'Waitlist':
+                        if h.admitted_email_sent_date == None:
+                            waitlist_hacker(h)
+
 
 
 class DashboardBackgroundHandler(webapp2.RequestHandler):
@@ -88,16 +96,16 @@ class ViewBreakdownsHandler(webapp2.RequestHandler):
 
 class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
-        if type == 'school':
-            data = getBySchool()
-        elif type == 'all':
+        if type == 'all':
             data = getAll()
-        elif type == 'shirt':
-            data = getByShirtSize()
         elif type == 'diet':
             data = getByDietaryPreferences()
+        elif type == 'shirt':
+            data = getByShirtSize()
+        elif type == 'status':
+            data = getByStatus()
         else:
-            data = {}
+            data = getGeneric(type)
 
         self.response.write(json.dumps(data))
 
@@ -126,18 +134,42 @@ def getAll():
             diet[hacker.dietary_restrictions] = diet.setdefault(hacker.dietary_restrictions, 0) + 1
     return {"schools": schools, "shirts":shirts, "hardware": hardware, "firstHack": firstHack, "diet":diet, "year": year}
 
-def getBySchool():
-    hackers =  Hacker.query().fetch()
+def getGeneric(value):
+    hackers = Hacker.query().fetch()
     data = {}
     for hacker in hackers:
-        data[hacker.school] = data.setdefault(hacker.school, 0) + 1
+        key = getattr(hacker, value).title()
+        data[key] = data.setdefault(key, 0) + 1
     return data
 
 def getByShirtSize():
-    return {"Small" : 1, "Medium" : 40, "Large" : 30, "Capacious" : 10}
+    hackers =  Hacker.query().fetch()
+    data = {}
+    for hacker in hackers:
+        key = hacker.shirt_gen + hacker.shirt_size
+        data[key] = data.setdefault(key, 0) + 1
+    return data
 
 def getByDietaryPreferences():
-    return {"Babies" : 10, "Vegetables" : 40, "Bajas" : 30, "Gluten-Free" : 10}
+    hackers =  Hacker.query().fetch()
+    data = {}
+    for hacker in hackers:
+        multikey = hacker.dietary_restrictions
+        if multikey == "":
+            multikey = "None"
+
+        for key in multikey.split(','):
+            key = key.title()
+            data[key] = data.setdefault(key, 0) + 1
+    return data
+
+def getByStatus():
+    hackers = Hacker.query().fetch()
+    data = {}
+    for hacker in hackers:
+        key = computeStatus(hacker)
+        data[key] = data.setdefault(key, 0) + 1
+    return data
 
 '''
     def entries_that_fit(offset):

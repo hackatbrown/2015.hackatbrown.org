@@ -37,7 +37,13 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.showBreakdowns = false;
   $scope.displayEmail = false;
 
-  $scope.charts = [{
+  $scope.charts = [
+    {
+      name : 'No Chart',
+      value : 'none',
+      hc_type : 'pie'
+    },
+    {
       name : 'By School',
       value : 'school',
       hc_type : 'pie'
@@ -48,6 +54,26 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
     }, {
       name : 'By Dietary Restrictions',
       value : 'diet',
+      hc_type : 'pie'
+    }, {
+      name : 'By Gender',
+      value : 'shirt_gen',
+      hc_type : 'pie'
+    }, {
+      name : 'By Year',
+      value : 'year',
+      hc_type : 'pie'
+    }, {
+      name : 'First Hackathon',
+      value : 'first_hackathon',
+      hc_type : 'pie'
+    }, {
+      name : 'Hardware Hackers',
+      value : 'hardware_hack',
+      hc_type : 'pie'
+    }, {
+      name : 'By Status',
+      value : 'status',
       hc_type : 'pie'
     }];
   $scope.currentChart = $scope.charts[0];
@@ -183,6 +209,10 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   }
 
   $scope.populateCharts = function() {
+    if ($scope.currentChart.value == "none") {
+      $('#chart_1').toggle(false);
+      return;
+    }
 
     $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
         success(function(data, status) {
