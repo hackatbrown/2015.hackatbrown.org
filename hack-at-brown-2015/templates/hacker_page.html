@@ -8,13 +8,13 @@
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
+<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
 <link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css"/>
 {% endblock %}
 
 {% block headjs %}
 {{ super() }}
 <script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
-<script type="application/javascript" src="/static/Tagit/js/tag-it.min.js"</script>
 {% endblock %}
 
 {% block nav %}
@@ -164,7 +164,7 @@
                             <div class="field disabled">
                                 <label for="dietary_restrictions">Dietary Restrictions?</label>
                                 <div class="ui icon input">
-                                    <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}" disabled/>
+                                    <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -246,9 +246,11 @@
 <script type="text/javascript" src="/static/js/select2.min.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
+
 
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
+<!--<script type="application/javascript" src="/static/Tagit/js/tag-it.js"</script>-->
 
 
 <script>
@@ -290,6 +292,10 @@
             $.each(data, function (key, val) {
                 $universities[key] = val;
             })
+        });
+        
+        $('#dietary_restrictions').tagit({
+            
         });
 
         // Populate the radio buttons
