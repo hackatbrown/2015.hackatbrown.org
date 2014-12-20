@@ -19,6 +19,18 @@ function switchFromMyInfo() {
     switchPanes(0);
 }
 
+function initalizeHamburger() {
+  // Hamburger menu for mobile
+  $("nav ul > li a").click(function () {
+    $("nav").removeClass("open");
+  })
+  $(".hamburger").click(function () {
+    $("nav").toggleClass("open");
+  });
+}
+
+// Resume Upload
+
 function requestNewUploadURL() {
     $.ajax({
         type: 'GET',
