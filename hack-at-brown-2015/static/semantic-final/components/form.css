@@ -945,6 +945,9 @@
 /* height: 35px !important; */
   padding-left: 0 !important;
 }
+.ui.icon.input .selectize-input {
+  padding-right: 1.18em!important;
+}
 .ui.form .selectize-input.focus {
   box-shadow: inset 1px -80px 0px -1px #404040 !important;
   padding-left: .65em !important;
@@ -955,6 +958,9 @@
 .selectize-input > input {
   height: auto !important;
   padding-top: 2px !important;
+}
+.ui.icon.input .selectize-input > input {
+  padding-right: 0px !important;
 }
 .selectize-input.focus > input {
   color: #ffffff;

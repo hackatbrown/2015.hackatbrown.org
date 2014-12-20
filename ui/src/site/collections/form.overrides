@@ -86,6 +86,10 @@
 //    padding-bottom: 8px !important;
 }
 
+.ui.icon.input .selectize-input {
+    padding-right: 1.18em!important;
+}
+
 .ui.form .selectize-input.has-items {
 //    padding-top: 4.5px !important;
 //    padding-bottom: 4px !important;
@@ -102,6 +106,10 @@
     height: auto !important;
     padding-top: 2px !important;
 }
+.ui.icon.input .selectize-input>input {
+    padding-right: 0px !important;
+}
+
 .selectize-input.focus > input {
     color: @white;
 }

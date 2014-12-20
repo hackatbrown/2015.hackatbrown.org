@@ -48,7 +48,7 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                            <div class="admit_status pending">
+                          <div class="admit_status {{ status }}">
                                 {{ status }}
                             </div>
 
@@ -125,7 +125,7 @@
                             </div>
                             <div class="field">
                                 <label>T-Shirt Size</label>
-                                <div class="shirt_size">
+                                <div class="shirt_size radiogroup">
                                     <table class="radio_select radiobuttons center">
                                         <tr>
                                             <td>
@@ -253,7 +253,6 @@
 
 
 <script type="text/javascript" src="/static/js/condor.js"></script>
-<script type="text/javascript" src="/static/js/select2.min.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
 <script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
@@ -494,6 +493,8 @@
     requestNewUploadURL();
 
     trackCondor(linkRepeater);
+    
+    initalizeHamburger();
   });
 </script>
 {% endblock %}
