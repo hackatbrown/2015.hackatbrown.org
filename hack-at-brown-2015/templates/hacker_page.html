@@ -106,10 +106,17 @@
                                             <i class="icon"></i>
                                         </div>
                                     </div>
-                                    <div class="six wide field disabled">
+                                    <div class="six wide field">
                                         <label for="year">Year</label>
-                                        <div class="ui icon input">
-                                            <input id="year" type="text" name="year" placeholder="Select Year" value="{{ hacker.year }}" disabled/>
+                                        <div class="ui icon input select">
+                                            <select id="year" type="text" name="year" placeholder="Select Year"
+                                            value="sophomore">
+                                                <option value="freshman">First Year</option>
+                                                <option value="sophomore">Second Year</option>
+                                                <option value="junior">Third Year</option>
+                                                <option value="senior">Fourth Year</option>
+                                                <option value="highschool">High School</option>
+                                            </select>
                                             <i class="icon"></i>
                                         </div>
                                     </div>
@@ -277,6 +284,11 @@
       switchFromMyInfo();
     });
 
+
+    $('#year').val("{{ hacker.year }}").selectize({
+        create: true,
+    });
+
     $("#info_top").click(function () {
       this.preventDefault;
       setTabActive(this);
@@ -285,7 +297,10 @@
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
     $("#update_form input").change(function () {
-//      console.log(this.name + " changed to " + this.value);
+      saveChange(this.name, this.value, this.parentNode, secret, true);
+    });
+
+    $("#year").change(function () {
       saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
@@ -377,7 +392,7 @@
     var dietaryRestrictionsSelectize = $(dietaryRestrictions).siblings(".selectize-control"),
         dietaryRestrictionsLabel = $(dietaryRestrictions).parent().siblings("label"),
         dietaryDropdown = $(dietaryRestrictionsSelectize).find(".selectize-dropdown");
-    
+
     $(dietaryRestrictionsLabel).click(function() {
       $(dietaryRestrictionsSelectize).find("input").focus();
     })
@@ -433,7 +448,7 @@
         return false;
       }
     });
-    
+
     var teammatesSelectize = $(teammates).siblings(".selectize-control"),
         teammatesLabel = $(teammates).parent().siblings("label"),
         teammatesDropdown = $(teammatesSelectize).find(".selectize-dropdown");
@@ -441,7 +456,7 @@
     $(teammates).click(function() {
       $(teammatesSelectize).find("input").focus();
     })
-    
+
     $(teammates).siblings("label").click(function() {
         $(teammates).find("input").focus();
     })

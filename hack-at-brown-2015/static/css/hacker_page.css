@@ -1,4 +1,9 @@
 
+/* Select Styling - FIXME; */
+/*.select > div .selectize-input {
+    font-size: initial;
+}
+*/
 /*Shim*/
 .top-bar_ul.constrained {
   max-width: 964px;
@@ -78,7 +83,7 @@ p.caption {
     background-color: white;
 }
 
-input[type=file] { 
+input[type=file] {
     display: none;
 }
 
@@ -272,7 +277,7 @@ a:active {
 .form_finish input[type=submit]:hover,
 input[type="radio"] + label:hover,
 .cancel_reg:hover,
-.add_link:hover, 
+.add_link:hover,
 .registration_form input[type="checkbox"]:hover,
 .check_agree:hover,
 .registration_form input[type="file"]:hover {
@@ -284,7 +289,7 @@ input[type="radio"] + label:hover,
 .registration_form input[type=submit]:focus,
 .registration_form input:not([type]):focus,
 .registration_form input[type="checkbox"]:focus,
-.registration_form input[type="file"]:focus, 
+.registration_form input[type="file"]:focus,
 .registration_form .resume-button:focus {
     outline: none;
 }
@@ -470,7 +475,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
     transition: box-shadow .2s cubic-bezier(.55,0,.1,1), border .2s, color .2s cubic-bezier(.55,0,.1,1);
     width: 250px;
 }
-.init_input::-webkit-input-placeholder, 
+.init_input::-webkit-input-placeholder,
 .init_input::-moz-input-placeholder,
 .init_input::-o-input-placeholder,
 .init_input:-ms-input-placeholder {
@@ -543,7 +548,7 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 .registration_form.ui.form.active {
     display: block;
 }
-.registration_form label { 
+.registration_form label {
     text-transform: uppercase;
     color: #1B8EB9;
     display: block;
@@ -567,7 +572,7 @@ span.optional {
 .two.fields .field {
     margin-bottom:0;
 }
-.registration_form input[type=file] { 
+.registration_form input[type=file] {
     display: none;
 }
 .registration_form .resume-button {
