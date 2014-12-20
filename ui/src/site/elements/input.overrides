@@ -38,7 +38,7 @@
 }
 
 .radiobuttons input[type="radio"] + label:hover, input[type="radio"]:focus + label {
-    background-color: #E2E1DF;
+    background-color: @lightgrey;
 }
 
 input[type="radio"]:checked + label {
