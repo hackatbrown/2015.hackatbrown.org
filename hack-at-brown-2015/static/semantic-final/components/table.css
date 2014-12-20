@@ -448,7 +448,7 @@
   border-top: 0.2em solid #e07b53;
 }
 .ui.pink.table {
-  border-top: 0.2em solid #d9499a;
+  border-top: 0.2em solid #ef5d93;
 }
 .ui.purple.table {
   border-top: 0.2em solid #8c537f;
@@ -485,7 +485,7 @@
   color: #ffffff !important;
 }
 .ui.inverted.pink.table {
-  background-color: #d9499a !important;
+  background-color: #ef5d93 !important;
   color: #ffffff !important;
 }
 .ui.inverted.purple.table {

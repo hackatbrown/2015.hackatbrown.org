@@ -478,8 +478,10 @@
   cursor: pointer;
 }
 .radiobuttons input[type="radio"] + label:hover,
-input[type="radio"]:focus + label {
-  background-color: #E2E1DF;
+input[type="radio"]:focus + label,
+input[type="button"]:hover,
+input[type="button"]:focus {
+  background-color: #e2e1df;
 }
 input[type="radio"]:checked + label {
   color: #ffffff;
