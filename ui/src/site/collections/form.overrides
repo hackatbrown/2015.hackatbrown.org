@@ -131,3 +131,7 @@
     box-shadow: inset 1px -80px 0 -1px @blue;
     color: @white;
 }
+
+.ui.form .selectize-control + i {
+    z-index: 200;
+}
