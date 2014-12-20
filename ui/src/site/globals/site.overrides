@@ -97,3 +97,37 @@ footer .social-links {
 .blog {
   background: url("/static/img/social-icons/medium.svg");
 }
+
+
+/*Admission Status Box - TODO Put this in a more sensical place*/
+.admit_status {
+  background-color: @black;
+  padding: .5em;
+  padding-top: .1em;
+  padding-bottom: .15em;
+  display: inline-block;
+  color: white;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.admit_status.pending {
+  background-color: @blue;
+}
+
+.admit_status.accepted,
+.admit_status.confirmed {
+  background-color: @teal;
+}
+
+.admit_status.checked.in {
+  background-color: @pink;
+}
+
+.admit_status.waitlisted {
+  background-color: @yellow;
+}
+
+.admit_status.not-accepted {
+  background-color: @black;
+}

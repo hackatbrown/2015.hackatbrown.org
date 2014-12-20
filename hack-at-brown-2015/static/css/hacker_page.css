@@ -13,21 +13,6 @@ p.caption {
     font-weight: 300;
 }
 
-.admit_status {
-    background-color: #404040;
-    padding: .5em;
-    padding-top: .1em;
-    padding-bottom: .15em;
-    display: inline-block;
-    color: white;
-    font-size: 2rem;
-    text-transform: uppercase;
-}
-
-.admit_status.pending {
-    background-color: #1B8EB9;
-}
-
 .panes .pane {
     display: none;
 }
