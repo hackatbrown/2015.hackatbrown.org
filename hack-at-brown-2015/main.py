@@ -51,6 +51,7 @@ app = webapp2.WSGIApplication([
 		('/__send_email', dashboard.SendEmail),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
+		('/__cleanup', db_cleanup.CleanupHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml

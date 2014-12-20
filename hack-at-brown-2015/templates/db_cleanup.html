@@ -9,10 +9,21 @@
 {% endblock %}
 
 {% block content %}
-  <div ng-app='cleanupApp' ng-init="getProperty" ng-controller="MainCtrl" >
+<div ng-app='cleanupApp' ng-controller="MainCtrl">
+  <input class=".newValue" type="text"/>
+  <select class="property" onchange=""></select>
+  <div ng-show="showPropertyValue">
     <h1 style="color: #EF5D93;">%%property%%</h1>
     <div ng-repeat="(key, value) in property">
       <span><b>%%key%%:</b> %%value%%</span>
     </div>
-    <br>
+  </div>
+  <br>
+  <input type="submit" class=".button" ng-click="cleanup"/>
+</div>
+
 {% endblock %}
+
+<script>
+  var properties = "{{ properties }}";
+</script>
