@@ -910,3 +910,83 @@
 .ui.form .ui.icon.input > .icon {
   width: 1em;
 }
+.ui.form .selectize-control {
+  font-weight: 300;
+}
+.ui.form .selectize-dropdown {
+  
+/*     -webkit-animation: fadeInDown .2s cubic-bezier(.55, 0, .1, 1);
+    -webkit-animation-iteration-count: infinite;
+    animation-name: fadeInDown;
+    transition: opacity .5s cubic-bezier(.55, 0, .1, 1); */
+  border-radius: 0;
+  box-shadow: none;
+  border: 0;
+  background: #ebebeb;
+}
+.ui.form .selectize-dropdown .optgroup-header,
+.selectize-dropdown [data-selectable] {
+  
+/* height: 35px; */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.ui.form .selectize-dropdown .active {
+  background-color: #1b8eb9 !important;
+  color: #ffffff !important;
+}
+.ui.form .selectize-input {
+  border-radius: 0 !important;
+  box-shadow: inset 1px -3px 0px -1px rgba(145, 143, 140, 0.3);
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding-left 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding-left 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+  border: 0;
+  
+/* height: 35px !important; */
+  padding-left: 0 !important;
+}
+.ui.form .selectize-input.focus {
+  box-shadow: inset 1px -80px 0px -1px #404040 !important;
+  padding-left: .65em !important;
+}
+.ui.form .selectize-input input {
+  color: #404040;
+}
+.selectize-input > input {
+  height: auto !important;
+  padding-top: 2px !important;
+}
+.selectize-input.focus > input {
+  color: #ffffff;
+}
+.ui.form .selectize-control.multi .selectize-input [data-value] {
+  box-shadow: none;
+  border-radius: 0;
+  text-shadow: none;
+  border: 0;
+  background: #1b8eb9;
+  color: #ffffff;
+  -webkit-transition: background-color 0.2s cubic-bezier(0.55, 0, 0.1, 1), color 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: background-color 0.2s cubic-bezier(0.55, 0, 0.1, 1), color 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+  padding-bottom: 3px;
+  margin-right: .3em;
+  margin-bottom: .3em;
+}
+.ui.form .selectize-control.multi .selectize-input.focus [data-value] {
+  background: #ffffff;
+  color: #404040;
+  box-shadow: inset 1px 0 0 -1px #1b8eb9;
+  -webkit-transition: box-shadow 1s bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 1s bezier(0.55, 0, 0.1, 1);
+}
+.ui.form .selectize-control.multi .selectize-input.focus [data-value]:hover {
+  background: #ebebeb;
+}
+.ui.form .selectize-control.multi .selectize-input.focus [data-value].active {
+  border: 0 !important;
+  box-shadow: inset 1px -80px 0 -1px #1b8eb9;
+  color: #ffffff;
+}
+.ui.form .selectize-control + i {
+  z-index: 200;
+}

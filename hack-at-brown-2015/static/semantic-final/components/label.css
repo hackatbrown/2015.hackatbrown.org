@@ -575,33 +575,33 @@ a.ui.orange.label:hover:before {
 
 .ui.pink.labels .label,
 .ui.pink.label {
-  background-color: #d9499a !important;
-  border-color: #d9499a !important;
+  background-color: #ef5d93 !important;
+  border-color: #ef5d93 !important;
   color: #ffffff !important;
 }
 .ui.labels .pink.label:before,
 .ui.pink.labels .label:before,
 .ui.pink.label:before {
-  background-color: #d9499a !important;
+  background-color: #ef5d93 !important;
 }
 a.ui.pink.labels .label:hover,
 .ui.pink.labels a.label:hover,
 a.ui.pink.label:hover {
-  background-color: #dc56a1 !important;
-  border-color: #dc56a1 !important;
+  background-color: #f06b9c !important;
+  border-color: #f06b9c !important;
   color: #ffffff !important;
 }
 .ui.labels a.pink.label:hover:before,
 .ui.pink.labels a.label:hover:before,
 a.ui.pink.label:hover:before {
-  background-color: #dc56a1 !important;
+  background-color: #f06b9c !important;
 }
 .ui.pink.corner.label,
 .ui.pink.corner.label:hover {
   background-color: transparent !important;
 }
 .ui.pink.ribbon.label {
-  border-color: #c62981 !important;
+  border-color: #ea2f74 !important;
 }
 
 /*--- Purple ---*/

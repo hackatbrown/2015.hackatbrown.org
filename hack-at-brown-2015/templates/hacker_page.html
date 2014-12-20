@@ -6,8 +6,13 @@
 
 {% block headcss %}
 {{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
+<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
+
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
+
+
 {% endblock %}
 
 {% block headjs %}
@@ -26,7 +31,7 @@
     </svg>
 </div>
 <div class="hamburger over"></div>
-<ul class="top-bar_ul transparent" data-0="" data-1="">
+<ul class="top-bar_ul constrained" data-0="" data-1="">
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
     <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
@@ -86,7 +91,7 @@
                             <div class="field">
                                 <label for="email">Email</label>
                                 <div class="ui icon input">
-                                    <input type="email" name="email" placeholder="handle@schooldomain.edu" value="{{ hacker.email }}"/>
+                                    <input type="email" id="email" name="email" placeholder="handle@schooldomain.edu" value="{{ hacker.email }}"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -159,19 +164,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="field disabled">
+                            <div class="field">
                                 <label for="dietary_restrictions">Dietary Restrictions?</label>
                                 <div class="ui icon input">
-                                    <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}" disabled/>
+                                    <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="field disabled">
-                                <label for="teammates">Any Friends You'd Like to Work With?</label>
+                            <div class="field">
+                              <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
                                 <div class="ui icon input">
-                                    <input id="teammates" type="text" name="teammates" value="{{ hacker.teammates }}" disabled/>
+                                    <input id="teammates" type="text" name="teammates" value="{{ hacker.teammates }}"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -244,85 +249,236 @@
 <script type="text/javascript" src="/static/js/select2.min.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
 
 
 <script>
-    var linkRepeater,
-        secret = "{{ hacker.secret }}";
-    var newResumeURL = "{{ newResumeURL }}";
+  var linkRepeater,
+    secret = "{{ hacker.secret }}";
+  var newResumeURL = "{{ newResumeURL }}";
 
-    $(document).ready(function() {
+  $(document).ready(function () {
 
-    if(location.hash === '#info') {
-            setTabActive($("#info_top"));
-            switchToMyInfo();
-        }
+    if (location.hash === '#info') {
+      setTabActive($("#info_top"));
+      switchToMyInfo();
+    }
 
-        $(".button").click(function() {
-            $(this).toggleClass("active");
-        });
-
-        $("#status_top").click(function() {
-            this.preventDefault;
-            setTabActive(this);
-            switchFromMyInfo();
-        });
-
-        $("#info_top").click(function() {
-            this.preventDefault;
-            setTabActive(this);
-            switchToMyInfo();
-        });
-
-        //    Form stuff. Needs to stay in the html for jinja to do its thing
-        $("#update_form input").change( function() {
-            console.log(this.name + " changed to " + this.value);
-            saveChange(this.name, this.value, this.parentNode, secret, true);
-        });
-
-        var $universities = [];
-        $.getJSON("/static/data/universities.json", function (data) {
-            $.each(data, function (key, val) {
-                $universities[key] = val;
-            })
-        });
-
-        // Populate the radio buttons
-        populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
-        populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
-        populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
-        populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
-
-        // Split the links into an array
-        var linkArray = processCSV("{{ hacker.links }}");
-
-        /* Autocomplete suggestions for schools */
-
-        $(".schools").autocomplete({
-            source: $universities
-        });
-
-        //Repeater list
-        linkRepeater = $(".condor").condor({
-            uniqueNames: false,
-            namePrefix: 'links',
-            activeHint: 'Github, Dribbble, Behance, etc.',
-            inactiveHint: 'add another link',
-            inputType: 'url',
-            prepopulate: linkArray
-        });
-
-        $(linkRepeater).find(".condor-active").each(function(i, uiInput) {
-            var icon = $(uiInput).find("i.icon"),
-                input = $(uiInput).find("input");
-            domainMatch(icon, $(input).val());
-        });
-        requestNewUploadURL();
-
-        trackCondor(linkRepeater);
+    $(".button").click(function () {
+      $(this).toggleClass("active");
     });
+
+    $("#status_top").click(function () {
+      this.preventDefault;
+      setTabActive(this);
+      switchFromMyInfo();
+    });
+
+    $("#info_top").click(function () {
+      this.preventDefault;
+      setTabActive(this);
+      switchToMyInfo();
+    });
+
+    //    Form stuff. Needs to stay in the html for jinja to do its thing
+    $("#update_form input").change(function () {
+//      console.log(this.name + " changed to " + this.value);
+      saveChange(this.name, this.value, this.parentNode, secret, true);
+    });
+
+    var $universities = [];
+    $.getJSON("/static/data/universities.json", function (data) {
+      $.each(data, function (key, val) {
+        $universities[key] = val;
+      })
+    });
+
+    var dietaryRestrictionsData = [{
+        diet: "Vegetarian"
+      },
+      {
+        diet: "Vegan"
+      },
+      {
+        diet: "Gluten Free"
+      },
+      {
+        diet: "Kosher"
+      },
+      {
+        diet: "Lactose Intolerant"
+      },
+      {
+        diet: "Nuts Allergy"
+      },
+      {
+        diet: "Treenuts Allergy"
+      },
+      {
+        diet: "Soy Allergy"
+      },
+      {
+        diet: "Shellfish Allergy"
+      },
+      {
+        diet: "Corn Allergy"
+      },
+      {
+        diet: "No Pork"
+      },
+      {
+        diet: "No Ham"
+      },
+      {
+        diet: "No Beef"
+      },
+      {
+        diet: "No Mutton"
+      },
+      {
+        diet: "Halal"
+      },
+      {
+        diet: "No Red Meat"
+      },
+      {
+        diet: "None"
+      }];
+    //TODO: make this load from a file
+
+
+
+    var dietaryRestrictions = $('#dietary_restrictions');
+    $(dietaryRestrictions).selectize({
+      valueField: 'diet',
+      labelField: 'diet',
+      searchField: ['diet'],
+      delimiter: ',',
+      persist: false,
+      hideSelected: true,
+      options: dietaryRestrictionsData,
+      onDropdownOpen: function () {
+        $(dietaryDropdown).stop().hide().slideToggle(100);
+      },
+      onDropdownClose: function () {
+        $(dietaryDropdown).stop().show().slideToggle(100);
+      },
+      create: function (input) {
+        return {
+          value: input,
+          text: input
+        }
+      }
+    });
+
+    var dietaryRestrictionsSelectize = $(dietaryRestrictions).siblings(".selectize-control"),
+        dietaryRestrictionsLabel = $(dietaryRestrictions).parent().siblings("label"),
+        dietaryDropdown = $(dietaryRestrictionsSelectize).find(".selectize-dropdown");
+    
+    $(dietaryRestrictionsLabel).click(function() {
+      $(dietaryRestrictionsSelectize).find("input").focus();
+    })
+
+    var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+      '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+
+    var teammates = $('#teammates');
+    $(teammates).selectize({
+      labelField: 'email',
+      valueField: 'email',
+      searchField: 'email',
+      delimiter: ',',
+      maxItems: 3,
+      persist: true,
+      hideSelected: true,
+      onDropdownOpen: function () {
+        $(teammatesDropdown).stop().hide().slideToggle(100);
+      },
+      onDropdownClose: function () {
+        $(teammatesDropdown).stop().show().slideToggle(100);
+      },
+      createFilter: function (input) {
+        var match, regex;
+
+        // email@address.com
+        regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+        match = input.match(regex);
+        if (match) return !this.options.hasOwnProperty(match[0]);
+
+        // name <email@address.com>
+        regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
+        match = input.match(regex);
+        if (match) return !this.options.hasOwnProperty(match[2]);
+
+        return false;
+      },
+      create: function (input) {
+        if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+          return {
+            email: input
+          };
+        }
+        var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
+        if (match) {
+          $(teammates).find("input").focus();
+          return {
+            email: match[2],
+            name: $.trim(match[1])
+          };
+        }
+        alert('Invalid email address.');
+        return false;
+      }
+    });
+    
+    var teammatesSelectize = $(teammates).siblings(".selectize-control"),
+        teammatesLabel = $(teammates).parent().siblings("label"),
+        teammatesDropdown = $(teammatesSelectize).find(".selectize-dropdown");
+
+    $(teammates).click(function() {
+      $(teammatesSelectize).find("input").focus();
+    })
+    
+    $(teammates).siblings("label").click(function() {
+        $(teammates).find("input").focus();
+    })
+
+    // Populate the radio buttons
+    populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
+    populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
+    populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
+    populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
+
+    // Split the links into an array
+    var linkArray = processCSV("{{ hacker.links }}");
+
+    /* Autocomplete suggestions for schools TODO */
+
+    $(".schools").autocomplete({
+      source: $universities
+    });
+
+    //Repeater list
+    linkRepeater = $(".condor").condor({
+      uniqueNames: false,
+      namePrefix: 'links',
+      activeHint: 'Github, Dribbble, Behance, etc.',
+      inactiveHint: 'add another link',
+      inputType: 'url',
+      prepopulate: linkArray
+    });
+
+    $(linkRepeater).find(".condor-active").each(function (i, uiInput) {
+      var icon = $(uiInput).find("i.icon"),
+        input = $(uiInput).find("input");
+      domainMatch(icon, $(input).val());
+    });
+    requestNewUploadURL();
+
+    trackCondor(linkRepeater);
+  });
 </script>
 {% endblock %}
