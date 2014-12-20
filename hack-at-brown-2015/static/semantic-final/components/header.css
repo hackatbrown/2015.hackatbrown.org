@@ -230,10 +230,10 @@ a.ui.orange.header:hover {
   color: #e28560 !important;
 }
 .ui.pink.header {
-  color: #d9499a !important;
+  color: #ef5d93 !important;
 }
 a.ui.pink.header:hover {
-  color: #dc56a1 !important;
+  color: #f06b9c !important;
 }
 .ui.purple.header {
   color: #8c537f !important;
@@ -272,7 +272,7 @@ a.ui.yellow.header:hover {
   border-bottom: 2px solid #e07b53;
 }
 .ui.pink.dividing.header {
-  border-bottom: 2px solid #d9499a;
+  border-bottom: 2px solid #ef5d93;
 }
 .ui.purple.dividing.header {
   border-bottom: 2px solid #8c537f;

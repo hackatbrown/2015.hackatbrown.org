@@ -82,13 +82,13 @@
     border: 0;
     /* height: 35px !important; */
     padding-left: 0 !important;
-    padding-top: 9px !important;
-    padding-bottom: 8px !important;
+//    padding-top: 9px !important;
+//    padding-bottom: 8px !important;
 }
 
 .ui.form .selectize-input.has-items {
-    padding-top: 4.5px !important;
-    padding-bottom: 4px !important;
+//    padding-top: 4.5px !important;
+//    padding-bottom: 4px !important;
 }
 .ui.form .selectize-input.focus {
     box-shadow: inset 1px -80px 0px -1px @black !important;
@@ -97,7 +97,12 @@
 .ui.form .selectize-input input {
     color: @black;
 }
-.selectize-input.focus input {
+
+.selectize-input>input {
+    height: auto !important;
+    padding-top: 2px !important;
+}
+.selectize-input.focus > input {
     color: @white;
 }
 .ui.form .selectize-control.multi .selectize-input [data-value] {
@@ -123,6 +128,6 @@
 }
 .ui.form .selectize-control.multi .selectize-input.focus [data-value].active {
     border: 0 !important;
-    box-shadow: inset 1px -50px 0 -1px @blue;
+    box-shadow: inset 1px -80px 0 -1px @blue;
     color: @white;
 }

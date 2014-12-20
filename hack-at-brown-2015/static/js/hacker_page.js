@@ -146,7 +146,7 @@ function populateDefaultRadio(key, value) {
 $(document).on('keydown', ':focus', function (event) {
     if ((event.keyCode || event.which) === 9) {
         //TODO: Generalize and support selecting other kinds of input
-        var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox]"),
+      var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox], input[type=button]"),
             index = $inputs.index(this),
             $next;
         // Index previous or next input based on the shift key

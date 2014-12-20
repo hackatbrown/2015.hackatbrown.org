@@ -37,7 +37,10 @@
     cursor: pointer;
 }
 
-.radiobuttons input[type="radio"] + label:hover, input[type="radio"]:focus + label {
+.radiobuttons input[type="radio"] + label:hover, 
+input[type="radio"]:focus + label,
+input[type="button"]:hover, 
+input[type="button"]:focus {
     background-color: @lightgrey;
 }
 
