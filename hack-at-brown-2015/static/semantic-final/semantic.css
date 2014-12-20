@@ -8812,6 +8812,10 @@ i.flag.zimbabwe:before {
   padding-left: 0 !important;
 }
 
+.ui.icon.input .selectize-input {
+  padding-right: 1.18em!important;
+}
+
 .ui.form .selectize-input.focus {
   box-shadow: inset 1px -80px 0px -1px #404040 !important;
   padding-left: .65em !important;
@@ -8824,6 +8828,10 @@ i.flag.zimbabwe:before {
 .selectize-input > input {
   height: auto !important;
   padding-top: 2px !important;
+}
+
+.ui.icon.input .selectize-input > input {
+  padding-right: 0px !important;
 }
 
 .selectize-input.focus > input {
@@ -29705,6 +29713,10 @@ body {
   padding-left: 0 !important;
 }
 
+.ui.icon.input .selectize-input {
+  padding-right: 1.18em!important;
+}
+
 .ui.form .selectize-input.focus {
   box-shadow: inset 1px -80px 0px -1px #404040 !important;
   padding-left: .65em !important;
@@ -29717,6 +29729,10 @@ body {
 .selectize-input > input {
   height: auto !important;
   padding-top: 2px !important;
+}
+
+.ui.icon.input .selectize-input > input {
+  padding-right: 0px !important;
 }
 
 .selectize-input.focus > input {
