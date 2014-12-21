@@ -11,6 +11,7 @@ import os
 import base64
 import webapp2
 
+
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
@@ -97,4 +98,5 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
             #            TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
+
 
