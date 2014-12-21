@@ -68,15 +68,14 @@ def putHacker(hacker):
 
 def computeStatus(hacker):
     if hacker is None:
-        return "Not Found"
-
+        return "not found"
     if hacker.checked_in == True:
-        return "Checked In"
+        return "checked in"
     elif hacker.rsvpd == True:
-        return "RSVP'd"
+        return "confirmed"
     elif hacker.admitted_email_sent_date != None:
-        return "Registered"
+        return "accepted"
     elif hacker.waitlist_email_sent_date != None:
-        return "Waitlisted"
+        return "waitlisted"
     else:
-        return "Pending"
+        return "pending"

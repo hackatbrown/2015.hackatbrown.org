@@ -19,6 +19,18 @@ function switchFromMyInfo() {
     switchPanes(0);
 }
 
+function initalizeHamburger() {
+  // Hamburger menu for mobile
+  $("nav ul > li a").click(function () {
+    $("nav").removeClass("open");
+  })
+  $(".hamburger").click(function () {
+    $("nav").toggleClass("open");
+  });
+}
+
+// Resume Upload
+
 function requestNewUploadURL() {
     $.ajax({
         type: 'GET',
@@ -57,7 +69,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         requestNewUploadURL();
     }
 
-    console.log("key: " + key + " value: " + value);
+//    console.log("key: " + key + " value: " + value);
     var data = {},
         $icon = $(uiinput).children(".icon"),
         oldIcon = $icon.attr('class');
@@ -87,7 +99,8 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
                 $icon.className = "remove icon";
                 setTimeout(function () {
                     $(uiinput).removeClass('fade');
-                    if ((oldIcon !== "checkmark icon") || (oldIcon !== "remove icon")) {
+                    if ((oldIcon !== "remove icon") || (oldIcon !== "remove icon")) {
+                        console.log(oldIcon);
                         $($icon).attr('class', oldIcon);
                     }
                 }, 1500);
@@ -113,7 +126,7 @@ function domainMatch(uiIcon, url) {
     };
     for (domain in recognizedDomains) {
         if(url.indexOf(domain) > -1) {
-            console.log("matched with " + domain);
+//            console.log("matched with " + domain);
             $(uiIcon).attr('class', "icon " + recognizedDomains[domain]);
             return;
         }
@@ -146,7 +159,7 @@ function populateDefaultRadio(key, value) {
 $(document).on('keydown', ':focus', function (event) {
     if ((event.keyCode || event.which) === 9) {
         //TODO: Generalize and support selecting other kinds of input
-        var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox]"),
+      var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox], input[type=button]"),
             index = $inputs.index(this),
             $next;
         // Index previous or next input based on the shift key

@@ -1073,8 +1073,8 @@
 }
 .ui.menu .pink.active.item,
 .ui.pink.menu .active.item {
-  border-color: #d9499a !important;
-  color: #d9499a !important;
+  border-color: #ef5d93 !important;
+  color: #ef5d93 !important;
 }
 .ui.menu .purple.active.item,
 .ui.purple.menu .active.item {
@@ -1263,10 +1263,10 @@
 
 /* Pink */
 .ui.inverted.pink.menu {
-  background-color: #d9499a;
+  background-color: #ef5d93;
 }
 .ui.inverted.pink.pointing.menu .active.item:after {
-  background-color: #d9499a;
+  background-color: #ef5d93;
 }
 
 /* Purple */

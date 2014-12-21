@@ -14,7 +14,7 @@
 {% block content %}
 <div id='header' class='vertically-centered vertically-centered-content'>
   <img src='/static/img/logo.png' width="134" height="144"/>
-  <h1>Hack@Brown Dashboard</h1>
+  <h1>Hack@Brown {% if envIsDev %}Dev-{% endif %}Dashboard</h1>
 </div>
 
 <div ng-app='dashApp' ng-init="getStats()" ng-controller="MainCtrl" >
