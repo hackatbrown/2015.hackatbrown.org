@@ -262,8 +262,7 @@
 
 
 <script>
-  var linkRepeater,
-      secret = "{{ hacker.secret }}";
+  var secret = "{{ hacker.secret }}";
   var newResumeURL = "{{ newResumeURL }}";
 
   $(document).ready(function () {
@@ -283,8 +282,6 @@
       switchFromMyInfo();
     });
 
-
-
     $("#info_top").click(function () {
       this.preventDefault;
       setTabActive(this);
@@ -296,94 +293,37 @@
       saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
-    $("#year").change(function () {
+    //Year Section
+    var $year = $('#year');
+    var $yearSelectize = $year.siblings(".selectize-control");
+    var $yearLabel = $year.parent().siblings("label");
+    var $yearDropdown = $yearSelectize.find(".selectize-dropdown");
+
+    $year.val("{{ hacker.year }}").selectize({
+      create: false,
+      hideSelected: true,
+      onDropdownOpen: slideOut,
+      onDropdownClose: slideIn,
+    });
+
+    $year.change(function () {
       saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
-    var $universities = [];
-    $.getJSON("/static/data/universities.json", function (data) {
-      $.each(data, function (key, val) {
-        $universities[key] = val;
-      })
-    });
-    
-    var year = $('#year');
-    $(year).val("{{ hacker.year }}").selectize({
-      create: false,
-      hideSlected: true,
-      onDropdownOpen: function () {
-        $(yearDropdown).stop().hide().slideToggle(200);
-      },
-      onDropdownClose: function () {
-        $(yearDropdown).stop().show().slideToggle(200);
-      },
-    });
-    
-    var yearSelectize = $(year).siblings(".selectize-control"),
-        yearLabel = $(year).parent().siblings("label"),
-        yearDropdown = $(yearSelectize).find(".selectize-dropdown");
-
-    $(yearLabel).click(function() {
-      $(yearSelectize).find("input").focus();
+    $yearLabel.click(function() {
+      $yearSelectize.find("input").focus();
     });
 
-    var dietaryRestrictionsData = [{
-        diet: "Vegetarian"
-      },
-      {
-        diet: "Vegan"
-      },
-      {
-        diet: "Gluten Free"
-      },
-      {
-        diet: "Kosher"
-      },
-      {
-        diet: "Lactose Intolerant"
-      },
-      {
-        diet: "Nuts Allergy"
-      },
-      {
-        diet: "Treenuts Allergy"
-      },
-      {
-        diet: "Soy Allergy"
-      },
-      {
-        diet: "Shellfish Allergy"
-      },
-      {
-        diet: "Corn Allergy"
-      },
-      {
-        diet: "No Pork"
-      },
-      {
-        diet: "No Ham"
-      },
-      {
-        diet: "No Beef"
-      },
-      {
-        diet: "No Mutton"
-      },
-      {
-        diet: "Halal"
-      },
-      {
-        diet: "No Red Meat"
-      },
-      {
-        diet: "None"
-      }];
-    //TODO: make this load from a file
+    //Dietary Restrictions Section
+    var rawDiet = ["Vegetarian", "Vegan", "Gluten Free", "Kosher", "Lactose Intolerant", "Nuts Allergy", "Treenuts Allergy", "Soy Allergy",
+"Shellfish Allergy", "Corn Allergy", "No Pork", "No Ham", "No Beef", "No Mutton", "Halal", "No Red Meat", "None"];
+    var dietaryRestrictionsData = [];
+    $.each(rawDiet, function (key, val) {
+        dietaryRestrictionsData.push({"diet" : val});
+    });
 
-
-
-    var dietaryRestrictions = $('#dietary_restrictions');
-    $(dietaryRestrictions).selectize({
+    var $dietaryRestrictions = $('#dietary_restrictions');
+    $dietaryRestrictions.selectize({
       valueField: 'diet',
       labelField: 'diet',
       searchField: ['diet'],
@@ -391,12 +331,8 @@
       persist: false,
       hideSelected: true,
       options: dietaryRestrictionsData,
-      onDropdownOpen: function () {
-        $(dietaryDropdown).stop().hide().slideToggle(100);
-      },
-      onDropdownClose: function () {
-        $(dietaryDropdown).stop().show().slideToggle(100);
-      },
+      onDropdownOpen: slideOut,
+      onDropdownClose: slideIn,
       create: function (input) {
         return {
           value: input,
@@ -405,19 +341,24 @@
       }
     });
 
-    var dietaryRestrictionsSelectize = $(dietaryRestrictions).siblings(".selectize-control"),
-        dietaryRestrictionsLabel = $(dietaryRestrictions).parent().siblings("label"),
-        dietaryDropdown = $(dietaryRestrictionsSelectize).find(".selectize-dropdown");
+    var $dietaryRestrictionsSelectize = $dietaryRestrictions.siblings(".selectize-control");
+    var $dietaryRestrictionsLabel = $dietaryRestrictions.parent().siblings("label");
+    var $dietaryDropdown = $dietaryRestrictionsSelectize.find(".selectize-dropdown");
 
-    $(dietaryRestrictionsLabel).click(function() {
-      $(dietaryRestrictionsSelectize).find("input").focus();
+    $dietaryRestrictionsLabel.click(function() {
+      $dietaryRestrictionsSelectize.find("input").focus();
     })
 
+    //Teammates Section
+    var $teammates = $('#teammates');
+    var $teammatesSelectize = $teammates.siblings(".selectize-control");
+    var $teammatesLabel = $teammates.parent().siblings("label");
+    var $teammatesDropdown = $teammatesSelectize.find(".selectize-dropdown");
     var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
       '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
 
-    var teammates = $('#teammates');
-    $(teammates).selectize({
+
+    $teammates.selectize({
       labelField: 'email',
       valueField: 'email',
       searchField: 'email',
@@ -425,12 +366,8 @@
       maxItems: 3,
       persist: true,
       hideSelected: true,
-      onDropdownOpen: function () {
-        $(teammatesDropdown).stop().hide().slideToggle(100);
-      },
-      onDropdownClose: function () {
-        $(teammatesDropdown).stop().show().slideToggle(100);
-      },
+      onDropdownOpen: slideOut,
+      onDropdownClose: slideIn,
       createFilter: function (input) {
         var match, regex;
 
@@ -454,7 +391,7 @@
         }
         var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
         if (match) {
-          $(teammates).find("input").focus();
+          $teammates.find("input").focus();
           return {
             email: match[2],
             name: $.trim(match[1])
@@ -465,31 +402,37 @@
       }
     });
 
-    var teammatesSelectize = $(teammates).siblings(".selectize-control"),
-        teammatesLabel = $(teammates).parent().siblings("label"),
-        teammatesDropdown = $(teammatesSelectize).find(".selectize-dropdown");
-
-    $(teammatesLabel).click(function() {
-      $(teammatesSelectize).find("input").focus();
+    $teammatesLabel.click(function() {
+      $teammatesSelectize.find("input").focus();
     });
 
+    //Shirt Size Section
     // Populate the radio buttons
     populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
     populateDefaultRadio("shirt_size", "{{ hacker.shirt_size }}");
     populateDefaultRadio("hardware_hack", "{{ hacker.hardware_hack }}");
     populateDefaultRadio("first_hackathon", "{{ hacker.first_hackathon }}");
 
+    //School Section
+    /* Autocomplete suggestions for schools TODO */
+    var universities = [];
+    $.getJSON("/static/data/universities.json", function (data) {
+      $.each(data, function (key, val) {
+        universities[key] = val;
+      })
+    });
+
+    $(".schools").autocomplete({
+      source: universities
+    });
+
+    //Links Section
+
     // Split the links into an array
     var linkArray = processCSV("{{ hacker.links }}");
 
-    /* Autocomplete suggestions for schools TODO */
-
-    $(".schools").autocomplete({
-      source: $universities
-    });
-
     //Repeater list
-    linkRepeater = $(".condor").condor({
+    var $linkRepeater = $(".condor").condor({
       uniqueNames: false,
       namePrefix: 'links',
       activeHint: 'Github, Dribbble, Behance, etc.',
@@ -498,15 +441,15 @@
       prepopulate: linkArray
     });
 
-    $(linkRepeater).find(".condor-active").each(function (i, uiInput) {
-      var icon = $(uiInput).find("i.icon"),
-        input = $(uiInput).find("input");
+    $linkRepeater.find(".condor-active").each(function (i, uiInput) {
+      var icon = $(uiInput).find("i.icon");
+      var input = $(uiInput).find("input");
       domainMatch(icon, $(input).val());
     });
     requestNewUploadURL();
 
-    trackCondor(linkRepeater);
-    
+    trackCondor($linkRepeater);
+
     initalizeHamburger();
   });
 </script>
