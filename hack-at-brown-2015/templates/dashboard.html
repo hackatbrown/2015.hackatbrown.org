@@ -136,6 +136,19 @@
 </div>
 <a style="text-decoration:none" class='button' href="/db_cleanup">DB Cleanup</a>
 {% if envIsDev %}
-<a style="text-decoration:none" class='button' href="/db_populate">DB Populate</a>
+<script>
+  function populateDB() {
+    if (window.confirm("Are you sure you want to generate 100 hackers?")) {
+      window.location.href = "/__db_populate/100";
+    }
+  }
+  function depopulateDB() {
+    if (window.confirm("Are you sure you want to eliminate 100 hackers?")) {
+      window.location.href = "/__db_depopulate/100";
+    }
+  }
+</script>
+<a style="text-decoration:none" class='button' onclick="populateDB()">DB Populate</a>
+<a style="text-decoration:none" class='button' onclick="depopulateDB()">DB Depopulate</a>
 {% endif %}
 {% endblock %}

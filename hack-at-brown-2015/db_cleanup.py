@@ -2,11 +2,12 @@ import webapp2
 from google.appengine.ext import ndb
 from dashboard import getAllHackers
 from registration import Hacker
-from registration import generate_secret_hacker_with_email
+from registration import generate_secret_for_hacker_with_email
 import json
 from template import template
 from registration import hacker_keys
 from config import envIsDev
+import random
 
 #Example:
 # json = {
@@ -49,15 +50,31 @@ class PopulateHandler(webapp2.RequestHandler):
         if not envIsDev() or self.request.host.split(":")[0] != "localhost":
             return self.redirect('/')
 
+        number = int(number)
+
         for i in range(0, number):
             hacker = createTestHacker(i)
 
+        self.response.write("Created {0} hackers.".format(number))
+
+class DepopulateHandler(webapp2.RequestHandler):
+    def get(self, number):
+        if not envIsDev() or self.request.host.split(":")[0] != "localhost":
+            return self.redirect('/')
+
+        number = int(number)
+
+        ndb.delete_multi(
+            Hacker.query().fetch(limit=number, keys_only=True)
+        )
+        self.response.write("Eliminated {0} hackers.".format(number))
 
 def createTestHacker(number):
+
     shirts = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
     def prob(): return random.uniform(0.0, 10.0)
     hacker = Hacker()
-    hacker.name = "Hacker {1}".format(number)
+    hacker.name = "Hacker {0}".format(number)
     hacker.school = "Brown University" if prob() < 3 else "Another University"
 
     hacker.year = "freshman"
@@ -68,8 +85,8 @@ def createTestHacker(number):
     elif prob() < 3:
         hacker.year = "senior"
 
-    hacker.email = "hacker_{1}@{2}.edu".format(number, hacker.school.lower().split(" ")[0])
-    hacker.secret = generate_secret_hacker_with_email(hacker.email)
+    hacker.email = "hacker_{0}@{1}.edu".format(number, hacker.school.lower().split(" ")[0])
+    hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
 
     hacker.shirt_gen = "M" if prob() < 5 else "W"
     hacker.shirt_size = random.choice(shirts)
@@ -80,13 +97,15 @@ def createTestHacker(number):
     while prob() < 2:
         item = random.choice(rawDiet)
         rawDiet.remove(item)
-        drs.push(item)
+        drs.append(item)
 
     hacker.dietary_restrictions = ','.join(drs)
 
     tms = []
     while prob() < 2:
-        teammates.push("hacker_{1}@another.edu".format(randint(0, number)))
+        tms.append("hacker_{0}@another.edu".format(random.randint(0, number)))
+
+    hacker.teammates = ','.join(tms)
 
     hacker.hardware_hack = "yes" if prob() > 8 else "no"
     hacker.first_hackathon = "yes" if prob() > 7 else "no"

@@ -55,6 +55,7 @@ app = webapp2.WSGIApplication([
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
 		('/db_cleanup', db_cleanup.CleanupHandler),
 		('/__db_populate/(\d+)', db_cleanup.PopulateHandler),
+		('/__db_depopulate/(\d+)', db_cleanup.DepopulateHandler),
 		('/__cleanup', db_cleanup.CleanupHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
