@@ -1,6 +1,10 @@
+import webapp2
 from google.appengine.ext import ndb
 from dashboard import getAllHackers
+from registration import Hacker
 import json
+from template import template
+from registration import hacker_keys
 
 #Example:
 # json = {
@@ -8,28 +12,33 @@ import json
 #     "RISD" : "Rhode Island School of Design"
 # }
 # run('school', json)
-
-def run(property, jsonKeys):
-    hackers = getAllHackers(property)
-    numChanges = 0
-    for hacker in hackers:
-        currentProp = getattr(hacker, property)
-        if currentProp and jsonKeys[currentProp] and currentProp != jsonKeys[currentProp]:
-            try:
-                setattr(hacker, jsonKeys[currentProp])
-                hacker.put()
-                numChanges++
-            except Exception as err
-                return {"success":False, "msg": str(err.args[0])}
-
-    successMsg = "Changed the schools of " + numChanges + " hackers."
-    return {"success":True, "msg": successMsg}
-
-
-def CleanupHandler(webapp2.RequestHandler):
+class CleanupHandler(webapp2.RequestHandler):
     def post(self):
         parsed_request = json.loads(self.request.body)
         property = parsed_request.get('property')
         jsonKeys = parsed_request.get('jsonKeys')
         result =  run(property, jsonKeys)
         return self.response.write(json.dumps(result))
+
+    def get(self):
+        jinjaVars = {"properties" : hacker_keys}
+        return self.response.write(template("db_cleanup.html", jinjaVars))
+
+def run(property, jsonKeys):
+    hackers = Hacker.query().filter(Hacker._properties[property].IN(jsonKeys.keys()))
+    changed = []
+    for hacker in hackers:
+        newProp = jsonKeys.get(getattr(hacker, property, None), None)
+        print(newProp)
+        if newProp:
+            setattr(hacker, property, newProp)
+            changed.append(hacker)
+
+    try:
+        ndb.put_multi(changed)
+    except Exception as err:
+        return {"success":False, "msg": str(err.args[0])}
+
+    successMsg = "Changed the " + property + " of " + str(len(changed)) + " hackers."
+    return {"success":True, "msg": successMsg}
+

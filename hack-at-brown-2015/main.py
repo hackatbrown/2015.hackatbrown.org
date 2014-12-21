@@ -51,6 +51,7 @@ app = webapp2.WSGIApplication([
 		('/__send_email', dashboard.SendEmail),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
+		('/db_cleanup', db_cleanup.CleanupHandler),
 		('/__cleanup', db_cleanup.CleanupHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),

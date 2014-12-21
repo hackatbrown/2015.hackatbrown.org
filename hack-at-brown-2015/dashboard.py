@@ -126,7 +126,7 @@ def getAllHackers(projection=None):
             if not memcache.set(memcachedKey, hackers, cacheTime):
                 logging.error("Memcache set failed")
     else:
-        hackers = Hacker.query().fetch()
+        hackers = Hacker.query(projection=projection).fetch()
 
     return hackers
 
@@ -144,7 +144,7 @@ def getGeneric(value):
     hackers = getAllHackers([value])
     data = {}
     for hacker in hackers:
-        key = getattr(hacker, value).title()
+        key = getattr(hacker, value)
         data[key] = data.setdefault(key, 0) + 1
     return data
 

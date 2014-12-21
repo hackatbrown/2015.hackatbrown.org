@@ -1,54 +1,76 @@
-var cleanupApp = angular.module('cleanupApp', []).config(function($interpolateProvider){
-        $interpolateProvider.startSymbol('%%').endSymbol('%%');
+function propertySelected(value) {
+
+  $('#displayProperty').text(value);
+
+  $.ajax({
+    url : '/__breakdown/' + value,
+    type : 'GET',
+    success : function(response) {
+      populateTable(JSON.parse(response));
+    },
+    failure : function(response) {
+      console.log(response);
     }
-);
+  });
+}
 
+function populateTable(groups) {
+  var $table = $('#table');
+  var $input = $('#submit');
+  $table.empty();
+  $table.append("<th>Property<td>Number of Hackers</td></th>")
+  for (var prop in groups) {
+    var $row = $('<tr class="property-value"><td class="prop">' + prop + '</td><td class="count">' + groups[prop] + '</td></tr>');
+    $row.click(function() {
+       $(this).toggleClass("selected");
+        $input.prop('disabled', !$table.has('.selected').length);
+    });
+    $table.append($row);
+  }
+}
 
-cleanupApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $http, $sce){
-  $scope.content = "";
-  $scope.header = "";
-
-  $scope.showPropertyValues = false;
-  $scope.property = "":
-
-  $scope.getContent = function (option) {
-    return 'PLACEHOLDER'
-  };
-
-  $scope.cleanup = function() {
-    var property = $('.property').val();
-    var originalValues = {};
-    var newValue = $('.newValue');
-    $('.selected').each(function(val) {
-      originalValues[val] = newValue;
+function cleanup() {
+    var property = $('#property-selector').val();
+    var replacedValues = {};
+    var newValue = $('#newValue').val();
+    $('#table').find('.selected .prop').each(function(index, elt) {
+      replacedValues[elt.innerHTML] = newValue;
     });
 
-    $display = $('.display');
-
-
-    if (property == "") {
-
+    var $display = $('#display');
+    function showStatus(success, msg) {
+        $display.toggleClass('success', success);
+        $display.toggleClass('failure', !success);
+        if (msg) {
+          $display.text(msg);
+        }
     }
+
+    if (!newValue) {
+      showStatus(false, "You must input a replacement string");
+      return;
+    }
+
+    if (!property) {
+      showStatus(false, "You must choose a property");
+      return;
+    }
+
+    data = {
+      "property" : property,
+      "jsonKeys" : replacedValues
+    };
 
     $.ajax({
       url : '/__cleanup',
       type : 'POST',
-      data : data,
+      data : JSON.stringify(data),
       success: function(response) {
         response = JSON.parse(response);
-        if (response.success === true) {
-          $display.addClass('.success');
-        } else if (response.success === false) {
-          $display.addClass('.failure');
-        }
-        $display.val(response.msg);
+        showStatus(response.success, response.msg);
       },
-      failure: function(response) {
-        response = JSON.parse(response);
-        $display.addClass('failure');
-        $display.val("Server Error");
+      failure: function() {
+        showStatus(false, "Server Error");
       }
     });
   }
-
-}]);
