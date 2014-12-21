@@ -137,5 +137,7 @@
   <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
 </div>
 <a style="text-decoration:none" class='button' href="/db_cleanup">DB Cleanup</a>
-
+{% if envIsDev %}
+<a style="text-decoration:none" class='button' href="/db_populate">DB Populate</
+{% endif %}
 {% endblock %}
