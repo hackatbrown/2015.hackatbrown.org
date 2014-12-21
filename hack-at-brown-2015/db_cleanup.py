@@ -5,6 +5,7 @@ from registration import Hacker
 import json
 from template import template
 from registration import hacker_keys
+from config import envIsDev
 
 #Example:
 # json = {
@@ -42,3 +43,11 @@ def run(property, jsonKeys):
     successMsg = "Changed the " + property + " of " + str(len(changed)) + " hackers."
     return {"success":True, "msg": successMsg}
 
+class PopulateHandler(webapp2.RequestHandler):
+    def get(self, number):
+        if not envIsDev() or self.request.host.split(":")[0] != "localhost":
+            return self.redirect('/')
+
+        for i in range(0, number):
+            hacker = createTestHacker()
+            hacker.put()

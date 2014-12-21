@@ -51,10 +51,11 @@ app = webapp2.WSGIApplication([
 		('/__send_email', dashboard.SendEmail),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
-		('/db_cleanup', db_cleanup.CleanupHandler),
-		('/__cleanup', db_cleanup.CleanupHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
+		('/db_cleanup', db_cleanup.CleanupHandler),
+		('/__db_populate/(\d+)', db_cleanup.PopulateHandler),
+		('/__cleanup', db_cleanup.CleanupHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
 		('/(.+)', short_urls.Serve)
