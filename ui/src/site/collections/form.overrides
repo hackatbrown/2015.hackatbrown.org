@@ -53,6 +53,7 @@
 
 .ui.form .selectize-control {
     font-weight: 300;
+    height: 35px;
 }
 
 .ui.form .selectize-dropdown, 
@@ -84,6 +85,9 @@
   transition: box-shadow .2s @defaultEasing, padding-left .2s @defaultEasing;
     border: 0;
     padding-left: 0 !important;
+    height: 35px;
+    padding-top: 0.6786em;
+    padding-bottom: 0.6786em;
 }
 .ui.form .selectize-input.has-items {
 //    padding-top: 4.5px !important;

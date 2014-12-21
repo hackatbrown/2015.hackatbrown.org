@@ -8777,13 +8777,16 @@ i.flag.zimbabwe:before {
 
 .ui.form .selectize-control {
   font-weight: 300;
+  height: 35px;
+}
+
+.ui.form .selectize-dropdown,
+.ui.form .selectize-input,
+.ui.form .selectize-input input {
+  font-size: 1em;
 }
 
 .ui.form .selectize-dropdown {
-  /*     -webkit-animation: fadeInDown .2s cubic-bezier(.55, 0, .1, 1);
-    -webkit-animation-iteration-count: infinite;
-    animation-name: fadeInDown;
-    transition: opacity .5s cubic-bezier(.55, 0, .1, 1); */
   border-radius: 0;
   box-shadow: none;
   border: 0;
@@ -8791,7 +8794,7 @@ i.flag.zimbabwe:before {
 }
 
 .ui.form .selectize-dropdown .optgroup-header,
-.selectize-dropdown [data-selectable] {
+.ui.form .selectize-dropdown [data-selectable] {
   /* height: 35px; */
   padding-top: 10px;
   padding-bottom: 10px;
@@ -8808,12 +8811,10 @@ i.flag.zimbabwe:before {
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding-left 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding-left 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   border: 0;
-  /* height: 35px !important; */
   padding-left: 0 !important;
-}
-
-.ui.icon.input .selectize-input {
-  padding-right: 1.18em!important;
+  height: 35px;
+  padding-top: 0.6786em;
+  padding-bottom: 0.6786em;
 }
 
 .ui.form .selectize-input.focus {
@@ -8821,11 +8822,8 @@ i.flag.zimbabwe:before {
   padding-left: .65em !important;
 }
 
-.ui.form .selectize-input input {
+.ui.form .selectize-input > input {
   color: #404040;
-}
-
-.selectize-input > input {
   height: auto !important;
   padding-top: 2px !important;
 }
@@ -8834,7 +8832,7 @@ i.flag.zimbabwe:before {
   padding-right: 0px !important;
 }
 
-.selectize-input.focus > input {
+.ui.form .selectize-input.focus > input {
   color: #ffffff;
 }
 
@@ -8870,7 +8868,11 @@ i.flag.zimbabwe:before {
   color: #ffffff;
 }
 
-.ui.form .selectize-control + i {
+.ui.icon.input .selectize-input {
+  padding-right: 1.18em!important;
+}
+
+.ui.icon.input .selectize-control + i {
   z-index: 200;
 }
 
@@ -29842,13 +29844,16 @@ footer .social-links {
 
 .ui.form .selectize-control {
   font-weight: 300;
+  height: 35px;
+}
+
+.ui.form .selectize-dropdown,
+.ui.form .selectize-input,
+.ui.form .selectize-input input {
+  font-size: 1em;
 }
 
 .ui.form .selectize-dropdown {
-  /*     -webkit-animation: fadeInDown .2s cubic-bezier(.55, 0, .1, 1);
-    -webkit-animation-iteration-count: infinite;
-    animation-name: fadeInDown;
-    transition: opacity .5s cubic-bezier(.55, 0, .1, 1); */
   border-radius: 0;
   box-shadow: none;
   border: 0;
@@ -29856,7 +29861,7 @@ footer .social-links {
 }
 
 .ui.form .selectize-dropdown .optgroup-header,
-.selectize-dropdown [data-selectable] {
+.ui.form .selectize-dropdown [data-selectable] {
   /* height: 35px; */
   padding-top: 10px;
   padding-bottom: 10px;
@@ -29873,12 +29878,10 @@ footer .social-links {
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding-left 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding-left 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   border: 0;
-  /* height: 35px !important; */
   padding-left: 0 !important;
-}
-
-.ui.icon.input .selectize-input {
-  padding-right: 1.18em!important;
+  height: 35px;
+  padding-top: 0.6786em;
+  padding-bottom: 0.6786em;
 }
 
 .ui.form .selectize-input.focus {
@@ -29886,11 +29889,8 @@ footer .social-links {
   padding-left: .65em !important;
 }
 
-.ui.form .selectize-input input {
+.ui.form .selectize-input > input {
   color: #404040;
-}
-
-.selectize-input > input {
   height: auto !important;
   padding-top: 2px !important;
 }
@@ -29899,7 +29899,7 @@ footer .social-links {
   padding-right: 0px !important;
 }
 
-.selectize-input.focus > input {
+.ui.form .selectize-input.focus > input {
   color: #ffffff;
 }
 
@@ -29935,6 +29935,10 @@ footer .social-links {
   color: #ffffff;
 }
 
-.ui.form .selectize-control + i {
+.ui.icon.input .selectize-input {
+  padding-right: 1.18em!important;
+}
+
+.ui.icon.input .selectize-control + i {
   z-index: 200;
 }

@@ -263,7 +263,7 @@
 
 <script>
   var linkRepeater,
-    secret = "{{ hacker.secret }}";
+      secret = "{{ hacker.secret }}";
   var newResumeURL = "{{ newResumeURL }}";
 
   $(document).ready(function () {
@@ -284,9 +284,6 @@
     });
 
 
-    $('#year').val("{{ hacker.year }}").selectize({
-        create: true,
-    });
 
     $("#info_top").click(function () {
       this.preventDefault;
@@ -308,6 +305,26 @@
       $.each(data, function (key, val) {
         $universities[key] = val;
       })
+    });
+    
+    var year = $('#year');
+    $(year).val("{{ hacker.year }}").selectize({
+      create: false,
+      hideSlected: true,
+      onDropdownOpen: function () {
+        $(yearDropdown).stop().hide().slideToggle(200);
+      },
+      onDropdownClose: function () {
+        $(yearDropdown).stop().show().slideToggle(200);
+      },
+    });
+    
+    var yearSelectize = $(year).siblings(".selectize-control"),
+        yearLabel = $(year).parent().siblings("label"),
+        yearDropdown = $(yearSelectize).find(".selectize-dropdown");
+
+    $(yearLabel).click(function() {
+      $(yearSelectize).find("input").focus();
     });
 
     var dietaryRestrictionsData = [{
@@ -452,13 +469,9 @@
         teammatesLabel = $(teammates).parent().siblings("label"),
         teammatesDropdown = $(teammatesSelectize).find(".selectize-dropdown");
 
-    $(teammates).click(function() {
+    $(teammatesLabel).click(function() {
       $(teammatesSelectize).find("input").focus();
-    })
-
-    $(teammates).siblings("label").click(function() {
-        $(teammates).find("input").focus();
-    })
+    });
 
     // Populate the radio buttons
     populateDefaultRadio("shirt_gen", "{{ hacker.shirt_gen }}");
