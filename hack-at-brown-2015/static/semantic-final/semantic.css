@@ -8724,6 +8724,12 @@ i.flag.zimbabwe:before {
          Site Overrides
 *******************************/
 
+.ui.form .row {
+  margin-bottom: 40px !important;
+  font-size: 1em !important;
+  line-height: 35px !important;
+}
+
 .ui.form ::input-placeholder {
   color: #918f8c !important;
   font-weight: 300;
@@ -8883,8 +8889,9 @@ i.flag.zimbabwe:before {
   padding-right: 0px !important;
 }
 
-.ui.form .row {
-  margin-bottom: 40px !important;
+.ui.form .selectize-dropdown [data-selectable] .highlight {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0;
 }
 
 /* RESPONSIVE */
@@ -29828,6 +29835,12 @@ footer .social-links {
          Site Overrides
 *******************************/
 
+.ui.form .row {
+  margin-bottom: 40px !important;
+  font-size: 1em !important;
+  line-height: 35px !important;
+}
+
 .ui.form ::input-placeholder {
   color: #918f8c !important;
   font-weight: 300;
@@ -29987,8 +30000,9 @@ footer .social-links {
   padding-right: 0px !important;
 }
 
-.ui.form .row {
-  margin-bottom: 40px !important;
+.ui.form .selectize-dropdown [data-selectable] .highlight {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0;
 }
 
 /* RESPONSIVE */
