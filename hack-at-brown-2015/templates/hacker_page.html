@@ -205,17 +205,20 @@
                             </div>
                             <div class="field">
                                 <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
-                                <input id="resume" class="resume-upload" type="file" name="resume"/>
-                                <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
-                                    Upload Resume
-                                </div>                                
-                                <span class="file-name">
-                                {% if hacker.resume %}
-                                    <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
-                                {% else %}
-                                    No file chosen.
-                                {% endif %}
-                                </span>
+                                <div class="upload-control">
+                                    <input id="resume" class="resume-upload" type="file" name="resume"/>
+                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
+                                        Upload Resume
+                                    </div>                                
+                                    <div class="file-name">
+                                        {% if hacker.resume %}
+                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
+                                        {% else %}
+                                        No file chosen.
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="two fields row">

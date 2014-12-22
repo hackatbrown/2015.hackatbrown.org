@@ -1,13 +1,24 @@
 
 /*Shim*/
+.upload-control {
+  display: flex;
+}
+
 .resume-upload {
+  flex: 0 0 128px;
+  margin-right: .75em;
+  transition: box-shadow 1.5s cubic-bezier(.55,0,.1,1) !important;
   width: 128px;
 }
 .resume-upload.complete {
   color: white !important;
 }
-.resume-upload {
-  transition: box-shadow 1.5s cubic-bezier(.55,0,.1,1) !important;
+
+.file-name {
+  margin-left: .75em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .top-bar_ul.constrained {
