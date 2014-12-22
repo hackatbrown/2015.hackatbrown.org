@@ -44,7 +44,7 @@
     <div class="outer_container">
         <div class="double panes">
             <div class="double_left pane pane0 active white">
-                <section id="status" class="panel hero">
+                <section id="mystatus" class="panel hero">
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
@@ -204,16 +204,21 @@
                                 </table>
                             </div>
                             <div class="field">
-                                <label for="resume">Upload Resume <span class="optional">(Recommended)</span></label>
-                                <input id="resume" class="resume-upload" type="file" name="resume"/>
-                                <input id="resume-over" class="resume-button" type="button" onclick="document.getElementById('resume').click()" value="Upload Resume"/>
-                                <span class="file-name">
-                                {% if hacker.resume %}
-                                    <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
-                                {% else %}
-                                    No file chosen.
-                                {% endif %}
-                                </span>
+                                <label for="resume">Resume <span class="optional">(Recommended)</span></label>
+                                <div class="upload-control">
+                                    <input id="resume" class="resume-upload" type="file" name="resume"/>
+                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
+                                        <span>Upload Resume</span>
+                                    </div>                                
+                                    <div class="file-name">
+                                        {% if hacker.resume %}
+                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
+                                        {% else %}
+                                        No file chosen.
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="two fields row">
@@ -270,10 +275,6 @@
       setTabActive($("#info_top"));
       switchToMyInfo();
     }
-
-    $(".button").click(function () {
-      $(this).toggleClass("active");
-    });
 
     $("#status_top").click(function () {
       this.preventDefault;
