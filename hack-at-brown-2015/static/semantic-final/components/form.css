@@ -900,6 +900,12 @@
           transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px;
 }
+.ui.form input::-moz-selection {
+  color: #ffffff;
+}
+.ui.form input::selection {
+  color: #ffffff;
+}
 .ui.form input[type=date]:focus,
 .ui.form input[type=datetime-local]:focus,
 .ui.form input[type=email]:focus,
@@ -960,8 +966,11 @@
   padding-left: .65em !important;
   color: #ffffff;
 }
-.selectize-control.multi .selectize-input.has-items {
+.ui.form .selectize-control.multi .selectize-input.has-items {
   padding: 0;
+}
+.ui.form .selectize-control.single > .selectize-input {
+  height: 35px;
 }
 .ui.form .selectize-control.single > .selectize-input > * {
   line-height: 35px;
@@ -1008,7 +1017,7 @@
   padding-right: 0px !important;
 }
 .ui.form .selectize-dropdown [data-selectable] .highlight {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(200, 200, 200, 0.2);
   border-radius: 0;
 }
 

@@ -1,7 +1,7 @@
 /*******************************
     User Variable Overrides
 *******************************/
-@input-height : 35px;
+@input-height : @baseInteractiveHeight;
 @line-height : 1.2142em;
 
 @input-padding : ~"calc(("@input-height ~" - "@line-height ~") / 2)";

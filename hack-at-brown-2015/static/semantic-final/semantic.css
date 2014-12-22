@@ -3095,8 +3095,8 @@
   -webkit-transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
   transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px !important;
-  padding: 7px 11px 10px;
-  line-height: 1.8em;
+  padding: 0 11px;
+  line-height: 35px;
 }
 
 .ui.active.button {
@@ -8763,6 +8763,14 @@ i.flag.zimbabwe:before {
   height: 35px;
 }
 
+.ui.form input::-moz-selection {
+  color: #ffffff;
+}
+
+.ui.form input::selection {
+  color: #ffffff;
+}
+
 .ui.form input[type=date]:focus,
 .ui.form input[type=datetime-local]:focus,
 .ui.form input[type=email]:focus,
@@ -8833,8 +8841,12 @@ i.flag.zimbabwe:before {
   color: #ffffff;
 }
 
-.selectize-control.multi .selectize-input.has-items {
+.ui.form .selectize-control.multi .selectize-input.has-items {
   padding: 0;
+}
+
+.ui.form .selectize-control.single > .selectize-input {
+  height: 35px;
 }
 
 .ui.form .selectize-control.single > .selectize-input > * {
@@ -8890,7 +8902,7 @@ i.flag.zimbabwe:before {
 }
 
 .ui.form .selectize-dropdown [data-selectable] .highlight {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(200, 200, 200, 0.2);
   border-radius: 0;
 }
 
@@ -14950,13 +14962,10 @@ img.ui.bordered.image {
 }
 
 .radiobuttons input[type="radio"] + label {
-  line-height: 1.8em;
+  line-height: 35px;
   background-color: #EBEBEB;
   text-transform: none;
-  height: 18px;
-  padding: 11px;
-  padding-top: 7px;
-  padding-bottom: 10px;
+  padding: 0 11px;
   color: #404042;
   font-weight: 300;
   font-size: .9em;
@@ -24488,17 +24497,17 @@ a:hover {
 *******************************/
 
 ::-webkit-selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 
 ::-moz-selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 
 ::selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 
@@ -29874,6 +29883,14 @@ footer .social-links {
   height: 35px;
 }
 
+.ui.form input::-moz-selection {
+  color: #ffffff;
+}
+
+.ui.form input::selection {
+  color: #ffffff;
+}
+
 .ui.form input[type=date]:focus,
 .ui.form input[type=datetime-local]:focus,
 .ui.form input[type=email]:focus,
@@ -29944,8 +29961,12 @@ footer .social-links {
   color: #ffffff;
 }
 
-.selectize-control.multi .selectize-input.has-items {
+.ui.form .selectize-control.multi .selectize-input.has-items {
   padding: 0;
+}
+
+.ui.form .selectize-control.single > .selectize-input {
+  height: 35px;
 }
 
 .ui.form .selectize-control.single > .selectize-input > * {
@@ -30001,7 +30022,7 @@ footer .social-links {
 }
 
 .ui.form .selectize-dropdown [data-selectable] .highlight {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(200, 200, 200, 0.2);
   border-radius: 0;
 }
 

@@ -1,8 +1,32 @@
 
 /*Shim*/
-.selectize-input input::input-placeholder {
-  font-size: 1em;
-  line-height: 35px;
+.upload-control {
+  display: flex;
+}
+
+.resume-upload {
+  flex: 0 0 128px;
+  margin-right: .75em;
+  transition: box-shadow 0s !important;
+  width: 128px;
+}
+.resume-upload.fadeBackground {
+  transition: box-shadow 0s, background-color 1s cubic-bezier(.55,0,.1,1) !important;
+}
+.resume-upload.loading,
+.resume-upload.complete {
+  transition: box-shadow 1.5s cubic-bezier(.55,0,.1,1) !important;
+}
+.resume-upload.complete {
+  color: white !important;
+  background-color: #26a59f;
+}
+
+.file-name {
+  margin-left: .75em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .top-bar_ul.constrained {
@@ -381,11 +405,13 @@ span.optional {
   overflow-y: hidden;
   transition: max-height .2s;
 }
+/*
 .resume-button:active {
   background-color: #404040;
   color: #fff;
   transition: none;
 }
+*/
 
 .hs-warning {
   display: none;

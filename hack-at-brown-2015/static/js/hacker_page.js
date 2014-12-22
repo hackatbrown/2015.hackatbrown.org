@@ -20,13 +20,13 @@ function switchFromMyInfo() {
 }
 
 function initalizeHamburger() {
-  // Hamburger menu for mobile
-  $("nav ul > li a").click(function () {
-    $("nav").removeClass("open");
-  })
-  $(".hamburger").click(function () {
-    $("nav").toggleClass("open");
-  });
+    // Hamburger menu for mobile
+    $("nav ul > li a").click(function () {
+        $("nav").removeClass("open");
+    });
+    $(".hamburger").click(function () {
+        $("nav").toggleClass("open");
+    });
 }
 
 // Resume Upload
@@ -35,7 +35,7 @@ function requestNewUploadURL() {
     $.ajax({
         type: 'GET',
         url: '/secret/__newurl/' + secret,
-        success: function(response) {
+        success: function (response) {
             response = JSON.parse(response);
             newResumeURL = response.newURL;
         }
@@ -43,20 +43,67 @@ function requestNewUploadURL() {
 }
 
 function updateResume(value, uiinput, secret, responseStatus) {
+
+    var $button = $(uiinput).find(".ui.button"),
+        $buttonText = $button.children("span"),
+        width = $button.outerWidth(),
+        complete = false;
+
+    function resetState(e) {
+        $button.removeClass("complete");
+        $button.removeAttr('style');
+        $button.addClass('fadeBackground');
+        $buttonText.fadeOut(200, function () {
+            $buttonText.text("Re-upload");
+            $buttonText.fadeIn(200);
+        });
+        $button.unbind('mouseenter', resetState);
+        setTimeout(function() {
+            $button.removeClass('fadeBackground');
+        }, 1000);
+    }
+
+    //Set the button state to loading
+    $button.addClass("loading active");
+
     var data = new FormData();
     data.append("resume", $('.resume-upload')[0].files[0]);
+
     $.ajax({
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            //Upload progress
+            xhr.upload.addEventListener("progress", _.throttle(function (evt) {
+                if (evt.lengthComputable && !complete) {
+                    var percentComplete = evt.loaded / evt.total;
+                    $button.css("box-shadow", "inset " + (width * percentComplete) + 5 + "px 0 0 -1px #1b8eb9");
+                }
+            }, 1000), false);
+            return xhr;
+        },
         url: newResumeURL,
         data: data,
         cache: false,
         contentType: false,
         processData: false,
         type: 'POST',
-        success: function(response){
-            response = JSON.parse(response)
+        success: function (response) {
+            complete = true;
+            $button.css("box-shadow", "inset " + width + 5 + "px 0 0 -1px #26a59f");
+            $button.addClass("complete");
+            $button.removeClass("loading active");
+            $buttonText.text("Complete!");
+            response = JSON.parse(response);
             $resumeView = $('.view-resume');
+            console.log(response.downloadLink);
             $resumeView.attr('href', response.downloadLink);
             $resumeView[0].innerHTML = response.fileName;
+
+            $button.one('mouseenter', resetState);
+            setTimeout(resetState, 2500);
+        },
+        failure: function (response) {
+            console.log("I have failed youuuu");
         }
     });
 }
@@ -74,12 +121,11 @@ function slideIn($element) {
 //  Form processing out
 
 function saveChange(key, value, uiinput, secret, responseStatus) {
-    if (key == 'resume') {
+    if (key === 'resume') {
         updateResume(value, uiinput, secret, responseStatus);
         requestNewUploadURL();
     }
 
-//    console.log("key: " + key + " value: " + value);
     var data = {},
         $icon = $(uiinput).children(".icon"),
         oldIcon = $icon.attr('class');
@@ -93,11 +139,11 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('fade');
-                $($icon).attr('class', "checkmark icon");
+                $icon.attr('class', "checkmark icon");
                 setTimeout(function () {
                     $(uiinput).removeClass('fade');
                     if ((oldIcon !== "checkmark icon") || (oldIcon !== "remove icon")) {
-                        $($icon).attr('class', oldIcon);
+                        $icon.attr('class', oldIcon);
                     }
                 }, 1500);
             }
@@ -110,8 +156,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
                 setTimeout(function () {
                     $(uiinput).removeClass('fade');
                     if ((oldIcon !== "remove icon") || (oldIcon !== "remove icon")) {
-                        console.log(oldIcon);
-                        $($icon).attr('class', oldIcon);
+                        $icon.attr('class', oldIcon);
                     }
                 }, 1500);
             }
@@ -119,24 +164,25 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
     });
 }
 
-function trim1 (str) {
+function trim1(str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
 function domainMatch(uiIcon, url) {
     var recognizedDomains = {
-        'dribbble.com': "dribbble",
-        'facebook.com': "facebook",
-        'linkedin.com': "linkedin",
-        'github.com': "github",
-        'jsfiddle.net': "jsfiddle",
-        'behance.net': "behance",
-        'soundcloud.com': "soundcloud",
-        'deviantart.com': "deviantart"
-    };
+            'dribbble.com': "dribbble",
+            'facebook.com': "facebook",
+            'linkedin.com': "linkedin",
+            'github.com': "github",
+            'jsfiddle.net': "jsfiddle",
+            'behance.net': "behance",
+            'soundcloud.com': "soundcloud",
+            'deviantart.com': "deviantart"
+        },
+        domain;
     for (domain in recognizedDomains) {
-        if(url.indexOf(domain) > -1) {
-//            console.log("matched with " + domain);
+        if (url.indexOf(domain) > -1) {
+            //            console.log("matched with " + domain);
             $(uiIcon).attr('class', "icon " + recognizedDomains[domain]);
             return;
         }
@@ -151,8 +197,8 @@ function trackCondor(condorObject) {
         this.value = this.value.trim().replace(/^.*?:\/\//, "");
         domainMatch(icon, this.value);
         saveChange("links", links.toString(), $(condorObject).find(".condor-active > .input"), secret, false);
-    }
-    $(condorObject).on( "change", ".condor-active > .input > input", detectedChange);
+    };
+    $(condorObject).on("change", ".condor-active > .input > input", detectedChange);
 }
 
 //  Form processing in

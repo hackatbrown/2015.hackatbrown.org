@@ -1,6 +1,7 @@
 /*******************************
          Site Overrides
 *******************************/
+
 .ui.form .row {
     margin-bottom:40px !important;
     font-size: 1em !important;
@@ -35,6 +36,10 @@
     font-weight: 300;
     transition: box-shadow .2s @defaultEasing, padding .2s @defaultEasing;
     height: @input-height;
+}
+
+.ui.form input::selection {
+    color: @white;
 }
 
 .ui.form input[type=date]:focus, 
@@ -103,8 +108,12 @@
     color: @white;
 }
 
-.selectize-control.multi .selectize-input.has-items {
+.ui.form .selectize-control.multi .selectize-input.has-items {
     padding: 0;
+}
+
+.ui.form .selectize-control.single > .selectize-input {
+    height: 35px;
 }
 
 .ui.form .selectize-control.single > .selectize-input > * {
@@ -153,7 +162,7 @@
 }
 
 .ui.form .selectize-dropdown [data-selectable] .highlight {
-    background: rgba(255, 255, 255, .2);
+    background: @highlightBackground;
     border-radius: 0;
 }
 
