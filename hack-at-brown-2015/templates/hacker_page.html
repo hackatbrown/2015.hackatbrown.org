@@ -173,7 +173,7 @@
                             <div class="field">
                                 <label for="dietary_restrictions">Dietary Restrictions?</label>
                                 <div class="ui icon input">
-                                    <input id="dietary_restrictions" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}"/>
+                                    <input id="dietary_restrictions" class="tags-input" type="text" name="dietary_restrictions" value="{{ hacker.dietary_restrictions }}"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                             <div class="field">
                               <label for="teammates">Any Friends You'd Like to Work With? <span class="optional">(Optional, Limit 3 Emails)</span></label>
                                 <div class="ui icon input">
-                                    <input id="teammates" type="text" name="teammates" value="{{ hacker.teammates }}"/>
+                                    <input id="teammates" class="tags-input" type="text" name="teammates" value="{{ hacker.teammates }}"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -287,10 +287,17 @@
       switchToMyInfo();
     });
 
+
     //    Form stuff. Needs to stay in the html for jinja to do its thing
-    $("#update_form input").change(function () {
+    $("#update_form input:not(.tags-input)").change(function () {
       saveChange(this.name, this.value, this.parentNode, secret, true);
     });
+
+    var debouncedSaveChange = _.debounce(saveChange, 2000);
+    $(".tags-input").change(function () {
+        debouncedSaveChange(this.name, this.value, this.parentNode, secret, true);
+    });
+
 
     //Year Section
     var $year = $('#year');
