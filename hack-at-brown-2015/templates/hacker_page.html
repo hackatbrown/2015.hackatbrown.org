@@ -212,7 +212,7 @@
                                     </div>                                
                                     <div class="file-name">
                                         {% if hacker.resume %}
-                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank">{{resumeFileName}}</a>
+                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                         {% else %}
                                         No file chosen.
                                         {% endif %}
