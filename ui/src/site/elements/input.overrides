@@ -3,7 +3,13 @@
 *******************************/
 .radiogroup {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    margin-bottom: -.2857rem;
+}
+
+.radiobuttons {
+    margin-bottom: .2857rem;
 }
 
 .radiobuttons input[type="radio"] + label {

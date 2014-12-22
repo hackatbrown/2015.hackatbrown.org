@@ -1,5 +1,11 @@
 
 /*Shim*/
+/*
+.selectize-input input::input-placeholder {
+  
+}
+*/
+
 .top-bar_ul.constrained {
   max-width: 964px;
 }
@@ -350,10 +356,6 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
   padding-bottom: 8%;
   transition: padding .5s;
 }
-
-.row {
-  margin-bottom:40px !important;
-}
 span.optional {
   font-weight: 300;
   color: #918f8c;
@@ -544,22 +546,6 @@ section .background > .right {
 
 }
 @media screen and (max-width: 750px) {
-  .shirt_size {
-    flex-direction: column;
-  }
-  .row {
-    margin-bottom:0 !important;
-  }
-  .two.fields .field, .ui.form .field.row {
-    margin-bottom:16px !important;
-  }
-  input[type="radio"] + label {
-    font-size:1em;
-    padding-left:15px;
-    padding-right:15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
   .double_right {
     padding-top: 12%;
   }

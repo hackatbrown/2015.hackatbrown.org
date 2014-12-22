@@ -13,28 +13,32 @@
     font-size: 1.1em;
 }
 
-.ui.form input[type="text"],
-.ui.form input[type="email"],
-.ui.form input[type="date"],
-.ui.form input[type="password"],
-.ui.form input[type="number"],
-.ui.form input[type="url"],
-.ui.form input[type="tel"] {
+.ui.form input[type=date], 
+.ui.form input[type=datetime-local], 
+.ui.form input[type=email], 
+.ui.form input[type=number], 
+.ui.form input[type=password], 
+.ui.form input[type=tel],
+.ui.form input[type=text], 
+.ui.form input[type=url] {
     border: none;
     box-shadow: inset 1px -3px 0px -1px @lightgreyalpha;
+    padding-top: @input-padding;
+    padding-bottom: @input-padding;
     padding-left: 0;
     font-weight: 300;
     transition: box-shadow .2s @defaultEasing, padding .2s @defaultEasing;
-    height: 35px;
+    height: @input-height;
 }
 
-.ui.form input[type="text"]:focus,
-.ui.form input[type="email"]:focus,
-.ui.form input[type="date"]:focus,
-.ui.form input[type="password"]:focus,
-.ui.form input[type="number"]:focus,
-.ui.form input[type="url"]:focus,
-.ui.form input[type="tel"]:focus {
+.ui.form input[type=date]:focus, 
+.ui.form input[type=datetime-local]:focus, 
+.ui.form input[type=email]:focus, 
+.ui.form input[type=number]:focus, 
+.ui.form input[type=password]:focus, 
+.ui.form input[type=tel]:focus,
+.ui.form input[type=text]:focus, 
+.ui.form input[type=url]:focus {
     box-shadow: inset 1px -50px 0px -1px @black !important;
     color: white !important;
     padding-left: .65em;
@@ -53,7 +57,7 @@
 
 .ui.form .selectize-control {
     font-weight: 300;
-    height: 35px;
+    height: @input-height;
 }
 
 .ui.form .selectize-dropdown, 
@@ -70,7 +74,6 @@
 }
 .ui.form .selectize-dropdown .optgroup-header, 
 .ui.form .selectize-dropdown [data-selectable] {
-    /* height: 35px; */
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -80,37 +83,31 @@
 }
 
 .ui.form .selectize-input {
+    border: 0;
     border-radius: 0 !important;
     box-shadow: inset 1px -3px 0px -1px rgba(145, 143, 140, 0.3);
-  transition: box-shadow .2s @defaultEasing, padding-left .2s @defaultEasing;
-    border: 0;
+    transition: box-shadow .2s @defaultEasing, padding-left .2s @defaultEasing;
     padding-left: 0 !important;
-    height: 35px;
-    padding-top: 0.6786em;
-    padding-bottom: 0.6786em;
-}
-.ui.form .selectize-input.has-items {
-//    padding-top: 4.5px !important;
-//    padding-bottom: 4px !important;
+    padding: 0;
+    color: @black;
 }
 .ui.form .selectize-input.focus {
     box-shadow: inset 1px -80px 0px -1px @black !important;
     padding-left: .65em !important;
-}
-
-.ui.form .selectize-input>input {
-    color: @black;
-    height: auto !important;
-    padding-top: 2px !important;
-}
-.ui.icon.input .selectize-input>input {
-    padding-right: 0px !important;
-}
-.ui.form .selectize-input.focus > input {
     color: @white;
 }
 
-.ui.form .selectize-control.multi .selectize-input [data-value] {
+.selectize-control.multi .selectize-input.has-items {
+    padding: 0;
+}
+
+.ui.form .selectize-control.single > .selectize-input > * {
+    line-height: @input-height;
+    height: @input-height;
+    position: relative !important;
+}
+
+.ui.form .selectize-control.multi > .selectize-input .item {
     box-shadow: none;
     border-radius: 0;
     text-shadow: none;
@@ -118,11 +115,13 @@
     background: @blue;
     color: @white;
     transition: background-color .2s cubic-bezier(.55, 0, .1, 1), color .2s cubic-bezier(.55, 0, .1, 1);
-    padding-bottom: 3px;
+    padding-top: .3em;
+    padding-bottom: .3em;
     margin-right: .3em;
-    margin-bottom: .3em;
+    margin-top: .2em;
+    margin-bottom: .2em;
 }
-.ui.form .selectize-control.multi .selectize-input.focus [data-value] {
+.ui.form .selectize-control.multi > .selectize-input.focus .item {
     background: @white;
     color: @black;
     box-shadow: inset 1px 0 0 -1px @blue;
@@ -142,4 +141,25 @@
 }
 .ui.icon.input .selectize-control + i {
   z-index: 200;
+}
+.ui.icon.input .selectize-input > input {
+    padding-right: 0px !important;
+}
+
+.ui.form .row {
+    margin-bottom:40px !important;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: @tabletBreakpoint) {
+    .ui.form .row {
+        margin-bottom:0 !important;
+    }
+    .ui.form .field {
+        margin-bottom:16px !important;
+    }
+    /* Prevent repeated stacking */
+    .field .field {
+        margin-bottom:0 !important;
+    }
 }

@@ -166,27 +166,25 @@ function populateDefaultRadio(key, value) {
 }
 
 /* Prevent horizontal scrolling of element into view on focus */
-$(document).on('keydown', ':focus', function (event) {
-    if ((event.keyCode || event.which) === 9) {
-        //TODO: Generalize and support selecting other kinds of input
-      var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox], input[type=button]"),
-            index = $inputs.index(this),
-            $next;
-        // Index previous or next input based on the shift key
-        index += event.shiftKey ? -1 : 1;
-        // If we are in the range of valid inputs (else browser takes focus)
-        if (index >= 0 && index < $inputs.length) {
-            $next = $inputs.eq(index);
-            event.preventDefault();
-            // Move, not scroll, to the next/prev item....
-            //                    MoveIntoView($next);
-            //console.log($next);
-            $next.focus();
-            return false;
-        }
-    }
-
-    if ((event.keyCode || event.which) === 13) {
-        $("input").blur();
-    }
-});
+//$(document).on('keydown', ':focus', function (event) {
+//    if ((event.keyCode || event.which) === 9) {
+//        //TODO: Generalize and support selecting other kinds of input
+//      var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox], input[type=button]"),
+//            index = $inputs.index(this),
+//            $next;
+//        // Index previous or next input based on the shift key
+//        index += event.shiftKey ? -1 : 1;
+//        // If we are in the range of valid inputs (else browser takes focus)
+//        if (index >= 0 && index < $inputs.length) {
+//            $next = $inputs.eq(index);
+//            event.preventDefault();
+//            //console.log($next);
+//            $next.focus();
+//            return false;
+//        }
+//    }
+//
+//    if ((event.keyCode || event.which) === 13) {
+//        $("input").blur();
+//    }
+//});
