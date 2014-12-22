@@ -49,7 +49,7 @@ def test(numentrants=1000):
 	print "\n\n"
 	print r"# brown/risd, % female, % first time"
 	print ""
-	print "applicants:      ", analyze(applicants, num_accept=numentrants)
+	print numentrants, "applicants: ", analyze(applicants, num_accept=numentrants)
 	print "----------------------------------------------"
 	print "first", 350, "admits:", rank_applicants(applicants)
 	print ""
