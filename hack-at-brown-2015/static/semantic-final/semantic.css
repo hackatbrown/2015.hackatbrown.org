@@ -8833,8 +8833,12 @@ i.flag.zimbabwe:before {
   color: #ffffff;
 }
 
-.selectize-control.multi .selectize-input.has-items {
+.ui.form .selectize-control.multi .selectize-input.has-items {
   padding: 0;
+}
+
+.ui.form .selectize-control.single > .selectize-input {
+  height: 35px;
 }
 
 .ui.form .selectize-control.single > .selectize-input > * {
@@ -29944,8 +29948,12 @@ footer .social-links {
   color: #ffffff;
 }
 
-.selectize-control.multi .selectize-input.has-items {
+.ui.form .selectize-control.multi .selectize-input.has-items {
   padding: 0;
+}
+
+.ui.form .selectize-control.single > .selectize-input {
+  height: 35px;
 }
 
 .ui.form .selectize-control.single > .selectize-input > * {

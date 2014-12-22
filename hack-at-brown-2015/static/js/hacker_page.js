@@ -42,10 +42,29 @@ function requestNewUploadURL() {
     });
 }
 
-function updateResume(value, uiinput, secret, responseStatus) {
+function updateResume (value, uiinput, secret, responseStatus) {
+    
+    var $button = $(uiinput).find(".ui.button"),
+        width = $button.outerWidth(),
+        complete = false;
+    //Set the button state to loading
+    $button.addClass("loading active");
+    
     var data = new FormData();
     data.append("resume", $('.resume-upload')[0].files[0]);
     $.ajax({
+        xhr: function()
+        {
+            var xhr = new window.XMLHttpRequest();
+            //Upload progress
+            xhr.upload.addEventListener("progress", _.throttle(function(evt){
+                if (evt.lengthComputable && !complete) {
+                    var percentComplete = evt.loaded / evt.total;
+                    $button.css("box-shadow", "inset " + (width * percentComplete) + 5 + "px 0 0 -1px #1b8eb9");
+                }
+            }, 1000), false);
+            return xhr;
+        },
         url: newResumeURL,
         data: data,
         cache: false,
@@ -53,7 +72,12 @@ function updateResume(value, uiinput, secret, responseStatus) {
         processData: false,
         type: 'POST',
         success: function(response){
-            response = JSON.parse(response)
+            complete = true;
+            $button.css("box-shadow", "inset " + width + 5 + "px 0 0 -1px #26a59f");
+            $button.addClass("complete");
+            $button.removeClass("loading active");
+            $button.text("Complete!");
+            response = JSON.parse(response);
             $resumeView = $('.view-resume');
             $resumeView.attr('href', response.downloadLink);
             $resumeView[0].innerHTML = response.fileName;
@@ -79,7 +103,6 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         requestNewUploadURL();
     }
 
-//    console.log("key: " + key + " value: " + value);
     var data = {},
         $icon = $(uiinput).children(".icon"),
         oldIcon = $icon.attr('class');
@@ -93,11 +116,11 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('fade');
-                $($icon).attr('class', "checkmark icon");
+                $icon.attr('class', "checkmark icon");
                 setTimeout(function () {
                     $(uiinput).removeClass('fade');
                     if ((oldIcon !== "checkmark icon") || (oldIcon !== "remove icon")) {
-                        $($icon).attr('class', oldIcon);
+                        $icon.attr('class', oldIcon);
                     }
                 }, 1500);
             }
@@ -110,8 +133,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
                 setTimeout(function () {
                     $(uiinput).removeClass('fade');
                     if ((oldIcon !== "remove icon") || (oldIcon !== "remove icon")) {
-                        console.log(oldIcon);
-                        $($icon).attr('class', oldIcon);
+                        $icon.attr('class', oldIcon);
                     }
                 }, 1500);
             }

@@ -1,8 +1,13 @@
 
 /*Shim*/
-.selectize-input input::input-placeholder {
-  font-size: 1em;
-  line-height: 35px;
+.resume-upload {
+  width: 128px;
+}
+.resume-upload.complete {
+  color: white !important;
+}
+.resume-upload {
+  transition: box-shadow 1.5s cubic-bezier(.55,0,.1,1) !important;
 }
 
 .top-bar_ul.constrained {
@@ -381,11 +386,13 @@ span.optional {
   overflow-y: hidden;
   transition: max-height .2s;
 }
+/*
 .resume-button:active {
   background-color: #404040;
   color: #fff;
   transition: none;
 }
+*/
 
 .hs-warning {
   display: none;
