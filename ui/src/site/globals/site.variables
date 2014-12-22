@@ -48,6 +48,8 @@
       Sizes
 --------------------*/
 
+@baseInteractiveHeight : 35px;
+
 /* Exact pixel values @ 14px em */
 @mini        : 0.7142rem;
 @tiny        : 0.8571rem;

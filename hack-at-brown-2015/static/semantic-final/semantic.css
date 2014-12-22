@@ -3095,8 +3095,8 @@
   -webkit-transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
   transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px !important;
-  padding: 7px 11px 10px;
-  line-height: 1.8em;
+  padding: 0 11px;
+  line-height: 35px;
 }
 
 .ui.active.button {
@@ -8761,6 +8761,14 @@ i.flag.zimbabwe:before {
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px;
+}
+
+.ui.form input::-moz-selection {
+  color: #ffffff;
+}
+
+.ui.form input::selection {
+  color: #ffffff;
 }
 
 .ui.form input[type=date]:focus,
@@ -14954,13 +14962,10 @@ img.ui.bordered.image {
 }
 
 .radiobuttons input[type="radio"] + label {
-  line-height: 1.8em;
+  line-height: 35px;
   background-color: #EBEBEB;
   text-transform: none;
-  height: 18px;
-  padding: 11px;
-  padding-top: 7px;
-  padding-bottom: 10px;
+  padding: 0 11px;
   color: #404042;
   font-weight: 300;
   font-size: .9em;
@@ -29876,6 +29881,14 @@ footer .social-links {
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px;
+}
+
+.ui.form input::-moz-selection {
+  color: #ffffff;
+}
+
+.ui.form input::selection {
+  color: #ffffff;
 }
 
 .ui.form input[type=date]:focus,

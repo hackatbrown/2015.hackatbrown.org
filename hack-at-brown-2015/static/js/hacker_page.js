@@ -95,11 +95,15 @@ function updateResume(value, uiinput, secret, responseStatus) {
             $buttonText.text("Complete!");
             response = JSON.parse(response);
             $resumeView = $('.view-resume');
+            console.log(response.downloadLink);
             $resumeView.attr('href', response.downloadLink);
             $resumeView[0].innerHTML = response.fileName;
 
             $button.one('mouseenter', resetState);
             setTimeout(resetState, 2500);
+        },
+        failure: function (response) {
+            console.log("I have failed youuuu");
         }
     });
 }

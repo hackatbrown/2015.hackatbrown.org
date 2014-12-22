@@ -2377,8 +2377,8 @@
   -webkit-transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
           transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1), border 0.15s cubic-bezier(0.55, 0, 0.1, 1);
   height: 35px !important;
-  padding: 7px 11px 10px;
-  line-height: 1.8em;
+  padding: 0 11px;
+  line-height: 35px;
 }
 .ui.active.button {
   color: #ffffff !important;

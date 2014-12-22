@@ -3,7 +3,7 @@
 *******************************/
 /* Button Variables */
 
-@height: 35px;
+@height: @baseInteractiveHeight;
 
 @textTransform: none;
 @fontWeight: 300;
