@@ -6,8 +6,8 @@ function setTabActive(tab) {
 
 function switchPanes(paneNumber) {
     var $panes = $(".panes");
-    $($panes).removeClass("in-pane0 in-pane1");
-    $($panes).addClass("in-pane" + paneNumber);
+    $panes.removeClass("in-pane0 in-pane1");
+    $panes.addClass("in-pane" + paneNumber);
     $(".pane" + paneNumber).addClass("active");
 }
 
@@ -44,7 +44,7 @@ function requestNewUploadURL() {
 
 function updateResume(value, uiinput, secret, responseStatus) {
     var data = new FormData();
-    data.append("resume", file = $('.resume-upload')[0].files[0]);
+    data.append("resume", $('.resume-upload')[0].files[0]);
     $.ajax({
         url: newResumeURL,
         data: data,
@@ -60,6 +60,16 @@ function updateResume(value, uiinput, secret, responseStatus) {
         }
     });
 }
+
+function slideOut($element) {
+    $element.stop().hide().slideToggle(200);
+
+}
+
+function slideIn($element) {
+    $element.stop().show().slideToggle(200);
+}
+
 
 //  Form processing out
 

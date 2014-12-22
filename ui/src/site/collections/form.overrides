@@ -53,43 +53,42 @@
 
 .ui.form .selectize-control {
     font-weight: 300;
+    height: 35px;
 }
+
+.ui.form .selectize-dropdown, 
+.ui.form .selectize-input,
+.ui.form .selectize-input input {
+    font-size: 1em;
+}
+
 .ui.form .selectize-dropdown {
-/*     -webkit-animation: fadeInDown .2s cubic-bezier(.55, 0, .1, 1);
-    -webkit-animation-iteration-count: infinite;
-    animation-name: fadeInDown;
-    transition: opacity .5s cubic-bezier(.55, 0, .1, 1); */
     border-radius: 0;
     box-shadow: none;
     border: 0;
     background: @offwhite;
 }
-
-.ui.form .selectize-dropdown .optgroup-header, .selectize-dropdown [data-selectable] {
+.ui.form .selectize-dropdown .optgroup-header, 
+.ui.form .selectize-dropdown [data-selectable] {
     /* height: 35px; */
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
 .ui.form .selectize-dropdown .active {
     background-color: @blue !important;
     color: @white !important;
 }
+
 .ui.form .selectize-input {
     border-radius: 0 !important;
     box-shadow: inset 1px -3px 0px -1px rgba(145, 143, 140, 0.3);
-    transition: box-shadow .2s cubic-bezier(.55, 0, .1, 1), padding-left .2s cubic-bezier(.55, 0, .1, 1);
+  transition: box-shadow .2s @defaultEasing, padding-left .2s @defaultEasing;
     border: 0;
-    /* height: 35px !important; */
     padding-left: 0 !important;
-//    padding-top: 9px !important;
-//    padding-bottom: 8px !important;
+    height: 35px;
+    padding-top: 0.6786em;
+    padding-bottom: 0.6786em;
 }
-
-.ui.icon.input .selectize-input {
-    padding-right: 1.18em!important;
-}
-
 .ui.form .selectize-input.has-items {
 //    padding-top: 4.5px !important;
 //    padding-bottom: 4px !important;
@@ -98,21 +97,19 @@
     box-shadow: inset 1px -80px 0px -1px @black !important;
     padding-left: .65em !important;
 }
-.ui.form .selectize-input input {
-    color: @black;
-}
 
-.selectize-input>input {
+.ui.form .selectize-input>input {
+    color: @black;
     height: auto !important;
     padding-top: 2px !important;
 }
 .ui.icon.input .selectize-input>input {
     padding-right: 0px !important;
 }
-
-.selectize-input.focus > input {
+.ui.form .selectize-input.focus > input {
     color: @white;
 }
+
 .ui.form .selectize-control.multi .selectize-input [data-value] {
     box-shadow: none;
     border-radius: 0;
@@ -140,6 +137,9 @@
     color: @white;
 }
 
-.ui.form .selectize-control + i {
-    z-index: 200;
+.ui.icon.input .selectize-input {
+  padding-right: 1.18em!important;
+}
+.ui.icon.input .selectize-control + i {
+  z-index: 200;
 }
