@@ -14892,6 +14892,17 @@ img.ui.bordered.image {
          Site Overrides
 *******************************/
 
+.radiogroup {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
 .radiobuttons input[type="radio"] + label {
   line-height: 1.8em;
   background-color: #EBEBEB;
@@ -24456,6 +24467,159 @@ body {
 /*******************************
          Site Overrides
 *******************************/
+
+/* Hamburger Menu Animations + Transition */
+
+.hamsvg > .bar {
+  -webkit-transform: rotate(0) translateY(0) translateX(0);
+  -ms-transform: rotate(0) translateY(0) translateX(0);
+  transform: rotate(0) translateY(0) translateX(0);
+  -webkit-transform-origin: 0px 4px;
+  -ms-transform-origin: 0px 4px;
+  transform-origin: 0px 4px;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.1s ease-in-out, fill 0.4s ease-in-out;
+  transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out, fill 0.4s ease-in-out;
+}
+
+.hamsvg {
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+}
+
+.hamsvg > .bar:nth-of-type(1) {
+  -webkit-transform-origin: 0px 25px;
+  -ms-transform-origin: 0px 25px;
+  transform-origin: 0px 25px;
+}
+
+nav.open .hamsvg > .bar:nth-of-type(1) {
+  -webkit-transform: rotate(-45deg) translate(0, -2px);
+  -ms-transform: rotate(-45deg) translate(0, -2px);
+  transform: rotate(-45deg) translate(0, -2px);
+}
+
+nav.open .hamsvg > .bar:nth-of-type(2) {
+  opacity: 0;
+}
+
+nav.open .hamsvg > .bar:nth-of-type(3) {
+  -webkit-transform: rotate(45deg) translate(0, 2px);
+  -ms-transform: rotate(45deg) translate(0, 2px);
+  transform: rotate(45deg) translate(0, 2px);
+}
+
+nav.open .hamsvg {
+  -webkit-transform: translate(5px, 0);
+  -ms-transform: translate(5px, 0);
+  transform: translate(5px, 0);
+}
+
+/* ETC */
+
+.caps {
+  text-transform: uppercase;
+}
+
+.blue {
+  color: #1b8eb9;
+}
+
+/* Footer */
+
+footer {
+  margin-top: 180px;
+  margin-bottom: 50px;
+  font-weight: 300;
+}
+
+footer .coc {
+  color: #918f8c;
+  margin-left: 0.5em;
+}
+
+.coc:hover {
+  border: none;
+  color: inherit;
+}
+
+footer .social-links {
+  list-style: none;
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
+.social-links li {
+  display: inline;
+}
+
+.social-links a {
+  display: inline-block;
+  padding: 0 0.7em;
+  height: 1.2em;
+  width: 1.2em;
+  background-size: 1.2em 1.2em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.8;
+  vertical-align: text-top;
+}
+
+.social-links a:hover {
+  opacity: 1.0;
+  border: none;
+}
+
+.email {
+  padding-top: 0.1em !important;
+  background: url("../../../../../../static/img/social-icons/email.svg");
+}
+
+.facebook {
+  background: url("../../../../../../static/img/social-icons/facebook.svg");
+}
+
+.twitter {
+  background: url("../../../../../../static/img/social-icons/twitter.svg");
+}
+
+.blog {
+  background: url("../../../../../../static/img/social-icons/medium.svg");
+}
+
+/*Admission Status Box - TODO Put this in a more sensical place*/
+
+.admit_status {
+  background-color: #404040;
+  padding: .5em;
+  padding-top: .1em;
+  padding-bottom: .15em;
+  display: inline-block;
+  color: white;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.admit_status.pending {
+  background-color: #1b8eb9;
+}
+
+.admit_status.accepted,
+.admit_status.confirmed {
+  background-color: #26a59f;
+}
+
+.admit_status.checked.in {
+  background-color: #ef5d93;
+}
+
+.admit_status.waitlisted {
+  background-color: #f2a73a;
+}
+
+.admit_status.not-accepted {
+  background-color: #404040;
+}
 
 /*
  * # Semantic UI
