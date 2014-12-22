@@ -108,15 +108,15 @@ a:hover {
 *******************************/
 
 ::-webkit-selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 ::-moz-selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 ::selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 
