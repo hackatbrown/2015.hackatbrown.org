@@ -547,9 +547,6 @@ section .background > .right {
   .shirt_size {
     flex-direction: column;
   }
-  .registration_form.center {
-    text-align:left;
-  }
   .row {
     margin-bottom:0 !important;
   }
@@ -620,57 +617,8 @@ section .background > .right {
     margin-top: -120px;
     margin-bottom: -120px;
   }
-
-  .about {
-    margin-top: 0;
-  }
-
-  .about .background > .back {
-    margin-right: -696.8px;
-    width: calc(50vw + 696.8px);
-    height: calc(100vw + 696.8px);
-  }
-
-  .about article {
-    padding-bottom: 120px;
-  }
-
-  .schedule {
-  }
-
-  .sponsors {
-    /*        margin-top: 60px;*/
-  }
-
-  .faq {
-    margin-top: 300px;
-  }
 }
 @media screen and (max-width: 500px) {
-  .title {
-    font-size: 2em;
-  }
-  .init_reg {
-    margin-top: 60px;
-  }
-  .init_reg * {
-    width: 80%;
-  }
-  section.triangle {
-    /*        padding-top: 300px;*/
-    /*        padding-bottom: 300px;*/
-  }
-  section .background {
-    /*        transform: scale(1.5, 1.5);*/
-    /*        transform-origin: center top;*/
-  }
-
-  .schedule article h2 > span {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-
   footer {
     text-align: center;
     margin-top: 0px;
