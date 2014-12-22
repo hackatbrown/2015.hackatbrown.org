@@ -6,7 +6,14 @@ class DummyApplicant:
 		def prob(): return random.uniform(0.0, 1.0)
 		self.id = ID
 		self.shirt_gen = "M" if prob() < 0.625 else "W"
-		self.school = "Brown University" if prob() < 0.3 else "Someother University"
+		
+		if prob() < 0.25:
+			self.school = "Brown University"
+		elif prob() < 0.1:
+			self.school = "RISD"
+		else:
+			self.school = "Someother University"
+		
 		self.first_hackathon = "yes" if prob() < 0.35 else "no"
 		self.year = "freshman"
 		if prob() < 0.3:
@@ -17,6 +24,7 @@ class DummyApplicant:
 			self.year = "senior"
 		self.admit_priority = 0
 		self.teammates = []
+		self.email = "blah@brown.edu"
 
 
 
@@ -33,8 +41,15 @@ def test(numentrants=1000):
 	print "----------------------------------"
 	print rank_applicants(applicants)
 	
-	print "12: ", len(filter(lambda x: x.admit_priority == 12, applicants))
-	print "24: ", len(filter(lambda x: x.admit_priority == 24, applicants))
-	print "36: ", len(filter(lambda x: x.admit_priority == 36, applicants))
-	print "48: ", len(filter(lambda x: x.admit_priority == 48, applicants))
-	print "60: ", len(filter(lambda x: x.admit_priority == 60, applicants))
+
+	priorities = {}
+	for a in applicants:
+		if a.admit_priority in priorities:
+			priorities[a.admit_priority] += 1
+		else:
+			priorities[a.admit_priority] = 1
+
+	for k,v in sorted(priorities.items()):
+		print v, ": ", k
+
+	print 
