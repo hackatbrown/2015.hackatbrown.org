@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<title>DB Cleanup</title>
+<link rel='stylesheet' href='/static/css/dashboard.css'/>
+<script type="text/javascript" src='/static/js/db_cleanup.js'></script>
+{% endblock %}
+
+{% block content %}
+<style>
+  .selected {
+    background: pink;
+  }
+  .success {
+    color: lightgreen;
+  }
+  .failure {
+    color: red;
+  }
+
+  table {
+    display: inline-table;
+  }
+
+  table, td {
+    border: 1px solid black;
+    padding: 5px;
+  }
+
+</style>
+<div id='header' class='vertically-centered vertically-centered-content'>
+  <img src='/static/img/logo.png' width="134" height="144"/>
+  <h1>DB Cleanup</h1>
+</div>
+
+<div><p id="display" >This page is to used to merge fields in the database. Proceed with extreme caution. Pick an attribute, then pick a replacement.</p></div>
+<br>
+<select id="property-selector" onchange="propertySelected(this.value)">
+  <option value="" disabled selected>Select a property</option>
+  {% for prop in properties %}
+  <option value="{{prop}}">{{ prop }}</option>
+  {% endfor %}
+</select>
+<input id="newValue" placeholder="replacement" type="text"/>
+<input id="submit" type="submit" class=".button" onclick="cleanup()" disabled/>
+<h1 id="displayProperty" style="color: #EF5D93;"></h1>
+<br>
+<table id="table">
+</table >
+<br>
+</div>
+
+<script>
+  var properties = {{ properties|safe }};
+</script>
+{% endblock %}

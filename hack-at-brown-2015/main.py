@@ -24,6 +24,7 @@ import registration
 from google.appengine.ext import blobstore
 import background_work
 import hacker_page
+import db_utils
 import short_urls
 import m
 
@@ -52,6 +53,10 @@ app = webapp2.WSGIApplication([
 		('/dashboard', dashboard.DashboardHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
+		('/db_cleanup', db_utils.CleanupHandler),
+		('/__db_populate/(\d+)', db_utils.PopulateHandler),
+		('/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
+		('/__cleanup', db_utils.CleanupHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
 		('/(.+)', short_urls.Serve)
