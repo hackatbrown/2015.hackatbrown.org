@@ -97,6 +97,7 @@ function updateResume(value, uiinput, secret, responseStatus) {
             $resumeView = $('.view-resume');
             console.log(response.downloadLink);
             $resumeView.attr('href', response.downloadLink);
+            $resumeView.attr('download', response.fileName);
             $resumeView[0].innerHTML = response.fileName;
 
             $button.one('mouseenter', resetState);
