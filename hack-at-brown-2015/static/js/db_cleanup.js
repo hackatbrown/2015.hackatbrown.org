@@ -18,9 +18,10 @@ function populateTable(groups) {
   var $table = $('#table');
   var $input = $('#submit');
   $table.empty();
-  $table.append("<th>Property<td>Number of Hackers</td></th>")
-  for (var prop in groups) {
-    var $row = $('<tr class="property-value"><td class="prop">' + prop + '</td><td class="count">' + groups[prop] + '</td></tr>');
+  $table.append("<th>Property<td>Number of Hackers</td></th>");
+  console.log(keys);
+  for (var i = 0; i < keys.length; i++) {
+    var $row = $('<tr class="property-value"><td class="prop">' + keys[i] + '</td><td class="count">' + groups[keys[i]] + '</td></tr>');
     $row.click(function() {
        $(this).toggleClass("selected");
         $input.prop('disabled', !$table.has('.selected').length);
