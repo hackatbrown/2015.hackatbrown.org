@@ -95,13 +95,15 @@ function updateResume(value, uiinput, secret, responseStatus) {
             $buttonText.text("Complete!");
             response = JSON.parse(response);
             $resumeView = $('.view-resume');
-            console.log(response.downloadLink);
-            $resumeView.attr({
+
+            $newLink = $("<a class='view-resume'></a>");
+            $newLink[0].innerHTML = response.fileName;
+            $newLink.attr({
                 'href' : response.downloadLink,
                 'download' : response.fileName,
                 'target' : '_blank'
             });
-            $resumeView[0].innerHTML = response.fileName;
+            $resumeView.replaceWith($newLink);
 
             $button.one('mouseenter', resetState);
             setTimeout(resetState, 2500);

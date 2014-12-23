@@ -209,16 +209,16 @@
                                     <input id="resume" class="resume-upload" type="file" name="resume"/>
                                     <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
                                         <span>Upload Resume</span>
-                                    </div>                                
+                                    </div>
                                     <div class="file-name">
                                         {% if hacker.resume %}
                                         <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                         {% else %}
-                                        No file chosen.
+                                        <span class="view-resume">No file chosen.</span>
                                         {% endif %}
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="two fields row">
