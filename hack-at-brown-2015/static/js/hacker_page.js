@@ -96,8 +96,11 @@ function updateResume(value, uiinput, secret, responseStatus) {
             response = JSON.parse(response);
             $resumeView = $('.view-resume');
             console.log(response.downloadLink);
-            $resumeView.attr('href', response.downloadLink);
-            $resumeView.attr('download', response.fileName);
+            $resumeView.attr({
+                'href' : response.downloadLink,
+                'download' : response.fileName,
+                'target' : '_blank'
+            });
             $resumeView[0].innerHTML = response.fileName;
 
             $button.one('mouseenter', resetState);
