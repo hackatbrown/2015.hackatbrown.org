@@ -9,13 +9,15 @@ from hacker_page import computeStatus
 from background_work import waitlist_hacker
 from google.appengine.api import memcache
 import logging
+from config import envIsDev
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write(template("dashboard.html"))
+        isDev = envIsDev()
+        self.response.write(template("dashboard.html", {"envIsDev" : isDev}))
 
 class ManualRegistrationHandler(webapp2.RequestHandler):
     def post(self):
@@ -126,7 +128,7 @@ def getAllHackers(projection=None):
             if not memcache.set(memcachedKey, hackers, cacheTime):
                 logging.error("Memcache set failed")
     else:
-        hackers = Hacker.query().fetch()
+        hackers = Hacker.query(projection=projection).fetch()
 
     return hackers
 
@@ -144,7 +146,7 @@ def getGeneric(value):
     hackers = getAllHackers([value])
     data = {}
     for hacker in hackers:
-        key = getattr(hacker, value).title()
+        key = getattr(hacker, value)
         data[key] = data.setdefault(key, 0) + 1
     return data
 
