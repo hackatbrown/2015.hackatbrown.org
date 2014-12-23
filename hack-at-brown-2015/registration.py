@@ -10,25 +10,41 @@ from google.appengine.api import memcache
 import os
 import base64
 import webapp2
+#Validation
+from google.appengine.ext import blobstore
+from google.appengine.api import datastore_errors
+from template import utils
+
 
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
+def stringValidator(prop, value):
+    lowerValue = value.lower()
+    cleanValue = lowerValue.strip()
+    cleanValue = str(utils.escape(cleanValue))
+
+    if cleanValue != lowerValue:
+        raise datastore_errors.BadValueError(prop._name)
+
+    #TODO - talk about lower case.
+    return cleanValue
+
 class Hacker(ndb.Model):
-	name = ndb.StringProperty()
-	school = ndb.StringProperty()
-	year = ndb.StringProperty()
-	email = ndb.StringProperty()
-	shirt_gen = ndb.StringProperty()
-	shirt_size = ndb.StringProperty()
-	dietary_restrictions = ndb.StringProperty()
+	name = ndb.StringProperty(validator=stringValidator)
+	school = ndb.StringProperty(validator=stringValidator)
+	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior'])
+	email = ndb.StringProperty(validator=stringValidator)
+	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
+	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
+	dietary_restrictions = ndb.StringProperty(validator=stringValidator)
 	resume = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
-	teammates = ndb.StringProperty(default=None)
+	teammates = ndb.StringProperty(default=None, validator=stringValidator)
 	teammates_emailed = ndb.BooleanProperty(default=False)
-	hardware_hack = ndb.StringProperty()
-	first_hackathon = ndb.StringProperty()
+	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
+	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
 
 
 	secret = ndb.StringProperty()
@@ -53,7 +69,7 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	logging.debug("addmitting a hacker\n")
+	logging.debug("admitting a hacker\n")
 	email = template("emails/admitted.html", {"hacker": hacker})
 	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown")
 
@@ -70,9 +86,17 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
             val =','.join(vals)
             print key + " " + val
             setattr(hacker, key, val)
+            print key + " " + self.request.get(key)
+            try:
+                setattr(hacker, key, self.request.get(key))
+            except datastore_errors.BadValueError as err:
+                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0]), "newURL" : blobstore.create_upload_url('/register')}))
+                return
+
         if Hacker.query(Hacker.email == hacker.email).count() > 0:
-            self.response.write(json.dumps({"success":False}))
+            self.response.write(json.dumps({"success":False, "msg": "Email Already Registered!"}))
             return
+
         resume_files = self.get_uploads('resume')
         if len(resume_files) > 0:
             hacker.resume = resume_files[0].key()
