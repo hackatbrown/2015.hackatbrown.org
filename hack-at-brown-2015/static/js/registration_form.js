@@ -212,10 +212,9 @@ $(document).ready(function () {
                     }
 
                     indicateFailure();
+
                     if (response.msg) {
-                        $formButton.val(response.msg).attr({
-                                disabled: false
-                        });
+                        $formButton.val(response.msg);
                     }
 
                     if (response.field) {
@@ -225,6 +224,8 @@ $(document).ready(function () {
                     if (response.newURL) {
                         $('#registration_form').get(0).setAttribute('action', response.newURL);
                     }
+
+                    $formButton.attr('disabled', false);
 
                     return false;
                 }
