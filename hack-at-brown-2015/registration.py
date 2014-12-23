@@ -20,11 +20,10 @@ memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
 def stringValidator(prop, value):
-    lowerValue = value.lower()
-    cleanValue = lowerValue.strip()
+    cleanValue = value.strip()
     cleanValue = str(utils.escape(cleanValue))
 
-    if cleanValue != lowerValue:
+    if cleanValue != value:
         raise datastore_errors.BadValueError(prop._name)
 
     #TODO - talk about lower case.
@@ -84,11 +83,8 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         for key in hacker_keys:
             vals = self.request.get_all(key)
             val =','.join(vals)
-            print key + " " + val
-            setattr(hacker, key, val)
-            print key + " " + self.request.get(key)
             try:
-                setattr(hacker, key, self.request.get(key))
+                setattr(hacker, key, val)
             except datastore_errors.BadValueError as err:
                 self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0]), "newURL" : blobstore.create_upload_url('/register')}))
                 return
@@ -108,7 +104,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         except Exception, e:
         	pass
         hacker.put()
-        name = hacker.name.split(" ")[0] # TODO: make it better
+        name = hacker.name.title().split(" ")[0] # TODO: make it better
         confirmation_html = template("post_registration_splash.html", {"name": name})
         self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
 
