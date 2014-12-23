@@ -27,7 +27,7 @@ def stringValidator(prop, value):
     if cleanValue != value:
         raise datastore_errors.BadValueError(prop._name)
 
-    if prop == 'email':
+    if prop._name == 'email':
         cleanValue = cleanValue.lower()
 
     return cleanValue
