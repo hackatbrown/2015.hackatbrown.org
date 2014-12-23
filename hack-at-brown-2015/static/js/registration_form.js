@@ -123,6 +123,7 @@ function validateForm() {
 
         if (!validEmails) {
             fieldInvalid('teammates');
+            validated = false;
         } else {
             $("#teammates").addClass("valid");
         }
