@@ -23,10 +23,13 @@ def stringValidator(prop, value):
     cleanValue = value.strip()
     cleanValue = str(utils.escape(cleanValue))
 
+
     if cleanValue != value:
         raise datastore_errors.BadValueError(prop._name)
 
-    #TODO - talk about lower case.
+    if prop == 'email':
+        cleanValue = cleanValue.lower()
+
     return cleanValue
 
 class Hacker(ndb.Model):
