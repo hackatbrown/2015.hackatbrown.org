@@ -52,6 +52,10 @@ function fieldInvalid(fieldName) {
         $element = $("input[name='" + fieldName + "']");
     }
 
+    if (!msg) {
+        msg = "Error";
+    }
+
     $element.addClass("invalid");
     addNag(msg, $element.parent());
 
@@ -194,6 +198,7 @@ $(document).ready(function () {
             e.preventDefault();
             if (!validateForm()) {
                 indicateFailure();
+                return;
             }
             $formButton = $("#registration_form input[type=submit]");
 
