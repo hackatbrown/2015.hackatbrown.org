@@ -37,6 +37,7 @@ class IndexHandler(webapp2.RequestHandler):
 				variables['registration_post_url'] = blobstore.create_upload_url('/register')
 			self.response.write(template("index.html", variables))
 
+
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),

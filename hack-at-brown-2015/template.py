@@ -1,4 +1,5 @@
 import jinja2, os
+from jinja2 import utils
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')),
