@@ -4,8 +4,10 @@
 .ui.button {
         transition: @transition, border .15s @defaultEasing;
         height: @height !important;
-        padding: 7px 11px 10px;
-        line-height: 1.8em;
+        padding: 0 11px;
+//        padding: 7px 11px 10px;
+//        line-height: 1.8em;
+        line-height: @height;
 }
 
 .ui.active.button {

@@ -48,6 +48,8 @@
       Sizes
 --------------------*/
 
+@baseInteractiveHeight : 35px;
+
 /* Exact pixel values @ 14px em */
 @mini        : 0.7142rem;
 @tiny        : 0.8571rem;
@@ -76,7 +78,7 @@
 @linkUnderline       : none;
 @linkHoverColor      : lighten( @linkColor, 5);
 
-@highlightBackground : rgba(255, 255, 160, 0.4);
+@highlightBackground : rgba(200, 200, 200, .2);
 @highlightColor      : @textColor;
 
 /*-------------------
