@@ -231,7 +231,7 @@ $(document).ready(function () {
                         $('#registration_form').get(0).setAttribute('action', response.newURL);
                     }
 
-                    $formButton.attr('disabled', false);
+                    $formButton.removeAttr('disabled');
 
                     return false;
                 }
