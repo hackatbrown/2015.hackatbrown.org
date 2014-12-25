@@ -108,7 +108,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
         	pass
         hacker.put()
         name = hacker.name.title().split(" ")[0] # TODO: make it better
-        confirmation_html = template("post_registration_splash.html", {"name": name})
+        confirmation_html = template("post_registration_splash.html", {"name": name, "secret": hacker.secret})
         self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
 
 class CheckRegistrationHandler(webapp2.RequestHandler):
