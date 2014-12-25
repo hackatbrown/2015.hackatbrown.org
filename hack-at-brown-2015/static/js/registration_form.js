@@ -1,6 +1,7 @@
 function fieldInvalid(fieldName) {
     var $element;
     var msg;
+    console.log(fieldName);
     switch (fieldName) {
         case 'email':
             msg = "Please enter a valid email address.";
@@ -22,7 +23,7 @@ function fieldInvalid(fieldName) {
             break;
         case 'shirt_size':
             msg = "Please choose a complete shirt size.";
-            $element = $("div.shirt_size");
+            $element = $(".shirt_size");
             break;
         case 'teammates':
             msg = "Please make sure all your teammates' emails are valid.";
@@ -45,20 +46,17 @@ function fieldInvalid(fieldName) {
             console.log("Invalid agree");
             break;
         default:
+            $element = $("input[name='" + fieldName + "']");
+            msg = "Error";
             break;
     }
 
-    if (!$element) {
-        $element = $("input[name='" + fieldName + "']");
+    if ($element) {
+        $element.addClass("invalid");
+        if (msg) {
+            addNag(msg, $element.parent());
+        }
     }
-
-    if (!msg) {
-        msg = "Error";
-    }
-
-    $element.addClass("invalid");
-    addNag(msg, $element.parent());
-
 }
 
 function validateForm() {
@@ -97,17 +95,17 @@ function validateForm() {
    var shirt_valid = true;
 
     // Check if they filled out shirt gender & size
-    if (!$("input[name='shirt_gen']:checked").val()) {
+    if (!($("input[name='shirt_gen']").is(":checked"))) {
         shirt_valid = false;
     }
 
-    if (!$("input[name='shirt_size']:checked").val()) {
+    if (!($("input[name='shirt_size']").is(":checked"))) {
         shirt_valid = false;
     }
 
     if (!shirt_valid) {
         fieldInvalid('shirt_size');
-        validate = false;
+        validated = false;
     }
 
     // Check for valid teammate emails
@@ -153,7 +151,7 @@ function validateForm() {
     // Check if they agree to the Code of Conduct
     if (!$("#agree").prop('checked')) {
         fieldInvalid('agree');
-        validatied = false;
+        validated = false;
     }
 
     return validated;
@@ -218,6 +216,7 @@ $(document).ready(function () {
                     }
 
                     indicateFailure();
+                    $formButton.removeAttr('disabled');
 
                     if (response.msg) {
                         $formButton.val(response.msg);
@@ -231,7 +230,6 @@ $(document).ready(function () {
                         $('#registration_form').get(0).setAttribute('action', response.newURL);
                     }
 
-                    $formButton.removeAttr('disabled');
 
                     return false;
                 }
