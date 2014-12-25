@@ -9,14 +9,14 @@ class DummyApplicant:
 		self.id = ID
 		self.shirt_gen = "W" if prob() < 0.23 else "M"
 		
-		if prob() < 0.22:
+		if prob() < 0.19:
 			self.school = "Brown University"
 		elif prob() < 0.1:
-			self.school = "RISD"
+			self.school = "Rhode Island School of Design"
 		else:
 			self.school = "Someother University"
 		
-		self.first_hackathon = "yes" if prob() < 0.31 else "no"
+		self.first_hackathon = "yes" if prob() < 0.34 else "no"
 		self.year = "freshman"
 		if prob() < 0.3:
 			self.year = "sophomore"
@@ -30,11 +30,12 @@ class DummyApplicant:
 
 
 
-def test(numentrants=1000):
+def test(numentrants=1400):
 	"""Use this function to test the ranking procedure.
 	Simulates a basic round of applicants for ranking.
 	Prints statistical information about the input round and output selected.
 	"""
+	target = 350
 	# Simulate Dummy Applicants
 	applicants = [DummyApplicant(x) for x in range(numentrants)]
 	# Simulate Dummy Teams
@@ -45,35 +46,9 @@ def test(numentrants=1000):
 			if prob() < 0.65:
 				applicants[idx].teammates.append(v.email)
 
-	d0 = DummyApplicant(0)
-	d0.shirt_gen = "W"
-	d0.year = "sophomore"
-	d0.first_hackathon = "no"
-	d0.school = "Brown University"
-	d0.email = "0@brown.edu"
-	d0.teammates = ["1@brown.edu"]
-
-	d1 = DummyApplicant(1)
-	d1.shirt_gen = "M"
-	d1.year = "sophomore"
-	d1.first_hackathon = "yes"
-	d1.school = "Brown University"
-	d1.email = "1@brown.edu"
-	d1.teammates = []
-
-	d2 = DummyApplicant(2)
-	d2.shirt_gen = "W"
-	d2.year = "sophomore"
-	d2.first_hackathon = "yes"
-	d2.school = "Brown University"
-	d2.email = "2@brown.edu"
-	d2.teammates = ["0@brown.edu", "3@brown.edu", "4@brown.edu"]
-
-	#applicants = [d0, d1, d2]
-
 	# Simulate ranking
 	print "\n\n"
-	print r"# brown/risd, % female, % first time"
+	print r"(# brown/risd, % women, % first time)"
 	print ""
 	print numentrants, "applicants: ", analyze(applicants, num_accept=numentrants)
 	print "----------------------------------------------"
@@ -82,14 +57,36 @@ def test(numentrants=1000):
 
 	priorities = {}
 	for a in applicants:
-		if a.admit_priority in priorities:
-			priorities[a.admit_priority] += 1
-		else:
-			priorities[a.admit_priority] = 1
+		priorities[a.admit_priority] = priorities.get(a.admit_priority, 0) + 1
 
 	for k,v in sorted(priorities.items()):
-		print v, ": ", k
+		print k, ": ", v
 
+	for k,v in sorted(priorities.items()):
+		print "\n\n----------{ rank", k, "stats }----------"
+
+		apps = filter(lambda x: x.admit_priority == k, applicants)
+		print "from", v, "applicants: ({0}, {1:1.3f}, {2:1.3f})".format(*analyze(apps, v))
+
+		print "\nBrown/RISD women:", len(filter(lambda x: (x.school == "Brown University" or x.school == "Rhode Island School of Design") and x.shirt_gen == "W", apps))
+		print "Brown/RISD men:  ", len(filter(lambda x: (x.school == "Brown University" or x.school == "Rhode Island School of Design") and x.shirt_gen == "M", apps))
+		
+		print "\nOther U women:", len(filter(lambda x: x.school != "Brown University" and x.school != "Rhode Island School of Design" and x.shirt_gen == "W", apps))
+		print "Other U men:  ", len(filter(lambda x: x.school != "Brown University" and x.school != "Rhode Island School of Design" and x.shirt_gen == "M", apps))
+		
+		print "\nBrown/RISD first hackathon:", len(filter(lambda x: (x.school == "Brown University" or x.school == "Rhode Island School of Design") and x.first_hackathon == "yes", apps))
+		print "Other U first hackathon:   ", len(filter(lambda x: x.school != "Brown University" and x.school != "Rhode Island School of Design" and x.first_hackathon == "yes", apps))
+
+	print "\n"
+	fill = 0
+	idx = 0
+	spriorities = sorted(priorities.items(), reverse=True)
+	while fill < target:
+		fill += spriorities[idx][1]
+		idx += 1
+		
+	print "Cuttoff in rank {0} (higher ranks all accepted)".format(spriorities[idx][0])
+	print r"(# brown/risd, % women, % first time)"
 
 
 
