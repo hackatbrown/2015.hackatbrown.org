@@ -118,9 +118,10 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
     $http.post('/__send_email', request).
     success(function(data, status, headers, config) {
       if(data.success = true){
-        console.log("sent emails!");
+        console.log("sent email request!");
         $scope.emailStatus = "Sent Email to " + $scope.emailRecipient + "!";
         if (data.html) {
+          $scope.emailStatus = "Displaying Email Below";
           //$scope.displayEmail = $sce.trustAsHtml(data.html);
           $scope.displayEmail = true;
           var iframe = document.getElementById("email-display")
