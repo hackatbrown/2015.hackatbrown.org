@@ -35,7 +35,7 @@ def stringValidator(prop, value):
 class Hacker(ndb.Model):
 	name = ndb.StringProperty(validator=stringValidator)
 	school = ndb.StringProperty(validator=stringValidator)
-	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior'])
+	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior', 'grad_student'])
 	email = ndb.StringProperty(validator=stringValidator)
 	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
