@@ -74,12 +74,14 @@ class SendEmail(webapp2.RequestHandler):
     email_name = parsed_request.get("emailName")
     recipient = parsed_request.get("recipient")
     if recipient == '__ALL__':
+        return
         # Case for sending to all hackers.
         for hacker in Hacker.query().fetch():
             print "Sending emails to all"
             html = template("emails/" + email_name + ".html", {"hacker": hacker, "name": hacker.name.split(" ")[0]})
             send_email(recipients=[hacker.email], html=html, subject=subject)
     elif recipient == "__UPDATES__":
+        return
         # Case for sending emails to people who signed up for updates but never registered.
         print "Sending emails to signed up for updates"
         for person in EmailListEntry.query().fetch():

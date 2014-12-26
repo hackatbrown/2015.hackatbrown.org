@@ -111,10 +111,15 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       console.log("Failed")
       return "Failed";
     };
+    var check = true;
     var request = {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }
     if (display === true){
           request.display = true;
         }
+    else
+       check = confirm("Are you sure you want to actually send emails?");
+    if(!check)
+      return;
     $http.post('/__send_email', request).
     success(function(data, status, headers, config) {
       if(data.success = true){
