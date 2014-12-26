@@ -73,26 +73,34 @@ class SendEmail(webapp2.RequestHandler):
     subject = parsed_request.get("subject")
     email_name = parsed_request.get("emailName")
     recipient = parsed_request.get("recipient")
-    template_hacker = Hacker.query(Hacker.email == recipient).fetch()[0]
-    template_name = template_hacker.name.split(" ")[0]
+    if recipient == '__ALL__':
+        # Case for sending to all hackers.
+        for hacker in Hacker.query().fetch():
+            print "Sending emails to all"
+            html = template("emails/" + email_name + ".html", {"hacker": hacker, "name": hacker.name.split(" ")[0]})
+            send_email(recipients=[hacker.email], html=html, subject=subject)
+    elif recipient == "__UPDATES__":
+        # Case for sending emails to people who signed up for updates but never registered.
+        print "Sending emails to signed up for updates"
+        for person in EmailListEntry.query().fetch():
+            if Hacker.query(Hacker.email == person.email).count() != 0:
+                continue
+            html = template("emails/" + email_name + ".html")
+            send_email(recipients=[person.email], html=html, subject=subject)
+    else: 
+        # Case for single email.
+        template_hacker = Hacker.query(Hacker.email == recipient).fetch()[0]
+        template_name = template_hacker.name.split(" ")[0]
 
-    html = template("emails/" + email_name + ".html", {"hacker": template_hacker, "name": template_name})
-    try:
-        if parsed_request.get("display"):
-            self.response.write(json.dumps({"success": True, "html": html }))
-            return
-    except Exception, e:
-        raise e
-    send_to = [recipient]
-    # if parsed_request.get("recipients") == "ALL":
-    #     send_to = [hacker.email for hacker in Hacker.query()]
-    # elif parsed_request.get("recipients") == "WAITLISTED":
-    #     send_to = [hacker.email for hacker in Hacker.query(Hacker.waitlist_email_sent_date != None)]
-    # elif parsed_request.get("recipients") == "ACCEPTED":
-    #     send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
+        html = template("emails/" + email_name + ".html", {"hacker": template_hacker, "name": template_name})
+        try:
+            if parsed_request.get("display"):
+                self.response.write(json.dumps({"success": True, "html": html }))
+                return
+        except Exception, e:
+            raise e
+        send_email(recipients=[recipient], html=html, subject=subject)
 
-
-    send_email(recipients=send_to, html=html, subject=subject)
     self.response.write(json.dumps({"success": True, "html":None }))
 
 class ViewBreakdownsHandler(webapp2.RequestHandler):
