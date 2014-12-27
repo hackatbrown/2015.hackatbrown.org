@@ -32,8 +32,8 @@ class DummyApplicant:
 
 def test(numentrants=1400):
 	"""Use this function to test the ranking procedure.
-	Simulates a basic round of applicants for ranking.
-	Prints statistical information about the input round and output selected.
+	Simulates a round of applicants with teams for ranking.
+	Prints statistical information about the input entrants and output selected.
 	"""
 	target = 350
 	# Simulate Dummy Applicants
@@ -48,45 +48,17 @@ def test(numentrants=1400):
 
 	# Simulate ranking
 	print "\n\n"
-	print r"(# brown/risd, % women, % first time)"
+	print "           ################"
+	print "           # DRY-RUN TEST #"
+	print "           ################\n"
+	print r"  [#Brown/RISD, %Women, %First time]"
 	print ""
-	print numentrants, "applicants: ", analyze(applicants, num_accept=numentrants)
-	print "----------------------------------------------"
-	print "first", 350, "admits:", rank_applicants(applicants)
+	print numentrants, "applicants:  [{0}, {1:.4f}, {2:.4f}]".format(*shallow_analyze(applicants, num_accept=numentrants))
+	print "---------------------------------------"
+	rank_applicants(applicants)
+	print "first", target, "admits: [{0}, {1:.4f}, {2:.4f}]".format(*shallow_analyze(applicants, num_accept=target))
 	print ""
-
-	priorities = {}
-	for a in applicants:
-		priorities[a.admit_priority] = priorities.get(a.admit_priority, 0) + 1
-
-	for k,v in sorted(priorities.items()):
-		print k, ": ", v
-
-	for k,v in sorted(priorities.items()):
-		print "\n\n----------{ rank", k, "stats }----------"
-
-		apps = filter(lambda x: x.admit_priority == k, applicants)
-		print "from", v, "applicants: ({0}, {1:1.3f}, {2:1.3f})".format(*analyze(apps, v))
-
-		print "\nBrown/RISD women:", len(filter(lambda x: (x.school == "Brown University" or x.school == "Rhode Island School of Design") and x.shirt_gen == "W", apps))
-		print "Brown/RISD men:  ", len(filter(lambda x: (x.school == "Brown University" or x.school == "Rhode Island School of Design") and x.shirt_gen == "M", apps))
-		
-		print "\nOther U women:", len(filter(lambda x: x.school != "Brown University" and x.school != "Rhode Island School of Design" and x.shirt_gen == "W", apps))
-		print "Other U men:  ", len(filter(lambda x: x.school != "Brown University" and x.school != "Rhode Island School of Design" and x.shirt_gen == "M", apps))
-		
-		print "\nBrown/RISD first hackathon:", len(filter(lambda x: (x.school == "Brown University" or x.school == "Rhode Island School of Design") and x.first_hackathon == "yes", apps))
-		print "Other U first hackathon:   ", len(filter(lambda x: x.school != "Brown University" and x.school != "Rhode Island School of Design" and x.first_hackathon == "yes", apps))
-
-	print "\n"
-	fill = 0
-	idx = 0
-	spriorities = sorted(priorities.items(), reverse=True)
-	while fill < target:
-		fill += spriorities[idx][1]
-		idx += 1
-		
-	print "Cuttoff in rank {0} (higher ranks all accepted)".format(spriorities[idx][0])
-	print r"(# brown/risd, % women, % first time)"
+	analyze(applicants, num_accept=target)
 
 
 
