@@ -28,6 +28,10 @@ class Message(ndb.Model):
 	
 	sms_text = ndb.TextProperty()
 	
+	def kick_off(self):
+		q = taskqueue.Queue("messages")
+		q.add(taskqueue.Task(url='/dashboard/messages/message_task_queue_work', params={"kickoff_message_key": self.key.urlsafe()}))
+	
 	def send_to_email(self, email, template_args={}):
 		# does the actual work of sending
 		assert self.email_subject, "No email subject provided. Is email unchecked?"
@@ -118,14 +122,17 @@ class MessagesDashboardHandler(webapp2.RequestHandler):
 				self.response.write("Sent SMS")
 		else:
 			message.put()
-			message.enqueue_tasks()
+			message.kick_off()
 			self.response.write(template("messages_dashboard.html", {"status": "Sent!"}))
 
 class MessagesTaskQueueWork(webapp2.RequestHandler):
 	def post(self):
-		keys = [ndb.Key(urlsafe=self.request.get('message_key'))] + map(lambda k: ndb.Key(urlsafe=k), self.request.get('entity_keys').split(','))
-		msg_and_entities = ndb.get_multi(keys)
-		message = msg_and_entities[0]
-		entities = msg_and_entities[1:]
-		futures = [message.send_to_entity_async(entity) for entity in entities]
-		for f in futures: f.wait()
+		if self.request.get('kickoff_message_key'):
+			ndb.Key(urlsafe=self.request.get('kickoff_message_key')).get().enqueue_tasks()
+		elif self.request.get('entity_keys'):
+			keys = [ndb.Key(urlsafe=self.request.get('message_key'))] + map(lambda k: ndb.Key(urlsafe=k), self.request.get('entity_keys').split(','))
+			msg_and_entities = ndb.get_multi(keys)
+			message = msg_and_entities[0]
+			entities = msg_and_entities[1:]
+			futures = [message.send_to_entity_async(entity) for entity in entities]
+			for f in futures: f.wait()
