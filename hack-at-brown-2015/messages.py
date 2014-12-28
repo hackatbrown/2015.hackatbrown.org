@@ -9,7 +9,7 @@ from registration import Hacker
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 	
-	audience = ndb.StringProperty(choices=[None, 'registered'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends'], default=None)
 	
 	email_subject = ndb.TextProperty()
 	email_html = ndb.TextProperty()
@@ -31,6 +31,8 @@ class Message(ndb.Model):
 	def get_hacker_query(self):
 		if self.audience == 'registered':
 			return Hacker.query()
+		elif self.audience == 'invited-friends':
+			return Hacker.query(Hacker.teammates != None)
 		else:
 			assert 0, "Unknown audience"
 	
@@ -57,10 +59,20 @@ class Message(ndb.Model):
 			f.get_result()
 	
 	def send_to_hacker(self, hacker):
-		if hacker.email and self.email_subject:
-			self.send_to_email(hacker.email, {"hacker": hacker})
-		if hacker.phone_number and self.sms_text:
-			self.send_to_phone(self.phone_number)
+		if self.audience == 'invited-friends':
+			# don't actually send to the hacker -- send to their friends
+			if hacker.teammates:
+				emails = hacker.teammates.split(',')
+				matching_hackers = Hacker.query(Hacker.email.IN(emails)).fetch()
+				emails_already_registered = [h.email for h in matching_hackers]
+				for email in emails:
+					if email not in emails_already_registered:
+						self.send_to_email(email, {"invited_by": hacker})
+		elif self.audience == 'registered': # send emails directly to hackers
+			if hacker.email and self.email_subject:
+				self.send_to_email(hacker.email, {"hacker": hacker})
+			if hacker.phone_number and self.sms_text:
+				self.send_to_phone(self.phone_number)
 
 class MessagesDashboardHandler(webapp2.RequestHandler):
 	def get(self):
