@@ -60,7 +60,7 @@ class Message(ndb.Model):
 	
 	def send_to_hacker(self, hacker):
 		if self.audience == 'invited-friends':
-			# don't actually send to the hacker -- send to their friends
+			# don't actually send to the hacker --- send to their friends
 			if hacker.teammates:
 				emails = hacker.teammates.split(',')
 				matching_hackers = Hacker.query(Hacker.email.IN(emails)).fetch()
