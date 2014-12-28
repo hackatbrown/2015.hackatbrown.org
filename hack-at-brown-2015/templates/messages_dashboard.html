@@ -98,8 +98,8 @@ form > div {
 					<label><input type='checkbox' name='email'/>Email:</label>
 					<input placeholder='Email Subject' name='email-subject'/>
 					<textarea name='email-html'><p>email HTML goes here</p></textarea>
-					<span data-show-for-recipient='registered'>{% raw %} {{ {%endraw %} hacker.name {% raw %}}}{% endraw %} will insert the hackers' name in email body or subject. This works for other Hacker properties as well.</span>
-					<span data-show-for-recipient='invited-friends'>{% raw %} {{ {%endraw %} invited_by.name {% raw %}}}{% endraw %} will insert the name of the person who's invited this person in email body or subject. This works for other Hacker properties as well.</span>	
+					<span data-show-for-recipient='registered'>{% raw %} {{ {%endraw %} hacker.name {% raw %}}}{% endraw %} will insert the hackers' name in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>
+					<span data-show-for-recipient='invited-friends'>{% raw %} {{ {%endraw %} invited_by.name {% raw %}}}{% endraw %} will insert the name of the person who's invited this person in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>	
 				</p>
 		
 				<p class='box'>
