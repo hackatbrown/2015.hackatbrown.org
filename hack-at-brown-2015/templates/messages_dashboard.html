@@ -62,10 +62,10 @@ form > div {
 	background-color: rgba(0,0,0,0.025);
 	padding: 1em;
 }
-.hint {
-	display: block;
+[data-show-for-recipient] {
 	font-size: small;
 	font-style: italic;
+	display: none;
 }
 </style>
 
@@ -87,6 +87,7 @@ form > div {
 				<p>
 					<label>Recipient:</label>
 					<select name="audience">
+						<option value=''>Select Recipients</option>
 						<option value='registered'>All Registered Hackers</option>
 						<option value='invited-friends'>Unregistered Invited Teammates</option>
 						<option value='mailing-list-unregistered'>Unregistered Mailing List Members</option>
@@ -97,7 +98,8 @@ form > div {
 					<label><input type='checkbox' name='email'/>Email:</label>
 					<input placeholder='Email Subject' name='email-subject'/>
 					<textarea name='email-html'><p>email HTML goes here</p></textarea>
-					<span class='hint'>Email and subject can be Jinja templates, although this functionality may not work in test emails.</div>
+					<span data-show-for-recipient='registered'>{% raw %} {{ {%endraw %} hacker.name {% raw %}}}{% endraw %} will insert the hackers' name in email body or subject. This works for other Hacker properties as well.</span>
+					<span data-show-for-recipient='invited-friends'>{% raw %} {{ {%endraw %} invited_by.name {% raw %}}}{% endraw %} will insert the name of the person who's invited this person in email body or subject. This works for other Hacker properties as well.</span>	
 				</p>
 		
 				<p class='box'>
@@ -120,10 +122,15 @@ form > div {
 </div>
 
 <script>
-$("#main-submit").click(function(e) {
+// disable submit-on-enter
+$('form#send input, form#send select').keypress(function(event) { return event.keyCode != 13; });
+
+$("form#send").submit(function(e) {
 	if (location.hostname != 'localhost' && prompt("This is live. Type 'okay' if you really want to send.") != 'okay') {
 		e.preventDefault();
+		return false;
 	}
+	return true;
 })
 $("#send-test").click(function(e) {
 	e.preventDefault();
@@ -138,6 +145,11 @@ $("#send-test").click(function(e) {
 			$("#status").text("Error: " + e.responseText);
 		}
 	})
+})
+$("[name=audience]").change(function(e) {
+	var audience = $(e.target).val();
+	$("[data-show-for-recipient]").hide();
+	$("[data-show-for-recipient='"+audience+"']").show().css({display:'block'});
 })
 </script>
 
