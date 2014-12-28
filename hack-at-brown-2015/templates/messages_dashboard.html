@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<title>Hack@Brown 2015 — Messages Dashboard</title>
+
+
+<style>
+/* please forgive me */
+#status:empty {
+	display: none;
+}
+#status {
+	width: 80%;
+	margin: auto;
+	padding: 10px;
+	background-color: #f55;
+	font-weight: bold;
+	text-align: center;
+}
+#label {
+	text-transform: uppercase;
+	font-size: 0.9em;
+	letter-spacing: -1px;
+}
+#centered {
+	width: 90%;
+	max-width: 800px;
+	margin: auto;
+}
+#centered > div {
+	padding: 1em;
+}
+
+#message-compose {
+	display: block;
+	width: 100%;
+	height: 400px;
+	margin-top: 0.5em;
+}
+textarea {
+	width: 100%;
+	height: 3em;
+	display: block;
+	margin-top: 0.5em;
+	font-family: monospace;
+}
+textarea[name='email-html'] {
+	height: 6em;
+}
+form > div {
+	margin-bottom: 1em;
+}
+#main-submit {
+	font-size: 1.2em;
+	padding: 4px;
+	display: block;
+	margin: auto;
+}
+.box {
+	border-radius: 4px;
+	background-color: rgba(0,0,0,0.025);
+	padding: 1em;
+}
+.hint {
+	display: block;
+	font-size: small;
+	font-style: italic;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div id='centered'>
+	<div>
+		
+		<div id='status'>{% if status %}{{status}}{% endif %}</div>
+		
+		<div id='header'>
+			<h1>Messages</h1>
+		</div>
+		<div id='thread'>
+			<form method='POST' id='send'>
+				<h2>Send a message</h2>
+				<p>
+					<label>Recipient:</label>
+					<select name="audience">
+						<option value='registered'>All Registered Hackers</option>
+					</select>
+				</p>
+		
+				<p class='box'>
+					<label><input type='checkbox' name='email'/>Email:</label>
+					<input placeholder='Email Subject' name='email-subject'/>
+					<textarea name='email-html'><p>email HTML goes here</p></textarea>
+					<span class='hint'>Email and subject can be Jinja templates, although this functionality may not work in test emails.</div>
+				</p>
+		
+				<p class='box'>
+					<label><input type='checkbox' name='sms'/>SMS:</label>
+					<textarea name='sms-text'></textarea>
+				</p>
+		
+				<p>
+					<label>Test this message:</label>
+					<input name='test-recipient' placeholder='Email address or phone #'/>
+					<input type='submit' value='Send test message' id='send-test'/>
+				</p>
+				
+				<p>
+					<input type='submit' value="Send Now" id='main-submit'/>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$("#send-test").click(function(e) {
+	e.preventDefault();
+	$.ajax({
+		url: '?test=1',
+		type: 'post',
+		data: $("form#send").serialize(),
+		success: function(result) {
+			$("#status").text(result);
+		},
+		error: function(e) {
+			$("#status").text("Error: " + e.responseText);
+		}
+	})
+})
+</script>
+
+{% endblock %}

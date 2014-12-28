@@ -8,3 +8,6 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 def template(filename, vals={}):
 	return JINJA_ENVIRONMENT.get_template(filename).render(vals)
+
+def template_string(template, vals={}):
+	return jinja2.Template(template).render(vals)
