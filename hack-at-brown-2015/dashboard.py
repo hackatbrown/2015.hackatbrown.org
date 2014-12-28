@@ -10,6 +10,8 @@ from background_work import waitlist_hacker
 from google.appengine.api import memcache
 import logging
 from config import envIsDev
+import itertools
+from google.appengine.ext import ndb
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
@@ -211,3 +213,17 @@ class BreakdownHandler(webapp2.RequestHandler):
         bd_counts_as_tuples = {field: sorted(count_dict.items(), key=lambda (k,v): v, reverse=True) for field, count_dict in bd_counts.iteritems()}
         self.response.write(template('breakdowns.html', {"field_counts": bd_counts_as_tuples}))
 '''
+
+
+class NormalizeEmailsHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.write("<form method='POST'><input type='submit' value='Do it'/></form>")
+	def post(self):
+		to_put = []
+		for h in itertools.chain(Hacker.query(projection=[Hacker.email]), EmailListEntry.query(projection=[EmailListEntry.email])):
+			if h.email != h.email.lower():
+				h.email = h.email.lower()
+				to_put.append(h)
+		ndb.put_multi(to_put)
+		self.response.write("Well, it seemed to work...")
+

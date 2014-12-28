@@ -78,7 +78,7 @@ class Message(ndb.Model):
 			# don't actually send to the hacker -- send to their friends
 			hacker = entity
 			if hacker.teammates:
-				emails = hacker.teammates.split(',')
+				emails = [email.lower() for email in hacker.teammates.split(',')]
 				matching_hackers = yield Hacker.query(Hacker.email.IN(emails)).fetch_async()
 				emails_already_registered = [h.email for h in matching_hackers]
 				for email in emails:
