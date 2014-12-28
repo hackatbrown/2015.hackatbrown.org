@@ -220,7 +220,7 @@ class NormalizeEmailsHandler(webapp2.RequestHandler):
 		self.response.write("<form method='POST'><input type='submit' value='Do it'/></form>")
 	def post(self):
 		to_put = []
-		for h in itertools.chain(Hacker.query(projection=[Hacker.email]), EmailListEntry.query(projection=[EmailListEntry.email])):
+		for h in itertools.chain(Hacker.query(), EmailListEntry.query()):
 			if h.email != h.email.lower():
 				h.email = h.email.lower()
 				to_put.append(h)
