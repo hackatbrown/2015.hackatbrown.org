@@ -49,7 +49,7 @@ app = webapp2.WSGIApplication([
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
 		('/__serve/([^/]+)?', resume.ServeHandler),
-		('/__get_dash_stats', dashboard.DashboardBackgroundHandler),
+		('/dashboard/__get_dash_stats', dashboard.DashboardBackgroundHandler),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
 		('/dashboard/messages', messages.MessagesDashboardHandler),

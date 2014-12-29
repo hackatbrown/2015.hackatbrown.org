@@ -86,7 +86,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
   $scope.getStats = function () {
 
-    $http({method: 'GET', url: '/__get_dash_stats'}).
+    $http({method: 'GET', url: '/dashboard/__get_dash_stats'}).
         success(function(data, status) {
           $scope.status = status;
           $scope.signupCount = data.signup_count;
