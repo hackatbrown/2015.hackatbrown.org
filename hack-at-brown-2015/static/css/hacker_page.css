@@ -92,7 +92,7 @@ p.caption {
   background-color: white;
 }
 
-input[type=file] { 
+input[type=file] {
   display: none;
 }
 
@@ -130,15 +130,21 @@ h3.secondary {
   top: 0;
 }
 
+.panes.in-pane0 {
+  -webkit-transform: translate3d(0%, 0, 0);
+  transform: translate3d(0%, 0, 0);
+}
+
 .panes.in-pane1 {
   -webkit-transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
 }
 
-.panes.in-pane0 {
-  -webkit-transform: translate3d(0%, 0, 0);
-  transform: translate3d(0%, 0, 0);
+.panes.in-pane2 {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
 }
+
 /*Page*/
 
 .ui.page.grid {
