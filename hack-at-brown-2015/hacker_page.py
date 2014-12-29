@@ -34,10 +34,10 @@ class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
         hacker = getHacker(secret)
         if hacker:
-            memcachedKey = memcachedBase + secret
+            createDeletedHacker(hacker, "unregistered")
             hacker.key.delete()
+            memcachedKey = memcachedBase + secret
             memcache.set(memcachedKey, None, cacheTime)
-            logging.info('deleted!')
 
         self.redirect('http://mhacks.org/')
 

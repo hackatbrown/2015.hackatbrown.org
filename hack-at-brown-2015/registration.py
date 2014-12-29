@@ -33,6 +33,8 @@ def stringValidator(prop, value):
     return cleanValue
 
 class Hacker(ndb.Model):
+    #TODO: If you add a new prooerty, please remember to add that property to deletedHacker.py.
+
 	name = ndb.StringProperty(validator=stringValidator)
 	school = ndb.StringProperty(validator=stringValidator)
 	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior', 'grad_student'])
@@ -47,7 +49,7 @@ class Hacker(ndb.Model):
 	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
-	
+
 	phone_number = ndb.StringProperty() # normalized to only digits, plz
 
 
