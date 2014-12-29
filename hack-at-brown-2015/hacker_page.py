@@ -5,11 +5,11 @@ import logging
 import json
 from google.appengine.api import memcache
 import resume
+from deletedHacker import createDeletedHacker
 
 
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
-
 
 class HackerPageHandler(webapp2.RequestHandler):
     def get(self, secret):
@@ -28,6 +28,11 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         name = hacker.name.split(" ")[0] # TODO: make it better
         newResumeURL = resume.newURL(secret)
+
+        self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        self.response.headers["Pragma"] = "no-cache"
+        self.response.headers["Expires"] = "0"
+
         self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL, "resumeFileName" : fileName}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
@@ -47,8 +52,9 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         parsed_request = json.loads(self.request.body)
 
         hacker = getHacker(secret)
+        if hacker is None:
+            return self.response.write(json.dumps({"success": False}))
 
-        logging.info("Request for hacker update recieved: " + hacker.name)
         for key in parsed_request:
             logging.info("key: " + key)
             if key in registration.hacker_keys:
