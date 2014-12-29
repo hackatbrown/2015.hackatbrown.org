@@ -4,6 +4,35 @@
   display: flex;
 }
 
+/* Hacky Delete Button*/
+#delete-button:focus {
+  outline: none;
+}
+
+#delete-button {
+  box-shadow: inset 1px 0px 0px -1px #1B8EB9;
+  background-color: #EBEBEB;
+  border: none;
+  padding: 11px;
+  padding-top: 7px;
+  padding-bottom: 10px;
+  color: #404040;
+  font-weight: 300;
+  font-size: .9em;
+  transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
+  height: 35px;
+  line-height: 1.8em;
+}
+
+.modal > .header {
+  font-weight: inherit !important;
+}
+
+.modal > .content > .description {
+  font-weight: inherit !important;
+
+}
+
 .resume-upload {
   flex: 0 0 128px;
   margin-right: .75em;
@@ -92,7 +121,7 @@ p.caption {
   background-color: white;
 }
 
-input[type=file] { 
+input[type=file] {
   display: none;
 }
 

@@ -31,9 +31,18 @@ function initalizeHamburger() {
 
 function confirmDeleteHacker(secret) {
     console.log(secret);
-    if (window.confirm("Are you sure you want to cancel your registration?")) {
-        window.location.href = "/__delete_hacker/" + secret;
-    }
+
+    $('.basic.ui.modal')
+      .modal({
+        selector : {
+            approve  : '.yes',
+            deny     : '.no',
+        },
+        onApprove : function() {
+            window.location.href = "/__delete_hacker/" + secret;
+        }
+      })
+      .modal('show');
 }
 
 // Resume Upload
