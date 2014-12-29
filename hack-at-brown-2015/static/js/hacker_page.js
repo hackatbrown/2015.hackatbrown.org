@@ -141,9 +141,12 @@ function slideIn($element) {
 //  Form processing out
 
 function saveChange(key, value, uiinput, secret, responseStatus) {
+    console.log(key, value);
     if (key === 'resume') {
         updateResume(value, uiinput, secret, responseStatus);
         requestNewUploadURL();
+    } else if (key == 'email') {
+        return;
     }
 
     var data = {},
