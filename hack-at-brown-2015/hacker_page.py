@@ -29,7 +29,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         name = hacker.name.split(" ")[0] # TODO: make it better
         newResumeURL = resume.newURL(secret)
 
-        self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, pre-check=0, post-check=0""
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
 
