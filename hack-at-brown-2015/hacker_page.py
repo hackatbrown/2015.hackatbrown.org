@@ -27,13 +27,12 @@ class HackerPageHandler(webapp2.RequestHandler):
             fileName = resume.getFileName(hacker.resume)
 
         name = hacker.name.split(" ")[0] # TODO: make it better
-        newResumeURL = resume.newURL(secret)
 
         self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, pre-check=0, post-check=0"
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
 
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL, "resumeFileName" : fileName}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : fileName}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
