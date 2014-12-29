@@ -29,6 +29,20 @@ function initalizeHamburger() {
     });
 }
 
+function confirmDeleteHacker(secret) {
+    $('.basic.ui.modal')
+      .modal({
+        selector : {
+            approve  : '.yes',
+            deny     : '.no',
+        },
+        onApprove : function() {
+            window.location.href = "/__delete_hacker/" + secret;
+        }
+      })
+      .modal('show');
+}
+
 // Resume Upload
 
 function requestNewUploadURL() {

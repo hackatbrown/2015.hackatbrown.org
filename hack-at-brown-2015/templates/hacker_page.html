@@ -40,6 +40,25 @@
 
 {% block content %}
 
+<div class="ui basic modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Don't Leave Us!
+  </div>
+  <div class="content">
+    <div class="image">
+        <i class="warning circle icon"></i>
+    </div>
+    <div class="description">
+        Are you sure you want to cancel your registration? You will not be able to access this page again.
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui button yes">Yes</div>
+    <div class="ui button no">No</div>
+  </div>
+</div>
+
 <div id="skrollr-body" class="trigrid container darkgrey">
     <div class="outer_container">
         <div class="double panes">
@@ -48,17 +67,19 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                          <div class="admit_status {{ status }}">
+                            <div class="admit_status {{ status }}">
                                 {{ status }}
                             </div>
-
+                            <div class="delete field">
+                                <input id="delete-button" type="button" value="Cancel Registration" />
+                            </div>
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
                         <h3 class="secondary">None yet!</h3>
-<!--
+
                         <div class="message items">
                             <div class="message item prompt">
                                 <h3>You haven't uploaded your resume yet!</h3>
@@ -70,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
--->
+
                     </div>
                 </section>
             </div>
@@ -271,6 +292,11 @@
   var newResumeURL = "{{ newResumeURL }}";
 
   $(document).ready(function () {
+
+    $('#delete-button').click(function() {
+        console.log('sup');
+        confirmDeleteHacker(secret);
+    });
 
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
