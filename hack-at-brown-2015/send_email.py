@@ -8,5 +8,8 @@ def send_email(html, subject, recipients):
 	for recip in recipients:
 		mail.send_mail(sender="Hack@Brown 2015 <hello@hackatbrown.org>", to=recip, subject=subject, body=plain_text, html=html)
 		print "SENDING EMAIL to " + str(recip) 
+		# print "BODY:"
+		# print html
+		# print "\n\n"
 
 		#print html.encode('utf-8')

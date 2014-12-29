@@ -27,6 +27,7 @@ import hacker_page
 import db_utils
 import short_urls
 import m
+import messages
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -49,9 +50,11 @@ app = webapp2.WSGIApplication([
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
 		('/__serve/([^/]+)?', resume.ServeHandler),
 		('/__get_dash_stats', dashboard.DashboardBackgroundHandler),
-		('/__send_email', dashboard.SendEmail),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
+		('/dashboard/messages', messages.MessagesDashboardHandler),
+		('/dashboard/messages/message_task_queue_work', messages.MessagesTaskQueueWork),
+		('/dashboard/normalize_emails', dashboard.NormalizeEmailsHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
 		('/db_cleanup', db_utils.CleanupHandler),

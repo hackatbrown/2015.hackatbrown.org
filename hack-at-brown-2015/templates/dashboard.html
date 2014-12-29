@@ -89,24 +89,9 @@
       </div>
     </div>
     <div id="email-panel" class='panel' >
-      <h2 class='option'> Email</h2>
-      <label ng-show='showEmailStatus' style='display: block' ><b>%%emailStatus%%</b></label>
-      <ul ng-init='emailOption = "all"' id='email-options' class='panel-content'>
-        <!-- <li ng-click='emailOption = "all"' ng-class='emailOption == "all" ? "selected" : "unselected"'> All </li>
-        <li ng-click='emailOption = "accepted"' ng-class='emailOption == "accepted" ? "selected" : "unselected"'>Accepted</li>
-        <li ng-click='emailOption = "waitlisted"' ng-class='emailOption == "waitlisted" ? "selected" : "unselected"'>Waitlisted</li> -->
-        <label>Recipient</label>
-        <input ng-model= "emailRecipient" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-      </ul>
-      <div>
-        <label>Subject</label>
-        <input ng-model= "emailSubject" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-        <label>Email name</label>
-        <input ng-model= "emailName" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-        <!-- <textarea ng-model="emailBody" name='body' style='width: 100%; height: 300px'></textarea> -->
-        <div id="send_email" class="button" ng-click='sendEmail()'> Send Email</div>
-        <div id="show_email" class="button" ng-click='showEmail()'> Show Email</div>
-      </div>
+      <h2 class='option'> Messages</h2>
+		<p><em>Email and SMS</em></p>
+		<a href='/dashboard/messages'>Go to messages dashboard</a>
     </div>
     <div id="manual-panel" class='panel' >
       <h2 class='option' >Manual</h2>

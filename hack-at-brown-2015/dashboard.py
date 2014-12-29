@@ -10,6 +10,8 @@ from background_work import waitlist_hacker
 from google.appengine.api import memcache
 import logging
 from config import envIsDev
+import itertools
+from google.appengine.ext import ndb
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
@@ -66,44 +68,6 @@ class LookupHackerHandler(webapp2.RequestHandler):
                 response['notFound'].append(email)
 
         self.response.write(json.dumps(response))
-
-class SendEmail(webapp2.RequestHandler):
-  def post(self):
-    parsed_request = json.loads(self.request.body)
-    subject = parsed_request.get("subject")
-    email_name = parsed_request.get("emailName")
-    recipient = parsed_request.get("recipient")
-    if recipient == '__ALL__':
-        return
-        # Case for sending to all hackers.
-        for hacker in Hacker.query().fetch():
-            print "Sending emails to all"
-            html = template("emails/" + email_name + ".html", {"hacker": hacker, "name": hacker.name.split(" ")[0]})
-            send_email(recipients=[hacker.email], html=html, subject=subject)
-    elif recipient == "__UPDATES__":
-        return
-        # Case for sending emails to people who signed up for updates but never registered.
-        print "Sending emails to signed up for updates"
-        for person in EmailListEntry.query().fetch():
-            if Hacker.query(Hacker.email == person.email).count() != 0:
-                continue
-            html = template("emails/" + email_name + ".html")
-            send_email(recipients=[person.email], html=html, subject=subject)
-    else: 
-        # Case for single email.
-        template_hacker = Hacker.query(Hacker.email == recipient).fetch()[0]
-        template_name = template_hacker.name.split(" ")[0]
-
-        html = template("emails/" + email_name + ".html", {"hacker": template_hacker, "name": template_name})
-        try:
-            if parsed_request.get("display"):
-                self.response.write(json.dumps({"success": True, "html": html }))
-                return
-        except Exception, e:
-            raise e
-        send_email(recipients=[recipient], html=html, subject=subject)
-
-    self.response.write(json.dumps({"success": True, "html":None }))
 
 class ViewBreakdownsHandler(webapp2.RequestHandler):
     def get(self):
@@ -249,3 +213,17 @@ class BreakdownHandler(webapp2.RequestHandler):
         bd_counts_as_tuples = {field: sorted(count_dict.items(), key=lambda (k,v): v, reverse=True) for field, count_dict in bd_counts.iteritems()}
         self.response.write(template('breakdowns.html', {"field_counts": bd_counts_as_tuples}))
 '''
+
+
+class NormalizeEmailsHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.write("<form method='POST'><input type='submit' value='Do it'/></form>")
+	def post(self):
+		to_put = []
+		for h in itertools.chain(Hacker.query(), EmailListEntry.query()):
+			if h.email != h.email.lower():
+				h.email = h.email.lower()
+				to_put.append(h)
+		ndb.put_multi(to_put)
+		self.response.write("Well, it seemed to work...")
+

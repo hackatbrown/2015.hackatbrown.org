@@ -47,6 +47,8 @@ class Hacker(ndb.Model):
 	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
+	
+	phone_number = ndb.StringProperty() # normalized to only digits, plz
 
 
 	secret = ndb.StringProperty()
