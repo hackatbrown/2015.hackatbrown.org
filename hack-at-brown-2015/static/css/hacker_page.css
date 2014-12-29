@@ -222,16 +222,6 @@ h3.secondary {
   height: 2px;
 }
 
-/*Legacy*/
-.info {
-  float: left;
-}
-
-.status {
-  float: right;
-}
-
-
 h1,h2,h3,h4,h5{
   font-weight: inherit;
 }
