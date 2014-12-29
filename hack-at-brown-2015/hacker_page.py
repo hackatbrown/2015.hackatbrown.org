@@ -30,6 +30,18 @@ class HackerPageHandler(webapp2.RequestHandler):
         newResumeURL = resume.newURL(secret)
         self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL, "resumeFileName" : fileName}))
 
+class DeleteHackerHandler(webapp2.RequestHandler):
+    def get(self, secret):
+        hacker = getHacker(secret)
+        if hacker:
+            memcachedKey = memcachedBase + secret
+            hacker.key.delete()
+            memcache.set(memcachedKey, None, cacheTime)
+            logging.info('deleted!')
+
+        self.redirect('http://mhacks.org/')
+
+
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
         parsed_request = json.loads(self.request.body)

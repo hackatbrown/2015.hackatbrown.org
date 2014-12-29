@@ -48,10 +48,10 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                          <div class="admit_status {{ status }}">
+                            <div class="admit_status {{ status }}">
                                 {{ status }}
                             </div>
-
+                            <input type="submit" value="Cancel Registration" id="delete_button"/>
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">
@@ -271,6 +271,10 @@
   var newResumeURL = "{{ newResumeURL }}";
 
   $(document).ready(function () {
+
+    $('#delete_button').click(function() {
+        confirmDeleteHacker(secret);
+    });
 
     if (location.hash === '#info') {
       setTabActive($("#info_top"));

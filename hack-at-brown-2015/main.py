@@ -48,6 +48,7 @@ app = webapp2.WSGIApplication([
 		('/secret/__newurl/(.+)', resume.NewURLHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
+		('/__delete_hacker/(.+)', hacker_page.DeleteHackerHandler),
 		('/__serve/([^/]+)?', resume.ServeHandler),
 		('/__get_dash_stats', dashboard.DashboardBackgroundHandler),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),

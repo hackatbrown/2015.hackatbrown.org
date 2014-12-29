@@ -29,6 +29,13 @@ function initalizeHamburger() {
     });
 }
 
+function confirmDeleteHacker(secret) {
+    console.log(secret);
+    if (window.confirm("Are you sure you want to cancel your registration?")) {
+        window.location.href = "/__delete_hacker/" + secret;
+    }
+}
+
 // Resume Upload
 
 function requestNewUploadURL() {
