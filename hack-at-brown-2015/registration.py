@@ -21,11 +21,6 @@ hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'di
 
 def stringValidator(prop, value):
     cleanValue = value.strip()
-    cleanValue = str(utils.escape(cleanValue))
-
-
-    if cleanValue != value:
-        raise datastore_errors.BadValueError(prop._name)
 
     if prop._name == 'email':
         cleanValue = cleanValue.lower()
