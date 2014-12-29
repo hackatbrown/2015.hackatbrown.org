@@ -58,6 +58,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/normalize_emails', dashboard.NormalizeEmailsHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
+		('/__lookup_hacker/', dashboard.LookupHackerHandler),
 		('/db_cleanup', db_utils.CleanupHandler),
 		('/__db_populate/(\d+)', db_utils.PopulateHandler),
 		('/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
