@@ -30,8 +30,6 @@ function initalizeHamburger() {
 }
 
 function confirmDeleteHacker(secret) {
-    console.log(secret);
-
     $('.basic.ui.modal')
       .modal({
         selector : {
