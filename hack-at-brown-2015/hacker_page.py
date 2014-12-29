@@ -44,7 +44,7 @@ class DeleteHackerHandler(webapp2.RequestHandler):
             memcachedKey = memcachedBase + secret
             memcache.set(memcachedKey, None, cacheTime)
 
-        self.redirect('http://mhacks.org/')
+        self.redirect('/')
 
 
 class HackerUpdateHandler(webapp2.RequestHandler):
@@ -58,8 +58,10 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         for key in parsed_request:
             logging.info("key: " + key)
             if key in registration.hacker_keys:
-                logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + parsed_request.get(key))
-                setattr(hacker, key, parsed_request.get(key))
+                requestKey = parsed_request.get(key)
+                if requestKey != 'email':
+                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + requestKey)
+                    setattr(hacker, key, requestKey)
             else:
                 logging.info("Key not found")
 
