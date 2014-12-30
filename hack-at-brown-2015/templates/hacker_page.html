@@ -70,9 +70,17 @@
                             <div class="admit_status {{ status }}">
                                 {{ status }}
                             </div>
+                            {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
                             <div class="delete field">
                                 <input id="delete-button" type="button" value="Cancel Registration" />
                             </div>
+                            {% endif %}
+                            {% if status == "accepted" %}
+                            <div class="rsvp field">
+                                <input id="rsvp-button" type="button" value="RSVP" />
+                            </div>
+                            {% endif %}
+
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">

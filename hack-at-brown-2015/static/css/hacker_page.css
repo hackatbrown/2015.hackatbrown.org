@@ -4,6 +4,28 @@
   display: flex;
 }
 
+/* Hacky RSVP Button*/
+#rsvp-button:focus {
+  outline: none;
+}
+
+#rsvp-button {
+  box-shadow: inset 1px 0px 0px -1px #1B8EB9;
+  background-color: blanchedalmond;
+  border: none;
+  padding: 11px;
+  padding-top: 7px;
+  padding-bottom: 10px;
+  color: #404040;
+  font-weight: 300;
+  font-size: .9em;
+  transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
+  height: 35px;
+  line-height: 1.8em;
+}
+/*    -      */
+
+
 /* Hacky Delete Button*/
 #delete-button:focus {
   outline: none;
@@ -23,6 +45,7 @@
   height: 35px;
   line-height: 1.8em;
 }
+/*    -      */
 
 .delete {
   padding-top: 10px;
