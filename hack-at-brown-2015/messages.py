@@ -6,7 +6,7 @@ HOW THIS WORKS:
  2.2 batching the entities returned from the query into groups of 40 (batch_size)
  2.3 creating Task Queue tasks for each batch, containing message ID and entity ID for all entities
 3. MessagesTaskQueueWork.post is called by the task queue for each task.
-4. MessagesTaskQueueWork.post loads the Message object and all entities, then concurrently calls Message.send_to_entity_async(entity) on each entity. These are responsible for looking the audience, the current entity (which may be a Hacker or an EmailListEntry, or maybe something else in the future), and sending the appropriate emails or SMSs 
+4. MessagesTaskQueueWork.post loads the Message object and all entities, then concurrently calls Message.send_to_entity_async(entity) on each entity. These are responsible for looking the audience, the current entity (which may be a Hacker or an EmailListEntry, or maybe something else in the future), and sending the appropriate emails or SMSs
 """
 
 import webapp2
@@ -20,30 +20,46 @@ from email_list import EmailListEntry
 
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
-	
+
 	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered'], default=None)
-	
+
+	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
 	email_html = ndb.TextProperty()
-	
+
 	sms_text = ndb.TextProperty()
-	
+
 	def kick_off(self):
 		q = taskqueue.Queue("messages")
 		q.add(taskqueue.Task(url='/dashboard/messages/message_task_queue_work', params={"kickoff_message_key": self.key.urlsafe()}))
-	
+
 	def send_to_email(self, email, template_args={}):
 		# does the actual work of sending
+		emails = [email]
 		assert self.email_subject, "No email subject provided. Is email unchecked?"
-		html = template_string(self.email_html, template_args)
+		if self.audience == 'invited-friends':
+			hacker = Hacker.query(Hacker.email==email).fetch()[0]
+			if hacker.teammates:
+				emails_found = [email.lower() for email in hacker.teammates.split(',')]
+				matching_hackers =  Hacker.query(Hacker.email.IN(emails_found)).fetch()
+				emails_already_registered = [h.email for h in matching_hackers]
+				emails = []
+				for email in emails_found:
+					if email not in emails_already_registered:
+						emails.append(email)
+						template_args["invited_by"] = hacker
+		if self.email_from_template:
+			html = template("emails/" + self.email_html + ".html", template_args)
+		else:
+			html = template_string(self.email_html, template_args)
 		html = template("emails/generic.html", dict({"content": html}.items() + template_args.items()))
 		subject = template_string(self.email_subject, template_args)
-		send_email(html, subject, [email])
-	
+		send_email(html, subject, emails)
+
 	def send_to_phone(self, phone):
 		# actual work of sms'ing
 		print "SHOULD SEND SMS '{0}' TO {1}, but not yet implemented".format(self.sms_text, phone)
-	
+
 	def get_query(self):
 		if self.audience == 'registered':
 			return Hacker.query()
@@ -51,14 +67,19 @@ class Message(ndb.Model):
 			return Hacker.query(Hacker.teammates != None)
 		elif self.audience == 'mailing-list-unregistered':
 			return EmailListEntry.query()
+		elif self.audience == None:
+			return None
 		else:
 			assert 0, "Unknown audience"
-	
+
 	def enqueue_tasks(self):
+		if self.get_query() == None:
+			print "No audience selected. No emails sent through messages system."
+			return 
 		q = taskqueue.Queue("messages")
 		# max task size is 100kb; max # of tasks added per batch is 100
 		task_futures = []
-		
+
 		batch_size = 40 # 2k users / 40 = 50 tasks. within our limits.
 		batch_of_entity_keys = []
 		def send_batch():
@@ -67,15 +88,15 @@ class Message(ndb.Model):
 			task_future = q.add_async(task)
 			task_futures.append(task_future)
 			batch_of_entity_keys[:] = []
-		
+
 		for key in self.get_query().iter(keys_only=True):
 			batch_of_entity_keys.append(key.urlsafe())
 			if len(batch_of_entity_keys) >= batch_size: send_batch()
 		if len(batch_of_entity_keys): send_batch()
-		
+
 		for f in task_futures:
 			f.get_result()
-	
+
 	@ndb.tasklet
 	def send_to_entity_async(self, entity):
 		try:
@@ -106,15 +127,19 @@ class Message(ndb.Model):
 class MessagesDashboardHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write(template("messages_dashboard.html", {}))
-	
+
 	def post(self):
-		message = Message(audience=self.request.get('audience'))
+		audience = None if self.request.get('audience') == '' else self.request.get('audience')
+		message = Message(audience=audience)
 		if self.request.get('email'):
 			message.email_subject = self.request.get('email-subject')
-			message.email_html = self.request.get('email-html')
+			if self.request.get('email-name'):
+				message.email_from_template = True
+				message.email_html = self.request.get('email-name')			
+			else:
+				message.email_html = self.request.get('email-html')
 		if self.request.get('sms'):
 			message.sms_text = self.request.get('sms-text')
-		
 		if self.request.get('test'):
 			recip = self.request.get('test-recipient')
 			if '@' in recip:

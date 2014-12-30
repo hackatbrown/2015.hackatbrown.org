@@ -1,5 +1,5 @@
-application: hackatbrown2015
-version: 2
+application: hackatbrown2015-dev
+version: 9
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -10,10 +10,6 @@ handlers:
   upload: favicon\.ico
 - url: /static
   static_dir: static
-
-- url: /__lookup_hacker/(.+)
-  login: admin
-  script: main.app
 
 - url: /admin_checkin
   script: admin_checkin.app

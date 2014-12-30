@@ -86,7 +86,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
   $scope.getStats = function () {
 
-    $http({method: 'GET', url: '/__get_dash_stats'}).
+    $http({method: 'GET', url: '/dashboard/__get_dash_stats'}).
         success(function(data, status) {
           $scope.status = status;
           $scope.signupCount = data.signup_count;
@@ -162,7 +162,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       return;
     };
 
-    $http.post('/__manual', {change: action, emails: emails}).
+    $http.post('/dashboard/__manual', {change: action, emails: emails}).
     success(function(data, status, headers, config) {
         $scope.manualStatus = action + " Success!";
         $scope.showManualStatus = true;
@@ -177,7 +177,12 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.lookupHacker = function(){
     $scope.manualEmails = $scope.manualEmails.toLowerCase();
     emails = $scope.manualEmails.trim().replace(/\s+/g, '');
-    $http({method: 'GET', url: '/__lookup_hacker/' + emails}).
+    if (emails) {
+      data = emails
+    } else {
+      data = "feeling_lucky";
+    }
+    $http({method: 'GET', url: '/dashboard/__lookup_hacker/' + data}).
         success(function(data) {
           $scope.lookupResult = data;
         }).
@@ -193,7 +198,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
     if ($scope.school){
       return;
     }
-    $http({method: 'GET', url: '/__breakdown/' + "all"}).
+    $http({method: 'GET', url: '/dashboard/__breakdown/' + "all"}).
         success(function(data, status) {
 
 
@@ -222,7 +227,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       return;
     }
 
-    $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
+    $http({method: 'GET', url: '/dashboard/__breakdown/' + $scope.currentChart.value}).
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
           $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
