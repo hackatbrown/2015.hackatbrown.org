@@ -1,0 +1,79 @@
+{% extends "centered.html" %}
+
+{% block headcss %}
+{{ super() }}
+<style>
+.social-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.social-links li {
+    display: inline;
+}
+
+.social-links a {
+    display: inline-block;
+    padding: 0 0.7em;
+
+    height: 2em;
+    width: 2em;
+
+    background-size: 1.2em 1.2em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.8;
+
+    vertical-align: text-top;
+}
+
+.social-links a:hover {
+    opacity: 1.0;
+    border: none;
+}
+
+.email {
+    padding-top: 0.1em !important;
+    background: url("/static/img/social-icons/email.svg");
+}
+
+.facebook {
+    background: url("/static/img/social-icons/facebook.svg");
+}
+
+.twitter {
+    background: url("/static/img/social-icons/twitter.svg");
+}
+
+.blog {
+    background: url("/static/img/social-icons/medium.svg");
+}
+#footer {
+   position: absolute;
+   bottom: 0.5em;
+   left: 0.5em;
+   right: 0.5em;
+   text-align: center;
+   opacity: 0.7;
+   font-size: small;
+}
+</style>
+{% endblock %}
+
+{% block centered_content %}
+<h1>Goodbye!</h1>
+<p>We're sad you can't make it to Hack@Brown this year.</p>
+<p>If you want to stay in touch (we'd love to see you next year!), follow us on Facebook or Twitter:</p>
+<div>
+   <ul class="social-links">
+       <li><a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook" target="_blank"></a></li>
+       <li><a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter" target="_blank"></a></li>
+   </ul>
+</div>
+
+<div id='footer'>
+   Feeling empty without Hack@Brown? <a href='ellenwiener.com'>Have some art.</a>
+</div>
+
+{% endblock %}
