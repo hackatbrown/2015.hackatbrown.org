@@ -23,6 +23,7 @@ class Message(ndb.Model):
 
 	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered'], default=None)
 
+	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
 	email_html = ndb.TextProperty()
 
@@ -34,11 +35,26 @@ class Message(ndb.Model):
 
 	def send_to_email(self, email, template_args={}):
 		# does the actual work of sending
+		print "calling send_to_email"
+		emails = [email]
 		assert self.email_subject, "No email subject provided. Is email unchecked?"
-		html = template_string(self.email_html, template_args)
+		if self.audience == 'invited-friends':
+			hacker = Hacker.query(Hacker.email==email).fetch()
+			if hacker.teammates:
+				emails_found = [email.lower() for email in hacker.teammates.split(',')]
+				matching_hackers = yield Hacker.query(Hacker.email.IN(emails_found)).fetch_async()
+				emails_already_registered = [h.email for h in matching_hackers]
+				emails = []
+				for email in emails_found:
+					if email not in emails_already_registered:
+						emails.append(email)
+		if self.email_from_template:
+			html = template("emails/" + self.email_html + ".html", template_args)
+		else:
+			html = template_string(self.email_html, template_args)
 		html = template("emails/generic.html", dict({"content": html}.items() + template_args.items()))
 		subject = template_string(self.email_subject, template_args)
-		send_email(html, subject, [email])
+		send_email(html, subject, emails)
 
 	def send_to_phone(self, phone):
 		# actual work of sms'ing
@@ -51,10 +67,15 @@ class Message(ndb.Model):
 			return Hacker.query(Hacker.teammates != None)
 		elif self.audience == 'mailing-list-unregistered':
 			return EmailListEntry.query()
+		elif self.audience == None:
+			return None
 		else:
 			assert 0, "Unknown audience"
 
 	def enqueue_tasks(self):
+		if self.get_query() == None:
+			print "No audience selected. No emails sent through messages system."
+			return 
 		q = taskqueue.Queue("messages")
 		# max task size is 100kb; max # of tasks added per batch is 100
 		task_futures = []
@@ -108,17 +129,23 @@ class MessagesDashboardHandler(webapp2.RequestHandler):
 		self.response.write(template("messages_dashboard.html", {}))
 
 	def post(self):
-		message = Message(audience=self.request.get('audience'))
+		audience = None if self.request.get('audience') == '' else self.request.get('audience')
+		message = Message(audience=audience)
 		if self.request.get('email'):
 			message.email_subject = self.request.get('email-subject')
-			message.email_html = self.request.get('email-html')
+			if self.request.get('email-name'):
+				message.email_from_template = True
+				message.email_html = self.request.get('email-name')			
+			else:
+				message.email_html = self.request.get('email-html')
 		if self.request.get('sms'):
 			message.sms_text = self.request.get('sms-text')
-
 		if self.request.get('test'):
 			recip = self.request.get('test-recipient')
 			if '@' in recip:
+				print "about to send"
 				message.send_to_email(recip)
+				print "done sending?"
 				self.response.write("Sent email")
 			elif len(recip) > 0:
 				message.send_to_phone(recip)
