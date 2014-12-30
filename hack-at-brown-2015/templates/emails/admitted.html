@@ -1,6 +1,7 @@
 {% extends "emails/base.html" %}
 
 {% block content %}
+<!-- Subject: You've been accepted to Hack@Brown! -->
 <h1>Congratulations!</h1>
 
 <p>Hi {{name}},</p>
@@ -22,6 +23,8 @@
     <li><span class="li-title">Dashboard:</span> Please also make sure all the information on your <a href='http://hackatbrown.org/secret/{{ hacker.secret }}'>dashboard</a> is up-to-date.</li>
 
     <li><span class="li-title">Travel Reimbursements:</span> If you need travel reimbursements, please indicate that on your dashboard. If you need more than $30 in reimbursements, please buy your tickets and upload receipts to the dashboard within one week.</li>
+
+    <li><span class="li-title">High Schoolers:</span> If you will be under the age of 18 as of February 7, 2015, please fill out the parental consent form and bring it to the hackathon. You'll find a link in your dashboard.</li>
 
     <li>Follow us on <a href='http://facebook.com/hackatbrown'>Facebook</a> and <a href='http://twitter.com/hackatbrown'>Twitter</a> for the latest information.</li>
 </ul>
