@@ -6,7 +6,7 @@ from registration import generate_secret_for_hacker_with_email
 import json
 from template import template
 from registration import hacker_keys
-from config import envIsDev
+from config import isMasterDB
 import random
 
 #Example:
@@ -47,7 +47,7 @@ def run(property, jsonKeys):
 
 class PopulateHandler(webapp2.RequestHandler):
     def get(self, number):
-        if not envIsDev() or envIsQA() or self.request.host.split(":")[0] != "localhost":
+        if isMasterDB():
             return self.redirect('/')
 
         number = int(number)
@@ -61,7 +61,7 @@ class PopulateHandler(webapp2.RequestHandler):
 
 class DepopulateHandler(webapp2.RequestHandler):
     def get(self, number):
-        if not envIsDev() or self.request.host.split(":")[0] != "localhost":
+        if isMasterDB():
             return self.redirect('/')
 
         number = int(number)
