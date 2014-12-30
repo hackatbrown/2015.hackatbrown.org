@@ -10,8 +10,6 @@
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row;
-  margin-left: auto;
-
  }
 
 .status-actions {
@@ -19,6 +17,11 @@
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row;
+  flex-wrap: wrap;
+ }
+
+ .admit_status {
+    margin-right: auto;
  }
 
 /* Hacky RSVP Button*/
