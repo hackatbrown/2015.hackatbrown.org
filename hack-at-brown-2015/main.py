@@ -28,6 +28,7 @@ import db_utils
 import short_urls
 import m
 import messages
+import ranking2015
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -55,6 +56,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/messages', messages.MessagesDashboardHandler),
 		('/dashboard/messages/message_task_queue_work', messages.MessagesTaskQueueWork),
 		('/dashboard/normalize_emails', dashboard.NormalizeEmailsHandler),
+		('/dashboard/__rank', ranking2015.RankingHandler),
 		('/__manual', dashboard.ManualRegistrationHandler),
 		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
 		('/db_cleanup', db_utils.CleanupHandler),
