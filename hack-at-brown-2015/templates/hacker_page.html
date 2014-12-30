@@ -87,20 +87,23 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                            <div class="admit_status {{ status }}">
-                                {{ status }}
+                            <div class="status-actions">
+                                <div class="admit_status {{ status }}">
+                                    {{ status }}
+                                </div>
+                                <div class="actions">
+                                    {% if status == "accepted" %}
+                                    <div class="rsvp field">
+                                        <input id="rsvp-button" type="button" value="RSVP" />
+                                    </div>
+                                    {% endif %}
+                                    {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
+                                    <div class="delete field">
+                                        <input id="delete-button" type="button" value="Cancel Registration" />
+                                    </div>
+                                    {% endif %}
+                                </div>
                             </div>
-                            {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
-                            <div class="delete field">
-                                <input id="delete-button" type="button" value="Cancel Registration" />
-                            </div>
-                            {% endif %}
-                            {% if status == "accepted" %}
-                            <div class="rsvp field">
-                                <input id="rsvp-button" type="button" value="RSVP" />
-                            </div>
-                            {% endif %}
-
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">
