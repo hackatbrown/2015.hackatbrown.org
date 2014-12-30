@@ -5,11 +5,11 @@ import logging
 import json
 from google.appengine.api import memcache
 import resume
+from deletedHacker import createDeletedHacker
 
 
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
-
 
 class HackerPageHandler(webapp2.RequestHandler):
     def get(self, secret):
@@ -27,21 +27,40 @@ class HackerPageHandler(webapp2.RequestHandler):
             fileName = resume.getFileName(hacker.resume)
 
         name = hacker.name.split(" ")[0] # TODO: make it better
-        newResumeURL = resume.newURL(secret)
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "newResumeURL" : newResumeURL, "resumeFileName" : fileName}))
+
+        self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, pre-check=0, post-check=0"
+        self.response.headers["Pragma"] = "no-cache"
+        self.response.headers["Expires"] = "0"
+
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : fileName}))
+
+class DeleteHackerHandler(webapp2.RequestHandler):
+    def get(self, secret):
+        hacker = getHacker(secret)
+        if hacker:
+            createDeletedHacker(hacker, "unregistered")
+            hacker.key.delete()
+            memcachedKey = memcachedBase + secret
+            memcache.set(memcachedKey, None, cacheTime)
+
+        self.redirect('/')
+
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):
         parsed_request = json.loads(self.request.body)
 
         hacker = getHacker(secret)
+        if hacker is None:
+            return self.response.write(json.dumps({"success": False}))
 
-        logging.info("Request for hacker update recieved: " + hacker.name)
         for key in parsed_request:
             logging.info("key: " + key)
             if key in registration.hacker_keys:
-                logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + parsed_request.get(key))
-                setattr(hacker, key, parsed_request.get(key))
+                requestKey = parsed_request.get(key)
+                if requestKey != 'email':
+                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + requestKey)
+                    setattr(hacker, key, requestKey)
             else:
                 logging.info("Key not found")
 
