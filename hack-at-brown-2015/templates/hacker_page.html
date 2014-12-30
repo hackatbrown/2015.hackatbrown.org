@@ -202,7 +202,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="two fields row">
+                            <div class="field">
+								<label for="phone_number">Phone Number</label>
+								<div class="ui icon input">
+                                    <input id="phone_number" type="text" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
+                                    <i class="icon"></i>
+								</div>
+                            </div>
                             <div class="field">
                                 <label for="dietary_restrictions">Dietary Restrictions?</label>
                                 <div class="ui icon input">
