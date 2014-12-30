@@ -1,20 +1,37 @@
 {% extends "emails/base.html" %}
 
 {% block content %}
-<h1>You've been accepted to Hack@Brown!</h1>
-<p>Hey,</p>
-<p>
-	We're always sad we can't admit everyone—but we're also really excited to say you've made the list. We can't wait to see what you build.
-</p>
-<p>
-	We're gonna need you to RSVP if you can go within 7 days.
-</p>
-<p>
-	If you're not coming, you should let us know so that we can admit someone from the waitlist.
-</p>
+<h1>Congratulations!</h1>
 
-<p>
-	<a class='cta'>RSVP or cancel</a>
+<p>Hi {{name}},</p>
+
+<p>We're excited to say you’ve been accepted to Hack@Brown 2015 and we look forward to welcoming you to Brown on February 7-8!</p>
+
+<p>You will be joined by nearly 350 other students excited to learn something new. However, we do have a waitlist of more students waiting to join, so <strong>please RSVP as soon as possible</strong>, even if you can't make it.</p>
+
+<a href='http://hackatbrown.org/secret/{{ hacker.secret }}' class='cta'>RSVP</a>
+
+<p><b>If we have not received your response by <strong><span class="rsvp-deadline">January 9</span></strong>, we will offer the spot to someone else.</b></p>
+
+<h2>
+    Important Announcements
+</h2>
+<ul>
+    <li><span class="li-title">Check-in:</span> Check-in will start at 9am on Saturday, February 7 and kick-off will begin at 11am. The event will end around 5pm on Sunday, February 8. Please expect to be present the entire time!</li>
+
+    <li><span class="li-title">Dashboard:</span> Please also make sure all the information on your <a href='http://hackatbrown.org/secret/{{ hacker.secret }}'>dashboard</a> is up-to-date.</li>
+
+    <li><span class="li-title">Travel Reimbursements:</span> If you need travel reimbursements, please indicate that on your dashboard. If you need more than $30 in reimbursements, please buy your tickets and upload receipts to the dashboard within one week.</li>
+
+    <li>Follow us on <a href='http://facebook.com/hackatbrown'>Facebook</a> and <a href='http://twitter.com/hackatbrown'>Twitter</a> for the latest information.</li>
+</ul>
+
+<p>Once again, congratulations! We look forward to meeting you in Providence, RI soon. If you have any questions, please don't hesitate to email us at <a href="mailto:hello@hackatbrown.org">hello@hackatbrown.org</a>.</p>
+
+<p> 
+Best,<br/> 
+Team Hack@Brown 
 </p>
 
 {% endblock %}
+
