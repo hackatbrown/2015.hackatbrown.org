@@ -47,15 +47,17 @@ def run(property, jsonKeys):
 
 class PopulateHandler(webapp2.RequestHandler):
     def get(self, number):
-        if not envIsDev() or self.request.host.split(":")[0] != "localhost":
+        if not envIsDev() or envIsQA() or self.request.host.split(":")[0] != "localhost":
             return self.redirect('/')
 
         number = int(number)
+        count = 0
 
         for i in range(0, number):
             hacker = createTestHacker(i)
+            count += 1
 
-        self.response.write("Created {0} hackers.".format(number))
+        self.response.write("Created {0} hackers.".format(count))
 
 class DepopulateHandler(webapp2.RequestHandler):
     def get(self, number):

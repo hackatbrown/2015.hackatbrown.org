@@ -123,13 +123,15 @@
 {% if envIsDev or isQA %}
 <script>
   function populateDB() {
-    if (window.confirm("Are you sure you want to generate 100 hackers?")) {
-      window.location.href = "/__db_populate/100";
+    var number = prompt("How many hackers do you want to generate?", "100");
+    if (number != null) {
+      window.location.href = "/__db_populate/" + number;
     }
   }
   function depopulateDB() {
-    if (window.confirm("Are you sure you want to eliminate 100 hackers?")) {
-      window.location.href = "/__db_depopulate/100";
+    var number = prompt("How many hackers to you want to eliminate?", "100");
+    if (number != null) {
+      window.location.href = "/__db_depopulate/" + number;
     }
   }
 </script>
