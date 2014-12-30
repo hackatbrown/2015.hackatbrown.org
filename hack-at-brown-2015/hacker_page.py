@@ -7,7 +7,6 @@ from google.appengine.api import memcache
 import resume
 from deletedHacker import createDeletedHacker
 
-
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
 
