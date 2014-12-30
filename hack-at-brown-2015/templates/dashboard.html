@@ -14,7 +14,7 @@
 {% block content %}
 <div id='header' class='vertically-centered vertically-centered-content'>
   <img src='/static/img/logo.png' width="134" height="144"/>
-  <h1>Hack@Brown {% if envIsDev %}Dev-{% endif %}Dashboard</h1>
+  <h1>Hack@Brown {% if envIsDev %}Dev-{% endif %}{% if isQA %}QA-{% endif %}Dashboard</h1>
 </div>
 
 <div ng-app='dashApp' ng-init="getStats()" ng-controller="MainCtrl" >
@@ -120,7 +120,7 @@
   <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
 </div>
 <a style="text-decoration:none" class='button' href="/db_cleanup">DB Cleanup</a>
-{% if envIsDev %}
+{% if envIsDev or isQA %}
 <script>
   function populateDB() {
     if (window.confirm("Are you sure you want to generate 100 hackers?")) {
