@@ -91,8 +91,11 @@ class CreateTestHackerWorker(webapp2.RequestHandler):
 
         start = int(self.request.get('start'))
         end = int(self.request.get('end'))
+        hackers = []
         for i in range(start, end):
-            createTestHacker(i)
+            hackers.append(createTestHacker(i))
+
+        ndb.put_multi(hackers)
 
 def createTestHacker(number):
 
@@ -134,7 +137,5 @@ def createTestHacker(number):
 
     hacker.hardware_hack = "yes" if prob() > 8 else "no"
     hacker.first_hackathon = "yes" if prob() > 7 else "no"
-
-    hacker.put()
 
     return hacker
