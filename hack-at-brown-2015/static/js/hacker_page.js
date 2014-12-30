@@ -29,25 +29,48 @@ function initalizeHamburger() {
     });
 }
 
-// Resume Upload
+function confirmDeleteHacker(secret) {
+    $('.basic.ui.modal')
+      .modal({
+        selector : {
+            approve  : '.yes',
+            deny     : '.no',
+        },
+        onApprove : function() {
+            window.location.href = "/__delete_hacker/" + secret;
+        }
+      })
+      .modal('show');
+}
 
-function requestNewUploadURL() {
+// Resume Upload
+function uploadResume(uiinput) {
+    //This is a 2-part process - first we get a new blobstore URL
+    //We pass in the update function as a callback.
+    //We call the callback function with the new URL as an argument
+    //Then we submit a multipart form request to that URL.
+    //There's a handler in resume.py which will receive it.
+    requestNewUploadURL(updateResume, uiinput);
+}
+
+function requestNewUploadURL(callback, uiinput) {
     $.ajax({
         type: 'GET',
         url: '/secret/__newurl/' + secret,
         success: function (response) {
             response = JSON.parse(response);
-            newResumeURL = response.newURL;
+            var newResumeURL = response.newURL;
+            callback(newResumeURL, uiinput);
         }
     });
 }
 
-function updateResume(value, uiinput, secret, responseStatus) {
-
-    var $button = $(uiinput).find(".ui.button"),
-        $buttonText = $button.children("span"),
-        width = $button.outerWidth(),
-        complete = false;
+function updateResume(newResumeURL, uiinput) {
+    $uiInput = $(uiinput);
+    var $button = $uiInput.find(".resume-upload");
+    var $buttonText = $button.children("span");
+    var width = $button.outerWidth();
+    var complete = false;
 
     function resetState(e) {
         $button.removeClass("complete");
@@ -128,8 +151,12 @@ function slideIn($element) {
 
 function saveChange(key, value, uiinput, secret, responseStatus) {
     if (key === 'resume') {
-        updateResume(value, uiinput, secret, responseStatus);
-        requestNewUploadURL();
+        if (value) {
+            uploadResume(uiinput);
+        }
+        return;
+    } else if (key == 'email') {
+        return;
     }
 
     var data = {},

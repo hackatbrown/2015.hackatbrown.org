@@ -56,9 +56,17 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
 
 class LookupHackerHandler(webapp2.RequestHandler):
     def get(self, emails):
+        response = {'found' : [], 'notFound' : []}
+
+        if (emails == 'feeling_lucky'):
+            #I'm feeling lucky!
+            luckyHacker = Hacker.query().get()
+            response['found'].append({'email': luckyHacker.email, 'secret' : luckyHacker.secret})
+            return self.response.write(json.dumps(response))
+
         emails = emails.split(',')
 
-        response = {'found' : [], 'notFound' : []}
+
 
         for email in emails:
             hacker = Hacker.query(Hacker.email == email).fetch(projection=Hacker.secret)

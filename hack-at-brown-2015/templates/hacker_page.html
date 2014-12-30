@@ -40,6 +40,25 @@
 
 {% block content %}
 
+<div class="ui basic modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Don't Leave Us!
+  </div>
+  <div class="content">
+    <div class="image">
+        <i class="warning circle icon"></i>
+    </div>
+    <div class="description">
+        Are you sure you want to cancel your registration? You will not be able to access this page again.
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui button yes">Yes</div>
+    <div class="ui button no">No</div>
+  </div>
+</div>
+
 <div id="skrollr-body" class="trigrid container darkgrey">
     <div class="outer_container">
         <div class="double panes">
@@ -48,30 +67,43 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                          <div class="admit_status {{ status }}">
+                            <div class="admit_status {{ status }}">
                                 {{ status }}
                             </div>
-
+                            <div class="delete field">
+                                <input id="delete-button" type="button" value="Cancel Registration" />
+                            </div>
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
                         <h3 class="secondary">None yet!</h3>
-<!--
-                        <div class="message items">
+
+<!--                         <div class="message items">
                             <div class="message item prompt">
                                 <h3>You haven't uploaded your resume yet!</h3>
                                 <p>We give our sponsors your resume for potential recruitment opportunities.</p>
                                 <div class="upload field">
-                                    <input id="resume" class="resume-upload" type="file" name="resume" />
-                                    <input id="resume-over" class="resume-button" type="button" value="Upload Resume" />
-                                    <span class="file-name"></span>
+                                    <input id="resume-message" class="resume-upload" type="file" name="resume" onchange="uploadResume(this.parentNode)"/>
+                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume-message').click()">
+                                        {% if hacker.resume %}
+                                        <span>Re-upload</span>
+                                        {% else %}
+                                        <span>Upload Resume</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="file-name">
+                                        {% if hacker.resume %}
+                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                        {% else %}
+                                        <span class="view-resume">No file chosen.</span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
--->
-                    </div>
+ -->                    </div>
                 </section>
             </div>
             <div class="double_right pane pane1 white">
@@ -90,7 +122,7 @@
                             <div class="field">
                                 <label for="email">Email</label>
                                 <div class="ui icon input">
-                                    <input type="email" id="email" name="email" placeholder="handle@schooldomain.edu" value="{{ hacker.email }}"/>
+                                    <input type="email" id="email" name="email" placeholder="handle@schooldomain.edu" value="{{ hacker.email }}" disabled/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -209,7 +241,11 @@
                                 <div class="upload-control">
                                     <input id="resume" class="resume-upload" type="file" name="resume"/>
                                     <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
+                                        {% if hacker.resume %}
+                                        <span>Re-upload</span>
+                                        {% else %}
                                         <span>Upload Resume</span>
+                                        {% endif %}
                                     </div>
                                     <div class="file-name">
                                         {% if hacker.resume %}
@@ -268,9 +304,13 @@
 
 <script>
   var secret = "{{ hacker.secret }}";
-  var newResumeURL = "{{ newResumeURL }}";
 
   $(document).ready(function () {
+
+    $('#delete-button').click(function() {
+        console.log('sup');
+        confirmDeleteHacker(secret);
+    });
 
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
@@ -454,7 +494,6 @@
       var input = $(uiInput).find("input");
       domainMatch(icon, $(input).val());
     });
-    requestNewUploadURL();
 
     trackCondor($linkRepeater);
 

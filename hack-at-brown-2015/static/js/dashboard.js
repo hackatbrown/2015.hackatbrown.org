@@ -86,7 +86,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
   $scope.getStats = function () {
 
-    $http({method: 'GET', url: '/__get_dash_stats'}).
+    $http({method: 'GET', url: '/dashboard/__get_dash_stats'}).
         success(function(data, status) {
           $scope.status = status;
           $scope.signupCount = data.signup_count;
@@ -177,7 +177,12 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.lookupHacker = function(){
     $scope.manualEmails = $scope.manualEmails.toLowerCase();
     emails = $scope.manualEmails.trim().replace(/\s+/g, '');
-    $http({method: 'GET', url: '/__lookup_hacker/' + emails}).
+    if (emails) {
+      data = emails
+    } else {
+      data = "feeling_lucky";
+    }
+    $http({method: 'GET', url: '/__lookup_hacker/' + data}).
         success(function(data) {
           $scope.lookupResult = data;
         }).
