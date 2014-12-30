@@ -14,20 +14,20 @@ import random
 #     "Rhode Island School of Design" : "Rhode Island School of Design"
 #     "RISD" : "Rhode Island School of Design"
 # }
-# run('school', json)
+# cleanup('school', json)
 class CleanupHandler(webapp2.RequestHandler):
     def post(self):
         parsed_request = json.loads(self.request.body)
         property = parsed_request.get('property')
         jsonKeys = parsed_request.get('jsonKeys')
-        result =  run(property, jsonKeys)
+        result =  cleanup(property, jsonKeys)
         return self.response.write(json.dumps(result))
 
     def get(self):
         jinjaVars = {"properties" : hacker_keys}
         return self.response.write(template("db_cleanup.html", jinjaVars))
 
-def run(property, jsonKeys):
+def cleanup(property, jsonKeys):
     hackers = Hacker.query().filter(Hacker._properties[property].IN(jsonKeys.keys()))
     changed = []
     for hacker in hackers:
