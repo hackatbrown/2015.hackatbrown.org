@@ -17,6 +17,7 @@ import re
 from google.appengine.api import taskqueue
 from registration import Hacker
 from email_list import EmailListEntry
+import sms
 
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
@@ -42,7 +43,8 @@ class Message(ndb.Model):
 	
 	def send_to_phone(self, phone):
 		# actual work of sms'ing
-		print "SHOULD SEND SMS '{0}' TO {1}, but not yet implemented".format(self.sms_text, phone)
+		print "Sending SMS '{0}' to {1}".format(self.sms_text, phone)
+		sms.send(phone, self.sms_text)
 	
 	def get_query(self):
 		if self.audience == 'registered':
@@ -94,14 +96,14 @@ class Message(ndb.Model):
 				if hacker.email and self.email_subject:
 					self.send_to_email(hacker.email, {"hacker": hacker})
 				if hacker.phone_number and self.sms_text:
-					self.send_to_phone(self.phone_number)
+					self.send_to_phone(hacker.phone_number)
 			elif self.audience == 'mailing-list-unregistered':
 				email = entity.email
 				is_registered = (yield Hacker.query(Hacker.email == email).count_async()) > 0
 				if not is_registered:
 					self.send_to_email(email, {})
 		except Exception as e:
-			print "Failed to send email '{0}' to '{1}'".format(self.email_subject, entity)
+			print "Failed to send email '{0}' to '{1}'; exception: {2}".format(self.email_subject, entity, e)
 
 class MessagesDashboardHandler(webapp2.RequestHandler):
 	def get(self):
