@@ -43,7 +43,7 @@ class DeleteHackerHandler(webapp2.RequestHandler):
             memcachedKey = memcachedBase + secret
             memcache.set(memcachedKey, None, cacheTime)
 
-        self.redirect('/')
+        self.redirect('/goodbye')
 
 
 class HackerUpdateHandler(webapp2.RequestHandler):
