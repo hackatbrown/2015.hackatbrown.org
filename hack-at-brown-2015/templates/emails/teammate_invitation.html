@@ -1,13 +1,15 @@
-{% extends "emails/base_anon.html" %}
+{% extends "emails/base.html" %}
 
 {% block content %}
 <h1>You've been referred by {{ invited_by.name }} to sign up for Hack@Brown!</h1>
 <p>
-    {{ invited_by.name }} indicated that they want you to join their team at Hack@Brown. Registrations close at midnight on December 31st so register now!
+    {{ invited_by.name }} indicated that they want you to join their team at Hack@Brown. Registrations close at midnight on December 31 so register now!
 </p>
+
 <a class="cta-button" href="http://hackatbrown.org">Register Here!</a>
 
 <p>
+    Best,<br/>
     Team Hack@Brown
 </p>
 {% endblock %}
