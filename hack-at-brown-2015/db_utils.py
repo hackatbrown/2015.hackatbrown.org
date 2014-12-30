@@ -8,6 +8,7 @@ from template import template
 from registration import hacker_keys
 from config import isMasterDB
 import random
+from google.appengine.api import taskqueue
 
 #Example:
 # json = {
@@ -51,13 +52,25 @@ class PopulateHandler(webapp2.RequestHandler):
             return self.redirect('/')
 
         number = int(number)
-        count = 0
+        q = taskqueue.Queue('populate')
 
-        for i in range(0, number):
-            hacker = createTestHacker(i)
-            count += 1
+        def enqueue(start, end):
+                params = {"start": start, "end" : end}
+                q.add(taskqueue.Task(url='/dashboard/__db_populate/worker', params=params))
 
-        self.response.write("Created {0} hackers.".format(count))
+        start = 0
+        end = 0
+        batchSize = 40 #just copying nate
+
+        for i in range(batchSize, number, batchSize):
+            end = i
+            enqueue(start, end)
+            start = end
+
+        if end < number:
+            enqueue(end, number)
+
+        self.response.write("Enqueued {0} hackers.".format(number))
 
 class DepopulateHandler(webapp2.RequestHandler):
     def get(self, number):
@@ -70,6 +83,16 @@ class DepopulateHandler(webapp2.RequestHandler):
             Hacker.query().fetch(limit=number, keys_only=True)
         )
         self.response.write("Eliminated {0} hackers.".format(number))
+
+class CreateTestHackerWorker(webapp2.RequestHandler):
+    def post(self):
+        if isMasterDB():
+            return self.redirect('/')
+
+        start = int(self.request.get('start'))
+        end = int(self.request.get('end'))
+        for i in range(start, end):
+            createTestHacker(i)
 
 def createTestHacker(number):
 

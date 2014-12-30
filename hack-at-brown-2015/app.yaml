@@ -11,10 +11,6 @@ handlers:
 - url: /static
   static_dir: static
 
-- url: /__lookup_hacker/(.+)
-  login: admin
-  script: main.app
-
 - url: /admin_checkin
   script: admin_checkin.app
   login: admin

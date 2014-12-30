@@ -125,13 +125,13 @@
   function populateDB() {
     var number = prompt("How many hackers do you want to generate?", "100");
     if (number != null) {
-      window.location.href = "/__db_populate/" + number;
+      window.location.href = "/dashboard/__db_populate/" + number;
     }
   }
   function depopulateDB() {
     var number = prompt("How many hackers to you want to eliminate?", "100");
     if (number != null) {
-      window.location.href = "/__db_depopulate/" + number;
+      window.location.href = "/dashboard/__db_depopulate/" + number;
     }
   }
 </script>
