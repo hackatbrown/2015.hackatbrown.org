@@ -45,11 +45,11 @@
   height: 35px;
   line-height: 1.8em;
 }
-/*    -      */
 
 .delete {
   padding-top: 10px;
 }
+/*    -      */
 
 .modal > .header {
   font-weight: inherit !important;

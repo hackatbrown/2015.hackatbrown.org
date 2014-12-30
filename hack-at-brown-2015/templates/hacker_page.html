@@ -40,7 +40,7 @@
 
 {% block content %}
 
-<div class="ui basic modal">
+<div id="delete-modal" class="ui basic modal">
   <i class="close icon"></i>
   <div class="header">
     Don't Leave Us!
@@ -58,6 +58,26 @@
     <div class="ui button no">No</div>
   </div>
 </div>
+
+<div id="rsvp-modal" class="ui basic modal">
+  <i class="close icon"></i>
+  <div class="header">
+    RSVP
+  </div>
+  <div class="content">
+    <div class="image">
+        <i class="warning circle icon"></i>
+    </div>
+    <div class="description">
+        Are you sure you're coming?
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui button yes">Yes</div>
+    <div class="ui button no">No</div>
+  </div>
+</div>
+
 
 <div id="skrollr-body" class="trigrid container darkgrey">
     <div class="outer_container">
@@ -316,8 +336,11 @@
   $(document).ready(function () {
 
     $('#delete-button').click(function() {
-        console.log('sup');
         confirmDeleteHacker(secret);
+    });
+
+    $('#rsvp-button').click(function() {
+        rsvp(secret);
     });
 
     if (location.hash === '#info') {
