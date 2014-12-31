@@ -77,20 +77,20 @@
 
 }
 
-.resume-upload {
+.upload {
   flex: 0 0 128px;
   margin-right: .75em;
   transition: box-shadow 0s !important;
   width: 128px;
 }
-.resume-upload.fadeBackground {
+.upload.fadeBackground {
   transition: box-shadow 0s, background-color 1s cubic-bezier(.55,0,.1,1) !important;
 }
-.resume-upload.loading,
-.resume-upload.complete {
+.upload.loading,
+.upload.complete {
   transition: box-shadow 1.5s cubic-bezier(.55,0,.1,1) !important;
 }
-.resume-upload.complete {
+.upload.complete {
   color: white !important;
   background-color: #26a59f;
 }

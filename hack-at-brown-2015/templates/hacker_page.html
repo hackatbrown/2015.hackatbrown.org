@@ -119,8 +119,8 @@
                                 <h3>You haven't uploaded your resume yet!</h3>
                                 <p>We give our sponsors your resume for potential recruitment opportunities.</p>
                                 <div class="upload field">
-                                    <input id="resume-message" class="resume-upload" type="file" name="resume" onchange="uploadResume(this.parentNode)"/>
-                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume-message').click()">
+                                    <input id="resume-message" class="resume-upload upload" type="file" name="resume" onchange="uploadResume(this.parentNode)"/>
+                                    <div id="resume-over" class="resume-upload upload ui button" onclick="document.getElementById('resume-message').click()">
                                         {% if hacker.resume %}
                                         <span>Re-upload</span>
                                         {% else %}
@@ -273,8 +273,8 @@
                             <div class="field">
                                 <label for="resume">Resume <span class="optional">(Recommended)</span></label>
                                 <div class="upload-control">
-                                    <input id="resume" class="resume-upload" type="file" name="resume"/>
-                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
+                                    <input id="resume" class="resume-upload upload" type="file" name="resume"/>
+                                    <div id="resume-over" class="resume-upload upload ui button" onclick="document.getElementById('resume').click()">
                                         {% if hacker.resume %}
                                         <span>Re-upload</span>
                                         {% else %}
@@ -326,8 +326,8 @@
                         <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
                             <div class="upload field">
                                 <label for="receipts">Receipts <span class="optional">(Optional)</span></label>
-                                <input id="receipts" class="receipts-upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
-                                <div id="receipts-over" class="receipts-upload ui button" onclick="document.getElementById('receipts').click()">
+                                <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
+                                <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                     {% if hacker.receipts %}
                                     <span>Re-upload</span>
                                     {% else %}
