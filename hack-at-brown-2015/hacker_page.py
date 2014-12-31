@@ -4,7 +4,7 @@ import registration
 import logging
 import json
 from google.appengine.api import memcache
-import resume
+import hackerFiles
 from deletedHacker import createDeletedHacker
 
 
@@ -24,7 +24,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         fileName = ""
 
         if hacker.resume:
-            fileName = resume.getFileName(hacker.resume)
+            fileName = hackerFiles.getFileName(hacker.resume)
 
         name = hacker.name.split(" ")[0] # TODO: make it better
 

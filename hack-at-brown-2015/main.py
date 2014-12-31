@@ -17,7 +17,7 @@
 import webapp2
 from template import template
 import config
-import resume
+import hackerFiles
 import dashboard
 import email_list
 import registration
@@ -44,13 +44,13 @@ app = webapp2.WSGIApplication([
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/__check_registered', registration.CheckRegistrationHandler),
-		('/secret/__change/(.+)', resume.ChangeHandler),
+		('/secret/__change/([^\/]+)/(.+)', hackerFiles.ChangeHandler),
 		('/secret/__rsvp/(.+)', hacker_page.RSVPHandler),
-		('/secret/__newurl/(.+)', resume.NewURLHandler),
+		('/secret/__newurl/([^\/]+)/(.+)', hackerFiles.NewURLHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
 		('/__delete_hacker/(.+)', hacker_page.DeleteHackerHandler),
-		('/__serve/([^/]+)?', resume.ServeHandler),
+		('/__serve/([^/]+)?', hackerFiles.ServeHandler),
 		('/dashboard/__get_dash_stats', dashboard.DashboardBackgroundHandler),
 		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),

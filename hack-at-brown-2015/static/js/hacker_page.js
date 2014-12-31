@@ -79,25 +79,29 @@ function uploadResume(uiinput) {
     //We pass in the update function as a callback.
     //We call the callback function with the new URL as an argument
     //Then we submit a multipart form request to that URL.
-    //There's a handler in resume.py which will receive it.
-    requestNewUploadURL(updateResume, uiinput);
+    //There's a handler in hackerFile.py which will receive it.
+    requestNewUploadURL(updateFile, uiinput, 'resume');
 }
 
-function requestNewUploadURL(callback, uiinput) {
+function uploadReceipt(uiinput) {
+    requestNewUploadURL(updateFile, uiinput, 'receipt');
+}
+
+function requestNewUploadURL(callback, uiinput, key) {
     $.ajax({
         type: 'GET',
-        url: '/secret/__newurl/' + secret,
+        url: '/secret/__newurl/' + secret + '/' + key,
         success: function (response) {
             response = JSON.parse(response);
-            var newResumeURL = response.newURL;
-            callback(newResumeURL, uiinput);
+            var newFileURL = response.newURL;
+            callback(newFileURL, uiinput, key);
         }
     });
 }
 
-function updateResume(newResumeURL, uiinput) {
+function updateFile(newFileURL, uiinput, key) {
     $uiInput = $(uiinput);
-    var $button = $uiInput.find(".resume-upload");
+    var $button = $uiInput.find("." + key + "-upload");
     var $buttonText = $button.children("span");
     var width = $button.outerWidth();
     var complete = false;
@@ -120,7 +124,7 @@ function updateResume(newResumeURL, uiinput) {
     $button.addClass("loading active");
 
     var data = new FormData();
-    data.append("resume", $('.resume-upload')[0].files[0]);
+    data.append(key, $button[0].files[0]);
 
     $.ajax({
         xhr: function () {
@@ -134,7 +138,7 @@ function updateResume(newResumeURL, uiinput) {
             }, 1000), false);
             return xhr;
         },
-        url: newResumeURL,
+        url: newFileURL,
         data: data,
         cache: false,
         contentType: false,
@@ -147,9 +151,9 @@ function updateResume(newResumeURL, uiinput) {
             $button.removeClass("loading active");
             $buttonText.text("Complete!");
             response = JSON.parse(response);
-            $resumeView = $('.view-resume');
+            $resumeView = $('.view-' + key);
 
-            $newLink = $("<a class='view-resume'></a>");
+            $newLink = $("<a class='view-" + key + "'></a>");
             $newLink[0].innerHTML = response.fileName;
             $newLink.attr({
                 'href' : response.downloadLink,
