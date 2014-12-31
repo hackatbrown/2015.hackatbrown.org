@@ -5,7 +5,7 @@
   display: flex;
 }
 
-.actions {
+.registration-actions {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
