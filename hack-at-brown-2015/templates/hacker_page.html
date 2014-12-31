@@ -12,7 +12,6 @@
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
 
-
 {% endblock %}
 
 {% block headjs %}
@@ -35,7 +34,10 @@
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
     <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
+    {% if status == "accepted" or status == "confirmed" %}
     <li class="top-bar_li" id="reimbursements_top"><a href="#reimbursements">Reimbursements</a></li>
+    {% endif %}
+
 </ul>
 {% endblock %}
 
@@ -343,6 +345,7 @@
 
 <script>
   var secret = "{{ hacker.secret }}";
+  var status = "{{ status }}";
 
   $(document).ready(function () {
 
@@ -359,9 +362,18 @@
       switchPanes(1);
     }
 
-    if (location.hash === '#reimbursements') {
-      setTabActive($("#reimbursements_top"));
-      switchPanes(2);
+    if (status == "accepted" || status == "confirmed") {
+        if (location.hash === '#reimbursements') {
+          setTabActive($("#reimbursements_top"));
+          switchPanes(2);
+        }
+
+        $("#reimbursements_top").click(function () {
+          this.preventDefault;
+          setTabActive(this);
+          switchPanes(2);
+        });
+
     }
 
 
@@ -376,14 +388,6 @@
       setTabActive(this);
       switchPanes(1);
     });
-
-    $("#reimbursements_top").click(function () {
-      this.preventDefault;
-      setTabActive(this);
-      switchPanes(2);
-    });
-
-
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
     $("#update_form input:not(.tags-input)").change(function () {
