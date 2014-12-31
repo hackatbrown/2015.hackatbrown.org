@@ -52,7 +52,7 @@ class Message(ndb.Model):
 			html = template("emails/" + self.email_html + ".html", template_args)
 		else:
 			html = template_string(self.email_html, template_args)
-		html = template("emails/generic.html", dict({"content": html}.items() + template_args.items()))
+			html = template("emails/generic.html", dict({"content": html}.items() + template_args.items()))
 		subject = template_string(self.email_subject, template_args)
 		send_email(html, subject, emails)
 
@@ -99,30 +99,28 @@ class Message(ndb.Model):
 
 	@ndb.tasklet
 	def send_to_entity_async(self, entity):
-		try:
-			if self.audience == 'invited-friends':
-				# don't actually send to the hacker -- send to their friends
-				hacker = entity
-				if hacker.teammates:
-					emails = [email.lower() for email in hacker.teammates.split(',')]
-					matching_hackers = yield Hacker.query(Hacker.email.IN(emails)).fetch_async()
-					emails_already_registered = [h.email for h in matching_hackers]
-					for email in emails:
-						if email not in emails_already_registered:
-							self.send_to_email(email, {"invited_by": hacker})
-			elif self.audience == 'registered': # send emails directly to hackers
-				hacker = entity
-				if hacker.email and self.email_subject:
-					self.send_to_email(hacker.email, {"hacker": hacker})
-				if hacker.phone_number and self.sms_text:
-					self.send_to_phone(self.phone_number)
-			elif self.audience == 'mailing-list-unregistered':
-				email = entity.email
-				is_registered = (yield Hacker.query(Hacker.email == email).count_async()) > 0
-				if not is_registered:
-					self.send_to_email(email, {})
-		except Exception as e:
-			print "Failed to send email '{0}' to '{1}'".format(self.email_subject, entity)
+		if self.audience == 'invited-friends':
+			# don't actually send to the hacker -- send to their friends
+			hacker = entity
+			if hacker.teammates:
+				emails = [email.lower() for email in hacker.teammates.split(',')]
+				matching_hackers = yield Hacker.query(Hacker.email.IN(emails)).fetch_async()
+				emails_already_registered = [h.email for h in matching_hackers]
+				for email in emails:
+					if email not in emails_already_registered:
+						self.send_to_email(email, {"invited_by": hacker})
+		elif self.audience == 'registered': # send emails directly to hackers
+			hacker = entity
+			if hacker.email and self.email_subject:
+				self.send_to_email(hacker.email, {"hacker": hacker})
+			if hacker.phone_number and self.sms_text:
+				self.send_to_phone(self.phone_number)
+		elif self.audience == 'mailing-list-unregistered':
+			email = entity.email
+			is_registered = (yield Hacker.query(Hacker.email == email).count_async()) > 0
+			if not is_registered:
+				self.send_to_email(email, {})
+		
 
 class MessagesDashboardHandler(webapp2.RequestHandler):
 	def get(self):
