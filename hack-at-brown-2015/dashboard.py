@@ -55,6 +55,11 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
 
     self.response.write(json.dumps(data))
 
+class RankingDashHandler(webapp2.RequestHandler):
+  def get(self):
+    self.response.write(template("ranking.html"))
+        
+
 class LookupHackerHandler(webapp2.RequestHandler):
     def get(self, emails):
         response = {'found' : [], 'notFound' : []}

@@ -1,0 +1,66 @@
+
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<style type="text/css">
+#centered {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+}
+
+#main-submit {
+    font-size: 1.2em;
+    padding: 4px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+    border: solid black 4px;
+    width: auto;
+    float: left;
+}
+
+#results {
+    border: solid black 4px;
+    padding: 5px;
+    width: 500px;
+    height: 600px;
+}
+</style>
+
+
+<div id='centered'>
+    <h1>Rankings Dashboard</h1>
+    <div type='submit' id='main-submit'/>
+        Rank All Hackers
+    </div>
+    <br>
+    <label></label>
+    <h1>Results</h1>
+    <div id="results">
+        <div id="results-html"></div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+$("#main-submit").click(function(e) {
+    console.log("clicked");
+    if (location.hostname != 'localhost' && prompt("This is live and should only be done once. Type 'rank' if you really want run the ranking algorithm.") != 'rank') {
+        e.preventDefault();
+        return false;
+    }
+    
+    $( "#results-html" ).text( "Working..." )
+    
+    $.get( "/dashboard/__rank", function( data ) {
+        $( "#results-html" ).html( data );
+    });
+
+    return true;
+})
+
+</script>
+
+{% endblock %}

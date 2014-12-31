@@ -62,6 +62,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/messages', messages.MessagesDashboardHandler),
 		('/dashboard/messages/message_task_queue_work', messages.MessagesTaskQueueWork),
 		('/dashboard/normalize_emails', dashboard.NormalizeEmailsHandler),
+		('/dashboard/ranking', dashboard.RankingDashHandler),
 		('/dashboard/__rank', ranking2015.RankingHandler),
 		('/dashboard/__manual', dashboard.ManualRegistrationHandler),
 		('/dashboard/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
