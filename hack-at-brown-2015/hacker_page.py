@@ -93,28 +93,36 @@ def getHacker(secret):
 
     return hacker
 
-def sendFormToBrown():
-    keys = ["first_name", "last_name", "address1", "address2", "city", "state", "zip", "country", "email", "phone"];
-    #"phone"
+def sendFormToBrown(payload):
     url = 'https://secure.brown.edu/purchasing/visitor/'
 
-    payload = {}
-    for key in keys:
-        payload[key] = "disregard"
+    failedHTML = '<div class="submitted"><span>Please make sure that all required fields are filled in.</span></div>'
 
-    # <div class="submitted"><span>Please make sure that all required fields are filled in.</span></div> <- check for this. in result.content
 
     payload["department"] = "Computer Science: Hack At Brown"
     payload["Submit"] = "Submit"
 
     form_data = urllib.urlencode(payload)
     result = urlfetch.fetch(url=url, payload=form_data, method=urlfetch.POST)
-
-    return result
+    return not (failedHTML in result.content)
 
 class SendToBrownHandler(webapp2.RequestHandler):
-    def get(self):
-        return self.response.write(sendFormToBrown())
+    def post(self, secret):
+        keys = ["address1", "address2", "city", "state", "zip", "country"]
+
+        hacker = getHacker(secret)
+        payload = {}
+
+        payload["email"] = hacker.email
+        payload["first_name"] = hacker.name.split(" ")[0]
+        payload["last_name"] = hacker.name.split(" ")[1]
+        payload["phone"] = hacker.phone_number
+
+        for key in keys:
+            payload[key] = self.request.get(key)
+
+        success = sendFormToBrown(payload)
+        return self.response.write(json.dumps({"success": success}))
 
 
 

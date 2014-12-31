@@ -173,13 +173,11 @@ function updateFile(newFileURL, uiinput, key) {
 
 function slideOut($element) {
     $element.stop().hide().slideToggle(200);
-
 }
 
 function slideIn($element) {
     $element.stop().show().slideToggle(200);
 }
-
 
 //  Form processing out
 
