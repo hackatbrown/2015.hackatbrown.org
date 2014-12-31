@@ -35,6 +35,7 @@
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
     <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
+    <li class="top-bar_li" id="mentoring_top"><a href="#mentoring">Mentoring</a></li>
 </ul>
 {% endblock %}
 
@@ -280,12 +281,19 @@
                                 <div class="condor"></div>
                             </div>
                         </div>
-<!--
-                        <div class="ui submit button active">
-                            Button
-                        </div>
--->
                     </form>
+                </section>
+            </div>
+            <div class="double_right pane pane2 white">
+                <section id="mystatus" class="panel hero">
+                    <div class="inner_container">
+                            <h1 class="hi">Hey {{ name }}!</h1>
+                            <p>your admission status is</p>
+                          <div class="admit_status {{ status }}">
+                                Mentoring
+                            </div>
+
+                    </div>
                 </section>
             </div>
         </div>
@@ -314,20 +322,33 @@
 
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
-      switchToMyInfo();
+      switchPanes(1);
     }
+
+    if (location.hash === '#mentoring') {
+      setTabActive($("#mentoring_top"));
+      switchPanes(2);
+    }
+
 
     $("#status_top").click(function () {
       this.preventDefault;
       setTabActive(this);
-      switchFromMyInfo();
+      switchPanes(0);
     });
 
     $("#info_top").click(function () {
       this.preventDefault;
       setTabActive(this);
-      switchToMyInfo();
+      switchPanes(1);
     });
+
+    $("#mentoring_top").click(function () {
+      this.preventDefault;
+      setTabActive(this);
+      switchPanes(2);
+    });
+
 
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing

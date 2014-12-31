@@ -33,6 +33,11 @@ h1, h2{
   margin : 20px;
 }
 
+.panel-section {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .notFound {
   color: red;
 }
@@ -77,6 +82,7 @@ h1, h2{
 }
 .option {
   border-bottom: 2px solid orange;
+  padding: 5px;
 }
 
 #email-display{

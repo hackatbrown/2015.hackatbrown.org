@@ -6,7 +6,7 @@ function setTabActive(tab) {
 
 function switchPanes(paneNumber) {
     var $panes = $(".panes");
-    $panes.removeClass("in-pane0 in-pane1");
+    $panes.removeClass("in-pane0 in-pane1 in-pane2");
     $panes.addClass("in-pane" + paneNumber);
     $(".pane" + paneNumber).addClass("active");
 }

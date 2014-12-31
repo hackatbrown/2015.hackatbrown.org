@@ -76,10 +76,6 @@ p.caption {
 }
 
 .panes .pane {
-  display: none;
-}
-
-.panes .pane.active {
   display: block;
 }
 
@@ -156,22 +152,29 @@ h3.secondary {
 .panes {
   transition: transform .8s cubic-bezier(.55,0,.1,1);
   position: relative;
-  width: 200%;
+  width: 300%;
+  display: flex;
   height: auto;
   height: auto;
   left: 0; /* 0 = Splash, -100% = Registration */
   top: 0;
 }
 
-.panes.in-pane1 {
-  -webkit-transform: translate3d(-50%, 0, 0);
-  transform: translate3d(-50%, 0, 0);
-}
-
 .panes.in-pane0 {
   -webkit-transform: translate3d(0%, 0, 0);
   transform: translate3d(0%, 0, 0);
 }
+
+.panes.in-pane1 {
+  -webkit-transform: translate3d(-33%, 0, 0);
+  transform: translate3d(-33%, 0, 0);
+}
+
+.panes.in-pane2 {
+  -webkit-transform: translate3d(-66%, 0, 0);
+  transform: translate3d(-66%, 0, 0);
+}
+
 /*Page*/
 
 .ui.page.grid {
@@ -248,16 +251,6 @@ h3.secondary {
   background: #EF5D93;
   height: 2px;
 }
-
-/*Legacy*/
-.info {
-  float: left;
-}
-
-.status {
-  float: right;
-}
-
 
 h1,h2,h3,h4,h5{
   font-weight: inherit;
@@ -399,14 +392,12 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
 /* REGISTRATION */
 .double_left {
   width: 50%;
-  float: left;
   height: auto;
   padding-top: 60px;
   padding-bottom: 5%;
 }
 .double_right {
   width: 50%;
-  float: right;
   height: auto;
   padding-top: 4%;
   padding-bottom: 8%;
