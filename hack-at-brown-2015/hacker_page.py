@@ -6,7 +6,8 @@ import json
 from google.appengine.api import memcache
 import hackerFiles
 from deletedHacker import createDeletedHacker
-
+from google.appengine.api import urlfetch
+import urllib
 
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
@@ -91,6 +92,31 @@ def getHacker(secret):
         hacker = registration.Hacker.WithSecret(secret)
 
     return hacker
+
+def sendFormToBrown():
+    keys = ["first_name", "last_name", "address1", "address2", "city", "state", "zip", "country", "email", "phone"];
+    #"phone"
+    url = 'https://secure.brown.edu/purchasing/visitor/'
+
+    payload = {}
+    for key in keys:
+        payload[key] = "disregard"
+
+    # <div class="submitted"><span>Please make sure that all required fields are filled in.</span></div> <- check for this. in result.content
+
+    payload["department"] = "Computer Science: Hack At Brown"
+    payload["Submit"] = "Submit"
+
+    form_data = urllib.urlencode(payload)
+    result = urlfetch.fetch(url=url, payload=form_data, method=urlfetch.POST)
+
+    return result
+
+class SendToBrownHandler(webapp2.RequestHandler):
+    def get(self):
+        return self.response.write(sendFormToBrown())
+
+
 
 def putHacker(hacker):
     memcachedKey = memcachedBase + hacker.secret
