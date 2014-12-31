@@ -41,8 +41,7 @@
   font-weight: 300;
   font-size: .9em;
   transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
-/*  height: 35px;
-*/  line-height: 1.8em;
+  line-height: 1.8em;
 }
 
 /*    -      */
@@ -65,8 +64,7 @@
   font-weight: 300;
   font-size: .9em;
   transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
-/*  height: 35px;
-*/  line-height: 1.8em;
+  line-height: 1.8em;
 }
 /*    -      */
 

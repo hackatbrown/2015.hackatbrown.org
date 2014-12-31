@@ -83,8 +83,8 @@ function uploadResume(uiinput) {
     requestNewUploadURL(updateFile, uiinput, 'resume');
 }
 
-function uploadReceipt(uiinput) {
-    requestNewUploadURL(updateFile, uiinput, 'receipt');
+function uploadReceipts(uiinput) {
+    requestNewUploadURL(updateFile, uiinput, 'receipts');
 }
 
 function requestNewUploadURL(callback, uiinput, key) {

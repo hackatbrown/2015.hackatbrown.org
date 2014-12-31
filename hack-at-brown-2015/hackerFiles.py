@@ -8,8 +8,6 @@ import hacker_page
 
 class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self, secret, key):
-        print(key)
-        key = "resume"
         hacker = hacker_page.getHacker(secret)
 
         if hacker is None:

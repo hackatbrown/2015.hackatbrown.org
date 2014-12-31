@@ -38,6 +38,7 @@ class Hacker(ndb.Model):
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 	dietary_restrictions = ndb.StringProperty(validator=stringValidator)
 	resume = ndb.BlobKeyProperty()
+	receipts = ndb.BlobKeyProperty()
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
 	teammates = ndb.StringProperty(default=None, validator=stringValidator)
@@ -46,7 +47,6 @@ class Hacker(ndb.Model):
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
 
 	phone_number = ndb.StringProperty() # normalized to only digits, plz
-
 
 	secret = ndb.StringProperty()
 

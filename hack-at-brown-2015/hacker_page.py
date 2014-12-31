@@ -21,10 +21,16 @@ class HackerPageHandler(webapp2.RequestHandler):
             return
 
         status = computeStatus(hacker)
-        fileName = ""
+        resumeFileName = ""
+        receiptsFileName = ""
 
         if hacker.resume:
-            fileName = hackerFiles.getFileName(hacker.resume)
+            resumeFileName = hackerFiles.getFileName(hacker.resume)
+
+        if hacker.receipts:
+            receiptsFileName = hackerFiles.getFileName(hacker.receipts)
+
+
 
         name = hacker.name.split(" ")[0] # TODO: make it better
 
@@ -32,7 +38,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
 
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : fileName}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileName" : receiptsFileName}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
