@@ -83,8 +83,23 @@ function uploadResume(uiinput) {
     requestNewUploadURL(updateFile, uiinput, 'resume');
 }
 
+function toggleReimbursementForm(on) {
+    $form = $('#address_form');
+    $inputs = $form.find('div:not(.upload) > input')
+    $select = $form.find('#state');
+    if (on) {
+        $select.removeAttr('disabled');
+        $inputs.removeAttr('disabled');
+    } else {
+        $select.attr('disabled', 'disabled');
+        $inputs.attr('disabled', 'disabled');
+    }
+}
+
 function uploadReceipts(uiinput) {
     requestNewUploadURL(updateFile, uiinput, 'receipts');
+    //TODO: should be a callback on success.
+    toggleReimbursementForm(true);
 }
 
 function requestNewUploadURL(callback, uiinput, key) {
