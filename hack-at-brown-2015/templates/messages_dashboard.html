@@ -87,20 +87,27 @@ form > div {
 				<p>
 					<label>Recipient:</label>
 					<select name="audience">
-						<option value=''>Select Recipients</option>
+						<option value=''>None</option>
 						<option value='registered'>All Registered Hackers</option>
 						<option value='invited-friends'>Unregistered Invited Teammates</option>
 						<option value='mailing-list-unregistered'>Unregistered Mailing List Members</option>
 					</select>
 				</p>
-		
+				
 				<p class='box'>
 					<label><input type='checkbox' name='email'/>Email:</label>
 					<input placeholder='Email Subject' name='email-subject'/>
+					<br>
+					<br>
+					<label>Write Email Body Here</label>
 					<textarea name='email-html'><p>email HTML goes here</p></textarea>
 					<span data-show-for-recipient='registered'>{% raw %} {{ {%endraw %} hacker.name {% raw %}}}{% endraw %} will insert the hackers' name in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>
-					<span data-show-for-recipient='invited-friends'>{% raw %} {{ {%endraw %} invited_by.name {% raw %}}}{% endraw %} will insert the name of the person who's invited this person in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>	
+					<span data-show-for-recipient='invited-friends'>{% raw %} {{ {%endraw %} invited_by.name {% raw %}}}{% endraw %} will insert the name of the person who's invited this person in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>
+					<br>
+					<label> Or, Select an Email from the Filesystem:</label>
+				<input name="email-name">	
 				</p>
+				
 		
 				<p class='box'>
 					<label><input type='checkbox' name='sms'/>SMS:</label>

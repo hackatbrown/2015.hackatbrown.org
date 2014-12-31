@@ -3,9 +3,10 @@ function propertySelected(value) {
   $('#displayProperty').text(value);
 
   $.ajax({
-    url : '/__breakdown/' + value,
+    url : '/dashboard/__breakdown/' + value,
     type : 'GET',
     success : function(response) {
+      console.log(JSON.parse(response))
       populateTable(JSON.parse(response));
     },
     failure : function(response) {
@@ -17,9 +18,9 @@ function propertySelected(value) {
 function populateTable(groups) {
   var $table = $('#table');
   var $input = $('#submit');
+  var keys = Object.keys(groups);
   $table.empty();
   $table.append("<th>Property<td>Number of Hackers</td></th>");
-  console.log(keys);
   for (var i = 0; i < keys.length; i++) {
     var $row = $('<tr class="property-value"><td class="prop">' + keys[i] + '</td><td class="count">' + groups[keys[i]] + '</td></tr>');
     $row.click(function() {
@@ -63,7 +64,7 @@ function cleanup() {
     };
 
     $.ajax({
-      url : '/__cleanup',
+      url : '/dashboard/__cleanup',
       type : 'POST',
       data : JSON.stringify(data),
       success: function(response) {

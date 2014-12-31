@@ -14,7 +14,7 @@
 {% block content %}
 <div id='header' class='vertically-centered vertically-centered-content'>
   <img src='/static/img/logo.png' width="134" height="144"/>
-  <h1>Hack@Brown {% if envIsDev %}Dev-{% endif %}Dashboard</h1>
+  <h1>Hack@Brown {% if envIsDev %}Dev-{% endif %}{% if isQA %}QA-{% endif %}Dashboard</h1>
 </div>
 
 <div ng-app='dashApp' ng-init="getStats()" ng-controller="MainCtrl" >
@@ -105,6 +105,7 @@
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
         <div ng-click='lookupHacker()' class='button'>Lookup</div>
         <a style="text-decoration:none" class='button' href="/admin_checkin">Go To Checkin</a>
+        <a style="text-decoration:none" class='button' href="/dashboard/ranking">Go To Ranking Dashboard</a>
       </div>
       <div class="found" ng-repeat="hacker in lookupResult.found">
         <span><b>Found <a ng-href="secret/%%hacker.secret%%">%%hacker.email%%</a></b></span><br>
@@ -120,16 +121,18 @@
   <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
 </div>
 <a style="text-decoration:none" class='button' href="/db_cleanup">DB Cleanup</a>
-{% if envIsDev %}
+{% if envIsDev or isQA %}
 <script>
   function populateDB() {
-    if (window.confirm("Are you sure you want to generate 100 hackers?")) {
-      window.location.href = "/__db_populate/100";
+    var number = prompt("How many hackers do you want to generate?", "100");
+    if (number != null) {
+      window.location.href = "/dashboard/__db_populate/" + number;
     }
   }
   function depopulateDB() {
-    if (window.confirm("Are you sure you want to eliminate 100 hackers?")) {
-      window.location.href = "/__db_depopulate/100";
+    var number = prompt("How many hackers to you want to eliminate?", "100");
+    if (number != null) {
+      window.location.href = "/dashboard/__db_depopulate/" + number;
     }
   }
 </script>
