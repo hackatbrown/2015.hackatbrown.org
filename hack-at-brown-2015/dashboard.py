@@ -29,7 +29,7 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
             hacker = Hacker.query(Hacker.email == address).fetch()
             if hacker:
                 for h in hacker: # should only be one
-                    if parsed_request.get('change') == "Register":
+                    if parsed_request.get('change') == "Accept":
                         if h.admitted_email_sent_date == None:
                             accept_hacker(h)
 

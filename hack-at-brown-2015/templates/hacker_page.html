@@ -41,7 +41,7 @@
 
 {% block content %}
 
-<div class="ui basic modal">
+<div id="delete-modal" class="ui basic modal">
   <i class="close icon"></i>
   <div class="header">
     Don't Leave Us!
@@ -60,6 +60,26 @@
   </div>
 </div>
 
+<div id="rsvp-modal" class="ui basic modal">
+  <i class="close icon"></i>
+  <div class="header">
+    RSVP
+  </div>
+  <div class="content">
+    <div class="image">
+        <i class="warning circle icon"></i>
+    </div>
+    <div class="description">
+        Are you sure you're coming?
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui button yes">Yes</div>
+    <div class="ui button no">No</div>
+  </div>
+</div>
+
+
 <div id="skrollr-body" class="trigrid container darkgrey">
     <div class="outer_container">
         <div class="double panes">
@@ -68,11 +88,22 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                            <div class="admit_status {{ status }}">
-                                {{ status }}
-                            </div>
-                            <div class="delete field">
-                                <input id="delete-button" type="button" value="Cancel Registration" />
+                            <div class="status-actions">
+                                <div class="admit_status {{ status }}">
+                                    {{ status }}
+                                </div>
+                                <div class="actions">
+                                    {% if status == "accepted" %}
+                                    <div class="rsvp field">
+                                        <input id="rsvp-button" type="button" value="RSVP" />
+                                    </div>
+                                    {% endif %}
+                                    {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
+                                    <div class="delete field">
+                                        <input id="delete-button" type="button" value="Cancel Registration" />
+                                    </div>
+                                    {% endif %}
+                                </div>
                             </div>
                     </div>
                 </section>
@@ -316,8 +347,11 @@
   $(document).ready(function () {
 
     $('#delete-button').click(function() {
-        console.log('sup');
         confirmDeleteHacker(secret);
+    });
+
+    $('#rsvp-button').click(function() {
+        rsvp(secret);
     });
 
     if (location.hash === '#info') {

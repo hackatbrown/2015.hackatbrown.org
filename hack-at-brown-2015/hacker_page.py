@@ -45,6 +45,15 @@ class DeleteHackerHandler(webapp2.RequestHandler):
 
         self.redirect('/')
 
+class RSVPHandler(webapp2.RequestHandler):
+    def post(self, secret):
+        hacker = getHacker(secret)
+        if hacker is None:
+            return self.response.write(json.dumps({"success":False}))
+
+        hacker.rsvpd = True
+        putHacker(hacker)
+        return self.response.write(json.dumps({"success": True}))
 
 class HackerUpdateHandler(webapp2.RequestHandler):
     def post(self, secret):

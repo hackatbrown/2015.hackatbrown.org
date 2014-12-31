@@ -30,7 +30,7 @@ function initalizeHamburger() {
 }
 
 function confirmDeleteHacker(secret) {
-    $('.basic.ui.modal')
+    $('#delete-modal')
       .modal({
         selector : {
             approve  : '.yes',
@@ -38,6 +38,36 @@ function confirmDeleteHacker(secret) {
         },
         onApprove : function() {
             window.location.href = "/__delete_hacker/" + secret;
+        }
+      })
+      .modal('show');
+}
+
+function rsvp(secret) {
+    $('#rsvp-modal')
+      .modal({
+        selector : {
+            approve  : '.yes',
+            deny     : '.no',
+        },
+        onApprove : function() {
+            $.ajax({
+                type: 'POST',
+                url: '/secret/__rsvp/' + secret,
+                success: function (response) {
+                    response = JSON.parse(response);
+                    if (response.success) {
+                        $status = $('.admit_status');
+                        $status.removeClass('accepted');
+                        $status.addClass('confirmed');
+                        $status.text('confirmed');
+
+                        $('.rsvp').remove();
+                        $('.delete').remove();
+
+                    }
+                }
+            });
         }
       })
       .modal('show');
