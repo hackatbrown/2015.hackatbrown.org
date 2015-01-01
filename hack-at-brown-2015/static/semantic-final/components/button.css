@@ -2402,3 +2402,6 @@
   background-color: #d9499a;
   color: #ffffff;
 }
+.ui.button:focus {
+  box-shadow: inset 1px 0 0 -1px #1b8eb9;
+}
