@@ -39,5 +39,5 @@
 }
 
 .ui.button:focus {
-        box-shadow: inset 1px -50px 0 -1px lighten(@blue, 20%);
+        box-shadow: inset 1px 0 0 -1px @blue;
 }
