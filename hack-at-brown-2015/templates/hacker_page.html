@@ -293,6 +293,7 @@
     </div>
 </div>
 
+<script type="text/javascript" src='/static/js/gutabslider.js'></script>
 
 <script type="text/javascript" src="/static/js/condor.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
@@ -305,6 +306,7 @@
 
 <script>
   var secret = "{{ hacker.secret }}";
+    
 
   $(document).ready(function () {
 
@@ -328,6 +330,8 @@
       setTabActive(this);
       switchToMyInfo();
     });
+      
+      initalizeNavMenu('.top-bar_ul');
 
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
