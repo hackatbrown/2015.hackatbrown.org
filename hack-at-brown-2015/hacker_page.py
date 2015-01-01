@@ -19,6 +19,7 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         if hacker is None:
             self.redirect('/')
+#            this shouldn't silently fail.  we should make a 404
             return
 
         status = computeStatus(hacker)
@@ -50,7 +51,7 @@ class DeleteHackerHandler(webapp2.RequestHandler):
             memcachedKey = memcachedBase + secret
             memcache.set(memcachedKey, None, cacheTime)
 
-        self.redirect('/')
+        self.redirect('/goodbye')
 
 class RSVPHandler(webapp2.RequestHandler):
     def post(self, secret):

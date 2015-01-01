@@ -34,5 +34,12 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: rsvpd
+  - name: checked_in
+  - name: email
+  - name: name
+
+- kind: Hacker
+  properties:
   - name: shirt_gen
   - name: shirt_size

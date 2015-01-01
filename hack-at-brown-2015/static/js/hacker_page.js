@@ -1,7 +1,14 @@
 //    Navigation
+function initalizeNavMenu(selector) {
+    setTimeout(function () {
+        $(selector).gutabslider();
+    }, 800);
+}
+
 function setTabActive(tab) {
     $(".top-bar_li").removeClass("active");
     $(tab).addClass("active");
+    setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
 }
 
 function switchPanes(paneNumber) {
