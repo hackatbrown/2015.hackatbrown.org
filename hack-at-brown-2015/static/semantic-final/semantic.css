@@ -3127,6 +3127,10 @@
   color: #ffffff;
 }
 
+.ui.button:focus {
+  box-shadow: inset 1px -50px 0 -1px #54bee6;
+}
+
 /*
  * # Semantic UI
  * https://github.com/Semantic-Org/Semantic-UI

@@ -37,3 +37,7 @@
         background-color: @magenta;
         color: @white;
 }
+
+.ui.button:focus {
+        box-shadow: inset 1px -50px 0 -1px lighten(@blue, 20%);
+}
