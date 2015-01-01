@@ -104,8 +104,9 @@ def sendFormToBrown(payload):
     payload["Submit"] = "Submit"
 
     form_data = urllib.urlencode(payload)
-    result = urlfetch.fetch(url=url, payload=form_data, method=urlfetch.POST)
-    return not (failedHTML in result.content)
+#    result = urlfetch.fetch(url=url, payload=form_data, method=urlfetch.POST)
+#    return not (failedHTML in result.content)
+    return True #changethisbacklater
 
 class SendToBrownHandler(webapp2.RequestHandler):
     def post(self, secret):
