@@ -55,7 +55,7 @@
 @actionBorder: 1px solid @borderColor;
 @actionBackground: #EFEFEF;
 @actionPadding: 1rem 2rem;
-@actionAlign: right;
+@actionAlign: left;
 
 @buttonDistance: 0.75em;
 

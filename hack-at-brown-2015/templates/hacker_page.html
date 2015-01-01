@@ -40,22 +40,16 @@
 
 {% block content %}
 
-<div class="ui basic modal">
-  <i class="close icon"></i>
-  <div class="header">
-    Don't Leave Us!
-  </div>
+<div class="ui basic modal small">
   <div class="content">
-    <div class="image">
-        <i class="warning circle icon"></i>
-    </div>
     <div class="description">
-        Are you sure you want to cancel your registration? You will not be able to access this page again.
+        <p>Sure you want to cancel your registration?</p>
+        <p>You won't be able to access this page again.</p>
     </div>
   </div>
   <div class="actions">
-    <div class="ui button yes">Yes</div>
-    <div class="ui button no">No</div>
+    <div class="ui button no">Don't Cancel</div>
+    <div class="ui button pink yes">Cancel Registration</div>
   </div>
 </div>
 
@@ -102,8 +96,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
- -->                    </div>
+</div>--> 
+                   </div>
                 </section>
             </div>
             <div class="double_right pane pane1 white">
@@ -315,7 +309,6 @@
   $(document).ready(function () {
 
     $('#delete-button').click(function() {
-        console.log('sup');
         confirmDeleteHacker(secret);
     });
 

@@ -9,15 +9,6 @@
   padding-top: 30px;
 }
 
-.modal > .header {
-  font-weight: inherit !important;
-}
-
-.modal > .content > .description {
-  font-weight: inherit !important;
-
-}
-
 .resume-upload {
   flex: 0 0 128px;
   margin-right: .75em;
