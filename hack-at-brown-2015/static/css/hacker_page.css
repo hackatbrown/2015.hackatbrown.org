@@ -35,7 +35,8 @@
 }
 
 .top-bar_ul.constrained {
-  max-width: 964px;
+  max-width: 856.8px;
+  width: calc(964px*.8);
 }
 
 h1.hi {
@@ -341,6 +342,9 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
   width: 100%;
   top: 0;
   overflow: hidden;
+}
+.lightgrey {
+  background-color: #F0F0F0;
 }
 
 /* COMMON */
