@@ -211,6 +211,10 @@ h3.secondary {
   margin-bottom: 0;
   left: 0;
 }
+.top-bar_ul.constrained .left {
+  margin-left: 0;
+  margin-right: 0;
+}
 .top-bar_ul a.secondary {
   color: #918f8c;
   font-weight: 300;

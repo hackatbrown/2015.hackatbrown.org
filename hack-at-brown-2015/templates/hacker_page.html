@@ -44,11 +44,11 @@
   <div class="content">
     <div class="description">
         <p>Sure you want to cancel your registration?</p>
-        <p>You won't be able to access this page again.</p>
+        <p>There's no going back!</p>
     </div>
   </div>
   <div class="actions">
-    <div class="ui button no">Don't Cancel</div>
+    <div class="ui button no">Nevermind</div>
     <div class="ui button pink yes">Cancel Registration</div>
   </div>
 </div>
@@ -198,7 +198,7 @@
                         </div>
                         <div class="two fields row">
                             <div class="field">
-								<label for="phone_number">Phone Number</label>
+                                <label for="phone_number">Cell Number <span class="optional">(Optional)</span></label>
 								<div class="ui icon input">
                                     <input id="phone_number" type="text" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
                                     <i class="icon"></i>
