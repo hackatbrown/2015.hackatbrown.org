@@ -40,22 +40,27 @@
 
 {% block content %}
 
-<div class="ui basic modal">
-  <i class="close icon"></i>
+<div class="ui basic modal small">
+<!--  <i class="close icon"></i>-->
+<!--
   <div class="header">
     Don't Leave Us!
   </div>
+-->
   <div class="content">
+<!--
     <div class="image">
         <i class="warning circle icon"></i>
     </div>
+-->
     <div class="description">
-        Are you sure you want to cancel your registration? You will not be able to access this page again.
+        <p>Sure you want to cancel your registration?</p>
+        <p>You won't be able to access this page again.</p>
     </div>
   </div>
   <div class="actions">
-    <div class="ui button yes">Yes</div>
-    <div class="ui button no">No</div>
+    <div class="ui button no">Don't Cancel</div>
+    <div class="ui button pink yes">Cancel Registration</div>
   </div>
 </div>
 
@@ -202,7 +207,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="two fields row">
+                            <div class="field">
+								<label for="phone_number">Phone Number</label>
+								<div class="ui icon input">
+                                    <input id="phone_number" type="text" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
+                                    <i class="icon"></i>
+								</div>
+                            </div>
                             <div class="field">
                                 <label for="dietary_restrictions">Dietary Restrictions?</label>
                                 <div class="ui icon input">
@@ -308,7 +320,6 @@
   $(document).ready(function () {
 
     $('#delete-button').click(function() {
-        console.log('sup');
         confirmDeleteHacker(secret);
     });
 
