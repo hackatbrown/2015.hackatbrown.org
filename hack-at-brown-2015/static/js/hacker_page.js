@@ -18,14 +18,6 @@ function switchPanes(paneNumber) {
     $(".pane" + paneNumber).addClass("active");
 }
 
-function switchToMyInfo() {
-    switchPanes(1);
-}
-
-function switchFromMyInfo() {
-    switchPanes(0);
-}
-
 function initalizeHamburger() {
     // Hamburger menu for mobile
     $("nav ul > li a").click(function () {
@@ -212,6 +204,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
     } else if (key == 'email') {
         return;
     }
+    console.log(key, value);
 
     var data = {},
         $icon = $(uiinput).children(".icon"),
