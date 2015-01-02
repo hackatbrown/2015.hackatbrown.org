@@ -83,9 +83,9 @@
     <div id="downloads" class='panel' >
       <h2 class='option' >Downloads</h2>
       <div class='panel-content'>
-        <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes</div>
-        <div ng-click='downloadAcceptedCSV()'id='csv_accepted_download_button' class='button' > Download Accepted CSV</div>
-        <div ng-click='downloadAllCSV()'id='csv_all_download_button' class='button' > Download All CSV</div>
+        <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes (TODO)</div>
+        <a href='/dashboard/csv'><div class='button' >Download All CSV</div></a>
+        <a href='/dashboard/csv?include_personally_identifiable_info=1'><div class='button' >Download All CSV <div class='button-subtitle'>Including personal information</div></div></a>
       </div>
     </div>
     <div id="email-panel" class='panel' >
