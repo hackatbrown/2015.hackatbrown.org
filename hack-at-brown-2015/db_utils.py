@@ -6,28 +6,29 @@ from registration import generate_secret_for_hacker_with_email
 import json
 from template import template
 from registration import registration_keys
-from config import envIsDev
+from config import isMasterDB
 import random
+from google.appengine.api import taskqueue
 
 #Example:
 # json = {
 #     "Rhode Island School of Design" : "Rhode Island School of Design"
 #     "RISD" : "Rhode Island School of Design"
 # }
-# run('school', json)
+# cleanup('school', json)
 class CleanupHandler(webapp2.RequestHandler):
     def post(self):
         parsed_request = json.loads(self.request.body)
         property = parsed_request.get('property')
         jsonKeys = parsed_request.get('jsonKeys')
-        result =  run(property, jsonKeys)
+        result =  cleanup(property, jsonKeys)
         return self.response.write(json.dumps(result))
 
     def get(self):
         jinjaVars = {"properties" : registration_keys}
         return self.response.write(template("db_cleanup.html", jinjaVars))
 
-def run(property, jsonKeys):
+def cleanup(property, jsonKeys):
     hackers = Hacker.query().filter(Hacker._properties[property].IN(jsonKeys.keys()))
     changed = []
     for hacker in hackers:
@@ -47,19 +48,33 @@ def run(property, jsonKeys):
 
 class PopulateHandler(webapp2.RequestHandler):
     def get(self, number):
-        if not envIsDev() or self.request.host.split(":")[0] != "localhost":
+        if isMasterDB():
             return self.redirect('/')
 
         number = int(number)
+        q = taskqueue.Queue('populate')
 
-        for i in range(0, number):
-            hacker = createTestHacker(i)
+        def enqueue(start, end):
+                params = {"start": start, "end" : end}
+                q.add(taskqueue.Task(url='/dashboard/__db_populate/worker', params=params))
 
-        self.response.write("Created {0} hackers.".format(number))
+        start = 0
+        end = 0
+        batchSize = 40 #just copying nate
+
+        for i in range(batchSize, number, batchSize):
+            end = i
+            enqueue(start, end)
+            start = end
+
+        if end < number:
+            enqueue(end, number)
+
+        self.response.write("Enqueued {0} hackers.".format(number))
 
 class DepopulateHandler(webapp2.RequestHandler):
     def get(self, number):
-        if not envIsDev() or self.request.host.split(":")[0] != "localhost":
+        if isMasterDB():
             return self.redirect('/')
 
         number = int(number)
@@ -68,6 +83,19 @@ class DepopulateHandler(webapp2.RequestHandler):
             Hacker.query().fetch(limit=number, keys_only=True)
         )
         self.response.write("Eliminated {0} hackers.".format(number))
+
+class CreateTestHackerWorker(webapp2.RequestHandler):
+    def post(self):
+        if isMasterDB():
+            return self.redirect('/')
+
+        start = int(self.request.get('start'))
+        end = int(self.request.get('end'))
+        hackers = []
+        for i in range(start, end):
+            hackers.append(createTestHacker(i))
+
+        ndb.put_multi(hackers)
 
 def createTestHacker(number):
 
@@ -109,7 +137,5 @@ def createTestHacker(number):
 
     hacker.hardware_hack = "yes" if prob() > 8 else "no"
     hacker.first_hackathon = "yes" if prob() > 7 else "no"
-
-    hacker.put()
 
     return hacker

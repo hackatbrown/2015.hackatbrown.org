@@ -48,34 +48,11 @@
 
 
 /* Hacky Delete Button*/
-#delete-button:focus {
-  outline: none;
+/*
+.delete {
+  padding-top: 30px;
 }
-
-#delete-button {
-  box-shadow: inset 1px 0px 0px -1px #1B8EB9;
-  background-color: #EBEBEB;
-  border: none;
-  padding-top: 1em;
-  padding-right: 1em;
-  padding-left: 1em;
-  padding-bottom: 1em;
-  color: #404040;
-  font-weight: 300;
-  font-size: .9em;
-  transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
-  line-height: 1.8em;
-}
-/*    -      */
-
-.modal > .header {
-  font-weight: inherit !important;
-}
-
-.modal > .content > .description {
-  font-weight: inherit !important;
-
-}
+*/
 
 .upload {
   flex: 0 0 128px;
@@ -103,7 +80,8 @@
 }
 
 .top-bar_ul.constrained {
-  max-width: 964px;
+  max-width: 856.8px;
+  width: calc(964px*.8);
 }
 
 h1.hi {
@@ -143,7 +121,7 @@ p.caption {
 
 
 .outer_container {
-  width: 80%;
+  width: 100%;
   max-width: 964px;
   margin-left: auto;
   margin-right: auto;
@@ -281,6 +259,10 @@ h3.secondary {
   margin-bottom: 0;
   left: 0;
 }
+.top-bar_ul.constrained .left {
+  margin-left: 0;
+  margin-right: 0;
+}
 .top-bar_ul a.secondary {
   color: #918f8c;
   font-weight: 300;
@@ -402,6 +384,9 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
   width: 100%;
   top: 0;
   overflow: hidden;
+}
+.lightgrey {
+  background-color: #F0F0F0;
 }
 
 /* COMMON */

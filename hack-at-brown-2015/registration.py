@@ -16,19 +16,31 @@ from google.appengine.api import datastore_errors
 from template import utils
 
 
+
 memcache_expiry = 10 * 60
 registration_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
 def stringValidator(prop, value):
-    cleanValue = value.strip()
+		cleanValue = value.strip()
 
-    if prop._name == 'email':
-        cleanValue = cleanValue.lower()
+		if prop._name == 'email':
+				cleanValue = cleanValue.lower()
 
-    return cleanValue
+		return cleanValue
+
+def phoneValidator(prop, value):
+	numbers = ''.join([c for c in value if c in '0123456789'])
+	if len(numbers) == 0:
+		return None
+	elif len(numbers) == 10:
+		return numbers
+	elif len(numbers) == 11 and numbers[0] == '1':
+		return numbers[1:] # remove +1 US country code
+	else:
+		raise datastore_errors.BadValueError(prop._name)
 
 class Hacker(ndb.Model):
-    #TODO: If you add a new prooerty, please remember to add that property to deletedHacker.py.
+	#TODO: If you add a new prooerty, please remember to add that property to deletedHacker.py.
 
 	name = ndb.StringProperty(validator=stringValidator)
 	school = ndb.StringProperty(validator=stringValidator)
@@ -46,7 +58,13 @@ class Hacker(ndb.Model):
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
 
-	phone_number = ndb.StringProperty() # normalized to only digits, plz
+
+	phone_number = ndb.StringProperty(validator=phoneValidator) # normalized to only digits, no country code
+	def pretty_phone(self):
+		if self.phone_number:
+			return "({0}) {1}-{2}".format(self.phone_number[:3], self.phone_number[3:6], self.phone_number[6:])
+		else:
+			return None
 
 	secret = ndb.StringProperty()
 
@@ -78,8 +96,8 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	logging.debug("admitting a hacker\n")
-	email = template("emails/admitted.html", {"hacker": hacker})
+	deadline = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%m/%d/%y")
+	email = template("emails/admitted.html", {"hacker": hacker, "deadline": deadline})
 	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown")
 
 	hacker.admitted_email_sent_date = datetime.datetime.now()
@@ -87,44 +105,43 @@ def accept_hacker(hacker):
 	memcache.add("admitted:{0}".format(hacker.secret), "1", memcache_expiry)
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
-    def post(self):
-        hacker = Hacker()
-        hacker.ip = self.request.remote_addr
-        for key in registration_keys:
-            vals = self.request.get_all(key)
-            val =','.join(vals)
-            try:
-                setattr(hacker, key, val)
-            except datastore_errors.BadValueError as err:
-                self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0]), "newURL" : blobstore.create_upload_url('/register')}))
-                return
+		def post(self):
+			hacker = Hacker()
+			hacker.ip = self.request.remote_addr
+			for key in registration_keys:
+				vals = self.request.get_all(key)
+				val =','.join(vals)
+				try:
+					setattr(hacker, key, val)
+				except datastore_errors.BadValueError as err:
+					return self.response.write(json.dumps({"success":False, "msg" : "Register", "field" : str(err.args[0]), "newURL" : blobstore.create_upload_url('/register')}))
 
-        if Hacker.query(Hacker.email == hacker.email).count() > 0:
-            self.response.write(json.dumps({"success":False, "msg": "Email Already Registered!"}))
-            return
+			if Hacker.query(Hacker.email == hacker.email).count() > 0:
+				return self.response.write(json.dumps({"success":False, "msg": "Email Already Registered!"}))
 
-        resume_files = self.get_uploads('resume')
-        if len(resume_files) > 0:
-            hacker.resume = resume_files[0].key()
-        hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
-        try:
-        	email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
-        	send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
-        	hacker.post_registration_email_sent_date = datetime.datetime.now()
-        except Exception, e:
-        	pass
-        hacker.put()
-        name = hacker.name.title().split(" ")[0] # TODO: make it better
-        confirmation_html = template("post_registration_splash.html", {"name": name, "secret": hacker.secret})
-        self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
+			resume_files = self.get_uploads('resume')
+			if len(resume_files) > 0:
+					hacker.resume = resume_files[0].key()
+			hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
+			try:
+				email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
+				send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
+				hacker.post_registration_email_sent_date = datetime.datetime.now()
+			except Exception, e:
+				pass
+			hacker.put()
+			name = hacker.name.title().split(" ")[0] # TODO: make it better
+			confirmation_html = template("post_registration_splash.html", {"name": name, "secret": hacker.secret})
+			self.response.write(json.dumps({"success": True, "replace_splash_with_html": confirmation_html}))
 
 class CheckRegistrationHandler(webapp2.RequestHandler):
 	def get(self):
 		email = self.request.get('email')
 		if Hacker.query(Hacker.email == email).count() > 0:
-				self.response.write(json.dumps({"registered":True}))
+			self.response.write(json.dumps({"registered":True}))
 		else:
-            #            TODO: move this into a more semantic place
+			#TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
+
 

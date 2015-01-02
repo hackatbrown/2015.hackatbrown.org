@@ -1,3 +1,6 @@
 queue:
 - name: messages
   rate: 5/s
+
+- name: populate
+  rate: 5/s

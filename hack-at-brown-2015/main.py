@@ -28,6 +28,7 @@ import db_utils
 import short_urls
 import m
 import messages
+import ranking2015
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -38,6 +39,11 @@ class IndexHandler(webapp2.RequestHandler):
 				variables['registration_post_url'] = blobstore.create_upload_url('/register')
 			self.response.write(template("index.html", variables))
 
+def static_page_handler(html_file):
+  class Handler(webapp2.RequestHandler):
+    def get(self):
+      self.response.write(template(html_file))
+  return Handler
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
@@ -52,20 +58,23 @@ app = webapp2.WSGIApplication([
 		('/__delete_hacker/(.+)', hacker_page.DeleteHackerHandler),
 		('/__serve/([^/]+)?', hackerFiles.ServeHandler),
 		('/dashboard/__get_dash_stats', dashboard.DashboardBackgroundHandler),
-		('/__breakdown/(\w+)', dashboard.BreakdownHandler),
+		('/dashboard/__breakdown/(\w+)', dashboard.BreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
 		('/dashboard/messages', messages.MessagesDashboardHandler),
 		('/dashboard/messages/message_task_queue_work', messages.MessagesTaskQueueWork),
 		('/dashboard/normalize_emails', dashboard.NormalizeEmailsHandler),
-		('/__manual', dashboard.ManualRegistrationHandler),
-		('/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
-		('/__lookup_hacker/', dashboard.LookupHackerHandler),
-		('/db_cleanup', db_utils.CleanupHandler),
-		('/__db_populate/(\d+)', db_utils.PopulateHandler),
-		('/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
-		('/__cleanup', db_utils.CleanupHandler),
+		('/dashboard/ranking', dashboard.RankingDashHandler),
+		('/dashboard/__rank', ranking2015.RankingHandler),
+		('/dashboard/__manual', dashboard.ManualRegistrationHandler),
+		('/dashboard/__lookup_hacker/(.+)', dashboard.LookupHackerHandler),
+		('/dashboard/db_cleanup', db_utils.CleanupHandler),
+		('/dashboard/__db_populate/(\d+)', db_utils.PopulateHandler),
+		('/dashboard/__db_populate/worker', db_utils.CreateTestHackerWorker),
+		('/dashboard/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
+		('/dashboard/__cleanup', db_utils.CleanupHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
+    ('/goodbye', static_page_handler("goodbye.html")),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)

@@ -98,7 +98,7 @@
   display: table;
   table-layout: fixed;
   width: 100%;
-  font-size: 1em;
+  font-size: 1.3em;
   line-height: 1.4;
   padding: 2rem;
   background: #ffffff;
@@ -144,7 +144,7 @@
   background: #efefef;
   padding: 1rem 2rem;
   border-top: 1px solid rgba(39, 41, 43, 0.15);
-  text-align: right;
+  text-align: left;
 }
 .ui.modal .actions > .button {
   margin-left: 0.75em;
@@ -434,3 +434,9 @@
          Site Overrides
 *******************************/
 
+.ui.modal > .content > .description {
+  font-weight: 300;
+}
+.ui.modal .actions > .button {
+  margin-left: inherit;
+}
