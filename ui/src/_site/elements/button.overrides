@@ -45,7 +45,8 @@
 .ui.basic.button, .ui.basic.buttons .button {
         box-shadow: 0 0 0 1px @lightgrey inset,0 0 0 0 @lightgrey inset;
         color: @grey !important;
-        transition: box-shadow .15s @defaultEasing, background .15s @defaultEasing;
+        font-weight: 300;
+//        transition: box-shadow .15s @defaultEasing, background .15s @defaultEasing;
 }
 
 .ui.basic.button:hover, .ui.basic.buttons .button:hover,

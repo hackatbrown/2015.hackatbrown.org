@@ -144,7 +144,7 @@
   background: #ffffff;
   padding: 1rem 2rem;
   border-top: none;
-  text-align: right;
+  text-align: left;
 }
 .ui.modal .actions > .button {
   margin-left: 0.75em;

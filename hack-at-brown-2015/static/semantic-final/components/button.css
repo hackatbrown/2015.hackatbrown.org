@@ -2411,8 +2411,7 @@
 .ui.basic.buttons .button {
   box-shadow: 0 0 0 1px #e2e1df inset, 0 0 0 0 #e2e1df inset;
   color: #918f8c !important;
-  -webkit-transition: box-shadow 0.15s cubic-bezier(0.55, 0, 0.1, 1), background 0.15s cubic-bezier(0.55, 0, 0.1, 1);
-          transition: box-shadow 0.15s cubic-bezier(0.55, 0, 0.1, 1), background 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+  font-weight: 300;
 }
 .ui.basic.button:hover,
 .ui.basic.buttons .button:hover,

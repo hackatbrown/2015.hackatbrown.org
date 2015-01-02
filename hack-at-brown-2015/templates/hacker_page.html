@@ -81,18 +81,18 @@
                                 <div class="admit_status {{ status }}">
                                     {{ status }}
                                 </div>
-                                <div class="registration-actions">
+<!--                                <div class="registration-actions">-->
                                     {% if status == "accepted" %}
                                     <div class="rsvp field">
-                                        <input id="rsvp-button" class="ui primary button"  type="button" value="Confirm Attendance" />
+                                        <input id="rsvp-button" class="ui primary rsvp button"  type="button" value="Confirm" />
                                     </div>
                                     {% endif %}
                                     {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
                                     <div class="delete field">
-                                        <input id="delete-button" class="ui basic button" type="button" value="Cancel Registration" />
+                                        <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
                                     </div>
                                     {% endif %}
-                                </div>
+<!--                                </div>-->
                             </div>
                     </div>
                 </section>

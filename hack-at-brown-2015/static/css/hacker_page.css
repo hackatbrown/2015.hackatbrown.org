@@ -10,6 +10,7 @@
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row;
+  flex-wrap: wrap;
  }
 
 .status-actions {
@@ -20,9 +21,9 @@
   flex-wrap: wrap;
  }
 
- .admit_status {
-    margin-right: auto;
- }
+.delete.field {
+  margin-left: auto
+}
 
 /* Hacky Delete Button*/
 /*

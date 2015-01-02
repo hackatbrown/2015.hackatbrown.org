@@ -105,11 +105,13 @@ footer .social-links {
   padding: 0 .5em;
 //  padding-top: .1em;
 //  padding-bottom: .15em;
-  line-height: 1.6em;
+  line-height: 48px;
   display: inline-block;
   color: white;
   font-size: 2rem;
   text-transform: uppercase;
+  margin-right: .25em;
+  margin-bottom: 30px;
 }
 
 .admit_status.pending {
@@ -131,4 +133,12 @@ footer .social-links {
 
 .admit_status.not-accepted {
   background-color: @black;
+}
+
+.ui.rsvp.button {
+  line-height: 48px !important;
+  height: 48px !important;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  margin-right: 0;
 }

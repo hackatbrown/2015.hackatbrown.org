@@ -3147,8 +3147,7 @@
 .ui.basic.buttons .button {
   box-shadow: 0 0 0 1px #e2e1df inset, 0 0 0 0 #e2e1df inset;
   color: #918f8c !important;
-  -webkit-transition: box-shadow 0.15s cubic-bezier(0.55, 0, 0.1, 1), background 0.15s cubic-bezier(0.55, 0, 0.1, 1);
-  transition: box-shadow 0.15s cubic-bezier(0.55, 0, 0.1, 1), background 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+  font-weight: 300;
 }
 
 .ui.basic.button:hover,
@@ -20344,7 +20343,7 @@ ol.ui.horizontal.list li:before,
   background: #ffffff;
   padding: 1rem 2rem;
   border-top: none;
-  text-align: right;
+  text-align: left;
 }
 
 .ui.modal .actions > .button {
@@ -24783,11 +24782,13 @@ footer .social-links {
 .admit_status {
   background-color: #404040;
   padding: 0 .5em;
-  line-height: 1.6em;
+  line-height: 48px;
   display: inline-block;
   color: white;
   font-size: 2rem;
   text-transform: uppercase;
+  margin-right: .25em;
+  margin-bottom: 30px;
 }
 
 .admit_status.pending {
@@ -24809,6 +24810,14 @@ footer .social-links {
 
 .admit_status.not-accepted {
   background-color: #404040;
+}
+
+.ui.rsvp.button {
+  line-height: 48px !important;
+  height: 48px !important;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  margin-right: 0;
 }
 
 /*
