@@ -78,21 +78,21 @@
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
                             <div class="status-actions">
-                                <div class="admit_status {{ status }}">
-                                    {{ status }}
-                                </div>
-<!--                                <div class="registration-actions">-->
+                                <div class="left_group">
+                                    <div class="admit_status {{ status }}">
+                                        {{ status }}
+                                    </div>
                                     {% if status == "accepted" %}
                                     <div class="rsvp field">
                                         <input id="rsvp-button" class="ui primary rsvp button"  type="button" value="Confirm" />
                                     </div>
                                     {% endif %}
-                                    {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
-                                    <div class="delete field">
-                                        <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
-                                    </div>
-                                    {% endif %}
-<!--                                </div>-->
+                                </div>
+                                {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
+                                <div class="delete field">
+                                    <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
+                                </div>
+                                {% endif %}
                             </div>
                     </div>
                 </section>
