@@ -4,7 +4,7 @@
     "source": {
       "config": "src/theme.config",
       "definitions": "src/definitions/",
-      "site": "src/site/",
+      "site": "src/_site/",
       "themes": "src/themes/"
     },
     "output": {
