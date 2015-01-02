@@ -24,28 +24,6 @@
     margin-right: auto;
  }
 
-/* Hacky RSVP Button*/
-#rsvp-button:focus {
-  outline: none;
-}
-
-#rsvp-button {
-  box-shadow: inset 1px 0px 0px -1px #1B8EB9;
-  background-color: blanchedalmond;
-  border: none;
-  padding-top: 1em;
-  padding-right: 1.5em;
-  padding-left: 1.5em;
-  padding-bottom: 1em;
-  color: #404040;
-  font-weight: 300;
-  font-size: .9em;
-  transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
-  line-height: 1.8em;
-}
-
-/*    -      */
-
 
 /* Hacky Delete Button*/
 /*
