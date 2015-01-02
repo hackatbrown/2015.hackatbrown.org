@@ -322,26 +322,28 @@
                         <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email.</strong> Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
                         {% if status == "confirmed" %}
                         <p>Please provide your mailing address and upload your receipts below. If you have multiple receipts, please put them in a zip file.</p>
-                        <form id='update_form' class='ui form inner_container' method='POST' action="/secret/__send_to_brown/{{ hacker.secret}}" enctype="multipart/form-data" autocomplete="on" novalidate>
-<!--                         TODO: VALIDATION & PHONE NUMBERS
- -->                            <div class="upload field">
-                                <label for="receipts">Receipts</label>
-                                <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
-                                <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
-                                    {% if hacker.receipts %}
-                                    <span>Re-upload</span>
-                                    {% else %}
-                                    <span>Upload Receipts</span>
-                                    {% endif %}
-                                </div>
-                                <div class="file-name">
-                                    {% if hacker.receipts %}
-                                    <a class="view-receipts" href='/__serve/{{ hacker.receipts }}' target="_blank" download="{{receiptsFileName}}">{{receiptsFileName}}</a>
-                                    {% else %}
-                                    <span class="view-receipts">No file chosen.</span>
-                                    {% endif %}
-                                </div>
+                        <div class="upload field">
+                            <label for="receipts">Receipts</label>
+                            <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
+                            <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
+                                {% if hacker.receipts %}
+                                <span>Re-upload</span>
+                                {% else %}
+                                <span>Upload Receipts</span>
+                                {% endif %}
                             </div>
+                            <div class="file-name">
+                                {% if hacker.receipts %}
+                                <a class="view-receipts" href='/__serve/{{ hacker.receipts }}' target="_blank" download="{{receiptsFileName}}">{{receiptsFileName}}</a>
+                                {% else %}
+                                <span class="view-receipts">No file chosen.</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <form id='address_form' class='ui form inner_container'enctype="multipart/form-data" autocomplete="on" novalidate
+                        {% if not hacker.receipts %} style="display: none;" {% endif %}
+                        >
+<!--                         TODO: VALIDATION -->
                             <div class="field">
                                 <label for="address1">address 1</label>
                                 <input type="text" id="address1" name="address1"/>
@@ -368,7 +370,6 @@
                             <div class="field">
                                 <label for="country">country</label>
                                 <input type="text" id="country" name="country"/>
-                                <input type="submit"/>
                             </div>
                         </form>
                         {% else %}
@@ -447,7 +448,7 @@
       switchPanes(1);
     });
 
-      initalizeNavMenu('.top-bar_ul');
+    initalizeNavMenu('.top-bar_ul');
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
     $(".form :input:not(.tags-input)").change(function () {

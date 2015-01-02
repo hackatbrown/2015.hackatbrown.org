@@ -8,7 +8,7 @@ function initalizeNavMenu(selector) {
 function setTabActive(tab) {
     $(".top-bar_li").removeClass("active");
     $(tab).addClass("active");
-    setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
+    setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
 }
 
 function switchPanes(paneNumber) {
@@ -79,41 +79,38 @@ function uploadResume(uiinput) {
     //We call the callback function with the new URL as an argument
     //Then we submit a multipart form request to that URL.
     //There's a handler in hackerFile.py which will receive it.
-    requestNewUploadURL(updateFile, uiinput, 'resume');
+    requestNewUploadURL(uiinput, 'resume');
 }
 
 function toggleReimbursementForm(on) {
     $form = $('#address_form');
-    $inputs = $form.find('div:not(.upload) > input')
-    $select = $form.find('#state');
+    $inputs = $form.find('div:not(.upload) :input')
     if (on) {
-        $select.removeAttr('disabled');
+        slideOut($form, 1000);
         $inputs.removeAttr('disabled');
     } else {
-        $select.attr('disabled', 'disabled');
         $inputs.attr('disabled', 'disabled');
     }
 }
 
 function uploadReceipts(uiinput) {
-    requestNewUploadURL(updateFile, uiinput, 'receipts');
-    //TODO: should be a callback on success.
-    toggleReimbursementForm(true);
+    var callback = function() {toggleReimbursementForm(true);};
+    requestNewUploadURL(uiinput, 'receipts', callback);
 }
 
-function requestNewUploadURL(callback, uiinput, key) {
+function requestNewUploadURL(uiinput, key, callback) {
     $.ajax({
         type: 'GET',
         url: '/secret/__newurl/' + secret + '/' + key,
         success: function (response) {
             response = JSON.parse(response);
             var newFileURL = response.newURL;
-            callback(newFileURL, uiinput, key);
+            updateFile(newFileURL, uiinput, key, callback);
         }
     });
 }
 
-function updateFile(newFileURL, uiinput, key) {
+function updateFile(newFileURL, uiinput, key, callback) {
     $uiInput = $(uiinput);
     var $button = $uiInput.find("." + key + "-upload");
     var $buttonText = $button.children("span");
@@ -178,6 +175,8 @@ function updateFile(newFileURL, uiinput, key) {
 
             $button.one('mouseenter', resetState);
             setTimeout(resetState, 2500);
+
+            setTimeout(callback, 1000);
         },
         failure: function (response) {
             console.log("I have failed youuuu");
@@ -185,8 +184,9 @@ function updateFile(newFileURL, uiinput, key) {
     });
 }
 
-function slideOut($element) {
-    $element.stop().hide().slideToggle(200);
+function slideOut($element, time) {
+    time = time || 200;
+    $element.stop().hide().slideToggle(time);
 }
 
 function slideIn($element) {
