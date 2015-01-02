@@ -1,3 +1,43 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.button {
+        transition: @transition, border .15s @defaultEasing;
+        height: @height !important;
+        padding: 0 11px;
+//        padding: 7px 11px 10px;
+//        line-height: 1.8em;
+        line-height: @height;
+}
+
+.ui.active.button {
+        color: @white !important;
+}
+
+.ui.active.button:hover {
+        box-shadow: inset 1px -50px 0 -1px lighten(@blue, 20%);
+}
+
+.ui.active.button:active {
+        color: @white;
+        box-shadow: inset 1px -50px 0 -1px lighten(@blue, 40%);
+}
+
+.ui.primary.button:hover {
+        background-color: @magenta;
+        color: @white;
+}
+
+.ui.primary.button:active {
+        background-color: darken(@magenta, 20%);
+        color: @white;
+}
+
+.ui.primary.button.active {
+        background-color: @magenta;
+        color: @white;
+}
+
+.ui.button:focus {
+        box-shadow: inset 1px 0 0 -1px @blue;
+}
