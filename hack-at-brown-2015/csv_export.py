@@ -10,7 +10,7 @@ def dict_from_hacker(hacker, include_keys):
 
 class CsvExport(webapp2.RequestHandler):
     def get(self):
-        keys = list(hacker_keys) + ['status']
+        keys = list(hacker_keys) + ['status', 'admit_priority', 'rsvpd', 'checked_in']
         if not self.request.get('include_personally_identifiable_info'):
             for key in personal_info_keys:
                 keys.remove(key)
