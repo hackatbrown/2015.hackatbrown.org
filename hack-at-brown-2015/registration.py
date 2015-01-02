@@ -17,7 +17,7 @@ from template import utils
 
 
 memcache_expiry = 10 * 60
-hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
+registration_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 
 def stringValidator(prop, value):
     cleanValue = value.strip()
@@ -61,6 +61,14 @@ class Hacker(ndb.Model):
 
 	ip = ndb.StringProperty()
 
+	#Only collected for reimbursements.
+	address1 = ndb.StringProperty()
+	address2 = ndb.StringProperty()
+	city = ndb.StringProperty()
+	state = ndb.StringProperty()
+	zip = ndb.StringProperty()
+	country =ndb.StringProperty()
+
 	@classmethod
 	def WithSecret(cls, secret):
 		results = cls.query(cls.secret == secret).fetch(1)
@@ -82,7 +90,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         hacker = Hacker()
         hacker.ip = self.request.remote_addr
-        for key in hacker_keys:
+        for key in registration_keys:
             vals = self.request.get_all(key)
             val =','.join(vals)
             try:

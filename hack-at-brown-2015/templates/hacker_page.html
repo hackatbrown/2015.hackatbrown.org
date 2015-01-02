@@ -324,7 +324,7 @@
                         <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email.</strong> Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
                         {% if status == "confirmed" %}
                         <p>Please provide your mailing address and upload your receipts below. If you have multiple receipts, please put them in a zip file.</p>
-                        <form id='address_form' class='ui form inner_container' method='POST' action="/secret/__send_to_brown/{{ hacker.secret}}" enctype="multipart/form-data" autocomplete="on" novalidate>
+                        <form id='update_form' class='ui form inner_container' method='POST' action="/secret/__send_to_brown/{{ hacker.secret}}" enctype="multipart/form-data" autocomplete="on" novalidate>
 <!--                         TODO: VALIDATION & PHONE NUMBERS
  -->                            <div class="upload field">
                                 <label for="receipts">Receipts</label>
@@ -434,11 +434,7 @@
           setTabActive($("#status_top"));
           switchPanes(0);
         });
-
     }
-
-
-
 
     $("#status_top").click(function () {
       this.preventDefault;
@@ -453,7 +449,7 @@
     });
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
-    $("#update_form input:not(.tags-input)").change(function () {
+    $(".form :input:not(.tags-input)").change(function () {
       saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
@@ -474,10 +470,6 @@
       hideSelected: true,
       onDropdownOpen: slideOut,
       onDropdownClose: slideIn,
-    });
-
-    $year.change(function () {
-      saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
     $yearLabel.click(function() {
@@ -513,7 +505,6 @@
 
     var $dietaryRestrictionsSelectize = $dietaryRestrictions.siblings(".selectize-control");
     var $dietaryRestrictionsLabel = $dietaryRestrictions.parent().siblings("label");
-    var $dietaryDropdown = $dietaryRestrictionsSelectize.find(".selectize-dropdown");
 
     $dietaryRestrictionsLabel.click(function() {
       $dietaryRestrictionsSelectize.find("input").focus();
@@ -523,7 +514,7 @@
     var $teammates = $('#teammates');
     var $teammatesSelectize = $teammates.siblings(".selectize-control");
     var $teammatesLabel = $teammates.parent().siblings("label");
-    var $teammatesDropdown = $teammatesSelectize.find(".selectize-dropdown");
+
     var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
       '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
 

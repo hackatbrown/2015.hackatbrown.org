@@ -5,7 +5,7 @@ from registration import Hacker
 from registration import generate_secret_for_hacker_with_email
 import json
 from template import template
-from registration import hacker_keys
+from registration import registration_keys
 from config import envIsDev
 import random
 
@@ -24,7 +24,7 @@ class CleanupHandler(webapp2.RequestHandler):
         return self.response.write(json.dumps(result))
 
     def get(self):
-        jinjaVars = {"properties" : hacker_keys}
+        jinjaVars = {"properties" : registration_keys}
         return self.response.write(template("db_cleanup.html", jinjaVars))
 
 def run(property, jsonKeys):
