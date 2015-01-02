@@ -41,3 +41,21 @@
 .ui.button:focus {
         box-shadow: inset 1px 0 0 -1px @blue;
 }
+
+.ui.basic.button, .ui.basic.buttons .button {
+        box-shadow: 0 0 0 1px @lightgrey inset,0 0 0 0 @lightgrey inset;
+        color: @grey !important;
+        transition: box-shadow .15s @defaultEasing, background .15s @defaultEasing;
+}
+
+.ui.basic.button:hover, .ui.basic.buttons .button:hover,
+.ui.basic.button:focus, .ui.basic.buttons .button:focus{
+        color: @grey !important;
+        box-shadow: 0 0 0 1px darken(@lightgrey, 10%) inset,0 0 0 0 darken(@lightgrey, 10%) inset;
+        background: 0 0 !important;
+}
+
+.ui.basic.button:active, .ui.basic.buttons .button:active {
+        background: darken(@lightgrey, 10%) !important;
+        box-shadow: 0 0 0 1px darken(@lightgrey, 10%) inset,0 0 0 0 darken(@lightgrey, 10%) inset;
+}

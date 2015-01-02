@@ -102,9 +102,10 @@ footer .social-links {
 /*Admission Status Box - TODO Put this in a more sensical place*/
 .admit_status {
   background-color: @black;
-  padding: .5em;
-  padding-top: .1em;
-  padding-bottom: .15em;
+  padding: 0 .5em;
+//  padding-top: .1em;
+//  padding-bottom: .15em;
+  line-height: 1.6em;
   display: inline-block;
   color: white;
   font-size: 2rem;

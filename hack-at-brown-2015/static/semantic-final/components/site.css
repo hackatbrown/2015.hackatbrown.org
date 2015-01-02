@@ -15,13 +15,6 @@
              Page
 *******************************/
 
-
-/* UI requires Border-Box */
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
 html,
 body {
   height: 100%;
@@ -125,9 +118,6 @@ a:hover {
         Global Overrides
 *******************************/
 
-body {
-  line-height: normal;
-}
 
 
 /*******************************
@@ -236,9 +226,8 @@ footer .social-links {
 /*Admission Status Box - TODO Put this in a more sensical place*/
 .admit_status {
   background-color: #404040;
-  padding: .5em;
-  padding-top: .1em;
-  padding-bottom: .15em;
+  padding: 0 .5em;
+  line-height: 1.6em;
   display: inline-block;
   color: white;
   font-size: 2rem;

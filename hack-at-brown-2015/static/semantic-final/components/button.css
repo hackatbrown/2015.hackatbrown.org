@@ -43,6 +43,7 @@
           user-select: none;
   -webkit-transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1);
           transition: opacity 0.1s cubic-bezier(0.55, 0, 0.1, 1), background-color 0.1s cubic-bezier(0.55, 0, 0.1, 1), color 0.1s cubic-bezier(0.55, 0, 0.1, 1), box-shadow 0.1s cubic-bezier(0.55, 0, 0.1, 1), background 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  will-change: '';
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -217,6 +218,7 @@
 .ui.animated.button {
   position: relative;
   overflow: hidden;
+  vertical-align: middle;
   padding-right: 0em !important;
 }
 .ui.animated.button .content {
@@ -875,6 +877,8 @@
 }
 .ui.buttons .or:before {
   position: absolute;
+  text-align: center;
+  border-radius: 500rem;
   content: 'or';
   top: 50%;
   left: 50%;
@@ -884,12 +888,10 @@
   margin-left: -0.892855em;
   width: 1.78571em;
   height: 1.78571em;
-  line-height: 1.58571em;
+  line-height: 1.78571em;
   color: rgba(0, 0, 0, 0.4);
   font-style: normal;
   font-weight: bold;
-  text-align: center;
-  border-radius: 500em;
   box-shadow: 0px 0px 0px 1px transparent inset;
 }
 .ui.buttons .or[data-text]:before {
@@ -2404,4 +2406,24 @@
 }
 .ui.button:focus {
   box-shadow: inset 1px 0 0 -1px #1b8eb9;
+}
+.ui.basic.button,
+.ui.basic.buttons .button {
+  box-shadow: 0 0 0 1px #e2e1df inset, 0 0 0 0 #e2e1df inset;
+  color: #918f8c !important;
+  -webkit-transition: box-shadow 0.15s cubic-bezier(0.55, 0, 0.1, 1), background 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.15s cubic-bezier(0.55, 0, 0.1, 1), background 0.15s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.ui.basic.button:hover,
+.ui.basic.buttons .button:hover,
+.ui.basic.button:focus,
+.ui.basic.buttons .button:focus {
+  color: #918f8c !important;
+  box-shadow: 0 0 0 1px #cac8c4 inset, 0 0 0 0 #cac8c4 inset;
+  background: 0 0 !important;
+}
+.ui.basic.button:active,
+.ui.basic.buttons .button:active {
+  background: #cac8c4 !important;
+  box-shadow: 0 0 0 1px #cac8c4 inset, 0 0 0 0 #cac8c4 inset;
 }
