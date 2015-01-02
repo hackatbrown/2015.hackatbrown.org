@@ -99,8 +99,8 @@
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
-                        <h3 class="secondary">None yet!</h3>
 
+                        {% if not hacker.resume %}
                         <div class="message items">
                             <div class="message item prompt">
                                 <h3>You haven't uploaded your resume yet!</h3>
@@ -124,6 +124,10 @@
                                 </div>
                             </div>
                         </div>
+                        {% else %}
+                        <h3 class="secondary">None yet!</h3>
+                        {% endif %}
+
                     </div>
                 </section>
             </div>
@@ -442,7 +446,7 @@
       setTabActive(this);
       switchPanes(1);
     });
-      
+
       initalizeNavMenu('.top-bar_ul');
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
