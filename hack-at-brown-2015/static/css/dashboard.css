@@ -23,6 +23,11 @@ h1, h2{
   cursor: pointer;
   display: inline-block;
   margin: 10px;
+  color: black;
+}
+.button-subtitle {
+	font-size: x-small;
+	opacity: 0.7;
 }
 .menu {
   display: inline-flex;
