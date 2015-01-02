@@ -18,6 +18,7 @@ from google.appengine.api import taskqueue
 from registration import Hacker
 from email_list import EmailListEntry
 import sms
+from config import isAdmin
 
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
@@ -61,7 +62,7 @@ class Message(ndb.Model):
 		# actual work of sms'ing
 		print "Sending SMS '{0}' to {1}".format(self.sms_text, phone)
 		sms.send(phone, self.sms_text)
-	
+
 	def get_query(self):
 		if self.audience == 'registered':
 			return Hacker.query()
@@ -77,7 +78,7 @@ class Message(ndb.Model):
 	def enqueue_tasks(self):
 		if self.get_query() == None:
 			print "No audience selected. No emails sent through messages system."
-			return 
+			return
 		q = taskqueue.Queue("messages")
 		# max task size is 100kb; max # of tasks added per batch is 100
 		task_futures = []
@@ -128,16 +129,18 @@ class Message(ndb.Model):
 
 class MessagesDashboardHandler(webapp2.RequestHandler):
 	def get(self):
+		if not isAdmin(): return self.redirect('/')
 		self.response.write(template("messages_dashboard.html", {}))
 
 	def post(self):
+		if not isAdmin(): return self.redirect('/')
 		audience = None if self.request.get('audience') == '' else self.request.get('audience')
 		message = Message(audience=audience)
 		if self.request.get('email'):
 			message.email_subject = self.request.get('email-subject')
 			if self.request.get('email-name'):
 				message.email_from_template = True
-				message.email_html = self.request.get('email-name')			
+				message.email_html = self.request.get('email-name')
 			else:
 				message.email_html = self.request.get('email-html')
 		if self.request.get('sms'):
@@ -157,6 +160,7 @@ class MessagesDashboardHandler(webapp2.RequestHandler):
 
 class MessagesTaskQueueWork(webapp2.RequestHandler):
 	def post(self):
+		if not isAdmin(): return self.redirect('/')
 		if self.request.get('kickoff_message_key'):
 			ndb.Key(urlsafe=self.request.get('kickoff_message_key')).get().enqueue_tasks()
 		elif self.request.get('entity_keys'):
