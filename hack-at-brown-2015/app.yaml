@@ -13,15 +13,15 @@ handlers:
 
 - url: /admin_checkin
   script: admin_checkin.app
-  login: admin
+  login: required
 
 - url: /dashboard
   script: main.app
-  login: admin
+  login: required
 
 - url: /dashboard(/.*)
   script: main.app
-  login: admin
+  login: required
 
 - url: /__background_work
   script: main.app

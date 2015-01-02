@@ -5,6 +5,7 @@ from template import template
 from registration import Hacker
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
+from config import onTeam
 
 cacheTime = 6 * 10
 hackerFormat = ['name', 'email']
@@ -14,9 +15,11 @@ divider = ' - '
 class CheckinPageHandler(webapp2.RequestHandler):
 
     def get(self):
+        if not onTeam(): return self.redirect('/')
         self.response.write(page_response())
 
     def post(self):
+        if not onTeam(): return self.redirect('/')
         nameAndEmail = self.request.get('name/email').split(divider)
         hacker = Hacker.query(Hacker.name == nameAndEmail[0] and Hacker.email == nameAndEmail[1]).get()
         if hacker is None:

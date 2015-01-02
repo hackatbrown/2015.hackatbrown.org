@@ -78,20 +78,26 @@
     </div>
 
   </div>
-
+  <br>
   <div id='menu_2nd_row' class='menu' >
     <div id="downloads" class='panel' >
       <h2 class='option' >Downloads</h2>
       <div class='panel-content'>
         <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes (TODO)</div>
         <a href='/dashboard/csv'><div class='button' >Download All CSV</div></a>
+        {% if admin %}
         <a href='/dashboard/csv?include_personally_identifiable_info=1'><div class='button' >Download All CSV <div class='button-subtitle'>Including personal information</div></div></a>
+        {% endif %}
       </div>
     </div>
     <div id="email-panel" class='panel' >
       <h2 class='option'> Messages</h2>
 		<p><em>Email and SMS</em></p>
+    {% if admin %}
 		<a href='/dashboard/messages'>Go to messages dashboard</a>
+    {% else %}
+    <span>Off limits for now</span>
+    {% endif %}
     </div>
     <div id="manual-panel" class='panel' >
       <h2 class='option' >Manual</h2>
@@ -100,12 +106,16 @@
         <label>Emails</label>
         <input ng-model= "manualEmails" type='text' name='emails' style='text-align: center; width: 100%; height: 50'>
         <label ng-show='showManualStatus' style='display: block' ><b>%%manualStatus%%</b></label>
+        {% if admin %}
         <div ng-click='changeStatus("Register")' class='button'>Sign Up</div>
         <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
-        <div ng-click='lookupHacker()' class='button'>Lookup</div>
         <a style="text-decoration:none" class='button' href="/admin_checkin">Go To Checkin</a>
+        {% endif %}
+        <div ng-click='lookupHacker()' class='button'>Lookup</div>
+        {% if admin %}
         <a style="text-decoration:none" class='button' href="/dashboard/ranking">Go To Ranking Dashboard</a>
+        {% endif %}
       </div>
       <div class="found" ng-repeat="hacker in lookupResult.found">
         <span><b>Found <a ng-href="secret/%%hacker.secret%%">%%hacker.email%%</a></b></span><br>
@@ -120,7 +130,7 @@
   </iframe>
   <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
 </div>
-<a style="text-decoration:none" class='button' href="/db_cleanup">DB Cleanup</a>
+<a style="text-decoration:none" class='button' href="/dashboard/db_cleanup">DB Cleanup</a>
 {% if envIsDev or isQA %}
 <script>
   function populateDB() {
