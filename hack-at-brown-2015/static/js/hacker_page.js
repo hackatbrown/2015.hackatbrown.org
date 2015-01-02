@@ -63,6 +63,8 @@ function rsvp(secret) {
 
                         $('.rsvp').remove();
                         $('.delete').remove();
+                        $('#rsvp-link').remove();
+                        $('#receipts-upload').show();
 
                     }
                 }
