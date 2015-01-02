@@ -24,14 +24,12 @@
     margin-right: auto;
  }
 
-
 /* Hacky Delete Button*/
 /*
 .delete {
   padding-top: 30px;
 }
 */
-
 .upload {
   flex: 0 0 128px;
   margin-right: .75em;
