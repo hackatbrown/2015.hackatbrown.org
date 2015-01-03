@@ -67,6 +67,7 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
+        <p id="reimbursements-modal">We can reimburse you up to <a href="#reimbursements">$400</a> in transit fees.</p>
     </div>
   </div>
   <div class="actions">
@@ -446,6 +447,13 @@
           this.preventDefault;
           setTabActive(this);
           switchPanes(2);
+        });
+        
+        $("#reimbursements-modal").click(function () {
+            this.preventDefault;
+            $("#rsvp-modal .no").click();
+            setTabActive($("#reimbursements_top"));
+            switchPanes(2);
         });
 
         $("#rsvp-link").click(function () {
