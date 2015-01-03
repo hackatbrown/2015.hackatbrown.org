@@ -217,9 +217,9 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             $button.removeClass("loading active");
             $buttonText.text("Complete!");
             response = JSON.parse(response);
-            $lastItem = $('.view-' + key).last();
-            if (!multiple || $lastItem.length === 0 || $lastItem.is('span')) {
-                $lastItem.remove();
+            $existingItems = $('.view-' + key);
+            if (!multiple || $existingItems.length === 0 || $existingItems.is('span')) {
+                $existingItems.remove();
             }
             for(var i = 0; i < response.downloadLinks.length; i++) {
                 $newItem = createFileView(key, multiple);
