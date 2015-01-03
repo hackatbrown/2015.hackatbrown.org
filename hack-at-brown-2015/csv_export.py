@@ -3,6 +3,7 @@ import webapp2
 from registration import Hacker, hacker_keys, personal_info_keys
 from hacker_page import computeStatus
 from config import onTeam
+from config import isAdmin
 
 def dict_from_hacker(hacker, include_keys):
     d = {key: getattr(hacker, key, None) for key in include_keys}
