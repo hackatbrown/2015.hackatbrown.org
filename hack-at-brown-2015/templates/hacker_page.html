@@ -100,32 +100,35 @@
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
 
-                        {% if not hacker.resume %}
+                        {% if hacker.resume %}
                         <div class="message items">
                             <div class="message item prompt">
                                 <h3>You haven't uploaded your resume yet!</h3>
                                 <p>We give our sponsors your resume for potential recruitment opportunities.</p>
-                                <div class="upload field">
-                                    <input id="resume-message" class="resume-upload upload" type="file" name="resume" onchange="uploadResume(this.parentNode)"/>
-                                    <div id="resume-over" class="resume-upload upload ui button" onclick="document.getElementById('resume-message').click()">
-                                        {% if hacker.resume %}
-                                        <span>Re-upload</span>
-                                        {% else %}
-                                        <span>Upload Resume</span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="file-name">
-                                        {% if hacker.resume %}
-                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
-                                        {% else %}
-                                        <span class="view-resume">No file chosen.</span>
-                                        {% endif %}
+                                <div class="actions">
+                                    <div class="field">
+                                        <div class="upload-control">
+                                            <div id="resume-over" class="resume-upload upload ui button" onclick="document.getElementById('resume').click()">
+                                                {% if hacker.resume %}
+                                                <span>Re-upload</span>
+                                                {% else %}
+                                                <span>Upload Resume</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="file-name">
+                                                {% if hacker.resume %}
+                                                <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                                {% else %}
+                                                <span class="view-resume">No file chosen.</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {% else %}
-                        <h3 class="secondary">None yet!</h3>
+                        <h3 class="secondary">None!</h3>
                         {% endif %}
 
                     </div>

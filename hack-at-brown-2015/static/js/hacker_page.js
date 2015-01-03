@@ -120,6 +120,7 @@ function requestNewUploadURL(uiinput, key, callback) {
 function updateFile(newFileURL, uiinput, key, callback) {
     $uiInput = $(uiinput);
     var $button = $uiInput.find("." + key + "-upload");
+    console.log($button);
     var $buttonText = $button.children("span");
     var width = $button.outerWidth();
     var complete = false;
@@ -142,7 +143,7 @@ function updateFile(newFileURL, uiinput, key, callback) {
     $button.addClass("loading active");
 
     var data = new FormData();
-    data.append(key, $button[0].files[0]);
+    data.append(key, $button.filter("input")[0].files[0]);
 
     $.ajax({
         xhr: function () {
@@ -205,7 +206,7 @@ function slideIn($element) {
 function saveChange(key, value, uiinput, secret, responseStatus) {
     if (key === 'resume') {
         if (value) {
-            uploadResume(uiinput);
+            uploadResume($(".resume-upload.upload.ui.button").parent());
         }
         return;
     } else if (key == 'email') {

@@ -1,5 +1,9 @@
 
 /*Shim*/
+.message .actions {
+  line-height: 35px;
+}
+
 .upload-control {
   display: -webkit-flex;
   display: flex;
