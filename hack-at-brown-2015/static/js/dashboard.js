@@ -223,7 +223,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
   $scope.populateCharts = function() {
     if ($scope.currentChart.value == "none") {
-      $('#chart_1').toggle(false);
+      $('#chart').toggle(false);
       return;
     }
 
@@ -231,14 +231,14 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
           $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
-          $('#chart_1').toggle(data != "null");
+          $('#chart').toggle(data != "null");
 
           if (data != "null") {
             var series = [];
             $.each(data, function(key, value) {
               series.push({"name" : key, "y": value});
             });
-            $('#chart_1').highcharts({
+            $('#chart').highcharts({
                   title : {
                     text : $scope.currentChart.name
                   },

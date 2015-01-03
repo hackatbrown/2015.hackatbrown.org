@@ -22,6 +22,9 @@
   right: 0px;
   z-index: 900;
   border: 1px solid rgba(39, 41, 43, 0.15);
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
   max-width: 250px;
   background-color: #ffffff;
   padding: 0.833em 1em;
@@ -35,7 +38,7 @@
   padding: 0em;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-size: 1.125em;
-  line-height: 1.2;
+  line-height: 1.33em;
   font-weight: bold;
 }
 .ui.popup > .header + .content {

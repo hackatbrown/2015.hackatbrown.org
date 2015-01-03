@@ -15,13 +15,6 @@
              Page
 *******************************/
 
-
-/* UI requires Border-Box */
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
 html,
 body {
   height: 100%;
@@ -125,9 +118,6 @@ a:hover {
         Global Overrides
 *******************************/
 
-body {
-  line-height: normal;
-}
 
 
 /*******************************
@@ -236,20 +226,28 @@ footer .social-links {
 /*Admission Status Box - TODO Put this in a more sensical place*/
 .admit_status {
   background-color: #404040;
-  padding: .5em;
-  padding-top: .1em;
-  padding-bottom: .15em;
+  padding: 0 .5em;
+  line-height: 48px;
   display: inline-block;
   color: white;
   font-size: 2rem;
   text-transform: uppercase;
+  margin-right: .25em;
+  margin-bottom: 30px;
+  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 .admit_status.pending {
   background-color: #1b8eb9;
 }
-.admit_status.accepted,
+.admit_status.accepted {
+  background: none;
+  box-shadow: 0 0 0 2px #26a59f inset;
+  color: #26a59f;
+}
 .admit_status.confirmed {
-  background-color: #26a59f;
+  background: none;
+  box-shadow: 0 -60px 0 2px #26a59f inset;
 }
 .admit_status.checked.in {
   background-color: #ef5d93;
@@ -259,4 +257,11 @@ footer .social-links {
 }
 .admit_status.not-accepted {
   background-color: #404040;
+}
+.ui.rsvp.button {
+  line-height: 48px !important;
+  height: 48px !important;
+  margin-bottom: 15px;
+  font-size: 16px;
+  margin-right: 0;
 }

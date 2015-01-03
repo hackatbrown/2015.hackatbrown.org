@@ -8,22 +8,14 @@ function initalizeNavMenu(selector) {
 function setTabActive(tab) {
     $(".top-bar_li").removeClass("active");
     $(tab).addClass("active");
-    setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 10);
+    setTimeout("$('.top-bar_ul').gutabslider('active-tab-changed')", 100);
 }
 
 function switchPanes(paneNumber) {
     var $panes = $(".panes");
-    $panes.removeClass("in-pane0 in-pane1");
+    $panes.removeClass("in-pane0 in-pane1 in-pane2");
     $panes.addClass("in-pane" + paneNumber);
     $(".pane" + paneNumber).addClass("active");
-}
-
-function switchToMyInfo() {
-    switchPanes(1);
-}
-
-function switchFromMyInfo() {
-    switchPanes(0);
 }
 
 function initalizeHamburger() {
@@ -37,7 +29,7 @@ function initalizeHamburger() {
 }
 
 function confirmDeleteHacker(secret) {
-    $('.basic.ui.modal')
+    $('#delete-modal')
       .modal({
         selector : {
             approve  : '.yes',
@@ -50,31 +42,84 @@ function confirmDeleteHacker(secret) {
       .modal('show');
 }
 
+function rsvp(secret) {
+    $('#rsvp-modal')
+      .modal({
+        selector : {
+            approve  : '.yes',
+            deny     : '.no',
+        },
+        onApprove : function() {
+            $.ajax({
+                type: 'POST',
+                url: '/secret/__rsvp/' + secret,
+                success: function (response) {
+                    response = JSON.parse(response);
+                    if (response.success) {
+                        $status = $('.admit_status');
+                        var $statusText = $status.children("span");
+                        $status.removeClass('accepted');
+                        $status.addClass('confirmed');
+                        $statusText.fadeOut(200, function () {
+                            $statusText.text("confirmed");
+                            $statusText.fadeIn(200);
+                        });
+                        $('.rsvp.field').fadeOut(200, function () {
+                            this.remove();
+                        });
+                        
+                        $('#rsvp-link').remove();
+                        $('#receipts-upload').show();
+
+                    }
+                }
+            });
+        }
+      })
+      .modal('show');
+}
+
 // Resume Upload
 function uploadResume(uiinput) {
     //This is a 2-part process - first we get a new blobstore URL
     //We pass in the update function as a callback.
     //We call the callback function with the new URL as an argument
     //Then we submit a multipart form request to that URL.
-    //There's a handler in resume.py which will receive it.
-    requestNewUploadURL(updateResume, uiinput);
+    //There's a handler in hackerFile.py which will receive it.
+    requestNewUploadURL(uiinput, 'resume');
 }
 
-function requestNewUploadURL(callback, uiinput) {
+function toggleReimbursementForm(on) {
+    $form = $('#address_form');
+    $inputs = $form.find('div:not(.upload) :input')
+    if (on) {
+        slideOut($form, 1000);
+        $inputs.removeAttr('disabled');
+    } else {
+        $inputs.attr('disabled', 'disabled');
+    }
+}
+
+function uploadReceipts(uiinput) {
+    var callback = function() {toggleReimbursementForm(true);};
+    requestNewUploadURL(uiinput, 'receipts', callback);
+}
+
+function requestNewUploadURL(uiinput, key, callback) {
     $.ajax({
         type: 'GET',
-        url: '/secret/__newurl/' + secret,
+        url: '/secret/__newurl/' + secret + '/' + key,
         success: function (response) {
             response = JSON.parse(response);
-            var newResumeURL = response.newURL;
-            callback(newResumeURL, uiinput);
+            var newFileURL = response.newURL;
+            updateFile(newFileURL, uiinput, key, callback);
         }
     });
 }
 
-function updateResume(newResumeURL, uiinput) {
+function updateFile(newFileURL, uiinput, key, callback) {
     $uiInput = $(uiinput);
-    var $button = $uiInput.find(".resume-upload");
+    var $button = $uiInput.find("." + key + "-upload");
     var $buttonText = $button.children("span");
     var width = $button.outerWidth();
     var complete = false;
@@ -97,7 +142,7 @@ function updateResume(newResumeURL, uiinput) {
     $button.addClass("loading active");
 
     var data = new FormData();
-    data.append("resume", $('.resume-upload')[0].files[0]);
+    data.append(key, $button[0].files[0]);
 
     $.ajax({
         xhr: function () {
@@ -111,7 +156,7 @@ function updateResume(newResumeURL, uiinput) {
             }, 1000), false);
             return xhr;
         },
-        url: newResumeURL,
+        url: newFileURL,
         data: data,
         cache: false,
         contentType: false,
@@ -124,9 +169,9 @@ function updateResume(newResumeURL, uiinput) {
             $button.removeClass("loading active");
             $buttonText.text("Complete!");
             response = JSON.parse(response);
-            $resumeView = $('.view-resume');
+            $resumeView = $('.view-' + key);
 
-            $newLink = $("<a class='view-resume'></a>");
+            $newLink = $("<a class='view-" + key + "'></a>");
             $newLink[0].innerHTML = response.fileName;
             $newLink.attr({
                 'href' : response.downloadLink,
@@ -137,6 +182,8 @@ function updateResume(newResumeURL, uiinput) {
 
             $button.one('mouseenter', resetState);
             setTimeout(resetState, 2500);
+
+            setTimeout(callback, 1000);
         },
         failure: function (response) {
             console.log("I have failed youuuu");
@@ -144,15 +191,14 @@ function updateResume(newResumeURL, uiinput) {
     });
 }
 
-function slideOut($element) {
-    $element.stop().hide().slideToggle(200);
-
+function slideOut($element, time) {
+    time = time || 200;
+    $element.stop().hide().slideToggle(time);
 }
 
 function slideIn($element) {
     $element.stop().show().slideToggle(200);
 }
-
 
 //  Form processing out
 
@@ -165,6 +211,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
     } else if (key == 'email') {
         return;
     }
+    console.log(key, value);
 
     var data = {},
         $icon = $(uiinput).children(".icon"),

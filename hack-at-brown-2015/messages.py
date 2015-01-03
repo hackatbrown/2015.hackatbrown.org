@@ -23,7 +23,7 @@ from config import isAdmin
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 
-	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted'], default=None)
 
 	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
@@ -70,6 +70,8 @@ class Message(ndb.Model):
 			return Hacker.query(Hacker.teammates != None)
 		elif self.audience == 'mailing-list-unregistered':
 			return EmailListEntry.query()
+		elif self.audience == 'waitlisted':
+			return Hacker.query(Hacker.admitted_email_sent_date == None and acker.waitlist_email_sent_date == None)
 		elif self.audience == None:
 			return None
 		else:

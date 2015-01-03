@@ -55,7 +55,7 @@
 @actionBorder: 1px solid @borderColor;
 @actionBackground: #EFEFEF;
 @actionPadding: 1rem 2rem;
-@actionAlign: left;
+@actionAlign: right;
 
 @buttonDistance: 0.75em;
 
@@ -92,9 +92,6 @@
 @fullScreenWidth: 95%;
 @fullScreenOffset: (100% - @fullScreenWidth) / 2;
 @fullScreenMargin: 1em auto;
-
-@fullScreenMobileWidth: auto;
-@fullScreenMobileMargin: 1em;
 
 /*-------------------
         Types
