@@ -28,6 +28,15 @@ function initalizeHamburger() {
     });
 }
 
+// Messages
+var $message_container = $(".message_container");
+function messagesCheckNone() {
+    if ($("message").length == 0) {
+        $message_container.html("<h3 class='secondary'>None!</h3>");
+    }
+}
+// File Upload
+
 function deleteFile(uiInput, key) {
     var blobKey = $(uiInput).find('a').attr('href').split('__serve/')[1];
 

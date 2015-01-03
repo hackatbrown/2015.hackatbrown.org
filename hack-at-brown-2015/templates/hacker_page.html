@@ -106,7 +106,7 @@
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
-
+                        <div class="message_container">
                         {% if not hacker.resume %}
                         <div class="message items">
                             <div class="message item prompt">
@@ -134,10 +134,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% else %}
-                        <h3 class="secondary">None!</h3>
                         {% endif %}
-
+                        </div>
                     </div>
                 </section>
             </div>
@@ -414,6 +412,8 @@
   var receipts = "{{ hacker.receipts }}"
 
   $(document).ready(function () {
+      
+    messagesCheckNone();
 
     if (receipts == "None") {
         toggleReimbursementForm(false);
