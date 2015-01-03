@@ -9,6 +9,7 @@ from registration import registration_keys
 from config import isMasterDB
 import random
 from google.appengine.api import taskqueue
+from config import isAdmin
 
 #Example:
 # json = {
@@ -48,6 +49,8 @@ def cleanup(property, jsonKeys):
 
 class PopulateHandler(webapp2.RequestHandler):
     def get(self, number):
+        if not isAdmin(): return self.redirect('/')
+
         if isMasterDB():
             return self.redirect('/')
 
@@ -74,6 +77,8 @@ class PopulateHandler(webapp2.RequestHandler):
 
 class DepopulateHandler(webapp2.RequestHandler):
     def get(self, number):
+        if not isAdmin(): return self.redirect('/')
+
         if isMasterDB():
             return self.redirect('/')
 

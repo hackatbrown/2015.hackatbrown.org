@@ -18,7 +18,8 @@ from template import utils
 
 
 memcache_expiry = 10 * 60
-registration_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
+hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon', 'phone_number']
+personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 def stringValidator(prop, value):
 		cleanValue = value.strip()

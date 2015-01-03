@@ -29,6 +29,7 @@ import short_urls
 import m
 import messages
 import ranking2015
+import csv_export
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -72,9 +73,10 @@ app = webapp2.WSGIApplication([
 		('/dashboard/__db_populate/worker', db_utils.CreateTestHackerWorker),
 		('/dashboard/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
 		('/dashboard/__cleanup', db_utils.CleanupHandler),
+        ('/dashboard/csv', csv_export.CsvExport),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
-    ('/goodbye', static_page_handler("goodbye.html")),
+	    ('/goodbye', static_page_handler("goodbye.html")),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)

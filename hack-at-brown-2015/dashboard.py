@@ -12,18 +12,27 @@ import logging
 from config import envIsDev, envIsQA
 import itertools
 from google.appengine.ext import ndb
+from google.appengine.api import users
+from config import onTeam, isAdmin
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
+
+        if not onTeam():
+            logging.info("Not authorized")
+            return self.redirect('/')
+
         isQA = envIsQA()
         isDev = envIsDev()
-        self.response.write(template("dashboard.html", {"envIsDev" : isDev, "isQA" : isQA}))
+
+        self.response.write(template("dashboard.html", {"envIsDev" : isDev, "isQA" : isQA, "admin" : isAdmin(), "onTeam" : onTeam(), "logout" : users.create_logout_url('/')}))
 
 class ManualRegistrationHandler(webapp2.RequestHandler):
     def post(self):
+        if not isAdmin(): return self.redirect('/')
         parsed_request = json.loads(self.request.body) # Angular apparently only sends json as text not as 'JSON'
         emails = parsed_request.get('emails')
         for address in emails:
@@ -57,8 +66,9 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
 
 class RankingDashHandler(webapp2.RequestHandler):
   def get(self):
+    if not isAdmin(): return self.redirect('/')
     self.response.write(template("ranking.html"))
-        
+
 
 class LookupHackerHandler(webapp2.RequestHandler):
     def get(self, emails):
@@ -82,10 +92,6 @@ class LookupHackerHandler(webapp2.RequestHandler):
                 response['notFound'].append(email)
 
         self.response.write(json.dumps(response))
-
-class ViewBreakdownsHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(template("breakdowns.html"))
 
 class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
