@@ -149,3 +149,8 @@ footer .social-links {
   font-size: 16px;
   margin-right: 0;
 }
+
+//Messages Interface.  Interim
+.message p {
+  font-weight: 300;
+}

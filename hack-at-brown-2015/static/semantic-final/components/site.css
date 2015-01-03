@@ -234,8 +234,8 @@ footer .social-links {
   text-transform: uppercase;
   margin-right: .25em;
   margin-bottom: 30px;
-  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-          transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1), width 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1), width 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 .admit_status.pending {
   background-color: #1b8eb9;
@@ -264,4 +264,7 @@ footer .social-links {
   margin-bottom: 15px;
   font-size: 16px;
   margin-right: 0;
+}
+.message p {
+  font-weight: 300;
 }

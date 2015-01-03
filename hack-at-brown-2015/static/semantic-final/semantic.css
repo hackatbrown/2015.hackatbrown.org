@@ -20276,7 +20276,7 @@ ol.ui.horizontal.list li:before,
   padding: 1.7142rem 2rem;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 1.6em;
-  line-height: 1.3em;
+  line-height: 1.33em;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.85);
   border-bottom: none;
@@ -20854,7 +20854,7 @@ a.ui.nag {
   padding: 0em;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-size: 1.125em;
-  line-height: 1.33em;
+  line-height: 1.2;
   font-weight: bold;
 }
 
@@ -24789,8 +24789,8 @@ footer .social-links {
   text-transform: uppercase;
   margin-right: .25em;
   margin-bottom: 30px;
-  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-  transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1), width 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1), width 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .admit_status.pending {
@@ -24826,6 +24826,10 @@ footer .social-links {
   margin-bottom: 15px;
   font-size: 16px;
   margin-right: 0;
+}
+
+.message p {
+  font-weight: 300;
 }
 
 /*
