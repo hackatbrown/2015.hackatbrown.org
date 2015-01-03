@@ -9,7 +9,7 @@ builtins:
 
 handlers:
 - url: /update_schema
-  script: updateSchemaHandler.app  # path to webapp2 application definition.
+  script: updateSchemaHandler.app
   login: admin
   secure: always
 
@@ -22,6 +22,14 @@ handlers:
 - url: /admin_checkin
   script: admin_checkin.app
   login: required
+
+- url: /dashboard/__db_populate(/.*)
+  script: main.app
+  login: admin
+
+- url: /dashboard/__db_depopulate(/.*)
+  script: main.app
+  login: admin
 
 - url: /dashboard
   script: main.app
