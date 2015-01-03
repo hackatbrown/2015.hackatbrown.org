@@ -117,31 +117,38 @@ function toggleReimbursementForm(on) {
 
 function uploadReceipts(uiinput) {
     var callback = function() {toggleReimbursementForm(true);};
-    requestNewUploadURL(uiinput, 'receipts', callback);
+    requestNewUploadURL(uiinput, 'receipts', callback, true);
 }
 
-function requestNewUploadURL(uiinput, key, callback) {
+function requestNewUploadURL(uiinput, key, callback, multiple) {
     $.ajax({
         type: 'GET',
         url: '/secret/__newurl/' + secret + '/' + key,
         success: function (response) {
             response = JSON.parse(response);
             var newFileURL = response.newURL;
-            updateFile(newFileURL, uiinput, key, callback);
+            updateFile(newFileURL, uiinput, key, callback, multiple);
         }
     });
 }
 
-function createFileView(key) {
-    $item = $('<div class="view-' + key + '"><a href="dummy">dummy</a><i class="ui basic rsvp button delete-file">Delete</i></div>');
-    $item.find('i').click(function() {
-        deleteFile(this.parentNode, key);
-    });
+function createFileView(key, multiple) {
+    $item = $('<div class="view-' + key + '"><a href="dummy">dummy</a></div>');
+
+    if (multiple) {
+        $icon = $('<i class="ui basic rsvp button delete-file">Delete</i>');
+        $icon.click(function() {
+            deleteFile(this.parentNode, key);
+        });
+        $item.append($icon);
+    }
     return $item;
 
 }
 
-function updateFile(newFileURL, uiinput, key, callback) {
+function updateFile(newFileURL, uiinput, key, callback, multiple) {
+    multiple = multiple || false;
+
     $uiInput = $(uiinput);
     var $button = $uiInput.find("." + key + "-upload");
     var $buttonText = $button.children("span");
@@ -172,6 +179,8 @@ function updateFile(newFileURL, uiinput, key, callback) {
         data.append(key, files[index]);
     }
 
+    data.append('multiple', multiple)
+
 
     $.ajax({
         xhr: function () {
@@ -200,11 +209,11 @@ function updateFile(newFileURL, uiinput, key, callback) {
             $buttonText.text("Complete!");
             response = JSON.parse(response);
             $lastItem = $('.view-' + key).last();
-            if ($lastItem.length === 0 || $lastItem.is('span')) {
+            if (!multiple || $lastItem.length === 0 || $lastItem.is('span')) {
                 $lastItem.remove();
             }
             for(var i = 0; i < response.downloadLinks.length; i++) {
-                $newItem = createFileView(key);
+                $newItem = createFileView(key, multiple);
                 $newLink = $newItem.find('a');
                 $newLink[0].innerHTML = response.fileNames[i];
                 $newLink.attr({

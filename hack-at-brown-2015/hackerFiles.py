@@ -7,8 +7,6 @@ import logging
 import hacker_page
 import operator
 
-multipleFiles = {"resume" : False, "receipts" : True}
-
 #Todo: shouldn't be called this.
 class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self, secret, key):
@@ -19,8 +17,9 @@ class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
             return self.redirect('/')
 
         newFiles = map(lambda f: f.key(), self.get_uploads(key))
+        multipleFileUpload = self.request.get('multiple') == "true"
 
-        if multipleFiles[key]:
+        if multipleFileUpload:
             existingFiles = getattr(hacker, key, [])
             value = existingFiles + newFiles
         elif len(newFiles) > 0:
