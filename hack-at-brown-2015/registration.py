@@ -109,7 +109,7 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		def post(self):
 			hacker = Hacker()
 			hacker.ip = self.request.remote_addr
-			for key in registration_keys:
+			for key in hacker_keys:
 				vals = self.request.get_all(key)
 				val =','.join(vals)
 				try:
