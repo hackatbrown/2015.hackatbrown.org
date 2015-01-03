@@ -5,7 +5,7 @@ from registration import Hacker
 from registration import generate_secret_for_hacker_with_email
 import json
 from template import template
-from registration import registration_keys
+from registration import hacker_keys
 from config import isMasterDB
 import random
 from google.appengine.api import taskqueue
