@@ -30,7 +30,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         receiptsFileNames = ""
 
         if hacker.resume:
-            resumeFileName = hackerFiles.getFileNames(hacker.resume)
+            resumeFileName = hackerFiles.getFileName(hacker.resume)
 
         if hacker.receipts and hacker.receipts[0] != None:
             receiptsFileNames = hackerFiles.getFileNames(hacker.receipts)

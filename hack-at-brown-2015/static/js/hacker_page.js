@@ -132,6 +132,15 @@ function requestNewUploadURL(uiinput, key, callback) {
     });
 }
 
+function createFileView(key) {
+    $item = $('<div class="view-' + key + '"><a href="dummy">dummy</a><i class="ui basic rsvp button delete-file">Delete</i></div>');
+    $item.find('i').click(function() {
+        deleteFile(this.parentNode, key);
+    });
+    return $item;
+
+}
+
 function updateFile(newFileURL, uiinput, key, callback) {
     $uiInput = $(uiinput);
     var $button = $uiInput.find("." + key + "-upload");
@@ -193,10 +202,9 @@ function updateFile(newFileURL, uiinput, key, callback) {
             $lastItem = $('.view-' + key).last();
             if ($lastItem.length === 0 || $lastItem.is('span')) {
                 $lastItem.remove();
-                $lastItem = $('<div class="view-' + key + '"><a href="dummy">dummy</a><i class="ui basic rsvp button delete-file">Delete</i></div>');
             }
             for(var i = 0; i < response.downloadLinks.length; i++) {
-                $newItem = $lastItem.clone();
+                $newItem = createFileView(key);
                 $newLink = $newItem.find('a');
                 $newLink[0].innerHTML = response.fileNames[i];
                 $newLink.attr({
@@ -204,11 +212,7 @@ function updateFile(newFileURL, uiinput, key, callback) {
                     'download' : response.fileNames[i],
                     'target' : '_blank'
                 });
-                $newItem.find('i').click(function() {
-                    deleteFile(this.parentNode, key);
-                });
                 $uiInput.append($newItem);
-                $lastItem = $newItem;
             }
 
             $button.on('mouseenter', resetState);

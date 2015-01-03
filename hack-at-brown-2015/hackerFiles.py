@@ -7,6 +7,8 @@ import logging
 import hacker_page
 import operator
 
+multipleFiles = {"resume" : False, "receipts" : True}
+
 #Todo: shouldn't be called this.
 class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self, secret, key):
@@ -16,10 +18,20 @@ class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
             logging.error("Attempted to change hacker's uploaded" + key + " but no hacker with key: " + secret)
             return self.redirect('/')
 
-        #all repeated or big if statement
-        existingFiles = getattr(hacker, key, [])
         newFiles = map(lambda f: f.key(), self.get_uploads(key))
-        setattr(hacker, key, existingFiles + newFiles)
+
+        if multipleFiles[key]:
+            existingFiles = getattr(hacker, key, [])
+            value = existingFiles + newFiles
+        elif len(newFiles) > 0:
+            existingFile = getattr(hacker, key, None)
+            if existingFile:
+                blobstore.delete(existingFile)
+            value = newFiles[0]
+        else:
+            value = None
+
+        setattr(hacker, key, value)
         hacker_page.putHacker(hacker)
 
         downloadLinks = map(getDownloadLink, newFiles)
@@ -49,11 +61,19 @@ class DeleteFileHandler(webapp2.RequestHandler):
         blobstore.delete(self.request.get('blobKey'))
         hacker_page.putHacker(hacker)
 
+def getFileName(blobKey):
+    if blobKey is None:
+        return None
+    info = blobstore.BlobInfo.get(blobKey)
+    if info is None:
+        return None
+
+    return info.filename
+
 def getFileNames(blobKeys):
     if blobKeys is None:
         return None
-    print(blobKeys)
-    return map(lambda key: blobstore.BlobInfo.get(key).filename, blobKeys)
+    return map(getFileName, blobKeys)
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
   def get(self, resource):
