@@ -41,7 +41,7 @@ def phoneValidator(prop, value):
 		raise datastore_errors.BadValueError(prop._name)
 
 class Hacker(ndb.Model):
-	#TODO: If you add a new prooerty, please remember to add that property to deletedHacker.py.
+	#TODO: If you add a new property, please remember to add that property to deletedHacker.py.
 
 	name = ndb.StringProperty(validator=stringValidator)
 	school = ndb.StringProperty(validator=stringValidator)

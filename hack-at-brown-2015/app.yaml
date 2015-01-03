@@ -4,7 +4,15 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+builtins:
+- deferred: on
+
 handlers:
+- url: /update_schema
+  script: updateSchemaHandler.app  # path to webapp2 application definition.
+  login: admin
+  secure: always
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico

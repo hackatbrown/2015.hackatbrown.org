@@ -234,6 +234,18 @@ class BreakdownHandler(webapp2.RequestHandler):
         self.response.write(template('breakdowns.html', {"field_counts": bd_counts_as_tuples}))
 '''
 
+class NormalizeEmailsHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("<form method='POST'><input type='submit' value='Do it'/></form>")
+    def post(self):
+        to_put = []
+        for h in itertools.chain(Hacker.query(), EmailListEntry.query()):
+            if h.email != h.email.lower():
+                h.email = h.email.lower()
+                to_put.append(h)
+        ndb.put_multi(to_put)
+        self.response.write("Well, it seemed to work...")
+
 
 class NormalizeEmailsHandler(webapp2.RequestHandler):
 	def get(self):
