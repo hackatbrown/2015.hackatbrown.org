@@ -322,8 +322,8 @@
                 <section class="panel hero">
                     <div class="inner_container">
                         <h1 class="hi">Reimbursements</h1>
-                        <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email.</strong> Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
-                        <p>Please provide your mailing address and upload your receipts below. If you have multiple receipts, please put them in a zip file.</p>
+                        <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email</strong>. We'll be able to reimburse up to $200 in travel costs this year. Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
+                        <p>Please upload your receipts below, and then provide your mailing address. If you have multiple receipts, please put them in a zip file.</p>
                         <div id="receipts-upload" class="upload field">
                             <label for="receipts">Receipts</label>
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
@@ -374,7 +374,9 @@
                                 <input type="text" id="country" name="country"/>
                             </div>
                         </form>
+                        {% if status == "accepted" %}
                         <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
+                        {% endif %}
                     </div>
                 </section>
             </div>
