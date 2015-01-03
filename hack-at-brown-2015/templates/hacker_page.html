@@ -67,6 +67,7 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
+        <p id="reimbursements-modal">We can reimburse you up to <a href="#reimbursements">$400</a> in transit fees.</p>
     </div>
   </div>
   <div class="actions">
@@ -91,7 +92,7 @@
                                     </div>
                                     {% if status == "accepted" %}
                                     <div class="rsvp field">
-                                        <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP" />
+                                        <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP?" />
                                     </div>
                                     {% endif %}
                                 </div>
@@ -106,7 +107,7 @@
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
-
+                        <div class="message_container">
                         {% if not hacker.resume %}
                         <div class="message items">
                             <div class="message item prompt">
@@ -134,10 +135,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% else %}
-                        <h3 class="secondary">None!</h3>
                         {% endif %}
-
+                        </div>
                     </div>
                 </section>
             </div>
@@ -414,6 +413,8 @@
   var receipts = "{{ hacker.receipts }}"
 
   $(document).ready(function () {
+      
+    messagesCheckNone();
 
     if (receipts == "None") {
         toggleReimbursementForm(false);
@@ -446,6 +447,13 @@
           this.preventDefault;
           setTabActive(this);
           switchPanes(2);
+        });
+        
+        $("#reimbursements-modal").click(function () {
+            this.preventDefault;
+            $("#rsvp-modal .no").click();
+            setTabActive($("#reimbursements_top"));
+            switchPanes(2);
         });
 
         $("#rsvp-link").click(function () {
