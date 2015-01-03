@@ -234,13 +234,20 @@ footer .social-links {
   text-transform: uppercase;
   margin-right: .25em;
   margin-bottom: 30px;
+  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 .admit_status.pending {
   background-color: #1b8eb9;
 }
-.admit_status.accepted,
+.admit_status.accepted {
+  background: none;
+  box-shadow: 0 0 0 2px #26a59f inset;
+  color: #26a59f;
+}
 .admit_status.confirmed {
-  background-color: #26a59f;
+  background: none;
+  box-shadow: 0 -60px 0 2px #26a59f inset;
 }
 .admit_status.checked.in {
   background-color: #ef5d93;

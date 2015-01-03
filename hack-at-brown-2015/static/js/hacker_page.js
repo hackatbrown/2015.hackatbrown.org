@@ -57,12 +57,17 @@ function rsvp(secret) {
                     response = JSON.parse(response);
                     if (response.success) {
                         $status = $('.admit_status');
+                        var $statusText = $status.children("span");
                         $status.removeClass('accepted');
                         $status.addClass('confirmed');
-                        $status.text('confirmed');
-
-                        $('.rsvp').remove();
-                        $('.delete').remove();
+                        $statusText.fadeOut(200, function () {
+                            $statusText.text("confirmed");
+                            $statusText.fadeIn(200);
+                        });
+                        $('.rsvp.field').fadeOut(200, function () {
+                            this.remove();
+                        });
+                        
                         $('#rsvp-link').remove();
                         $('#receipts-upload').show();
 

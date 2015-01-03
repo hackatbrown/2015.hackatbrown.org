@@ -112,15 +112,22 @@ footer .social-links {
   text-transform: uppercase;
   margin-right: .25em;
   margin-bottom: 30px;
+  transition: box-shadow .3s @defaultEasing, color .3s @defaultEasing, width .3s @defaultEasing;
 }
 
 .admit_status.pending {
   background-color: @blue;
 }
 
-.admit_status.accepted,
+.admit_status.accepted {
+  background: none;
+  box-shadow: 0 0 0 2px @teal inset;
+  color: @teal;
+}
+
 .admit_status.confirmed {
-  background-color: @teal;
+  background: none;
+  box-shadow: 0 -60px 0 2px @teal inset;
 }
 
 .admit_status.checked.in {
