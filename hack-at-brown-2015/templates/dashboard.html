@@ -27,56 +27,58 @@
       <div>Declined: <span><h2>%%declinedCount%%</h2></span></div>
 </div>
 <br>
-<div><h2 class='option'>Breakdown</h2></div>
-<div id='charts'>
-  <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
-  </select>
-    <div id='chart_1'></div>
-    <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
-</div>
-<div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
-  <div id="breakdowns" ng-show='showBreakdowns'>
+<div class="panel-section" id="breakdowns">
+  <h2 class='option'>Breakdown</h2>
+  <div id='breakdown-charts'>
+    <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
+    </select>
+      <div id='chart'></div>
+      <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
+  </div>
+  <div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
+    <div id="breakdown-numbers" ng-show='showBreakdowns'>
 
-    <h1 style=""> Schools </h1>
-    <div ng-repeat="(key, value) in school">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Year </h1>
-    <div ng-repeat="(key, value) in years">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Dietary Restrictions </h1>
-    <div ng-repeat="(key, value) in diet">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Shirt Sizes </h1>
-    <div ng-repeat="(key, value) in shirt">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Hardware Hack? </h1>
-    <div ng-repeat="(key, value) in hardware_hack">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> First Hackathon? </h1>
-    <div ng-repeat="(key, value) in first_hackathon">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Gender </h1>
-    <div ng-repeat="(key, value) in shirt_gen">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Status </h1>
-    <div ng-repeat="(key, value) in h_status">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
+      <h1> Schools </h1>
+      <div ng-repeat="(key, value) in school">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> Year </h1>
+      <div ng-repeat="(key, value) in years">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> Dietary Restrictions </h1>
+      <div ng-repeat="(key, value) in diet">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> Shirt Sizes </h1>
+      <div ng-repeat="(key, value) in shirt">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> Hardware Hack? </h1>
+      <div ng-repeat="(key, value) in hardware_hack">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> First Hackathon? </h1>
+      <div ng-repeat="(key, value) in first_hackathon">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> Gender </h1>
+      <div ng-repeat="(key, value) in shirt_gen">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
+      <br>
+      <h1> Status </h1>
+      <div ng-repeat="(key, value) in h_status">
+        <span><b>%%key%%:</b> %%value%%</span>
+      </div>
 
+    </div>
   </div>
   <br>
   <div id='menu_2nd_row' class='menu' >
@@ -107,6 +109,7 @@
         <input ng-model= "manualEmails" type='text' name='emails' style='text-align: center; width: 100%; height: 50'>
         <label ng-show='showManualStatus' style='display: block' ><b>%%manualStatus%%</b></label>
         {% if admin %}
+        <div ng-click='changeStatus("Accept")' class='button'>Accept</div>
         <div ng-click='changeStatus("Register")' class='button'>Sign Up</div>
         <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
@@ -145,8 +148,9 @@
       window.location.href = "/dashboard/__db_depopulate/" + number;
     }
   }
-</script>
-<a style="text-decoration:none" class='button' onclick="populateDB()">DB Populate</a>
-<a style="text-decoration:none" class='button' onclick="depopulateDB()">DB Depopulate</a>
+  </script>
+  <a style="text-decoration:none" class='button' onclick="populateDB()">DB Populate</a>
+  <a style="text-decoration:none" class='button' onclick="depopulateDB()">DB Depopulate</a>
 {% endif %}
+</div>
 {% endblock %}

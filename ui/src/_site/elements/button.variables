@@ -1,3 +1,47 @@
 /*******************************
     User Variable Overrides
 *******************************/
+/* Button Variables */
+
+@height: @baseInteractiveHeight;
+
+@textTransform: none;
+@fontWeight: 300;
+@textColor: @black;
+
+@primaryColor: @secondaryColor;
+
+@borderRadius: 0;
+
+@backgroundColor: @offwhite;
+@backgroundImage: none;
+@inactiveBoxShadow:inset 1px 0 0 -1px @blue;
+@boxShadow: @inactiveBoxShadow;
+
+@hoverBackgroundColor: @lightgrey;
+@hoverBackgroundImage: none;
+@hoverBoxShadow: @inactiveBoxShadow;
+
+@downBackgroundColor: @grey;
+@downBackgroundImage: none;
+@downBoxShadow: @inactiveBoxShadow;
+
+@activeBackgroundColor: @grey;
+@activeBackgroundImage: none;
+@activeBoxShadow: inset 1px -50px 0 -1px @blue;
+
+@verticalBoxShadow: none;
+
+@loadingBackgroundColor: #F0F0F0;
+
+@labeledIconLeftShadow: none;
+@labeledIconRightShadow: none;
+
+@mini: 0.6rem;
+@tiny: 0.7rem;
+@small: 0.85rem;
+@medium: 0.92rem;
+@large: 1rem;
+@big: 1.125rem;
+@huge: 1.25rem;
+@massive: 1.3rem;

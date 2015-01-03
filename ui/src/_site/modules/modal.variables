@@ -1,3 +1,5 @@
 /*******************************
          Site Overrides
 *******************************/
+@contentFontSize: 1.3em;
+@actionAlign: left;

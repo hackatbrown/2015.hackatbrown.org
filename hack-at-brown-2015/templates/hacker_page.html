@@ -12,7 +12,6 @@
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
 
-
 {% endblock %}
 
 {% block headjs %}
@@ -35,12 +34,16 @@
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
     <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
+    {% if status == "accepted" or status == "confirmed" %}
+    <li class="top-bar_li" id="reimbursements_top"><a href="#reimbursements">Reimbursements</a></li>
+    {% endif %}
+
 </ul>
 {% endblock %}
 
 {% block content %}
 
-<div class="ui basic modal small">
+<div id="delete-modal" class="ui basic modal small">
   <div class="content">
     <div class="description">
         <p>Sure you want to cancel your registration?</p>
@@ -48,10 +51,23 @@
     </div>
   </div>
   <div class="actions">
-    <div class="ui button no">Nevermind</div>
     <div class="ui button pink yes">Cancel Registration</div>
+    <div class="ui button no">Nevermind</div>
   </div>
 </div>
+
+<div id="rsvp-modal" class="ui basic modal small">
+  <div class="content">
+    <div class="description">
+        <p>Confirm your attendance?</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui button teal yes">Confirm</div>
+    <div class="ui button no">Nevermind</div>
+  </div>
+</div>
+
 
 <div id="skrollr-body" class="trigrid container lightgrey">
     <div class="outer_container">
@@ -61,46 +77,64 @@
                     <div class="inner_container">
                             <h1 class="hi">Hey {{ name }}!</h1>
                             <p>your admission status is</p>
-                            <div class="admit_status {{ status }}">
-                                {{ status }}
-                            </div>
-                            <div class="delete field">
-                                <input id="delete-button" class="ui button" type="button" value="Cancel Registration" />
+                            <div class="status-actions">
+                                <div class="left_group">
+                                    <div class="admit_status {{ status }}">
+                                        <span>{{ status }}</span>
+                                    </div>
+                                    {% if status == "accepted" %}
+                                    <div class="rsvp field">
+                                        <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP" />
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
+                                <div class="delete field">
+                                    <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
+                                </div>
+                                {% endif %}
                             </div>
                     </div>
                 </section>
                 <section id="messages" class="panel grey secondary">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
-                        <h3 class="secondary">None yet!</h3>
 
-<!--                         <div class="message items">
+                        {% if not hacker.resume %}
+                        <div class="message items">
                             <div class="message item prompt">
                                 <h3>You haven't uploaded your resume yet!</h3>
                                 <p>We give our sponsors your resume for potential recruitment opportunities.</p>
-                                <div class="upload field">
-                                    <input id="resume-message" class="resume-upload" type="file" name="resume" onchange="uploadResume(this.parentNode)"/>
-                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume-message').click()">
-                                        {% if hacker.resume %}
-                                        <span>Re-upload</span>
-                                        {% else %}
-                                        <span>Upload Resume</span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="file-name">
-                                        {% if hacker.resume %}
-                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
-                                        {% else %}
-                                        <span class="view-resume">No file chosen.</span>
-                                        {% endif %}
+                                <div class="actions">
+                                    <div class="field">
+                                        <div class="upload-control">
+                                            <div id="resume-over" class="resume-upload upload ui button" onclick="document.getElementById('resume').click()">
+                                                {% if hacker.resume %}
+                                                <span>Re-upload</span>
+                                                {% else %}
+                                                <span>Upload Resume</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="file-name">
+                                                {% if hacker.resume %}
+                                                <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                                {% else %}
+                                                <span class="view-resume">No file chosen.</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-</div>--> 
-                   </div>
+                        </div>
+                        {% else %}
+                        <h3 class="secondary">None!</h3>
+                        {% endif %}
+
+                    </div>
                 </section>
             </div>
-            <div class="double_right pane pane1 white">
+            <div class="double_left pane pane1 white">
                 <section id="myinfo" class="panel">
 
                     <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
@@ -240,8 +274,8 @@
                             <div class="field">
                                 <label for="resume">Resume <span class="optional">(Recommended)</span></label>
                                 <div class="upload-control">
-                                    <input id="resume" class="resume-upload" type="file" name="resume"/>
-                                    <div id="resume-over" class="resume-upload ui button" onclick="document.getElementById('resume').click()">
+                                    <input id="resume" class="resume-upload upload" type="file" name="resume"/>
+                                    <div id="resume-over" class="resume-upload upload ui button" onclick="document.getElementById('resume').click()">
                                         {% if hacker.resume %}
                                         <span>Re-upload</span>
                                         {% else %}
@@ -281,12 +315,69 @@
                                 <div class="condor"></div>
                             </div>
                         </div>
-<!--
-                        <div class="ui submit button active">
-                            Button
-                        </div>
--->
                     </form>
+                </section>
+            </div>
+            <div class="double_left pane pane2 white">
+                <section class="panel hero">
+                    <div class="inner_container">
+                        <h1 class="hi">Reimbursements</h1>
+                        <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email</strong>. We'll be able to reimburse up to $200 in travel costs this year. Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
+                        <p>Please upload your receipts below, and then provide your mailing address. If you have multiple receipts, please put them in a zip file.</p>
+                        <div id="receipts-upload" class="upload field">
+                            <label for="receipts">Receipts</label>
+                            <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
+                            <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
+                                {% if hacker.receipts %}
+                                <span>Re-upload</span>
+                                {% else %}
+                                <span>Upload Receipts</span>
+                                {% endif %}
+                            </div>
+                            <div class="file-name">
+                                {% if hacker.receipts %}
+                                <a class="view-receipts" href='/__serve/{{ hacker.receipts }}' target="_blank" download="{{receiptsFileName}}">{{receiptsFileName}}</a>
+                                {% else %}
+                                <span class="view-receipts">No file chosen.</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <form id='address_form' class='ui form inner_container'enctype="multipart/form-data" autocomplete="on" novalidate
+                        {% if not hacker.receipts %} style="display: none;" {% endif %}
+                        >
+<!--                         TODO: VALIDATION -->
+                            <div class="field">
+                                <label for="address1">address 1</label>
+                                <input type="text" id="address1" name="address1"/>
+                            </div>
+                            <div class="field">
+                                <label for="address2">address2</label>
+                                <input type="text" id="address2" name="address2"/>
+                            </div>
+                            <div class="field">
+                                <label for="city">city</label>
+                                <input type="text" id="city" name="city"/>
+                            </div>
+                            <div class="field">
+                                <label for="state">state</label>
+                                <select id="state" name="state">
+                                    <option value="">Please Select</option>
+                                    <option value="N/A">N/A</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District Of Columbia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="zip">zip</label>
+                                <input type="text" id="zip" name="zip"/>
+                            </div>
+                            <div class="field">
+                                <label for="country">country</label>
+                                <input type="text" id="country" name="country"/>
+                            </div>
+                        </form>
+                        {% if status == "accepted" %}
+                        <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
+                        {% endif %}
+                    </div>
                 </section>
             </div>
         </div>
@@ -306,36 +397,67 @@
 
 <script>
   var secret = "{{ hacker.secret }}";
-    
+  var status = "{{ status }}";
+  var receipts = "{{ hacker.receipts }}"
 
   $(document).ready(function () {
+
+    if (receipts == "None") {
+        toggleReimbursementForm(false);
+    }
 
     $('#delete-button').click(function() {
         confirmDeleteHacker(secret);
     });
 
+    $('#rsvp-button').click(function() {
+        rsvp(secret);
+    });
+
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
-      switchToMyInfo();
+      switchPanes(1);
+    }
+
+    if (status == "accepted" || status == "confirmed") {
+        if (location.hash === '#reimbursements') {
+          setTabActive($("#reimbursements_top"));
+          switchPanes(2);
+        }
+
+        $("#reimbursements_top").click(function () {
+          this.preventDefault;
+          setTabActive(this);
+          switchPanes(2);
+        });
+
+        $("#rsvp-link").click(function () {
+          this.preventDefault;
+          setTabActive($("#status_top"));
+          switchPanes(0);
+        });
+
+        if (status == "accepted") {
+            $('#receipts-upload').hide();
+        }
     }
 
     $("#status_top").click(function () {
       this.preventDefault;
       setTabActive(this);
-      switchFromMyInfo();
+      switchPanes(0);
     });
 
     $("#info_top").click(function () {
       this.preventDefault;
       setTabActive(this);
-      switchToMyInfo();
+      switchPanes(1);
     });
-      
-      initalizeNavMenu('.top-bar_ul');
 
+    initalizeNavMenu('.top-bar_ul');
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
-    $("#update_form input:not(.tags-input)").change(function () {
+    $(".form :input:not(.tags-input)").change(function () {
       saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
@@ -356,10 +478,6 @@
       hideSelected: true,
       onDropdownOpen: slideOut,
       onDropdownClose: slideIn,
-    });
-
-    $year.change(function () {
-      saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
     $yearLabel.click(function() {
@@ -395,7 +513,6 @@
 
     var $dietaryRestrictionsSelectize = $dietaryRestrictions.siblings(".selectize-control");
     var $dietaryRestrictionsLabel = $dietaryRestrictions.parent().siblings("label");
-    var $dietaryDropdown = $dietaryRestrictionsSelectize.find(".selectize-dropdown");
 
     $dietaryRestrictionsLabel.click(function() {
       $dietaryRestrictionsSelectize.find("input").focus();
@@ -405,7 +522,7 @@
     var $teammates = $('#teammates');
     var $teammatesSelectize = $teammates.siblings(".selectize-control");
     var $teammatesLabel = $teammates.parent().siblings("label");
-    var $teammatesDropdown = $teammatesSelectize.find(".selectize-dropdown");
+
     var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
       '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
 

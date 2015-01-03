@@ -14,12 +14,14 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
 <link rel='stylesheet' href='/static/semantic-final/components/input.min.css' />
 <link rel='stylesheet' href='/static/semantic/minified/collections/grid.min.css' />
 
-<!--<link rel="stylesheet" href="/static/Tagit/css/jquery.tagit.css" type="text/css"/>-->
 <link rel="stylesheet" href="/static/css/select2.css"/>
 <link rel='stylesheet' href='/static/css/index.min.css'/>
 <link rel='stylesheet' href='/static/css/registration.min.css'/>
 {% if registration_status == "sign_up_for_updates" %}
 <link rel='stylesheet' href='/static/css/index-supdates.css'/>
+{% endif %}
+{% if registration_status == "registration_closed" %}
+<link rel='stylesheet' href='/static/semantic-final/components/button.min.css'/>
 {% endif %}
 {% endblock %}
 
@@ -87,9 +89,16 @@ Hack@Brown 2015 &mdash; February 7&ndash;8, Brown University
                 {% endif %}
                 
                 {% if registration_status == "registration_closed" %}
-                <div class='main_cta'>
-                    Registration is closed, sorry!
-                </div>
+                <style>
+                    input[type=submit] {
+                        background-color: #918f8c !important;
+                        border: 2px solid #918f8c !important;
+                        cursor: not-allowed !important;
+                    }
+                </style>
+                <form class="init_reg">
+                    <input type="submit" value="REGISTRATION CLOSED" class="init_submit light" disabled/>
+                </form>
                 {% endif %}
             </div>
 

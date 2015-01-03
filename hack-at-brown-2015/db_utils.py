@@ -26,7 +26,7 @@ class CleanupHandler(webapp2.RequestHandler):
         return self.response.write(json.dumps(result))
 
     def get(self):
-        jinjaVars = {"properties" : hacker_keys}
+        jinjaVars = {"properties" : registration_keys}
         return self.response.write(template("db_cleanup.html", jinjaVars))
 
 def cleanup(property, jsonKeys):

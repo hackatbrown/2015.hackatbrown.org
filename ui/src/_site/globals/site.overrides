@@ -1,3 +1,156 @@
 /*******************************
          Site Overrides
 *******************************/
+/* Hamburger Menu Animations + Transition */
+.hamsvg > .bar {
+  transform: rotate(0) translateY(0) translateX(0);
+  transform-origin: 0px 4px;
+  transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out, fill .4s ease-in-out;
+}
+.hamsvg {
+  transition: transform 0.2s ease-in-out;
+}
+.hamsvg > .bar:nth-of-type(1) {
+  transform-origin: 0px 25px;
+}
+nav.open .hamsvg > .bar:nth-of-type(1) {
+  transform: rotate(-45deg) translate(0, -2px);
+}
+nav.open .hamsvg > .bar:nth-of-type(2) {
+  opacity: 0;
+}
+nav.open .hamsvg > .bar:nth-of-type(3) {
+  transform: rotate(45deg) translate(0, 2px);
+}
+nav.open .hamsvg {
+  transform: translate(5px, 0);
+}
+
+/* ETC */
+.caps {
+  text-transform: uppercase;
+}
+.blue {
+  color: @blue;
+}
+
+/* Footer */
+
+footer {
+  margin-top: 180px;
+  margin-bottom: 50px;
+  font-weight: 300;
+}
+footer .coc {
+  color: #918f8c;
+  margin-left: 0.5em;
+}
+
+.coc:hover {
+  border: none;
+  color: inherit;
+}
+
+footer .social-links {
+  list-style: none;
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+.social-links li {
+  display: inline;
+}
+
+.social-links a {
+  display: inline-block;
+  padding: 0 0.7em;
+
+  height: 1.2em;
+  width: 1.2em;
+
+  background-size: 1.2em 1.2em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.8;
+
+  vertical-align: text-top;
+}
+
+.social-links a:hover {
+  opacity: 1.0;
+  border: none;
+}
+
+.email {
+  padding-top: 0.1em !important;
+  background: url("/static/img/social-icons/email.svg");
+}
+
+.facebook {
+  background: url("/static/img/social-icons/facebook.svg");
+}
+
+.twitter {
+  background: url("/static/img/social-icons/twitter.svg");
+}
+
+.blog {
+  background: url("/static/img/social-icons/medium.svg");
+}
+
+
+/*Admission Status Box - TODO Put this in a more sensical place*/
+.admit_status {
+  background-color: @black;
+  padding: 0 .5em;
+//  padding-top: .1em;
+//  padding-bottom: .15em;
+  line-height: 48px;
+  display: inline-block;
+  color: white;
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-right: .25em;
+  margin-bottom: 30px;
+  transition: box-shadow .3s @defaultEasing, color .3s @defaultEasing, width .3s @defaultEasing;
+}
+
+.admit_status.pending {
+  background-color: @blue;
+}
+
+.admit_status.accepted {
+  background: none;
+  box-shadow: 0 0 0 2px @teal inset;
+  color: @teal;
+}
+
+.admit_status.confirmed {
+  background: none;
+  box-shadow: 0 -60px 0 2px @teal inset;
+}
+
+.admit_status.checked.in {
+  background-color: @pink;
+}
+
+.admit_status.waitlisted {
+  background-color: @yellow;
+}
+
+.admit_status.not-accepted {
+  background-color: @black;
+}
+
+.ui.rsvp.button {
+  line-height: 48px !important;
+  height: 48px !important;
+  margin-bottom: 15px;
+  font-size: 16px;
+  margin-right: 0;
+}
+
+//Messages Interface.  Interim
+.message p {
+  font-weight: 300;
+}
