@@ -28,6 +28,21 @@ function initalizeHamburger() {
     });
 }
 
+function deleteFile(uiInput, key) {
+    var blobKey = $(uiInput).find('a').attr('href').split('__serve/')[1];
+
+
+    var data = {'key' : key, 'blobKey' : blobKey};
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url: '/secret/__delete_file/' + secret,
+        success : function() {
+            $(uiInput).remove();
+        }
+    });
+}
+
 function confirmDeleteHacker(secret) {
     $('#delete-modal')
       .modal({
@@ -145,8 +160,6 @@ function updateFile(newFileURL, uiinput, key, callback) {
     var i =0;
     files = $button.filter("input")[0].files;
     for (index in files) {
-        console.log(index);
-        console.log(files[index]);
         data.append(key, files[index]);
     }
 
@@ -172,24 +185,30 @@ function updateFile(newFileURL, uiinput, key, callback) {
         success: function (response) {
             complete = true;
             $button.css("box-shadow", "inset " + width + 5 + "px 0 0 -1px #26a59f");
+
             $button.addClass("complete");
             $button.removeClass("loading active");
             $buttonText.text("Complete!");
             response = JSON.parse(response);
-            $lastLink = $('.view-' + key).last();
+            $lastItem = $('.view-' + key).last();
+            if ($lastItem.length === 0 || $lastItem.is('span')) {
+                $lastItem.remove();
+                $lastItem = $('<div class="view-' + key + '"><a href="dummy">dummy</a><i class="ui basic rsvp button delete-file">Delete</i></div>');
+            }
             for(var i = 0; i < response.downloadLinks.length; i++) {
-                console.log("LINK: " + i);
-                console.log('')
-                $newLink = $("<a class='view-" + key + "'></a>");
+                $newItem = $lastItem.clone();
+                $newLink = $newItem.find('a');
                 $newLink[0].innerHTML = response.fileNames[i];
                 $newLink.attr({
                     'href' : response.downloadLinks[i],
                     'download' : response.fileNames[i],
                     'target' : '_blank'
                 });
-                $lastLink.after($newLink);
-                $newLink.before($('<br>'));
-                $lastLink = $newLink;
+                $newItem.find('i').click(function() {
+                    deleteFile(this.parentNode, key);
+                });
+                $uiInput.append($newItem);
+                $lastItem = $newItem;
             }
 
             $button.on('mouseenter', resetState);

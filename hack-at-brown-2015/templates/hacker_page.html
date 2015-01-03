@@ -337,8 +337,11 @@
                             <div class="file-name">
                                 {% if hacker.receipts %}
                                 {% for receipt in hacker.receipts %}
-                                <a class="view-receipts" href='/__serve/{{ receipt }}' target="_blank" download="{{receiptsFileNames[loop.index]}}">{{receiptsFileNames[loop.index]}}</a>
+                                <div class="view-receipts">
+                                <a href='/__serve/{{ receipt }}' target="_blank" download="{{receiptsFileNames[loop.index0]}}">{{receiptsFileNames[loop.index0]}}</a>
+                                <i class="ui basic rsvp button delete-file">Delete</i>
                                 <br>
+                                </div>
                                 {% endfor %}
                                 {% else %}
                                 <span class="view-receipts">No file chosen.</span>
@@ -417,6 +420,10 @@
         rsvp(secret);
     });
 
+    $(".delete-file").click(function() {
+        deleteFile(this.parentNode, 'receipts');
+    });
+
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
       switchPanes(1);
@@ -443,6 +450,7 @@
         if (status == "accepted") {
             $('#receipts-upload').hide();
         }
+
     }
 
     $("#status_top").click(function () {

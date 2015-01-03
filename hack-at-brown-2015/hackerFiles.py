@@ -33,7 +33,21 @@ def getDownloadLink(blobKey):
 def newURL(secret, key):
     return blobstore.create_upload_url('/secret/__change/' + secret + '/' + key)
 
+class DeleteFileHandler(webapp2.RequestHandler):
+    def post(self, secret):
+        hacker = hacker_page.getHacker(secret)
 
+        if hacker is None:
+            logging.error("Attempted to change hacker's uploaded" + key + " but no hacker with key: " + secret)
+            return self.response.write("failure")
+
+        key = self.request.get('key')
+        files = getattr(hacker, key, [])
+        files.remove(self.request.get('blobKey'))
+        setattr(hacker, key, files)
+
+        blobstore.delete(self.request.get('blobKey'))
+        hacker_page.putHacker(hacker)
 
 def getFileNames(blobKeys):
     if blobKeys is None:

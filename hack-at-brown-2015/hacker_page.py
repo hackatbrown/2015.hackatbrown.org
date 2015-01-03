@@ -89,6 +89,7 @@ class HackerUpdateHandler(webapp2.RequestHandler):
             else:
                 logging.info("Key not found")
 
+        logging.info(hacker.receipts)
         putHacker(hacker)
 
         self.response.write(json.dumps({"success": True}))
@@ -129,6 +130,9 @@ def sendReimbursementFormToBrown(hacker):
     return not (failedHTML in result.content)
 
 def putHacker(hacker):
+
+    if hacker.receipts == [None]:
+        hacker.receipts = []
     memcachedKey = memcachedBase + hacker.secret
 
     if not memcache.set(memcachedKey, hacker, cacheTime):
