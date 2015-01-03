@@ -67,7 +67,7 @@ function rsvp(secret) {
                         $('.rsvp.field').fadeOut(200, function () {
                             this.remove();
                         });
-                        
+
                         $('#rsvp-link').remove();
                         $('#receipts-upload').show();
 
@@ -120,7 +120,6 @@ function requestNewUploadURL(uiinput, key, callback) {
 function updateFile(newFileURL, uiinput, key, callback) {
     $uiInput = $(uiinput);
     var $button = $uiInput.find("." + key + "-upload");
-    console.log($button);
     var $buttonText = $button.children("span");
     var width = $button.outerWidth();
     var complete = false;
@@ -143,7 +142,14 @@ function updateFile(newFileURL, uiinput, key, callback) {
     $button.addClass("loading active");
 
     var data = new FormData();
-    data.append(key, $button.filter("input")[0].files[0]);
+    var i =0;
+    files = $button.filter("input")[0].files;
+    for (index in files) {
+        console.log(index);
+        console.log(files[index]);
+        data.append(key, files[index]);
+    }
+
 
     $.ajax({
         xhr: function () {
@@ -170,18 +176,23 @@ function updateFile(newFileURL, uiinput, key, callback) {
             $button.removeClass("loading active");
             $buttonText.text("Complete!");
             response = JSON.parse(response);
-            $resumeView = $('.view-' + key);
+            $lastLink = $('.view-' + key).last();
+            for(var i = 0; i < response.downloadLinks.length; i++) {
+                console.log("LINK: " + i);
+                console.log('')
+                $newLink = $("<a class='view-" + key + "'></a>");
+                $newLink[0].innerHTML = response.fileNames[i];
+                $newLink.attr({
+                    'href' : response.downloadLinks[i],
+                    'download' : response.fileNames[i],
+                    'target' : '_blank'
+                });
+                $lastLink.after($newLink);
+                $newLink.before($('<br>'));
+                $lastLink = $newLink;
+            }
 
-            $newLink = $("<a class='view-" + key + "'></a>");
-            $newLink[0].innerHTML = response.fileName;
-            $newLink.attr({
-                'href' : response.downloadLink,
-                'download' : response.fileName,
-                'target' : '_blank'
-            });
-            $resumeView.replaceWith($newLink);
-
-            $button.one('mouseenter', resetState);
+            $button.on('mouseenter', resetState);
             setTimeout(resetState, 2500);
 
             setTimeout(callback, 1000);

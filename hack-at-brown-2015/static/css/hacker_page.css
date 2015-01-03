@@ -36,7 +36,6 @@
   flex: 0 0 128px;
   margin-right: .75em;
   transition: box-shadow 0s !important;
-  width: 128px;
 }
 .upload.fadeBackground {
   transition: box-shadow 0s, background-color 1s cubic-bezier(.55,0,.1,1) !important;
@@ -52,8 +51,8 @@
 
 .file-name {
   margin-left: .75em;
-  white-space: nowrap;
-  overflow: hidden;
+/*  white-space: nowrap;
+*/  overflow: hidden;
   text-overflow: ellipsis;
 }
 

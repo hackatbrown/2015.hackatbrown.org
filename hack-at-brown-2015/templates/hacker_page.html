@@ -326,7 +326,7 @@
                         <p>Please upload your receipts below, and then provide your mailing address. If you have multiple receipts, please put them in a zip file.</p>
                         <div id="receipts-upload" class="upload field">
                             <label for="receipts">Receipts</label>
-                            <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
+                            <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                 {% if hacker.receipts %}
                                 <span>Re-upload</span>
@@ -336,7 +336,10 @@
                             </div>
                             <div class="file-name">
                                 {% if hacker.receipts %}
-                                <a class="view-receipts" href='/__serve/{{ hacker.receipts }}' target="_blank" download="{{receiptsFileName}}">{{receiptsFileName}}</a>
+                                {% for receipt in hacker.receipts %}
+                                <a class="view-receipts" href='/__serve/{{ receipt }}' target="_blank" download="{{receiptsFileNames[loop.index]}}">{{receiptsFileNames[loop.index]}}</a>
+                                <br>
+                                {% endfor %}
                                 {% else %}
                                 <span class="view-receipts">No file chosen.</span>
                                 {% endif %}
