@@ -84,9 +84,9 @@
       <h2 class='option' >Downloads</h2>
       <div class='panel-content'>
         <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes (TODO)</div>
-        <a href='/dashboard/csv'><div class='button' >Download All CSV</div></a>
+        <a href='/dashboard/csv' download="HAB_all_apps_anon.csv"><div class='button' >Download All CSV</div></a>
         {% if admin %}
-        <a href='/dashboard/csv?include_personally_identifiable_info=1'><div class='button' >Download All CSV <div class='button-subtitle'>Including personal information</div></div></a>
+        <a href='/dashboard/csv?include_personally_identifiable_info=1' download="HAB_all_apps.csv"><div class='button' >Download All CSV <div class='button-subtitle'>Including personal information</div></div></a>
         {% endif %}
       </div>
     </div>
