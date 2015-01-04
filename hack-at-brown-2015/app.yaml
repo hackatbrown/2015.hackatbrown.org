@@ -1,5 +1,5 @@
-application: hackatbrown2015
-version: 2
+application: hackatbrown2015-dev
+version: 9 
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -14,6 +14,10 @@ handlers:
 - url: /admin_checkin
   script: admin_checkin.app
   login: required
+
+- url: /dashboard/messages/message_task_queue_work
+  script: main.app
+  login: admin
 
 - url: /dashboard
   script: main.app
