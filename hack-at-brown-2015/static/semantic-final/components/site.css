@@ -268,3 +268,9 @@ footer .social-links {
 .message p {
   font-weight: 300;
 }
+.money {
+  color: #26a59f !important;
+}
+.money.negative {
+  color: #d95c5c !important;
+}

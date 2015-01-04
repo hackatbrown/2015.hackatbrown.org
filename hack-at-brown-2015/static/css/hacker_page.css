@@ -78,9 +78,12 @@ p.caption {
   background-color: rgba(145, 143, 140, .05);
 }
 
-.panel.secondary {
+.panel.condensed-top {
   padding-top: 30px;
-  padding-bottom: 90px;
+}
+
+.panel.condensed-bottom {
+  padding-bottom: 30px;
 }
 
 .panel.hero p {
@@ -161,13 +164,13 @@ h3.secondary {
 }
 
 .panes.in-pane1 {
-  -webkit-transform: translate3d(-33.5%, 0, 0);
-  transform: translate3d(-33.5%, 0, 0);
+  -webkit-transform: translate3d(-33.333%, 0, 0);
+  transform: translate3d(-33.333%, 0, 0);
 }
 
 .panes.in-pane2 {
-  -webkit-transform: translate3d(-66%, 0, 0);
-  transform: translate3d(-66%, 0, 0);
+  -webkit-transform: translate3d(-66.666%, 0, 0);
+  transform: translate3d(-66.666%, 0, 0);
 }
 
 /*Page*/
@@ -347,8 +350,8 @@ input:focus:-o-autofill, textarea:focus:-o-autofill, select:focus:-o-autofill {
   position: relative;
   width: 100%;
   height: auto;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 90px;
+  padding-bottom: 90px;
 }
 .panel.white {
   background-color: rgba(255, 255, 255, .8);
@@ -409,7 +412,7 @@ span.optional {
   font-weight: 300;
   color: #918f8c;
 }
-.two.fields .field {
+.fields .field {
   margin-bottom:0;
 }
 /*TODO: Check what this does*/

@@ -8833,6 +8833,12 @@ i.flag.zimbabwe:before {
   line-height: 35px !important;
 }
 
+.ui.form.condensed .row {
+  margin-bottom: 20px!important;
+  font-size: 1em!important;
+  line-height: 35px!important;
+}
+
 .ui.form ::input-placeholder {
   color: #918f8c !important;
   font-weight: 300;
@@ -24832,6 +24838,14 @@ footer .social-links {
   font-weight: 300;
 }
 
+.money {
+  color: #26a59f !important;
+}
+
+.money.negative {
+  color: #d95c5c !important;
+}
+
 /*
  * # Semantic UI
  * https://github.com/Semantic-Org/Semantic-UI
@@ -30386,6 +30400,12 @@ footer .social-links {
   line-height: 35px !important;
 }
 
+.ui.form.condensed .row {
+  margin-bottom: 20px!important;
+  font-size: 1em!important;
+  line-height: 35px!important;
+}
+
 .ui.form ::input-placeholder {
   color: #918f8c !important;
   font-weight: 300;
@@ -31554,6 +31574,12 @@ footer .social-links {
   margin-bottom: 40px !important;
   font-size: 1em !important;
   line-height: 35px !important;
+}
+
+.ui.form.condensed .row {
+  margin-bottom: 20px!important;
+  font-size: 1em!important;
+  line-height: 35px!important;
 }
 
 .ui.form ::input-placeholder {
