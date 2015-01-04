@@ -15,6 +15,10 @@ handlers:
   script: admin_checkin.app
   login: required
 
+- url: /dashboard/messages/message_task_queue_work
+  script: main.app
+  login: admin
+
 - url: /dashboard
   script: main.app
   login: required
