@@ -38,8 +38,9 @@ function messagesCheckNone() {
 // File Upload
 
 function deleteFile(uiInput, key) {
-    var blobKey = $(uiInput).find('a').attr('href').split('__serve/')[1];
-
+    $uiInput = $(uiInput);
+    var blobKey = $uiInput.find('a').attr('href').split('__serve/')[1];
+    var last = $uiInput.siblings('.view-' + key).length == 0;
 
     var data = {'key' : key, 'blobKey' : blobKey};
     $.ajax({
@@ -47,6 +48,8 @@ function deleteFile(uiInput, key) {
         data: data,
         url: '/secret/__delete_file/' + secret,
         success : function() {
+            //forgive me
+            $uiInput.siblings('#' + key + '-over').children('span').text(last ? "Upload " + key.charAt(0).toUpperCase() + key.slice(1) : " Upload More");
             $(uiInput).remove();
         }
     });
@@ -169,7 +172,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
         $button.removeAttr('style');
         $button.addClass('fadeBackground');
         $buttonText.fadeOut(200, function () {
-            $buttonText.text("Re-upload");
+            $buttonText.text(multiple ? "Upload More" : "Re-upload");
             $buttonText.fadeIn(200);
         });
         $button.unbind('mouseenter', resetState);
@@ -182,13 +185,12 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
     $button.addClass("loading active");
 
     var data = new FormData();
-    var i =0;
     files = $button.filter("input")[0].files;
     for (index in files) {
         data.append(key, files[index]);
     }
 
-    data.append('multiple', multiple)
+    data.append('multiple', multiple);
 
 
     $.ajax({
