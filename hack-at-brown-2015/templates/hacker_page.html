@@ -620,15 +620,12 @@
     })
 
     //Teammates Section
-    var $teammates = $('#teammates');
-    var $teammatesSelectize = $teammates.siblings(".selectize-control");
-    var $teammatesLabel = $teammates.parent().siblings("label");
 
     var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
       '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
 
 
-    $teammates.selectize({
+    var $teammates = $('#teammates').selectize({
       labelField: 'email',
       valueField: 'email',
       searchField: 'email',
@@ -671,9 +668,12 @@
         return false;
       }
     });
+      
+    var teammates = $teammates.selectize;
+    var $teammatesLabel = $teammates.parent().siblings("label");
 
     $teammatesLabel.click(function() {
-      $teammatesSelectize.find("input").focus();
+        teammates.focus();
     });
 
     //Shirt Size Section
