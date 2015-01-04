@@ -79,23 +79,36 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         if (status == "checked in") or (status == "confirmed"):
             keys += reimbursement_keys
 
+        kv = {}
         for key in parsed_request:
-            logging.info("key: " + key)
             if key in keys:
-                requestKey = parsed_request.get(key)
-                if requestKey != 'email':
-                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + requestKey)
-                    setattr(hacker, key, requestKey)
+                value = parsed_request.get(key)
+                if key != 'email':
+                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
+                    kv[key] = value
             else:
-                logging.info("Key not found")
+                logging.info("Key not found or authorized")
 
-        logging.info(hacker.receipts)
-        putHacker(hacker)
+        if kv:
+            updateHacker(secret, kv)
 
         self.response.write(json.dumps({"success": True}))
 
+def updateHacker(secret, dict):
+    memcachedKey = memcachedBase + secret
+    client = memcache.Client()
+    while True:
+        hacker = client.gets(memcachedKey)
+        if hacker is None:
+            hacker = registration.Hacker.WithSecret(secret)
+
+        for k, v in dict.iteritems():
+            setattr(hacker, k, v)
+        if client.cas(memcachedKey, hacker):
+            hacker.put()
+            break
+
 def getHacker(secret):
-    logging.info(secret)
     memcachedKey = memcachedBase + secret
     hacker = memcache.get(memcachedKey)
     if hacker is None:

@@ -332,7 +332,7 @@
                         {% endif %}
                         <h1 class="hi">Congratulations!</h1>
                         <p>We can reimburse you up to <span class="money">$400</span> in transit fees.</p>
-                        <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p> 
+                        <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
                 </section>
@@ -372,7 +372,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel grey condensed-top">                        
+                <section class="panel grey condensed-top">
                         <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
@@ -534,7 +534,7 @@
           setTabActive(this);
           switchPanes(2);
         });
-        
+
         $("#reimbursements-modal").click(function () {
             this.preventDefault;
             $("#rsvp-modal .no").click();
@@ -675,7 +675,7 @@
         return false;
       }
     });
-      
+
     var teammates = $teammates.selectize;
     var $teammatesLabel = $teammates.parent().siblings("label");
 
@@ -729,7 +729,8 @@
     {% if status == "accepted" or status == "confirmed" %}
      //State Section
     var $state = $('#state');
-     var $state2 = $state.clone().attr("id","state2").attr("tabindex","-1").insertAfter($state);
+    $state.val("{{ hacker.state }}");
+    var $state2 = $state.clone().attr("id","state2").attr("tabindex","-1").insertAfter($state);
     $state.selectize({
         create: false,
         hideSelected: true,
@@ -742,7 +743,7 @@
      $stateLabel.click(function() {
          state.focus();
      });
-     
+
      $state2.change( function() {
          state.setValue(this.value);
      });
