@@ -8942,6 +8942,7 @@ i.flag.zimbabwe:before {
   padding-left: 0 !important;
   padding: 0;
   color: #404040;
+  background: none !important;
 }
 
 .ui.form .selectize-input.focus {
@@ -20282,7 +20283,7 @@ ol.ui.horizontal.list li:before,
   padding: 1.7142rem 2rem;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 1.6em;
-  line-height: 1.33em;
+  line-height: 1.3em;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.85);
   border-bottom: none;
@@ -30509,6 +30510,7 @@ footer .social-links {
   padding-left: 0 !important;
   padding: 0;
   color: #404040;
+  background: none !important;
 }
 
 .ui.form .selectize-input.focus {
@@ -31685,6 +31687,7 @@ footer .social-links {
   padding-left: 0 !important;
   padding: 0;
   color: #404040;
+  background: none !important;
 }
 
 .ui.form .selectize-input.focus {

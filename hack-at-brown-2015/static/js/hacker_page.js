@@ -154,6 +154,7 @@ function createFileView(key, multiple) {
     $item = $('<div class="view-' + key + '"><a href="dummy">dummy</a></div>');
 
     if (multiple) {
+        $item.addClass('multi');
         $icon = $('<i class="ui basic rsvp button delete-file">Delete</i>');
         $icon.click(function() {
             deleteFile(this.parentNode, key);
