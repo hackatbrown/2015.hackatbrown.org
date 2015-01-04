@@ -154,12 +154,20 @@ function createFileView(key, multiple) {
     $item = $('<div class="view-' + key + '"><a href="dummy">dummy</a></div>');
 
     if (multiple) {
-        $item.addClass('multi');
-        $icon = $('<i class="ui basic rsvp button delete-file">Delete</i>');
-        $icon.click(function() {
-            deleteFile(this.parentNode, key);
+        $item.addClass('multi ui card');
+        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra'><span class='filename'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
+        $delete = $item.find('#delete');
+        $delete.click(function() {
+            deleteFile(this.parentNode.parentNode, key);
         });
-        $item.append($icon);
+        $item.find('.dimmer').dimmer({
+            on: 'hover'
+        });
+//        $icon = $('<i class="ui basic rsvp button delete-file">Delete</i>');
+//        $icon.click(function() {
+//            deleteFile(this.parentNode, key);
+//        });
+//        $item.append($icon);
     }
     return $item;
 
@@ -230,12 +238,25 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             if (!multiple || $existingItems.length === 0 || $existingItems.is('span')) {
                 $existingItems.remove();
             }
+            
+            if (multiple) {
+                //forgive me
+                $uiInput = $uiInput.find('.ui.cards');
+            }
+            
             for(var i = 0; i < response.downloadLinks.length; i++) {
+                href = response.downloadLinks[i];
                 $newItem = createFileView(key, multiple);
-                $newLink = $newItem.find('a');
-                $newLink[0].innerHTML = response.fileNames[i];
+                $newLink = $newItem.find('a');                
+                if(!multiple) {
+                    $newLink[0].innerHTML = response.fileNames[i];
+                } else {
+                    $newItem.find('.filename').text(response.fileNames[i]);
+                }
+                iframeurl = 'http://docs.google.com/viewer?' + encodeURIComponent(document.domain + href) + '&embedded=true';
+                $newItem.find('iframe').attr('src', iframeurl);
                 $newLink.attr({
-                    'href' : response.downloadLinks[i],
+                    'href' : href,
                     'download' : response.fileNames[i],
                     'target' : '_blank'
                 });

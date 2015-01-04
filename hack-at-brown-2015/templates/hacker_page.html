@@ -337,7 +337,7 @@
                     </div>
                 </section>
                 <section class="panel grey condensed-top condensed-bottom">
-                    <div class="inner_container">
+                    <div class="reciepts-upload inner_container">
                         <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
@@ -348,19 +348,27 @@
                                 <span>Upload Receipts</span>
                                 {% endif %}
                             </div>
-                            <div class="file-name">
-                                {% if hacker.receipts %}
-                                {% for receipt in hacker.receipts %}
-                                <div class="view-receipts multi">
-                                <a href='/__serve/{{ receipt }}' target="_blank" download="{{receiptsFileNames[loop.index0]}}">{{receiptsFileNames[loop.index0]}}</a>
-                                <i class="ui basic rsvp button delete-file">Delete</i>
-                                <br>
+                            {% if hacker.receipts %}
+                            <div class="ui cards">
+                            {% for receipt in hacker.receipts %}
+                            <div class="view-receipts multi ui card">
+                                <div class="ui image dimmable">
+                                    <div class="ui dimmer">
+                                        <div class="content">
+                                            <div class="center"><a id="open" class="ui inverted button" href="/__serve/{{ receipt }}" download="{{receiptsFileNames[loop.index0]}}" target="_blank">Download</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <iframe urlattr="/__serve/{{ receipt }}"></iframe>
                                 </div>
-                                {% endfor %}
-                                {% else %}
-                                <span class="view-receipts"></span>
-                                {% endif %}
+                                <div class="extra"><span class="filename">{{receiptsFileNames[loop.index0]}}</span>
+                                    <div id="delete" class="delete-receipt ui pink button">REMOVE</div>
+                                </div>
                             </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="ui cards">
+                            {% endif %}
                         </div>
                     </div>
                 </section>
@@ -374,11 +382,11 @@
                                 <div class="field">
                                     <label for="address1">address</label>
                                     <div class="ui icon input">
-                                        <input type="text" id="address1" name="address1" value="{{hacker.address1 or ''}}" placeholder="Box 1337"/>
+                                        <input type="text" id="address1" name="address1" value="{{hacker.address1 or ''}}" placeholder="127 Brown St."/>
                                         <i class="icon"></i>
                                     </div>
                                     <div class="ui icon input">
-                                        <input type="text" id="address2" name="address2" value="{{hacker.address2 or ''}}" placeholder="69 Brown Street"/>
+                                        <input type="text" id="address2" name="address2" value="{{hacker.address2 or ''}}" placeholder="Box 001"/>
                                         <i class="icon"></i>
                                     </div>
                                 </div>
@@ -506,9 +514,9 @@
         rsvp(secret);
     });
 
-    $(".delete-file").click(function() {
-        deleteFile(this.parentNode, 'receipts');
-    });
+      $(".delete-receipt").click(function() {
+          deleteFile(this.parentNode.parentNode, 'receipts');
+      });
 
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
@@ -741,6 +749,16 @@
     {% endif %}
 
     initalizeHamburger();
+     
+     //forgive me father for i have sinned
+     
+     $(".reciepts-upload iframe").each( function ( i ) {
+         console.log("bloop");
+         href = this.getAttribute('urlattr');
+         iframeurl = 'http://docs.google.com/viewer?' + encodeURIComponent(document.domain + href) + '&embedded=true';
+         this.setAttribute('src', iframeurl);
+     });
+     
   });
 </script>
 {% endblock %}
