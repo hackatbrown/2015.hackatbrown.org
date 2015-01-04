@@ -163,11 +163,8 @@ function createFileView(key, multiple) {
         $item.find('.dimmer').dimmer({
             on: 'hover'
         });
-//        $icon = $('<i class="ui basic rsvp button delete-file">Delete</i>');
-//        $icon.click(function() {
-//            deleteFile(this.parentNode, key);
-//        });
-//        $item.append($icon);
+    } else {
+        $item.addClass('file-name');
     }
     return $item;
 

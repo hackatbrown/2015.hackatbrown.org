@@ -72,8 +72,8 @@
 
 .file-name {
   margin-left: .75em;
-/*  white-space: nowrap;
-*/  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 

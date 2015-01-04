@@ -123,11 +123,11 @@
                                                 <span>Upload Resume</span>
                                                 {% endif %}
                                             </div>
-                                            <div class="file-name">
+                                            <div class="view-resume file-name">
                                                 {% if hacker.resume %}
-                                                <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                                <a href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                                 {% else %}
-                                                <span class="view-resume">No file chosen.</span>
+                                                <span>No file chosen.</span>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -288,11 +288,11 @@
                                         <span>Upload Resume</span>
                                         {% endif %}
                                     </div>
-                                    <div class="file-name">
+                                    <div class="view-resume file-name">
                                         {% if hacker.resume %}
-                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                        <a href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                         {% else %}
-                                        <span class="view-resume">No file chosen.</span>
+                                        <span>No file chosen.</span>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -757,6 +757,10 @@
          href = this.getAttribute('urlattr');
          iframeurl = encodeiFrame(href);
          this.setAttribute('src', iframeurl);
+     });
+     
+     $('.reciepts-upload .dimmer').dimmer({
+         on: 'hover'
      });
      
   });
