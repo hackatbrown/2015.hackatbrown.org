@@ -83,6 +83,10 @@ p.caption {
   padding-bottom: 90px;
 }
 
+.panel.condensed-bottom {
+  padding-bottom: 30px;
+}
+
 .panel.hero p {
   font-size: 1.3em;
   font-weight: 300;

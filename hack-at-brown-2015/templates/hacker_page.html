@@ -67,7 +67,7 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
-        <p id="reimbursements-modal">We can reimburse you up to <a href="#reimbursements">$400</a> in transit fees.</p>
+        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$400</a> in transit fees.</p>
     </div>
   </div>
   <div class="actions">
@@ -325,11 +325,20 @@
                 </section>
             </div>
             <div class="double_left pane pane2 white">
-                <section class="panel hero">
+                <section class="panel hero condensed-bottom">
                     <div class="inner_container">
-                        <h1 class="hi">Reimbursements</h1>
-                        <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email</strong>. We'll be able to reimburse up to $200 in travel costs this year. Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
-                        <p>Please upload your receipts below, and then provide your mailing address.</p>
+                        {% if status == "accepted" %}
+                        <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
+                        {% endif %}
+                        <h1 class="hi">Congratulations!</h1>
+                        <p>We can reimburse you up to <span class="money">$400</a> in transit fees.</p>
+                        <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p> 
+                        <p>Otherwise, they're due on 3.1.2015.</p>
+                    </div>
+                </section>
+                <section class="panel secondary">
+                    <div class="inner_container">
+                        <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
                             <label for="receipts">Receipts</label>
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
@@ -354,9 +363,11 @@
                                 {% endif %}
                             </div>
                         </div>
+                        
                         <form id='address_form' class='ui form inner_container'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
+                            <h3>Reimbursment form:</h3>
 <!--                         TODO: VALIDATION -->
                             <div class="field">
                                 <label for="address1">address 1</label>
@@ -386,9 +397,6 @@
                                 <input type="text" id="country" name="country"/>
                             </div>
                         </form>
-                        {% if status == "accepted" %}
-                        <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
-                        {% endif %}
                     </div>
                 </section>
             </div>
