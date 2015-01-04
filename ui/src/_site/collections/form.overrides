@@ -107,6 +107,7 @@
     padding-left: 0 !important;
     padding: 0;
     color: @black;
+    background: none !important;
 }
 .ui.form .selectize-input.focus {
     box-shadow: inset 1px -80px 0px -1px @black !important;
