@@ -1,5 +1,13 @@
 
 /*Shim*/
+.indented {
+  margin-left: .8em !important;
+}
+
+.light {
+  font-weight: 300;
+}
+
 .ui.card .extra {
   display: flex;
   justify-content: space-between;

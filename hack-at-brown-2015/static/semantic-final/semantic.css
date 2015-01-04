@@ -94,7 +94,7 @@
 
 .ui.accordion.menu .item .title > .dropdown.icon {
   float: right;
-  margin: 49.5% 0em 0em 1em;
+  margin: 0.165em 0em 0em 1em;
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -3314,7 +3314,8 @@
 .ui.cards > .card > .content > .header,
 .ui.card > .content > .header {
   display: block;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   color: rgba(0, 0, 0, 0.85);
 }
@@ -3325,7 +3326,7 @@
 .ui.card > .content > .header:not(.ui) {
   font-weight: bold;
   font-size: 1.2em;
-  margin-top: -49.5%;
+  margin-top: 0.165em;
   line-height: 1.33em;
 }
 
@@ -4814,7 +4815,7 @@ a.ui.card:hover,
   vertical-align: middle;
   background: rgba(0, 0, 0, 0.85);
   opacity: 0;
-  line-height: 100%;
+  line-height: 1.33em;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   -webkit-animation-duration: 0.5s;
@@ -10978,12 +10979,12 @@ i.flag.zimbabwe:before {
 
 .ui.header {
   border: none;
-  margin: -webkit-calc(2rem -  49.5% ) 0em 1rem;
-  margin: calc(2rem -  49.5% ) 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   padding: 0em 0em;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-weight: bold;
-  line-height: 100%;
+  line-height: 1.33em;
   text-transform: none;
   color: #404040;
 }
@@ -10998,7 +10999,7 @@ i.flag.zimbabwe:before {
 }
 
 .ui.header:first-child {
-  margin-top: -49.5%;
+  margin-top: -0.165em;
 }
 
 .ui.header:last-child {
@@ -11013,7 +11014,7 @@ i.flag.zimbabwe:before {
   display: table-cell;
   opacity: 1;
   font-size: 1.5em;
-  padding-top: 49.5%;
+  padding-top: 0.165em;
   vertical-align: middle;
   padding-right: 0.5rem;
 }
@@ -14624,9 +14625,9 @@ img.ui.bordered.image {
   outline: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   text-align: left;
-  line-height: 100%;
+  line-height: 1.33em;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
-  padding: -48.71429em 1em;
+  padding: 0.62071em 1em;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.15);
   color: #404040;
@@ -15291,7 +15292,8 @@ input[type="radio"]:checked + label {
 
 .ui.items > .item > .content > .header {
   display: inline-block;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
@@ -19743,7 +19745,7 @@ ol.ui.horizontal.list li:before,
   margin: 1em 0em;
   background: #efefef;
   padding: 1em 1.5em;
-  line-height: 100%;
+  line-height: 1.33em;
   color: #404040;
   -webkit-transition: opacity 0.2s ease, color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   transition: opacity 0.2s ease, color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
@@ -19845,7 +19847,7 @@ ol.ui.horizontal.list li:before,
   cursor: pointer;
   position: absolute;
   margin: 0em;
-  top: 50.5em;
+  top: 1.165em;
   right: 0.5em;
   opacity: 0.7;
   -webkit-transition: opacity 0.1s linear;
@@ -20279,7 +20281,8 @@ ol.ui.horizontal.list li:before,
   display: block;
   font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif;
   background: #ffffff;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   padding: 1.7142rem 2rem;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 1.6em;
@@ -20406,7 +20409,7 @@ ol.ui.horizontal.list li:before,
   }
 
   .ui.modal > .close {
-    top: 100.0892rem;
+    top: 1.4192rem;
     right: 1rem;
     color: #404040;
   }
@@ -20561,7 +20564,7 @@ ol.ui.horizontal.list li:before,
 }
 
 .ui.fullscreen.modal > .close {
-  top: 100.0892rem;
+  top: 1.4192rem;
   right: 1rem;
   color: #404040;
 }
@@ -24566,7 +24569,7 @@ body {
   background: #ffffff;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-size: 100%;
-  line-height: 100%;
+  line-height: 1.33em;
   color: #404040;
   font-smoothing: antialiased;
 }
@@ -24582,7 +24585,8 @@ h4,
 h5 {
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   line-height: 1.33em;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   font-weight: bold;
   padding: 0em;
 }
@@ -24614,7 +24618,7 @@ h5 {
 
 p {
   margin: 0em 0em 1em;
-  line-height: 100%;
+  line-height: 1.33em;
 }
 
 p:first-child {
@@ -25495,7 +25499,7 @@ footer .social-links {
   font-size: 0em;
   background: '';
   box-shadow: '';
-  line-height: 100%;
+  line-height: 1.33em;
   box-sizing: border-box;
   border-radius: 0;
 }

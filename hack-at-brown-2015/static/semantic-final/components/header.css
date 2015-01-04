@@ -19,12 +19,12 @@
 /* Standard */
 .ui.header {
   border: none;
-  margin: -webkit-calc(2rem -  49.5% ) 0em 1rem;
-  margin: calc(2rem -  49.5% ) 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   padding: 0em 0em;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-weight: bold;
-  line-height: 100%;
+  line-height: 1.33em;
   text-transform: none;
   color: #404040;
 }
@@ -37,7 +37,7 @@
   color: rgba(0, 0, 0, 0.5);
 }
 .ui.header:first-child {
-  margin-top: -49.5%;
+  margin-top: -0.165em;
 }
 .ui.header:last-child {
   margin-bottom: 0em;
@@ -51,7 +51,7 @@
   display: table-cell;
   opacity: 1;
   font-size: 1.5em;
-  padding-top: 49.5%;
+  padding-top: 0.165em;
   vertical-align: middle;
   padding-right: 0.5rem;
 }

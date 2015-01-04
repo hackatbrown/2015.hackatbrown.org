@@ -80,7 +80,8 @@
   display: block;
   font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif;
   background: #ffffff;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   padding: 1.7142rem 2rem;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 1.6em;
@@ -193,7 +194,7 @@
     padding-right: 2.25rem;
   }
   .ui.modal > .close {
-    top: 100.0892rem;
+    top: 1.4192rem;
     right: 1rem;
     color: #404040;
   }
@@ -332,7 +333,7 @@
   padding-right: 2.25rem;
 }
 .ui.fullscreen.modal > .close {
-  top: 100.0892rem;
+  top: 1.4192rem;
   right: 1rem;
   color: #404040;
 }

@@ -7,7 +7,7 @@
 {% block headcss %}
 {{ super() }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
-<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
+<!--<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>-->
 
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
@@ -341,7 +341,34 @@
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
                 </section>
-                <section class="reciepts-section panel grey condensed-top condensed-bottom">
+                <section class="panel grey condensed-top condensed-bottom">
+                    <div class="inner_container">
+                        <h4 class="label grey">Travel Tips</h4>
+                        <div class="ui accordion">
+                            <div class="active title">
+                                <i class="dropdown icon"></i>
+                                Flights
+                            </div>
+                            <div class="active indented content light">
+                                <ul class="ui list">
+                                    <li>If you’re flying, we recommend flying into <a href="http://www.massport.com/logan-airport">Boston Logan Airport (BOS)</a></li>
+                                    <li>Once you’re at Logan, take the <a href="https://www.google.com/maps/dir/Boston+Logan+International+Airport,+1+Harborside+Dr,+Boston,+MA+02128/Boston+South+Station/@42.3590236,-71.0519385,14z/data=!4m14!4m13!1m5!1m1!1s0x89e37014d5da4937:0xc9394c31f2d5144!2m2!1d-71.00956!2d42.365613!1m5!1m1!1s0x89e37081fa252f27:0x7806af60ddbe89c8!2m2!1d-71.055304!2d42.352311!5i1!12b1">Silver Line 1 Bus</a> to South Station in Boston. From there, take the <a href="http://www.mbta.com/schedules_and_maps/rail/lines/?route=PROVSTOU">MBTA Commuter Rail</a> or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a> to Providence.</li>
+                                    <li>We recommend arriving Friday night (February 6th) and leaving Sunday night (February 8th). We’ll be providing you sleeping accommodations Friday night, don’t worry!</li>
+                                </ul>
+                            </div>
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Busses
+                            </div>
+                            <div class="indented content light">
+                                <ul class="ui list">
+                                    <li>Popular modes of transportation are the <a href="http://peterpanbus.com/">Peter Pan</a> bus, <a href="http://us.megabus.com/">Megabus</a>, or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="reciepts-section panel condensed-top condensed-bottom">
                     <form class="ui form reciepts-upload inner_container">
                         <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
@@ -386,7 +413,7 @@
                         </div>
                     </form>
                 </section>
-                <section class="reciepts-section panel grey condensed-top">
+                <section class="reciepts-section panel condensed-top">
                         <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
@@ -501,7 +528,7 @@
 <script type="text/javascript" src="/static/js/condor.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
-<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
+<!--<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>-->
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
@@ -706,16 +733,16 @@
 
     //School Section
     /* Autocomplete suggestions for schools TODO */
-    var universities = [];
-    $.getJSON("/static/data/universities.json", function (data) {
-      $.each(data, function (key, val) {
-        universities[key] = val;
-      })
-    });
-
-    $(".schools").autocomplete({
-      source: universities
-    });
+//    var universities = [];
+//    $.getJSON("/static/data/universities.json", function (data) {
+//      $.each(data, function (key, val) {
+//        universities[key] = val;
+//      })
+//    });
+//
+//    $(".schools").autocomplete({
+//      source: universities
+//    });
 
     //Links Section
 
@@ -764,6 +791,8 @@
     {% endif %}
 
     initalizeHamburger();
+     
+     $('.ui.accordion').accordion();
      
      //forgive me father for i have sinned
      
