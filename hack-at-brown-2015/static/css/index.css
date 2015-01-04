@@ -775,7 +775,7 @@ nav.open .hamsvg {
     }
     
     .hamburger {
-        display: block
+        display: block;
     }
     nav.open .top-bar_ul {
         height: 225px;
@@ -800,7 +800,7 @@ nav.open .hamsvg {
     }
     
     .gu-sliding-bar {
-        display: none
+        display: none;
     }
     
     .triangle article {
@@ -823,7 +823,7 @@ nav.open .hamsvg {
     }
     
     .triangle.faq {
-        margin-top: 960px;
+        margin-top: 1290px;
     }
     
     .triangle.faq article {

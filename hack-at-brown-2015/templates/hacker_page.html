@@ -46,12 +46,19 @@
 <div id="delete-modal" class="ui basic modal small">
   <div class="content">
     <div class="description">
+        {% if  status == "confirmed" %}
+        <p>You've already confirmed your attendence!</p>
+        <p>You'll have to email us: <a href="mailto:hello@hackatbrown.org?subject=Cancelling%20My%20Registration">hello@hackatbrown.org</a></p>
+        {% else %}
         <p>Sure you want to cancel your registration?</p>
         <p>There's no going back!</p>
+        {% endif %}
     </div>
   </div>
   <div class="actions">
+    {% if  status != "confirmed" %}
     <div class="ui button pink yes">Cancel Registration</div>
+    {% endif %}
     <div class="ui button no">Nevermind</div>
   </div>
 </div>
@@ -88,7 +95,7 @@
                                     </div>
                                     {% endif %}
                                 </div>
-                                {% if status == "accepted" or status == "waitlisted" or status == "pending" %}
+                                {% if status == "accepted" or status == "waitlisted" or status == "pending" or status == "confirmed" %}
                                 <div class="delete field">
                                     <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
                                 </div>
