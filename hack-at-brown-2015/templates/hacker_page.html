@@ -340,7 +340,6 @@
                     <div class="inner_container">
                         <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
-                            <label for="receipts">Receipts</label>
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                 {% if hacker.receipts %}
@@ -722,7 +721,7 @@
     {% if status == "accepted" or status == "confirmed" %}
      //State Section
     var $state = $('#state');
-     var $state2 = $state.clone().attr("id","state2").insertAfter($state);
+     var $state2 = $state.clone().attr("id","state2").attr("tabindex","-1").insertAfter($state);
     $state.selectize({
         create: false,
         hideSelected: true,
