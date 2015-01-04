@@ -331,7 +331,7 @@
                         <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
                         {% endif %}
                         <h1 class="hi">Congratulations!</h1>
-                        <p>We can reimburse you up to <span class="money">$400</a> in transit fees.</p>
+                        <p>We can reimburse you up to <span class="money">$400</span> in transit fees.</p>
                         <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p> 
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
@@ -374,33 +374,98 @@
                             <div class="row">
                                 <div class="field">
                                     <label for="address1">address</label>
-                                    <input type="text" id="address1" name="address1"/>
-                                    <input type="text" id="address2" name="address2"/>
+                                    <div class="ui icon input">
+                                        <input type="text" id="address1" name="address1"/>
+                                        <i class="icon"></i>
+                                    </div>
+                                    <div class="ui icon input">
+                                        <input type="text" id="address2" name="address2"/>
+                                        <i class="icon"></i>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="three fields">
                                     <div class="ten wide field">
                                         <label for="city">city</label>
-                                        <input type="text" id="city" name="city"/>
+                                        <div class="ui icon input">
+                                            <input type="text" id="city" name="city"/>
+                                            <i class="icon"></i>
+                                        </div>
                                     </div>
                                     <div class="two wide field">
                                         <label for="state">state</label>
                                         <select id="state" name="state">
-                                            <option value="">Please Select</option>
-                                            <option value="N/A">N/A</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District Of Columbia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option>
+                                            <option value="">--</option>
+                                            <option value="N/A">N/A</option>
+                                            <option value="AL">AL</option>
+                                            <option value="AK">AK</option>
+                                            <option value="AZ">AZ</option>
+                                            <option value="AR">AR</option>
+                                            <option value="CA">CA</option>
+                                            <option value="CO">CO</option>
+                                            <option value="CT">CT</option>
+                                            <option value="DE">DE</option>
+                                            <option value="FL">FL</option>
+                                            <option value="GA">GA</option>
+                                            <option value="HI">HI</option>
+                                            <option value="ID">ID</option>
+                                            <option value="IL">IL</option>
+                                            <option value="IN">IN</option>
+                                            <option value="IA">IA</option>
+                                            <option value="KS">KS</option>
+                                            <option value="KY">KY</option>
+                                            <option value="LA">LA</option>
+                                            <option value="ME">ME</option>
+                                            <option value="MD">MD</option>
+                                            <option value="MA">MA</option>
+                                            <option value="MI">MI</option>
+                                            <option value="MN">MN</option>
+                                            <option value="MS">MS</option>
+                                            <option value="MO">MO</option>
+                                            <option value="MT">MT</option>
+                                            <option value="NE">NE</option>
+                                            <option value="NV">NV</option>
+                                            <option value="NH">NH</option>
+                                            <option value="NJ">NJ</option>
+                                            <option value="NM">NM</option>
+                                            <option value="NY">NY</option>
+                                            <option value="NC">NC</option>
+                                            <option value="ND">ND</option>
+                                            <option value="OH">OH</option>
+                                            <option value="OK">OK</option>
+                                            <option value="OR">OR</option>
+                                            <option value="PA">PA</option>
+                                            <option value="RI">RI</option>
+                                            <option value="SC">SC</option>
+                                            <option value="SD">SD</option>
+                                            <option value="TN">TN</option>
+                                            <option value="TX">TX</option>
+                                            <option value="UT">UT</option>
+                                            <option value="VT">VT</option>
+                                            <option value="VA">VA</option>
+                                            <option value="WA">WA</option>
+                                            <option value="WV">WV</option>
+                                            <option value="WI">WI</option>
+                                            <option value="WY">WY</option>
                                         </select>
                                     </div>
                                     <div class="four wide field">
                                         <label for="zip">zip</label>
-                                        <input type="text" id="zip" name="zip"/>
+                                        <div class="ui icon input">
+                                            <input type="text" id="zip" name="zip"/>
+                                            <i class="icon"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="field">
                                     <label for="country">country</label>
-                                    <input type="text" id="country" name="country"/>
+                                    <div class="ui icon input">
+                                        <input type="text" id="country" name="country"/>
+                                        <i class="icon"></i>
+                                    </div>
                                 </div>
                             </div>
                         </form>
