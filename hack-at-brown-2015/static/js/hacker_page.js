@@ -253,7 +253,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                 } else {
                     $newItem.find('.filename').text(response.fileNames[i]);
                 }
-                iframeurl = 'http://docs.google.com/viewer?' + encodeURIComponent(document.domain + href) + '&embedded=true';
+                iframeurl = encodeiFrame(href);
                 $newItem.find('iframe').attr('src', iframeurl);
                 $newLink.attr({
                     'href' : href,
@@ -272,6 +272,10 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             console.log("I have failed youuuu");
         }
     });
+}
+
+function encodeiFrame(href) {
+    return 'http://docs.google.com/viewer?url=' + encodeURIComponent('http://' + document.domain + href) + '&embedded=true';
 }
 
 function slideOut($element, time) {

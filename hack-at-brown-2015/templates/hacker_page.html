@@ -754,9 +754,8 @@
      //forgive me father for i have sinned
      
      $(".reciepts-upload iframe").each( function ( i ) {
-         console.log("bloop");
          href = this.getAttribute('urlattr');
-         iframeurl = 'http://docs.google.com/viewer?' + encodeURIComponent(document.domain + href) + '&embedded=true';
+         iframeurl = encodeiFrame(href);
          this.setAttribute('src', iframeurl);
      });
      
