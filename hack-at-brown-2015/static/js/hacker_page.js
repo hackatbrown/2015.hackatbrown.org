@@ -49,7 +49,12 @@ function deleteFile(uiInput, key) {
         url: '/secret/__delete_file/' + secret,
         success : function() {
             //forgive me
-            $uiInput.siblings('#' + key + '-over').children('span').text(last ? "Upload " + key.charAt(0).toUpperCase() + key.slice(1) : " Upload More");
+            if (last) {
+                $uiInput.siblings('#' + key + '-over').children('span').text("Upload " + key.charAt(0).toUpperCase() + key.slice(1));
+
+                toggleReimbursementForm(false);
+
+            }
             $(uiInput).remove();
         }
     });
@@ -123,6 +128,7 @@ function toggleReimbursementForm(on) {
         slideOut($form, 1000);
         $inputs.removeAttr('disabled');
     } else {
+        slideIn($form, 1000);
         $inputs.attr('disabled', 'disabled');
     }
 }
