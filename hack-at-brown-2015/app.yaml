@@ -1,10 +1,18 @@
-application: hackatbrown2015
+application: hackatbrown2015-dev
 version: 9
 runtime: python27
 api_version: 1
 threadsafe: yes
 
+builtins:
+- deferred: on
+
 handlers:
+- url: /update_schema
+  script: updateSchemaHandler.app
+  login: admin
+  secure: always
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
@@ -16,6 +24,14 @@ handlers:
   login: required
 
 - url: /dashboard/messages/message_task_queue_work
+  script: main.app
+  login: admin
+
+- url: /dashboard/__db_populate(/.*)
+  script: main.app
+  login: admin
+
+- url: /dashboard/__db_depopulate(/.*)
   script: main.app
   login: admin
 

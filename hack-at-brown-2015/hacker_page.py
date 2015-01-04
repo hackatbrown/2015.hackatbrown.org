@@ -27,15 +27,13 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         status = computeStatus(hacker)
         resumeFileName = ""
-        receiptsFileName = ""
+        receiptsFileNames = ""
 
         if hacker.resume:
             resumeFileName = hackerFiles.getFileName(hacker.resume)
 
-        if hacker.receipts:
-            receiptsFileName = hackerFiles.getFileName(hacker.receipts)
-
-
+        if hacker.receipts and hacker.receipts[0] != None:
+            receiptsFileNames = hackerFiles.getFileNames(hacker.receipts)
 
         name = hacker.name.split(" ")[0] # TODO: make it better
 
@@ -43,7 +41,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
 
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileName" : receiptsFileName}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
@@ -81,24 +79,52 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         if (status == "checked in") or (status == "confirmed"):
             keys += reimbursement_keys
 
+        kv = {}
         for key in parsed_request:
-            logging.info("key: " + key)
             if key in keys:
-                requestKey = parsed_request.get(key)
-                if requestKey != 'email':
-                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + requestKey)
-                    setattr(hacker, key, requestKey)
+                value = parsed_request.get(key)
+                if key != 'email':
+                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
+                    kv[key] = value
             else:
-                logging.info("Key not found")
+                logging.info("Key not found or authorized")
+                success = False
 
-        putHacker(hacker)
+        if kv:
+            success = updateHacker(secret, kv)
 
-        self.response.write(json.dumps({"success": True}))
+        if not success:
+            self.response.set_status(400)
+
+        self.response.write(json.dumps({"success": success}))
+
+def updateHacker(secret, dict):
+    memcachedKey = memcachedBase + secret
+    client = memcache.Client()
+    retries = 5
+    success = False
+    while retries > 0 and not success:
+        hacker = client.gets(memcachedKey)
+        if hacker is None:
+            hacker = registration.Hacker.WithSecret(secret)
+            client.set(memcachedKey, hacker)
+
+        for k, v in dict.iteritems():
+            setattr(hacker, k, v)
+
+
+        if client.cas(memcachedKey, hacker):
+            success = True
+            hacker.put()
+
+        retries-= 1
+
+    return success
 
 def getHacker(secret):
-    logging.info(secret)
     memcachedKey = memcachedBase + secret
-    hacker = memcache.get(memcachedKey)
+    client = memcache.Client()
+    hacker = client.gets(memcachedKey)
     if hacker is None:
         hacker = registration.Hacker.WithSecret(secret)
 
@@ -131,9 +157,13 @@ def sendReimbursementFormToBrown(hacker):
     return not (failedHTML in result.content)
 
 def putHacker(hacker):
-    memcachedKey = memcachedBase + hacker.secret
 
-    if not memcache.set(memcachedKey, hacker, cacheTime):
+    if hacker.receipts == [None]:
+        hacker.receipts = []
+    memcachedKey = memcachedBase + hacker.secret
+    client = memcache.Client()
+    #TODO: consider using cas
+    if not client.set(memcachedKey, hacker, cacheTime):
         logging.error('Memcache set failed')
 
     hacker.put()

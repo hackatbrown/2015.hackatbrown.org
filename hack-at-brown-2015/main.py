@@ -54,6 +54,7 @@ app = webapp2.WSGIApplication([
 		('/secret/__change/([^\/]+)/(.+)', hackerFiles.ChangeHandler),
 		('/secret/__rsvp/(.+)', hacker_page.RSVPHandler),
 		('/secret/__newurl/([^\/]+)/(.+)', hackerFiles.NewURLHandler),
+		('/secret/__delete_file/(.+)', hackerFiles.DeleteFileHandler),
 		('/secret/(.+)', hacker_page.HackerPageHandler),
 		('/__update_hacker/(.+)', hacker_page.HackerUpdateHandler),
 		('/__delete_hacker/(.+)', hacker_page.DeleteHackerHandler),

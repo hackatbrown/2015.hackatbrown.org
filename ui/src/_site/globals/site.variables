@@ -68,7 +68,7 @@
 @pageOverflowX       : hidden;
 
 @fontSize            : 100%;
-@lineHeight          : 100%;
+@lineHeight          : 1.33em;
 @textColor           : @black;
 
 @headerMargin        : 1em 0em 1rem;
@@ -305,6 +305,12 @@ Background Colors
 /*-------------------
   Derived Values
 --------------------*/
+
+/* Header Spacing */
+@headerLineHeightOffset : (@lineHeight - 1em) / 2;
+@headerTopMargin        : ~"calc(2rem - "@lineHeightOffset~")";
+@headerBottomMargin     : 1rem;
+@headerMargin           : @headerTopMargin 0em @headerBottomMargin;
 
 /* Makes sure padded grid can fit at 320px */
 @pageMinWidth        : (320px - (@fontSize * 3));

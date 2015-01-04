@@ -28,6 +28,38 @@ function initalizeHamburger() {
     });
 }
 
+// Messages
+var $message_container = $(".message_container");
+function messagesCheckNone() {
+    if ($(".message").length == 0) {
+        $message_container.html("<h3 class='secondary'>None!</h3>");
+    }
+}
+// File Upload
+
+function deleteFile(uiInput, key) {
+    $uiInput = $(uiInput);
+    var blobKey = $uiInput.find('a').attr('href').split('__serve/')[1];
+    var last = $uiInput.siblings('.view-' + key).length == 0;
+
+    var data = {'key' : key, 'blobKey' : blobKey};
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url: '/secret/__delete_file/' + secret,
+        success : function() {
+            //forgive me
+            if (last) {
+                $uiInput.siblings('#' + key + '-over').children('span').text("Upload " + key.charAt(0).toUpperCase() + key.slice(1));
+
+                toggleReimbursementForm(false);
+
+            }
+            $(uiInput).remove();
+        }
+    });
+}
+
 function confirmDeleteHacker(secret) {
     $('#delete-modal')
       .modal({
@@ -67,9 +99,9 @@ function rsvp(secret) {
                         $('.rsvp.field').fadeOut(200, function () {
                             this.remove();
                         });
-                        
+
                         $('#rsvp-link').remove();
-                        $('#receipts-upload').show();
+                        $('.reciepts-section').show();
 
                     }
                 }
@@ -96,31 +128,53 @@ function toggleReimbursementForm(on) {
         slideOut($form, 1000);
         $inputs.removeAttr('disabled');
     } else {
+        slideIn($form, 1000);
         $inputs.attr('disabled', 'disabled');
     }
 }
 
 function uploadReceipts(uiinput) {
     var callback = function() {toggleReimbursementForm(true);};
-    requestNewUploadURL(uiinput, 'receipts', callback);
+    requestNewUploadURL(uiinput, 'receipts', callback, true);
 }
 
-function requestNewUploadURL(uiinput, key, callback) {
+function requestNewUploadURL(uiinput, key, callback, multiple) {
     $.ajax({
         type: 'GET',
         url: '/secret/__newurl/' + secret + '/' + key,
         success: function (response) {
             response = JSON.parse(response);
             var newFileURL = response.newURL;
-            updateFile(newFileURL, uiinput, key, callback);
+            updateFile(newFileURL, uiinput, key, callback, multiple);
         }
     });
 }
 
-function updateFile(newFileURL, uiinput, key, callback) {
+function createFileView(key, multiple) {
+    $item = $('<div class="view-' + key + '"><a href="dummy">dummy</a></div>');
+
+    if (multiple) {
+        $item.addClass('multi ui card');
+        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra'><span class='file-name'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
+        $delete = $item.find('#delete');
+        $delete.click(function() {
+            deleteFile(this.parentNode.parentNode, key);
+        });
+        $item.find('.dimmer').dimmer({
+            on: 'hover'
+        });
+    } else {
+        $item.addClass('file-name');
+    }
+    return $item;
+
+}
+
+function updateFile(newFileURL, uiinput, key, callback, multiple) {
+    multiple = multiple || false;
+
     $uiInput = $(uiinput);
     var $button = $uiInput.find("." + key + "-upload");
-    console.log($button);
     var $buttonText = $button.children("span");
     var width = $button.outerWidth();
     var complete = false;
@@ -130,7 +184,7 @@ function updateFile(newFileURL, uiinput, key, callback) {
         $button.removeAttr('style');
         $button.addClass('fadeBackground');
         $buttonText.fadeOut(200, function () {
-            $buttonText.text("Re-upload");
+            $buttonText.text(multiple ? "Upload More" : "Re-upload");
             $buttonText.fadeIn(200);
         });
         $button.unbind('mouseenter', resetState);
@@ -143,7 +197,13 @@ function updateFile(newFileURL, uiinput, key, callback) {
     $button.addClass("loading active");
 
     var data = new FormData();
-    data.append(key, $button.filter("input")[0].files[0]);
+    files = $button.filter("input")[0].files;
+    for (index in files) {
+        data.append(key, files[index]);
+    }
+
+    data.append('multiple', multiple);
+
 
     $.ajax({
         xhr: function () {
@@ -166,22 +226,48 @@ function updateFile(newFileURL, uiinput, key, callback) {
         success: function (response) {
             complete = true;
             $button.css("box-shadow", "inset " + width + 5 + "px 0 0 -1px #26a59f");
+
             $button.addClass("complete");
             $button.removeClass("loading active");
             $buttonText.text("Complete!");
             response = JSON.parse(response);
-            $resumeView = $('.view-' + key);
+            $existingItems = $('.view-' + key);
+            if (!multiple || $existingItems.length === 0 || $existingItems.is('span')) {
+                $existingItems.remove();
+            }
 
-            $newLink = $("<a class='view-" + key + "'></a>");
-            $newLink[0].innerHTML = response.fileName;
-            $newLink.attr({
-                'href' : response.downloadLink,
-                'download' : response.fileName,
-                'target' : '_blank'
-            });
-            $resumeView.replaceWith($newLink);
+            if (multiple) {
+                //forgive me
+                $uiInput = $uiInput.find('.ui.cards');
+            }
 
-            $button.one('mouseenter', resetState);
+            for(var i = 0; i < response.downloadLinks.length; i++) {
+                href = response.downloadLinks[i];
+                filename = response.fileNames[i];
+                
+                $newItem = createFileView(key, multiple);
+                $newLink = $newItem.find('a');
+                if(!multiple) {
+                    $newLink[0].innerHTML = filename;
+                } else {
+                    $newItem.find('.file-name').text(filename);
+                }
+                if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
+                    $newItem.find('iframe').replaceWith("<img src='" + href + "'></img>");
+                } else {
+                    iframeurl = encodeiFrame(href);
+                    $newItem.find('iframe').attr('src', iframeurl);
+                }
+                
+                $newLink.attr({
+                    'href' : href,
+                    'download' : response.fileNames[i],
+                    'target' : '_blank'
+                });
+                $uiInput.append($newItem);
+            }
+
+            $button.on('mouseenter', resetState);
             setTimeout(resetState, 2500);
 
             setTimeout(callback, 1000);
@@ -190,6 +276,10 @@ function updateFile(newFileURL, uiinput, key, callback) {
             console.log("I have failed youuuu");
         }
     });
+}
+
+function encodeiFrame(href) {
+    return 'http://docs.google.com/viewer?url=' + encodeURIComponent('http://' + document.domain + href) + '&embedded=true';
 }
 
 function slideOut($element, time) {
@@ -224,6 +314,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         type: 'POST',
         data: JSON.stringify(data),
         success: function (data, status) {
+            console.log(data);
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('fade');
@@ -236,7 +327,8 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
                 }, 1500);
             }
         },
-        failure: function (data, status) {
+        error: function (data, status) {
+            console.log('ERROR');
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('error fade');
