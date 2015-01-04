@@ -9,6 +9,7 @@ def updateSchema(cursor=None, num_updated=0):
     query = Hacker.query()
     to_put = []
     for hacker in query.fetch(limit=BATCH_SIZE, start_cursor=cursor):
+        hacker.admitted_email_sent_date = None
         if hacker.receipts is None or hacker.receipts == [None]:
             hacker.receipts = []
             to_put.append(hacker)
