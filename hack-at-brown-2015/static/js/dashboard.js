@@ -177,14 +177,30 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.lookupHacker = function(){
     $scope.manualEmails = $scope.manualEmails.toLowerCase();
     emails = $scope.manualEmails.trim().replace(/\s+/g, '');
+
     if (emails) {
-      data = emails
+      if (emails == _.pluck($scope.lookupResult.found, 'email')) {
+        emails = emails.replace(/(hacker_)(\d+)(@.+)/, function(full, a, b, c) { return a + (Number(b) + 1) + c;
+        });
+      }
+      data = emails;
     } else {
       data = "feeling_lucky";
     }
+
     $http({method: 'GET', url: '/dashboard/__lookup_hacker/' + data}).
         success(function(data) {
           $scope.lookupResult = data;
+          $scope.manualEmails = _.pluck(data.found, 'email').join();
+          $scope.manualEmails += _.map(data.notFound, function(email) {
+            var emailArray = email.split('@');
+            if (emailArray[1] == 'another.edu') {
+              emailArray[1] = 'brown.edu';
+            } else if (emailArray[1] == 'brown.edu') {
+              emailArray[1] = 'another.edu';
+            }
+            return emailArray.join("@");
+          }).join();
         }).
         error(function(data) {
           $scope.manualStatus = data;

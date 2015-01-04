@@ -18,7 +18,7 @@ function propertySelected(value) {
 function populateTable(groups) {
   var $table = $('#table');
   var $input = $('#submit');
-  var keys = Object.keys(groups);
+  var keys = Object.keys(groups).sort();
   $table.empty();
   $table.append("<th>Property<td>Number of Hackers</td></th>");
   for (var i = 0; i < keys.length; i++) {

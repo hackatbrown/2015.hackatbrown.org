@@ -1,4 +1,5 @@
 {% extends "emails/base.html" %}
+{% block content %}
 <p>
 	Hey,
 </p>
@@ -7,3 +8,10 @@
 	We've got a lot of people on our waitlist, so we're letting your admission expire.
 	If you think this is an error, please contact us at <a href='mailto:hello@hackatbrown.org'>hello@hackatbrown.org</a>.
 </p>
+
+<p> 
+Best,<br/> 
+Team Hack@Brown 
+</p>
+
+{% endblock %}
