@@ -894,6 +894,11 @@
   font-size: 1em !important;
   line-height: 35px !important;
 }
+.ui.form.condensed .row {
+  margin-bottom: 20px!important;
+  font-size: 1em!important;
+  line-height: 35px!important;
+}
 .ui.form ::input-placeholder {
   color: #918f8c !important;
   font-weight: 300;
