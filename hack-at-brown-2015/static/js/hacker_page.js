@@ -238,16 +238,16 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             if (!multiple || $existingItems.length === 0 || $existingItems.is('span')) {
                 $existingItems.remove();
             }
-            
+
             if (multiple) {
                 //forgive me
                 $uiInput = $uiInput.find('.ui.cards');
             }
-            
+
             for(var i = 0; i < response.downloadLinks.length; i++) {
                 href = response.downloadLinks[i];
                 $newItem = createFileView(key, multiple);
-                $newLink = $newItem.find('a');                
+                $newLink = $newItem.find('a');
                 if(!multiple) {
                     $newLink[0].innerHTML = response.fileNames[i];
                 } else {
@@ -306,6 +306,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         type: 'POST',
         data: JSON.stringify(data),
         success: function (data, status) {
+            console.log(data);
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('fade');
@@ -318,7 +319,8 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
                 }, 1500);
             }
         },
-        failure: function (data, status) {
+        error: function (data, status) {
+            console.log('ERROR');
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('error fade');

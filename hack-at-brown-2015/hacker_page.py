@@ -88,29 +88,43 @@ class HackerUpdateHandler(webapp2.RequestHandler):
                     kv[key] = value
             else:
                 logging.info("Key not found or authorized")
+                success = False
 
         if kv:
-            updateHacker(secret, kv)
+            success = updateHacker(secret, kv)
 
-        self.response.write(json.dumps({"success": True}))
+        if not success:
+            self.response.set_status(400)
+
+        self.response.write(json.dumps({"success": success}))
 
 def updateHacker(secret, dict):
     memcachedKey = memcachedBase + secret
     client = memcache.Client()
-    while True:
+    retries = 5
+    success = False
+    while retries > 0 and not success:
         hacker = client.gets(memcachedKey)
         if hacker is None:
             hacker = registration.Hacker.WithSecret(secret)
+            client.set(memcachedKey, hacker)
 
         for k, v in dict.iteritems():
             setattr(hacker, k, v)
+
+
         if client.cas(memcachedKey, hacker):
+            success = True
             hacker.put()
-            break
+
+        retries-= 1
+
+    return success
 
 def getHacker(secret):
     memcachedKey = memcachedBase + secret
-    hacker = memcache.get(memcachedKey)
+    client = memcache.Client()
+    hacker = client.gets(memcachedKey)
     if hacker is None:
         hacker = registration.Hacker.WithSecret(secret)
 
@@ -147,8 +161,9 @@ def putHacker(hacker):
     if hacker.receipts == [None]:
         hacker.receipts = []
     memcachedKey = memcachedBase + hacker.secret
-
-    if not memcache.set(memcachedKey, hacker, cacheTime):
+    client = memcache.Client()
+    #TODO: consider using cas
+    if not client.set(memcachedKey, hacker, cacheTime):
         logging.error('Memcache set failed')
 
     hacker.put()
