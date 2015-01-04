@@ -83,25 +83,28 @@
             <div class="double_left pane pane0 active white">
                 <section id="mystatus" class="panel hero">
                     <div class="inner_container">
-                            <h1 class="hi">Hey {{ name }}!</h1>
-                            <p>your admission status is</p>
-                            <div class="status-actions">
-                                <div class="left_group">
-                                    <div class="admit_status {{ status }}">
-                                        <span>{{ status }}</span>
-                                    </div>
-                                    {% if status == "accepted" %}
-                                    <div class="rsvp field">
-                                        <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP?" />
-                                    </div>
-                                    {% endif %}
+                        <h1 class="hi">Hey {{ name }}!</h1>
+                        <p>your admission status is</p>
+                        <div class="status-actions">
+                            <div class="left_group">
+                                <div class="admit_status {{ status }}">
+                                    <span>{{ status }}</span>
                                 </div>
-                                {% if status == "accepted" or status == "waitlisted" or status == "pending" or status == "confirmed" %}
-                                <div class="delete field">
-                                    <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
+                                {% if status == "accepted" %}
+                                <div class="rsvp field">
+                                    <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP?" />
                                 </div>
                                 {% endif %}
                             </div>
+                            {% if status == "accepted" or status == "waitlisted" or status == "pending" or status == "confirmed" %}
+                            <div class="delete field">
+                                <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if status == "accepted" %}
+                        <p>You have 7 days left to confirm your attendance.</p>
+                        {% endif %}
                     </div>
                 </section>
                 <section id="messages" class="panel grey condensed-top">
