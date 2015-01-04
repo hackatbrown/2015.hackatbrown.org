@@ -329,13 +329,13 @@
                     <div class="inner_container">
                         <h1 class="hi">Reimbursements</h1>
                         <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email</strong>. We'll be able to reimburse up to $200 in travel costs this year. Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
-                        <p>Please upload your receipts below, and then provide your mailing address. If you have multiple receipts, please put them in a zip file.</p>
+                        <p>Please upload your receipts below, and then provide your mailing address.</p>
                         <div id="receipts-upload" class="upload field">
                             <label for="receipts">Receipts</label>
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                 {% if hacker.receipts %}
-                                <span>Re-upload</span>
+                                <span>Upload More</span>
                                 {% else %}
                                 <span>Upload Receipts</span>
                                 {% endif %}
@@ -350,7 +350,7 @@
                                 </div>
                                 {% endfor %}
                                 {% else %}
-                                <span class="view-receipts">No file chosen.</span>
+                                <span class="view-receipts"></span>
                                 {% endif %}
                             </div>
                         </div>
