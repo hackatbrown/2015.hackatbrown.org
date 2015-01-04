@@ -104,7 +104,7 @@
                             </div>
                     </div>
                 </section>
-                <section id="messages" class="panel grey secondary">
+                <section id="messages" class="panel grey condensed-top">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
                         <div class="message_container">
@@ -336,7 +336,7 @@
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
                 </section>
-                <section class="panel secondary">
+                <section class="panel grey condensed-top condensed-bottom">
                     <div class="inner_container">
                         <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
@@ -363,7 +363,9 @@
                                 {% endif %}
                             </div>
                         </div>
-                        
+                    </div>
+                </section>
+                <section class="panel grey condensed-top">                        
                         <form id='address_form' class='ui form inner_container'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
@@ -397,7 +399,6 @@
                                 <input type="text" id="country" name="country"/>
                             </div>
                         </form>
-                    </div>
                 </section>
             </div>
         </div>
