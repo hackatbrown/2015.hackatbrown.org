@@ -412,7 +412,7 @@ span.optional {
   font-weight: 300;
   color: #918f8c;
 }
-.two.fields .field {
+.fields .field {
   margin-bottom:0;
 }
 /*TODO: Check what this does*/
