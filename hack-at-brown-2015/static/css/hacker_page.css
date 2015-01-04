@@ -5,6 +5,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.ui.card .extra #delete {
+  flex-shrink: 0;
+}
 .ui.card iframe {
   height: 100%;
   width: 100%;
@@ -72,8 +75,16 @@
 
 .file-name {
   margin-left: .75em;
-/*  white-space: nowrap;
-*/  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card .file-name {
+  margin-left: 0;
+  margin-right: .75em;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 

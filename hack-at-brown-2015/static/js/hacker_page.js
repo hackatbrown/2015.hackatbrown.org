@@ -101,7 +101,7 @@ function rsvp(secret) {
                         });
 
                         $('#rsvp-link').remove();
-                        $('#receipts-upload').show();
+                        $('.reciepts-section').show();
 
                     }
                 }
@@ -155,7 +155,7 @@ function createFileView(key, multiple) {
 
     if (multiple) {
         $item.addClass('multi ui card');
-        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra'><span class='filename'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
+        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra'><span class='file-name'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
         $delete = $item.find('#delete');
         $delete.click(function() {
             deleteFile(this.parentNode.parentNode, key);
@@ -163,11 +163,8 @@ function createFileView(key, multiple) {
         $item.find('.dimmer').dimmer({
             on: 'hover'
         });
-//        $icon = $('<i class="ui basic rsvp button delete-file">Delete</i>');
-//        $icon.click(function() {
-//            deleteFile(this.parentNode, key);
-//        });
-//        $item.append($icon);
+    } else {
+        $item.addClass('file-name');
     }
     return $item;
 
@@ -246,15 +243,22 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
 
             for(var i = 0; i < response.downloadLinks.length; i++) {
                 href = response.downloadLinks[i];
+                filename = response.fileNames[i];
+                
                 $newItem = createFileView(key, multiple);
                 $newLink = $newItem.find('a');
                 if(!multiple) {
-                    $newLink[0].innerHTML = response.fileNames[i];
+                    $newLink[0].innerHTML = filename;
                 } else {
-                    $newItem.find('.filename').text(response.fileNames[i]);
+                    $newItem.find('.file-name').text(filename);
                 }
-                iframeurl = 'http://docs.google.com/viewer?' + encodeURIComponent(document.domain + href) + '&embedded=true';
-                $newItem.find('iframe').attr('src', iframeurl);
+                if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
+                    $newItem.find('iframe').replaceWith("<img src='" + href + "'></img>");
+                } else {
+                    iframeurl = encodeiFrame(href);
+                    $newItem.find('iframe').attr('src', iframeurl);
+                }
+                
                 $newLink.attr({
                     'href' : href,
                     'download' : response.fileNames[i],
@@ -272,6 +276,10 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             console.log("I have failed youuuu");
         }
     });
+}
+
+function encodeiFrame(href) {
+    return 'http://docs.google.com/viewer?url=' + encodeURIComponent('http://' + document.domain + href) + '&embedded=true';
 }
 
 function slideOut($element, time) {

@@ -123,11 +123,11 @@
                                                 <span>Upload Resume</span>
                                                 {% endif %}
                                             </div>
-                                            <div class="file-name">
+                                            <div class="view-resume file-name">
                                                 {% if hacker.resume %}
-                                                <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                                <a href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                                 {% else %}
-                                                <span class="view-resume">No file chosen.</span>
+                                                <span>No file chosen.</span>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -288,11 +288,11 @@
                                         <span>Upload Resume</span>
                                         {% endif %}
                                     </div>
-                                    <div class="file-name">
+                                    <div class="view-resume file-name">
                                         {% if hacker.resume %}
-                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                        <a href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                         {% else %}
-                                        <span class="view-resume">No file chosen.</span>
+                                        <span>No file chosen.</span>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -328,16 +328,17 @@
                 <section class="panel hero condensed-bottom">
                     <div class="inner_container">
                         {% if status == "accepted" %}
-                        <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
-                        {% endif %}
+                        <h1 class="hi" id="rsvp-link">You must <a href="#status">RSVP</a> before you can be reimbursed.</h1>
+                        {% else %}
                         <h1 class="hi">Congratulations!</h1>
+                        {% endif %}
                         <p>We can reimburse you up to <span class="money">$400</span> in transit fees.</p>
                         <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
                 </section>
-                <section class="panel grey condensed-top condensed-bottom">
-                    <div class="reciepts-upload inner_container">
+                <section class="reciepts-section panel grey condensed-top condensed-bottom">
+                    <form class="ui form reciepts-upload inner_container">
                         <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
@@ -348,31 +349,40 @@
                                 <span>Upload Receipts</span>
                                 {% endif %}
                             </div>
-                            {% if hacker.receipts %}
                             <div class="ui cards">
-                            {% for receipt in hacker.receipts %}
-                            <div class="view-receipts multi ui card">
-                                <div class="ui image dimmable">
-                                    <div class="ui dimmer">
-                                        <div class="content">
-                                            <div class="center"><a id="open" class="ui inverted button" href="/__serve/{{ receipt }}" download="{{receiptsFileNames[loop.index0]}}" target="_blank">Download</a>
+                            {% if hacker.receipts %}
+                                {% for receipt in hacker.receipts %}
+                                <div class="view-receipts multi ui card">
+                                    <div class="ui image dimmable">
+                                        <div class="ui dimmer">
+                                            <div class="content">
+                                                <div class="center"><a id="open" class="ui inverted button" href="/__serve/{{ receipt }}" download="{{receiptsFileNames[loop.index0]}}" target="_blank">Download</a>
+                                                </div>
                                             </div>
                                         </div>
+                                        <iframe filename="{{receiptsFileNames[loop.index0]}}" urlattr="/__serve/{{ receipt }}"></iframe>
                                     </div>
-                                    <iframe urlattr="/__serve/{{ receipt }}"></iframe>
+                                    <div class="extra"><span class="file-name">{{receiptsFileNames[loop.index0]}}</span>
+                                        <div id="delete" class="delete-receipt ui pink button">REMOVE</div>
+                                    </div>
                                 </div>
-                                <div class="extra"><span class="filename">{{receiptsFileNames[loop.index0]}}</span>
-                                    <div id="delete" class="delete-receipt ui pink button">REMOVE</div>
+                                {% endfor %}
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="field">
+                                <label for="reimbursement-needed">Total Reimbursement Needed</label>
+                                <div class="ui icon input">
+                                    <input type="text" id="reimbursement-needed" name="reimbursement-needed" value="{{hacker.year or ''}}" placeholder="$"/>
+<!--                                    TODO: Right value-->
+                                    <i class="icon"></i>
                                 </div>
                             </div>
-                            {% endfor %}
-                            {% else %}
-                            <div class="ui cards">
-                            {% endif %}
                         </div>
-                    </div>
+                    </form>
                 </section>
-                <section class="panel grey condensed-top">
+                <section class="reciepts-section panel grey condensed-top">
                         <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
@@ -549,7 +559,7 @@
         });
 
         if (status == "accepted") {
-            $('#receipts-upload').hide();
+            $('.reciepts-section').hide();
         }
 
     }
@@ -726,7 +736,7 @@
 
     trackCondor($linkRepeater);
 
-    {% if status == "accepted" or status == "confirmed" %}
+    {% if status == "confirmed" %}
      //State Section
     var $state = $('#state');
     $state.val("{{ hacker.state }}");
@@ -754,10 +764,18 @@
      //forgive me father for i have sinned
      
      $(".reciepts-upload iframe").each( function ( i ) {
-         console.log("bloop");
          href = this.getAttribute('urlattr');
-         iframeurl = 'http://docs.google.com/viewer?' + encodeURIComponent(document.domain + href) + '&embedded=true';
-         this.setAttribute('src', iframeurl);
+         filename = this.getAttribute('filename');
+         if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
+             $(this).replaceWith("<img src='" + href + "'></img>");
+         } else {
+             iframeurl = encodeiFrame(href);
+             this.setAttribute('src', iframeurl);
+         }
+     });
+     
+     $('.reciepts-upload .dimmer').dimmer({
+         on: 'hover'
      });
      
   });
