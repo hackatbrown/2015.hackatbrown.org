@@ -1,5 +1,5 @@
-application: hackatbrown2015
-version: 2
+application: hackatbrown2015-dev
+version: 9 
 runtime: python27
 api_version: 1
 threadsafe: yes
