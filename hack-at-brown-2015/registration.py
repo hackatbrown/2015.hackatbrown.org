@@ -104,6 +104,8 @@ def generate_secret_for_hacker_with_email(email):
 
 def accept_hacker(hacker):
 	hacker.deadline = (datetime.datetime.now() + datetime.timedelta(seconds=admission_expiration_seconds()))
+	if hacker.deadline > datetime.datetime(2015, 2, 7):
+		hacker.deadline = datetime.datetime(2015, 2, 7)
 	email = template("emails/admitted.html", {"hacker": hacker, "deadline": hacker.deadline.strftime("%m/%d/%y"), "name":hacker.name.split(" ")[0]})
 	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown!")
 
