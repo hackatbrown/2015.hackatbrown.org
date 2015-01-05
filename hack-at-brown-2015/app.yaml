@@ -11,7 +11,6 @@ handlers:
 - url: /update_schema
   script: updateSchemaHandler.app
   login: admin
-  secure: always
 
 - url: /favicon\.ico
   static_files: favicon.ico
