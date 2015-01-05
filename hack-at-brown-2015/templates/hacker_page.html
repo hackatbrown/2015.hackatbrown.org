@@ -552,7 +552,7 @@
   var status = "{{ status }}";
   var receipts = "{{ hacker.receipts }}";
   var rmax = "{{hacker.rmax}}";
-    
+
     var container,
         msnry;
 
@@ -627,12 +627,12 @@
     initalizeNavMenu('.top-bar_ul');
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
-    $(".form :input:not(.tags-input)").change(function () {
+    $(".form :input:not(.tags-input)").not('#reimbursement-needed').change(function () {
         saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
     var debouncedSaveChange = _.debounce(saveChange, 2000);
-    $(".tags-input").change(function () {
+    $(".tags-input, #reimbursement-needed").change(function () {
         debouncedSaveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
@@ -783,7 +783,7 @@
     });
 
     trackCondor($linkRepeater);
-      
+
     //Telephone masking
       $("input[type=tel]").mask("(999) 999-9999");
 
@@ -830,18 +830,22 @@
      $('.reciepts-upload .dimmer').dimmer({
          on: 'hover'
      });
-     
+
+
      container = document.querySelector('.cards');
-     
-     msnry = new Masonry( container, {
-         // options
-         itemSelector: '.card',
-         columnWidth: container.querySelector('.grid-sizer')
-     });
-     
-     imagesLoaded( container, function () {
-         msnry.layout();
-     } );
+     if (container) {
+         msnry = new Masonry( container, {
+             // options
+             itemSelector: '.card',
+             columnWidth: container.querySelector('.grid-sizer')
+         });
+
+         imagesLoaded( container, function () {
+             msnry.layout();
+         } );
+     }
+
+
 
   });
 </script>
