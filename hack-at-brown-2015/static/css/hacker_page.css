@@ -1,5 +1,14 @@
 
 /*Shim*/
+.ui.label {
+  width: 1em !important;
+  background: none !important;
+  color: rgba(145,143,140,.3) !important;
+  box-shadow: inset 1px -3px 0 -1px rgba(145,143,140,.3) !important;
+  transition: box-shadow .2s cubic-bezier(0.55,0,.1,1),padding .2s cubic-bezier(0.55,0,.1,1) !important;
+  font-weight: 300 !important; 
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
