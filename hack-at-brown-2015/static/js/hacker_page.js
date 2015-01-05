@@ -42,10 +42,15 @@ function deleteFile(uiInput, key) {
     $uiInput.addClass("removing");
     if ($uiInput.hasClass("card")) {
         var $dimmer = $uiInput.find(".dimmer");
+        var $button = $uiInput.find("#delete")
         $dimmer.addClass("inverted");
-        $dimmer.html("<div class='ui loader'></div>");
+        $dimmer.append("<div class='ui loader'></div>");
+        $dimmer.dimmer({
+            closable: false,
+            on: false
+        });
         $dimmer.dimmer('show');
-        $uiInput.find("#delete").addClass("loading");
+        $button.addClass("loading");
     }
     var blobKey = $uiInput.find('a').attr('href').split('__serve/')[1];
     var last = $uiInput.siblings('.view-' + key).length == 0;
@@ -64,6 +69,10 @@ function deleteFile(uiInput, key) {
 
             }
             $(uiInput).fadeOut(300);
+        },
+        error : function() {
+            $dimmer.html("<div class='content'><div class='center'><i class='remove icon'></i></div></div>");
+            $button.removeClass("loading").addClass("disabled");
         }
     });
 }

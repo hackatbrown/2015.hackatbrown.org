@@ -1,5 +1,9 @@
 
 /*Shim*/
+.removing a {
+  display: none;
+}
+
 .indented {
   margin-left: .8em !important;
 }
