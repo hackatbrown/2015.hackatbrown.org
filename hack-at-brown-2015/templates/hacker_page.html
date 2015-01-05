@@ -244,7 +244,7 @@
                             <div class="field">
                                 <label for="phone_number">Cell Number <span class="optional">(Optional)</span></label>
 								<div class="ui icon input">
-                                    <input id="phone_number" type="tel" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
+                                    <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
                                     <i class="icon"></i>
 								</div>
                             </div>
@@ -536,6 +536,8 @@
 <script type="text/javascript" src="/static/js/masonry.pkgd.min.js"></script>
 <script type="text/javascript" src="/static/js/imagesloaded.pkgd.min.js"></script>"
 
+<script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
+
 <script>
   var secret = "{{ hacker.secret }}";
   var status = "{{ status }}";
@@ -772,6 +774,9 @@
     });
 
     trackCondor($linkRepeater);
+      
+    //Telephone masking
+      $("input[type=tel]").mask("(999) 999-9999");
 
     {% if status == "confirmed" %}
      //State Section
