@@ -299,10 +299,16 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             uploadResume($(".resume-upload.upload.ui.button").parent());
         }
         return;
-    } else if (key == 'email') {
+    } else if (key === 'email') {
         return;
     } else if (key === 'receipts') {
         return;
+    } else if (key === "rtotal") {
+        value = Number(value);
+        if (isNaN(value)) {
+            value = 0;
+            $('#reimbursement-needed').val(value);
+        }
     }
 
     var data = {},

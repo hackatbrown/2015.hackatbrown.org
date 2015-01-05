@@ -12,7 +12,7 @@ import urllib
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
 
-reimbursement_keys = ["address1", "address2", "city", "state", "zip", "country", "email"]
+reimbursement_keys = ["address1", "address2", "city", "state", "zip", "country", "email", 'rtotal']
 
 
 class HackerPageHandler(webapp2.RequestHandler):
@@ -83,11 +83,21 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         for key in parsed_request:
             if key in keys:
                 value = parsed_request.get(key)
-                if key != 'email':
-                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
-                    kv[key] = value
+                if key == 'email':
+                    continue
+                if key == 'rtotal':
+                    try:
+                        value = int(value)
+                        if value > hacker.rmax:
+                            value = hacker.rmax
+                    except Exception:
+                        success = False
+                        break
+                    # logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
+                kv[key] = value
+
             else:
-                logging.info("Key not found or authorized")
+                logging.info("Key {0}not found or authorized".format(key))
                 success = False
 
         if kv:

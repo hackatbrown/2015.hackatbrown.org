@@ -67,7 +67,7 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
-        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$400</a> in transit fees.</p>
+        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$ {{hacker.rmax}} </a> in transit fees.</p>
     </div>
   </div>
   <div class="actions">
@@ -336,7 +336,7 @@
                         {% else %}
                         <h1 class="hi">Congratulations!</h1>
                         {% endif %}
-                        <p>We can reimburse you up to <span class="money">$400</span> in transit fees.</p>
+                        <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
                         <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
@@ -405,8 +405,7 @@
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
                                 <div class="ui icon input">
-                                    <input type="text" id="reimbursement-needed" name="reimbursement-needed" value="{{hacker.year or ''}}" placeholder="$"/>
-<!--                                    TODO: Right value-->
+                                    <input type="numeric" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
