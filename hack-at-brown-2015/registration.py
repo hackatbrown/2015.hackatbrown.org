@@ -15,6 +15,7 @@ import webapp2
 from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
 from template import utils
+from config import admission_expiration_seconds
 
 
 
@@ -102,8 +103,8 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	hacker.deadline = (datetime.datetime.now() + datetime.timedelta(days=7))
-	email = template("emails/admitted.html", {"hacker": hacker, "deadline": hacker.deadline.strftime("%m/%d/%y")})
+	hacker.deadline = (datetime.datetime.now() + datetime.timedelta(seconds=admission_expiration_seconds()))
+	email = template("emails/admitted.html", {"hacker": hacker, "deadline": hacker.deadline.strftime("%m/%d/%y"), "name":hacker.name.split(" ")[0]})
 	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown!")
 
 	hacker.admitted_email_sent_date = datetime.datetime.now()

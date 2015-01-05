@@ -67,7 +67,9 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
-        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$ {{hacker.rmax}} </a> in transit fees.</p>
+        {% if hacker.rmax %}
+        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">${{hacker.rmax}}</a> in transit fees.</p>
+        {% endif %}
     </div>
   </div>
   <div class="actions">
@@ -244,7 +246,7 @@
                             <div class="field">
                                 <label for="phone_number">Cell Number <span class="optional">(Optional)</span></label>
 								<div class="ui icon input">
-                                    <input id="phone_number" type="text" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
+                                    <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
                                     <i class="icon"></i>
 								</div>
                             </div>
@@ -336,11 +338,17 @@
                         {% else %}
                         <h1 class="hi">Congratulations!</h1>
                         {% endif %}
+                        {% if hacker.rmax %}
                         <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
                         <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
+                        {% else %}
+                        <p>You don't need any reimbursement to come, silly!</p>
+                        <p>Think this is an error? Email us at <a href="mailto:hello@hackatbrown.org?subject=Cancelling%20My%20Registration">hello@hackatbrown.org</a>.</p>
+                        {% endif %}
                     </div>
                 </section>
+                {% if hacker.rmax %}
                 <section class="panel grey condensed-top">
                     <div class="inner_container">
                         <h4 class="label grey">Travel Tips</h4>
@@ -381,6 +389,7 @@
                                 {% endif %}
                             </div>
                             <div class="ui cards">
+                                <div class="grid-sizer"></div>
                             {% if hacker.receipts %}
                                 {% for receipt in hacker.receipts %}
                                 <div class="view-receipts multi ui card">
@@ -405,7 +414,7 @@
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
                                 <div class="ui icon input">
-                                    <input type="numeric" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$"/>
+                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$" max="{{hacker.rmax}}" min="0"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -517,6 +526,7 @@
                             </div>
                         </form>
                 </section>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -532,12 +542,19 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
 
+<script type="text/javascript" src="/static/js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="/static/js/imagesloaded.pkgd.min.js"></script>"
+
+<script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
 
 <script>
   var secret = "{{ hacker.secret }}";
   var status = "{{ status }}";
   var receipts = "{{ hacker.receipts }}";
   var rmax = "{{hacker.rmax}}";
+    
+    var container,
+        msnry;
 
   $(document).ready(function () {
 
@@ -717,7 +734,7 @@
       }
     });
 
-    var teammates = $teammates.selectize;
+    var teammates = $teammates[0].selectize;
     var $teammatesLabel = $teammates.parent().siblings("label");
 
     $teammatesLabel.click(function() {
@@ -766,6 +783,9 @@
     });
 
     trackCondor($linkRepeater);
+      
+    //Telephone masking
+      $("input[type=tel]").mask("(999) 999-9999");
 
     {% if status == "confirmed" %}
      //State Section
@@ -810,6 +830,18 @@
      $('.reciepts-upload .dimmer').dimmer({
          on: 'hover'
      });
+     
+     container = document.querySelector('.cards');
+     
+     msnry = new Masonry( container, {
+         // options
+         itemSelector: '.card',
+         columnWidth: container.querySelector('.grid-sizer')
+     });
+     
+     imagesLoaded( container, function () {
+         msnry.layout();
+     } );
 
   });
 </script>

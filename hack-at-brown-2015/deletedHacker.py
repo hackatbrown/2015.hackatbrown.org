@@ -34,7 +34,7 @@ class DeletedHacker(ndb.Model):
     checked_in = ndb.BooleanProperty()
     ip = ndb.StringProperty()
 
-    receipts = ndb.BlobKeyProperty()
+    receipts = ndb.BlobKeyProperty(repeated=True)
     #different
     deletedDate = ndb.DateTimeProperty(auto_now_add=True)
     deletedCause = ndb.StringProperty(choices=["unregistered", "expired"])
