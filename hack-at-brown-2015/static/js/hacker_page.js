@@ -63,7 +63,7 @@ function deleteFile(uiInput, key) {
                 toggleReimbursementForm(false);
 
             }
-            $(uiInput).fadeOut;
+            $(uiInput).fadeOut(300);
         }
     });
 }
