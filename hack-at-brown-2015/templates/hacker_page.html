@@ -67,7 +67,7 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
-        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$ {{hacker.rmax}} </a> in transit fees.</p>
+        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">${{hacker.rmax}}</a> in transit fees.</p>
     </div>
   </div>
   <div class="actions">
@@ -406,7 +406,7 @@
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
                                 <div class="ui icon input">
-                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$"/>
+                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$" max="{{hacker.rmax}}" min="0"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>

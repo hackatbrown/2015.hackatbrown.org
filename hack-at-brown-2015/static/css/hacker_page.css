@@ -6,9 +6,17 @@
 
 .ui.cards {
   padding-bottom: 30px;
+  transition: height .5s cubic-bezier(.55,0,.1,1);
 }
 
 .ui.cards .card {
+  animation: fadeIn .5s cubic-bezier(.55,0,.1,1);
+  animation-fill-mode: backwards;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 .removing a {
