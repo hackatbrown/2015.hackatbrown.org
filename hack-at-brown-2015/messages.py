@@ -19,6 +19,7 @@ from registration import Hacker
 from email_list import EmailListEntry
 import sms
 from config import isAdmin
+import datetime
 
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
@@ -71,7 +72,8 @@ class Message(ndb.Model):
 		elif self.audience == 'mailing-list-unregistered':
 			return EmailListEntry.query()
 		elif self.audience == 'waitlisted':
-			return Hacker.query(Hacker.admitted_email_sent_date == None, Hacker.waitlist_email_sent_date != None)
+			print "sending waitlisted emails: " + str(Hacker.query(Hacker.admitted_email_sent_date == None).count())
+			return Hacker.query(Hacker.admitted_email_sent_date == None)
 		elif self.audience == None:
 			return None
 		else:
