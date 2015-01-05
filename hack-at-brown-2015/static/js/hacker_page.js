@@ -39,6 +39,19 @@ function messagesCheckNone() {
 
 function deleteFile(uiInput, key) {
     $uiInput = $(uiInput);
+    $uiInput.addClass("removing");
+    if ($uiInput.hasClass("card")) {
+        var $dimmer = $uiInput.find(".dimmer");
+        var $button = $uiInput.find("#delete")
+        $dimmer.addClass("inverted");
+        $dimmer.append("<div class='ui loader'></div>");
+        $dimmer.dimmer({
+            closable: false,
+            on: false
+        });
+        $dimmer.dimmer('show');
+        $button.addClass("loading");
+    }
     var blobKey = $uiInput.find('a').attr('href').split('__serve/')[1];
     var last = $uiInput.siblings('.view-' + key).length == 0;
 
@@ -55,7 +68,11 @@ function deleteFile(uiInput, key) {
                 toggleReimbursementForm(false);
 
             }
-            $(uiInput).remove();
+            $(uiInput).fadeOut(300);
+        },
+        error : function() {
+            $dimmer.html("<div class='content'><div class='center'><i class='remove icon'></i></div></div>");
+            $button.removeClass("loading").addClass("disabled");
         }
     });
 }
@@ -99,7 +116,7 @@ function rsvp(secret) {
                         $('.rsvp.field').fadeOut(200, function () {
                             this.remove();
                         });
-
+                        $('#days-remaining').remove();
                         $('#rsvp-link').remove();
                         $('.reciepts-section').show();
 
@@ -155,7 +172,7 @@ function createFileView(key, multiple) {
 
     if (multiple) {
         $item.addClass('multi ui card');
-        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra'><span class='file-name'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
+        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra flex'><span class='file-name'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
         $delete = $item.find('#delete');
         $delete.click(function() {
             deleteFile(this.parentNode.parentNode, key);
@@ -244,7 +261,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             for(var i = 0; i < response.downloadLinks.length; i++) {
                 href = response.downloadLinks[i];
                 filename = response.fileNames[i];
-                
+
                 $newItem = createFileView(key, multiple);
                 $newLink = $newItem.find('a');
                 if(!multiple) {
@@ -258,7 +275,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                     iframeurl = encodeiFrame(href);
                     $newItem.find('iframe').attr('src', iframeurl);
                 }
-                
+
                 $newLink.attr({
                     'href' : href,
                     'download' : response.fileNames[i],
@@ -299,10 +316,19 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             uploadResume($(".resume-upload.upload.ui.button").parent());
         }
         return;
-    } else if (key == 'email') {
+    } else if (key === 'email') {
         return;
+    } else if (key === 'receipts') {
+        return;
+    } else if (key === "rtotal") {
+        value = Number(value);
+        if (isNaN(value)) {
+            value = 0;
+        } else if (value > rmax) {
+            value = rmax;
+        }
+        $('#reimbursement-needed').val(value);
     }
-    console.log(key, value);
 
     var data = {},
         $icon = $(uiinput).children(".icon"),
@@ -314,7 +340,6 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         type: 'POST',
         data: JSON.stringify(data),
         success: function (data, status) {
-            console.log(data);
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('fade');
@@ -390,27 +415,3 @@ function processCSV(csvString) {
 function populateDefaultRadio(key, value) {
     $('input:radio[name=' + key + '][value=' + value + ']').attr('checked', true);
 }
-
-/* Prevent horizontal scrolling of element into view on focus */
-//$(document).on('keydown', ':focus', function (event) {
-//    if ((event.keyCode || event.which) === 9) {
-//        //TODO: Generalize and support selecting other kinds of input
-//      var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox], input[type=button]"),
-//            index = $inputs.index(this),
-//            $next;
-//        // Index previous or next input based on the shift key
-//        index += event.shiftKey ? -1 : 1;
-//        // If we are in the range of valid inputs (else browser takes focus)
-//        if (index >= 0 && index < $inputs.length) {
-//            $next = $inputs.eq(index);
-//            event.preventDefault();
-//            //console.log($next);
-//            $next.focus();
-//            return false;
-//        }
-//    }
-//
-//    if ((event.keyCode || event.which) === 13) {
-//        $("input").blur();
-//    }
-//});

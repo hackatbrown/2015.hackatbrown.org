@@ -73,8 +73,16 @@ def createDeletedHacker(hacker, cause):
     deletedHacker.ip = hacker.ip
 
     deletedHacker.receipts = hacker.receipts
+    address1 = ndb.StringProperty()
+    address2 = ndb.StringProperty()
+    city = ndb.StringProperty()
+    state = ndb.StringProperty()
+    zip = ndb.StringProperty()
+    country =ndb.StringProperty()
+
+    rmax = ndb.IntegerProperty(default = 0)
+    rtotal = ndb.IntegerProperty(default = 0)
+
 
     deletedHacker.deletedCause = cause
-
-
     deletedHacker.put()

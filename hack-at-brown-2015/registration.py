@@ -22,12 +22,12 @@ hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'di
 personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 def stringValidator(prop, value):
-		cleanValue = value.strip()
+	cleanValue = value.strip()
 
-		if prop._name == 'email':
-				cleanValue = cleanValue.lower()
+	if prop._name == 'email':
+			cleanValue = cleanValue.lower()
 
-		return cleanValue
+	return cleanValue
 
 def phoneValidator(prop, value):
 	numbers = ''.join([c for c in value if c in '0123456789'])
@@ -88,6 +88,10 @@ class Hacker(ndb.Model):
 	state = ndb.StringProperty()
 	zip = ndb.StringProperty()
 	country =ndb.StringProperty()
+
+	rmax = ndb.IntegerProperty(default = 0)
+	rtotal = ndb.IntegerProperty(default = 0)
+
 
 	@classmethod
 	def WithSecret(cls, secret):

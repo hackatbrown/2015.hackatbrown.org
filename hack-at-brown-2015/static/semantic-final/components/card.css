@@ -59,11 +59,11 @@
   display: block;
   width: 290px;
   min-height: 0px;
-  background: #ffffff;
+  background: #fcfcfc;
   padding: 0em;
   border: none;
   border-radius: 0;
-  box-shadow: 0px 0.2em 0px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5;
+  box-shadow: 0px 0.2em 0px 0px #d4d4d5;
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1);
           transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   z-index: '';
@@ -757,3 +757,27 @@ a.ui.card:hover,
     User Variable Overrides
 *******************************/
 
+.ui.card iframe {
+  height: 100%;
+  width: 100%;
+  border: none;
+}
+.ui.card .extra.flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.ui.card .extra.flex .ui.button {
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+}

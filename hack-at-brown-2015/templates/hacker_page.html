@@ -67,7 +67,7 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
-        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$400</a> in transit fees.</p>
+        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">$ {{hacker.rmax}} </a> in transit fees.</p>
     </div>
   </div>
   <div class="actions">
@@ -104,7 +104,7 @@
                         </div>
                         {% if status == "accepted" %}
 <!--                        TODO: Make dynamic-->
-                        <p>You have 7 days left to confirm your attendance.</p>
+                        <p id="days-remaining">You have 7 days left to confirm your attendance.</p>
                         {% endif %}
                     </div>
                 </section>
@@ -336,12 +336,12 @@
                         {% else %}
                         <h1 class="hi">Congratulations!</h1>
                         {% endif %}
-                        <p>We can reimburse you up to <span class="money">$400</span> in transit fees.</p>
+                        <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
                         <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
                     </div>
                 </section>
-                <section class="panel grey condensed-top condensed-bottom">
+                <section class="panel grey condensed-top">
                     <div class="inner_container">
                         <h4 class="label grey">Travel Tips</h4>
                         <div class="ui accordion">
@@ -358,7 +358,7 @@
                             </div>
                             <div class="title">
                                 <i class="dropdown icon"></i>
-                                Busses + Trains
+                                Buses + Trains
                             </div>
                             <div class="indented content light">
                                 <ul class="ui list">
@@ -393,7 +393,7 @@
                                         </div>
                                         <iframe filename="{{receiptsFileNames[loop.index0]}}" urlattr="/__serve/{{ receipt }}"></iframe>
                                     </div>
-                                    <div class="extra"><span class="file-name">{{receiptsFileNames[loop.index0]}}</span>
+                                    <div class="extra flex"><span class="file-name">{{receiptsFileNames[loop.index0]}}</span>
                                         <div id="delete" class="delete-receipt ui pink button">REMOVE</div>
                                     </div>
                                 </div>
@@ -405,8 +405,7 @@
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
                                 <div class="ui icon input">
-                                    <input type="text" id="reimbursement-needed" name="reimbursement-needed" value="{{hacker.year or ''}}" placeholder="$"/>
-<!--                                    TODO: Right value-->
+                                    <input type="numeric" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -537,7 +536,8 @@
 <script>
   var secret = "{{ hacker.secret }}";
   var status = "{{ status }}";
-  var receipts = "{{ hacker.receipts }}"
+  var receipts = "{{ hacker.receipts }}";
+  var rmax = "{{hacker.rmax}}";
 
   $(document).ready(function () {
 
@@ -791,11 +791,11 @@
     {% endif %}
 
     initalizeHamburger();
-     
+
      $('.ui.accordion').accordion();
-     
+
      //forgive me father for i have sinned
-     
+
      $(".reciepts-upload iframe").each( function ( i ) {
          href = this.getAttribute('urlattr');
          filename = this.getAttribute('filename');
@@ -806,11 +806,11 @@
              this.setAttribute('src', iframeurl);
          }
      });
-     
+
      $('.reciepts-upload .dimmer').dimmer({
          on: 'hover'
      });
-     
+
   });
 </script>
 {% endblock %}
