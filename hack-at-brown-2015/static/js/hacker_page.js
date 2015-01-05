@@ -281,7 +281,9 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                     'download' : response.fileNames[i],
                     'target' : '_blank'
                 });
+                $newItem.css("display", "none");
                 $uiInput.append($newItem);
+                $newItem.fadeIn(600);
             }
 
             $button.on('mouseenter', resetState);
