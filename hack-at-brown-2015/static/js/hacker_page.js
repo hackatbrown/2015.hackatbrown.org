@@ -324,8 +324,10 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         value = Number(value);
         if (isNaN(value)) {
             value = 0;
-            $('#reimbursement-needed').val(value);
+        } else if (value > rmax) {
+            value = rmax;
         }
+        $('#reimbursement-needed').val(value);
     }
 
     var data = {},
@@ -413,27 +415,3 @@ function processCSV(csvString) {
 function populateDefaultRadio(key, value) {
     $('input:radio[name=' + key + '][value=' + value + ']').attr('checked', true);
 }
-
-/* Prevent horizontal scrolling of element into view on focus */
-//$(document).on('keydown', ':focus', function (event) {
-//    if ((event.keyCode || event.which) === 9) {
-//        //TODO: Generalize and support selecting other kinds of input
-//      var $inputs = $("input[type=text], input[type=url], input[type=email], input[type=radio], input[type=checkbox], input[type=button]"),
-//            index = $inputs.index(this),
-//            $next;
-//        // Index previous or next input based on the shift key
-//        index += event.shiftKey ? -1 : 1;
-//        // If we are in the range of valid inputs (else browser takes focus)
-//        if (index >= 0 && index < $inputs.length) {
-//            $next = $inputs.eq(index);
-//            event.preventDefault();
-//            //console.log($next);
-//            $next.focus();
-//            return false;
-//        }
-//    }
-//
-//    if ((event.keyCode || event.which) === 13) {
-//        $("input").blur();
-//    }
-//});
