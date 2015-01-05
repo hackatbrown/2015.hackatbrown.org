@@ -333,7 +333,7 @@
             <div class="double_left pane pane2 white">
                 <section class="panel hero condensed-bottom">
                     <div class="inner_container">
-                        {% if status == "accepted" %}
+                        {% if status == "accepted" and hacker.rmax %}
                         <h1 class="hi" id="rsvp-link">You must <a href="#status">RSVP</a> before you can be reimbursed.</h1>
                         {% else %}
                         <h1 class="hi">Congratulations!</h1>
@@ -413,8 +413,11 @@
                         <div class="row">
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
-                                <div class="ui icon input">
-                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$" max="{{hacker.rmax}}" min="0"/>
+                                <div class="ui labeled icon input">
+                                    <div class="ui label">
+                                        $
+                                    </div>
+                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -546,6 +549,7 @@
 <script type="text/javascript" src="/static/js/imagesloaded.pkgd.min.js"></script>"
 
 <script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.maskMoney.min.js"></script>
 
 <script>
   var secret = "{{ hacker.secret }}";

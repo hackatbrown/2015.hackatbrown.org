@@ -79,6 +79,22 @@ function deleteFile(uiInput, key) {
     });
 }
 
+//Validation nags
+function addNag(msg, parent) {
+    console.log("nag added");
+    var nags = parent.children(".nag");
+    if (nags.length == 0) {
+        parent.append("<div class='nag'>" + msg + "</div>");
+        parent.removeClass("valid");
+        parent.children().removeClass("valid");
+    }
+    else {
+        $(nags).text(msg);
+        parent.removeClass("valid");
+        parent.children().removeClass("valid");
+    }
+}
+
 function confirmDeleteHacker(secret) {
     $('#delete-modal')
       .modal({
@@ -341,6 +357,7 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             value = 0;
         } else if (value > rmax) {
             value = rmax;
+            addNag("Value must be below $" + value + "!", uiinput);
         }
         $('#reimbursement-needed').val(value);
     }
