@@ -13,6 +13,7 @@ function setTabActive(tab) {
 
 function switchPanes(paneNumber) {
     var $panes = $(".panes");
+    $('html,body').animate({scrollTop: 0}, 1000);
     $panes.removeClass("in-pane0 in-pane1 in-pane2");
     $panes.addClass("in-pane" + paneNumber);
     $(".pane" + paneNumber).addClass("active");
