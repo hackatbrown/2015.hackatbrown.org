@@ -104,7 +104,7 @@
                         </div>
                         {% if status == "accepted" %}
 <!--                        TODO: Make dynamic-->
-                        <p>You have 7 days left to confirm your attendance.</p>
+                        <p id="days-remaining">You have 7 days left to confirm your attendance.</p>
                         {% endif %}
                     </div>
                 </section>
@@ -358,7 +358,7 @@
                             </div>
                             <div class="title">
                                 <i class="dropdown icon"></i>
-                                Busses + Trains
+                                Buses + Trains
                             </div>
                             <div class="indented content light">
                                 <ul class="ui list">
@@ -791,11 +791,11 @@
     {% endif %}
 
     initalizeHamburger();
-     
+
      $('.ui.accordion').accordion();
-     
+
      //forgive me father for i have sinned
-     
+
      $(".reciepts-upload iframe").each( function ( i ) {
          href = this.getAttribute('urlattr');
          filename = this.getAttribute('filename');
@@ -806,11 +806,11 @@
              this.setAttribute('src', iframeurl);
          }
      });
-     
+
      $('.reciepts-upload .dimmer').dimmer({
          on: 'hover'
      });
-     
+
   });
 </script>
 {% endblock %}

@@ -99,7 +99,7 @@ function rsvp(secret) {
                         $('.rsvp.field').fadeOut(200, function () {
                             this.remove();
                         });
-
+                        $('#days-remaining').remove();
                         $('#rsvp-link').remove();
                         $('.reciepts-section').show();
 
@@ -244,7 +244,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
             for(var i = 0; i < response.downloadLinks.length; i++) {
                 href = response.downloadLinks[i];
                 filename = response.fileNames[i];
-                
+
                 $newItem = createFileView(key, multiple);
                 $newLink = $newItem.find('a');
                 if(!multiple) {
@@ -258,7 +258,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                     iframeurl = encodeiFrame(href);
                     $newItem.find('iframe').attr('src', iframeurl);
                 }
-                
+
                 $newLink.attr({
                     'href' : href,
                     'download' : response.fileNames[i],
@@ -301,8 +301,9 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         return;
     } else if (key == 'email') {
         return;
+    } else if (key === 'receipts') {
+        return;
     }
-    console.log(key, value);
 
     var data = {},
         $icon = $(uiinput).children(".icon"),
@@ -314,7 +315,6 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         type: 'POST',
         data: JSON.stringify(data),
         success: function (data, status) {
-            console.log(data);
             $(uiinput).removeClass('loading');
             if (responseStatus) {
                 $(uiinput).addClass('fade');
