@@ -39,6 +39,19 @@ function messagesCheckNone() {
 
 function deleteFile(uiInput, key) {
     $uiInput = $(uiInput);
+    $uiInput.addClass("removing");
+    if ($uiInput.hasClass("card")) {
+        var $dimmer = $uiInput.find(".dimmer");
+        var $button = $uiInput.find("#delete")
+        $dimmer.addClass("inverted");
+        $dimmer.append("<div class='ui loader'></div>");
+        $dimmer.dimmer({
+            closable: false,
+            on: false
+        });
+        $dimmer.dimmer('show');
+        $button.addClass("loading");
+    }
     var blobKey = $uiInput.find('a').attr('href').split('__serve/')[1];
     var last = $uiInput.siblings('.view-' + key).length == 0;
 
@@ -55,7 +68,11 @@ function deleteFile(uiInput, key) {
                 toggleReimbursementForm(false);
 
             }
-            $(uiInput).remove();
+            $(uiInput).fadeOut(300);
+        },
+        error : function() {
+            $dimmer.html("<div class='content'><div class='center'><i class='remove icon'></i></div></div>");
+            $button.removeClass("loading").addClass("disabled");
         }
     });
 }
@@ -155,7 +172,7 @@ function createFileView(key, multiple) {
 
     if (multiple) {
         $item.addClass('multi ui card');
-        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra'><span class='file-name'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
+        $item.html("<div class='ui image dimmable'><div class='ui dimmer'><div class='content'><div class='center'><a id='open' class='ui inverted button'>Download</a></div></div></div><iframe></iframe></div><div class='extra flex'><span class='file-name'></span><div id='delete' class='ui pink button'>REMOVE</div></div>");
         $delete = $item.find('#delete');
         $delete.click(function() {
             deleteFile(this.parentNode.parentNode, key);
