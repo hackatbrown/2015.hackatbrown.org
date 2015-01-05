@@ -244,7 +244,7 @@
                             <div class="field">
                                 <label for="phone_number">Cell Number <span class="optional">(Optional)</span></label>
 								<div class="ui icon input">
-                                    <input id="phone_number" type="text" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
+                                    <input id="phone_number" type="tel" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
                                     <i class="icon"></i>
 								</div>
                             </div>
@@ -406,7 +406,7 @@
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
                                 <div class="ui icon input">
-                                    <input type="numeric" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$"/>
+                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="$"/>
                                     <i class="icon"></i>
                                 </div>
                             </div>
@@ -723,7 +723,7 @@
       }
     });
 
-    var teammates = $teammates.selectize;
+    var teammates = $teammates[0].selectize;
     var $teammatesLabel = $teammates.parent().siblings("label");
 
     $teammatesLabel.click(function() {
