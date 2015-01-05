@@ -23,10 +23,6 @@ handlers:
   script: admin_checkin.app
   login: required
 
-- url: /dashboard/messages/message_task_queue_work
-  script: main.app
-  login: admin
-
 - url: /dashboard/__db_populate(/.*)
   script: main.app
   login: admin
@@ -42,6 +38,10 @@ handlers:
 - url: /dashboard(/.*)
   script: main.app
   login: required
+
+- url: /dashboard/messages/message_task_queue_work
+  script: main.app
+  login: admin
 
 - url: /__background_work
   script: main.app

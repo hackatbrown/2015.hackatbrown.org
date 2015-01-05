@@ -77,6 +77,7 @@ class Hacker(ndb.Model):
 
 	rsvpd = ndb.BooleanProperty(default=False)
 	checked_in = ndb.BooleanProperty(default=False)
+	deadline = ndb.DateTimeProperty()
 
 	ip = ndb.StringProperty()
 
@@ -97,8 +98,8 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	deadline = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%m/%d/%y")
-	email = template("emails/admitted.html", {"hacker": hacker, "deadline": deadline})
+	hacker.deadline = (datetime.datetime.now() + datetime.timedelta(days=7))
+	email = template("emails/admitted.html", {"hacker": hacker, "deadline": hacker.deadline.strftime("%m/%d/%y")})
 	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown")
 
 	hacker.admitted_email_sent_date = datetime.datetime.now()
