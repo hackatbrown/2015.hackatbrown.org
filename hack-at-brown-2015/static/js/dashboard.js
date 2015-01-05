@@ -27,6 +27,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.showManualStatus = false;
   $scope.manualStatus = "";
   $scope.manualEmails = "";
+  $scope.lookupResult = {found : [], notFound : []};
 
   $scope.signupCount = 0;
   $scope.registerCount = 0;
