@@ -101,10 +101,10 @@ class HackerUpdateHandler(webapp2.RequestHandler):
                 success = False
 
         if kv:
-            success = updateHacker(secret, kv)
-
-        if not success:
-            self.response.set_status(400)
+            try:
+                success = updateHacker(secret, kv)
+            except Exception:
+                success = False
 
         self.response.write(json.dumps({"success": success}))
 

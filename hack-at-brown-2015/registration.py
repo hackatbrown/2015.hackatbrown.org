@@ -1,3 +1,4 @@
+
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
 import json
@@ -30,13 +31,12 @@ def stringValidator(prop, value):
 	return cleanValue
 
 def phoneValidator(prop, value):
-	numbers = ''.join([c for c in value if c in '0123456789'])
-	if len(numbers) == 0:
-		return None
-	elif len(numbers) == 10:
-		return numbers
-	elif len(numbers) == 11 and numbers[0] == '1':
-		return numbers[1:] # remove +1 US country code
+	if any(c.isalpha() for c in value):
+		raise datastore_errors.BadValueError(prop._name)
+	elif len(value) == 10:
+		return value
+	elif len(value) == 11 and value[0] == '1':
+		return value[1:] # remove +1 US country code
 	else:
 		raise datastore_errors.BadValueError(prop._name)
 
