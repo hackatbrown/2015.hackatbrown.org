@@ -1,5 +1,16 @@
 
 /*Shim*/
+.grid-sizer {
+  width: 50%;
+}
+
+.ui.cards {
+  padding-bottom: 30px;
+}
+
+.ui.cards .card {
+}
+
 .removing a {
   display: none;
 }
@@ -630,6 +641,9 @@ section .background > .right {
 
 }
 @media screen and (max-width: 750px) {
+  .grid-sizer {
+    width: 100%;
+  }
   .double_right {
     padding-top: 12%;
   }

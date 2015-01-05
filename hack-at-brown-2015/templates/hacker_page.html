@@ -381,6 +381,7 @@
                                 {% endif %}
                             </div>
                             <div class="ui cards">
+                                <div class="grid-sizer"></div>
                             {% if hacker.receipts %}
                                 {% for receipt in hacker.receipts %}
                                 <div class="view-receipts multi ui card">
@@ -532,12 +533,17 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
 
+<script type="text/javascript" src="/static/js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="/static/js/imagesloaded.pkgd.min.js"></script>"
 
 <script>
   var secret = "{{ hacker.secret }}";
   var status = "{{ status }}";
   var receipts = "{{ hacker.receipts }}";
   var rmax = "{{hacker.rmax}}";
+    
+    var container,
+        msnry;
 
   $(document).ready(function () {
 
@@ -810,6 +816,18 @@
      $('.reciepts-upload .dimmer').dimmer({
          on: 'hover'
      });
+     
+     container = document.querySelector('.cards');
+     
+     msnry = new Masonry( container, {
+         // options
+         itemSelector: '.card',
+         columnWidth: container.querySelector('.grid-sizer')
+     });
+     
+     imagesLoaded( container, function () {
+         msnry.layout();
+     } );
 
   });
 </script>

@@ -68,7 +68,9 @@ function deleteFile(uiInput, key) {
                 toggleReimbursementForm(false);
 
             }
-            $(uiInput).fadeOut(300);
+            $uiInput.fadeOut(300);
+            msnry.remove( uiInput );
+            msnry.layout();
         },
         error : function() {
             $dimmer.html("<div class='content'><div class='center'><i class='remove icon'></i></div></div>");
@@ -257,6 +259,8 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                 //forgive me
                 $uiInput = $uiInput.find('.ui.cards');
             }
+            
+            var items = [];
 
             for(var i = 0; i < response.downloadLinks.length; i++) {
                 href = response.downloadLinks[i];
@@ -264,6 +268,13 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
 
                 $newItem = createFileView(key, multiple);
                 $newLink = $newItem.find('a');
+                
+                $newLink.attr({
+                    'href' : href,
+                    'download' : response.fileNames[i],
+                    'target' : '_blank'
+                });
+                
                 if(!multiple) {
                     $newLink[0].innerHTML = filename;
                 } else {
@@ -275,14 +286,18 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                     iframeurl = encodeiFrame(href);
                     $newItem.find('iframe').attr('src', iframeurl);
                 }
-
-                $newLink.attr({
-                    'href' : href,
-                    'download' : response.fileNames[i],
-                    'target' : '_blank'
-                });
                 $uiInput.append($newItem);
+                
+                if(multiple) {
+                    items.push( $newItem[0] );
+                }
+                
             }
+            
+            imagesLoaded( container, function () {
+                msnry.addItems(items);
+                msnry.layout();
+            } );
 
             $button.on('mouseenter', resetState);
             setTimeout(resetState, 2500);
