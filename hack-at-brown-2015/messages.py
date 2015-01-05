@@ -71,7 +71,7 @@ class Message(ndb.Model):
 		elif self.audience == 'mailing-list-unregistered':
 			return EmailListEntry.query()
 		elif self.audience == 'waitlisted':
-			return Hacker.query(Hacker.admitted_email_sent_date == None and Hacker.waitlist_email_sent_date != None)
+			return Hacker.query(Hacker.admitted_email_sent_date == None, Hacker.waitlist_email_sent_date != None)
 		elif self.audience == None:
 			return None
 		else:
