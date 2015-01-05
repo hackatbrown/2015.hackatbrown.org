@@ -103,7 +103,7 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	print "actually accepting hacker"
+	#print "actually accepting hacker"
 	hacker.deadline = (datetime.datetime.now() + datetime.timedelta(seconds=admission_expiration_seconds()))
 	if hacker.deadline > datetime.datetime(2015, 2, 7):
 		hacker.deadline = datetime.datetime(2015, 2, 7)
