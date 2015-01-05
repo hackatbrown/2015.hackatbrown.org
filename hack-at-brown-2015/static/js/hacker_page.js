@@ -299,7 +299,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                 }
                 if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
                     $newItem.find('iframe').replaceWith("<img src='" + href + "'></img>");
-                } else {
+                } else if((/\.(pdf|ai|psd|pages|dxf|fnt|fon|xls|xlsx|doc|docx|pps|ppt|pptx|otf|eps|ps|rar|ttf|xps|zip)$/i).test(filename)) {
                     iframeurl = encodeiFrame(href);
                     $newItem.find('iframe').attr('src', iframeurl);
                 }

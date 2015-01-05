@@ -823,9 +823,9 @@
      $(".reciepts-upload iframe").each( function ( i ) {
          href = this.getAttribute('urlattr');
          filename = this.getAttribute('filename');
-         if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
+         if ((/\.(gif|jpg|jpeg|tiff|png|svg)$/i).test(filename)) {
              $(this).replaceWith("<img src='" + href + "'></img>");
-         } else {
+         } else if((/\.(pdf|ai|psd|pages|dxf|fnt|fon|xls|xlsx|doc|docx|pps|ppt|pptx|otf|eps|ps|rar|ttf|xps|zip)$/i).test(filename)) {
              iframeurl = encodeiFrame(href);
              this.setAttribute('src', iframeurl);
          }
