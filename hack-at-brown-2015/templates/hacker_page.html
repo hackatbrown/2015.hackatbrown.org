@@ -106,7 +106,14 @@
                         </div>
                         {% if status == "accepted" %}
 <!--                        TODO: Make dynamic-->
-                        <p id="days-remaining">You have 7 days left to confirm your attendance.</p>
+                            {% if deadline == 1 %}
+                            <p id="days-remaining">You have {{deadline}} day left to confirm your attendance.</p>
+                            {% elif deadline == 0%}
+                            <p id="days-remaining"><b>Today is the last day day to confirm your attendance.</b></p>
+                            {% else %}
+                            <p id="days-remaining">You have {{deadline}} days left to confirm your attendance.</p>
+                            {% endif %}
+                            
                         {% endif %}
                     </div>
                 </section>

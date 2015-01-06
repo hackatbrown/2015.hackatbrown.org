@@ -8,6 +8,7 @@ import hackerFiles
 from deletedHacker import createDeletedHacker
 from google.appengine.api import urlfetch
 import urllib
+import datetime
 
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
@@ -40,8 +41,9 @@ class HackerPageHandler(webapp2.RequestHandler):
         self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, pre-check=0, post-check=0"
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
-
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames}))
+        deadline = 7
+        deadline = (hacker.deadline - datetime.datetime.now()).days
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):

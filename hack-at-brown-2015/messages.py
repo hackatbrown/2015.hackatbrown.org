@@ -131,7 +131,7 @@ class Message(ndb.Model):
 			elif self.audience == 'waitlisted':
 				hacker = entity
 				hacker.waitlist_email_sent_date = datetime.datetime.now()
-				self.send_to_email(hacker.email, {"hacker": hacker})
+				self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				hacker.put()
 
 		except Exception as e:
