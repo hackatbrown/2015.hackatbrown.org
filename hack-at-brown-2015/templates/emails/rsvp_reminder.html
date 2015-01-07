@@ -1,0 +1,18 @@
+{% extends "emails/base.html" %}
+{% block content %}
+<p>
+    Hi {{name}},
+</p>
+<p>
+    Today is your last day to RSVP for Hack@Brown!
+    We've got a lot of people on our waitlist, so if you don't RSVP, we're going to have to let your admission expire. 
+</p>
+
+<a href='http://hackatbrown.org/secret/{{ hacker.secret }}' class='cta-button'>RSVP</a>
+
+<p> 
+Best,<br/> 
+Team Hack@Brown 
+</p>
+
+{% endblock %}
