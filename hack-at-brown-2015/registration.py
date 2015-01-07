@@ -114,6 +114,16 @@ def accept_hacker(hacker):
 	hacker.put()
 	memcache.add("admitted:{0}".format(hacker.secret), "1", memcache_expiry)
 
+def expire_hacker(hacker):
+	if hacker.rsvpd == True or hacker.admitted_email_sent_date == None:
+			#hacker has rsvp'd or was never accepted
+			return
+	print "Expiring " + hacker.email + " with admit date: " + str(hacker.admitted_email_sent_date)
+	email = template("emails/admittance_expired.html", {"name":hacker.name.split(" ")[0]})
+	send_email(recipients=[hacker.email], html=email, subject="You didn't RSVP to Hack@Brown in time...")
+	createDeletedHacker(hacker, "expired")
+	hacker.key.delete()
+
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 		def post(self):
 			hacker = Hacker()
