@@ -128,11 +128,21 @@ def getAllHackers(projection=None):
     return hackers
 
 def getAll():
-    keys = ["school", "shirt", "hardware_hack", "first_hackathon", "diet",
-    "year", "shirt_gen", "h_status"]
+    prettyKeys = {
+    "School" : "school",
+    "Shirt Size" : "shirt",
+    "Hardware Hackers" : "hardware_hack",
+    "First Timers" : "first_hackathon",
+    "Dietary Restrictions" : "diet",
+    "Year" : "year",
+    "Gender" : "shirt_gen",
+    "Admit Status" : "h_status",
+    "State" : "state"
+    }
+
     data = {}
-    for key in keys:
-        data[key] = getBreakdown(key)
+    for pretty, key in prettyKeys.items():
+        data[pretty] = getBreakdown(key)
 
     return data
 

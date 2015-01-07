@@ -94,13 +94,8 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
     $http({method: 'GET', url: '/dashboard/__get_dash_stats'}).
         success(function(data, status) {
+          $scope.breakdownData = data;
           $scope.status = status;
-          $scope.signupCount = data.signup_count;
-          $scope.registerCount = data.registered_count;
-          $scope.acceptedCount = data.accepted_count;
-          $scope.confirmedCount = data.confirmed_count
-          $scope.waitlistCount = data.waitlist_count;
-          $scope.declinedCount = data.declined_count;
         }).
         error(function(data, status) {
           console.log('failed to hit __get_dash_stats')
@@ -226,14 +221,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
 
           if (data != "null") {
-            $scope.school = data.school;
-            $scope.shirt = data.shirt;
-            $scope.hardware_hack = data.hardware_hack;
-            $scope.first_hackathon = data.first_hackathon;
-            $scope.diet = data.diet;
-            $scope.years = data.year;
-            $scope.shirt_gen = data.shirt_gen
-            $scope.h_status = data.h_status
+            $scope.breakdownData = data;
           }
 
         }).
