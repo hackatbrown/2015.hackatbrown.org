@@ -42,7 +42,8 @@ class HackerPageHandler(webapp2.RequestHandler):
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
         deadline = 7
-        deadline = (hacker.deadline - datetime.datetime.now()).days
+        if hacker.deadline:
+            deadline = (hacker.deadline - datetime.datetime.now()).days
         self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
