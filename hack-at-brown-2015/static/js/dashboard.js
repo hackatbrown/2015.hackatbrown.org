@@ -43,44 +43,71 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
     {
       name : 'No Chart',
       value : 'none',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     },
     {
       name : 'By School',
       value : 'school',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Shirt Size',
       value : 'shirt',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Dietary Restrictions',
       value : 'diet',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Gender',
       value : 'shirt_gen',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Year',
       value : 'year',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'First Hackathon',
       value : 'first_hackathon',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'Hardware Hackers',
       value : 'hardware_hack',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Status',
       value : 'h_status',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By State',
       value : 'state',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
+    }, {
+      name : "Reimbursement Budget",
+      value : 'budget',
+      hc_type : {
+        polar : true,
+        type : 'line'
+      }
     }];
   $scope.currentChart = $scope.charts[0];
   $scope.showChartStatus = false;
@@ -243,23 +270,46 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
           $scope.showChartStatus = (data == "null");
           $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
           $('#chart').toggle(data != "null");
-
-          if (data != "null") {
-            var series = [];
-            $.each(data, function(key, value) {
-              series.push({"name" : key, "y": value});
-            });
-            $('#chart').highcharts({
-                  title : {
-                    text : $scope.currentChart.name
-                  },
-                  series: [{
-                      type : $scope.currentChart.hc_type,
-                      name: 'Hackers',
-                      data: series
-                  }]
-                });
+          if (data == "null") {
+            return;
           }
+
+          var dictToSeriesData = function(obj) {
+            return _.map(obj, function(v, k) { return {"name" : k, "y": v};});
+          }
+
+          var serieses = [];
+          var tooltip = {};
+
+          if ($scope.currentChart.value == "budget") {
+            tooltip = {
+            shared: true,
+            pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+            }
+            serieses = _.map(data, function(series) {
+              series.data = dictToSeriesData(series.data);
+              return series;
+            });
+          } else {
+            var series = {name : 'Hackers', data : []};
+            series.data =  dictToSeriesData(data);
+            serieses.push(series);
+          }
+
+          $('#chart').highcharts({
+                chart :  $scope.currentChart.hc_type,
+                title : {
+                  text : $scope.currentChart.name
+                },
+                xAxis : {
+                  categories : []
+                },
+                yAxis : {
+                  min : 0
+                },
+                tooltip : tooltip,
+                series: serieses
+              });
         }).
         error(function(data, status) {
           $scope.data = data || "Request failed";

@@ -108,6 +108,8 @@ def getBreakdown(type):
         data = getByShirtSize()
     elif type == 'h_status':
         data = getByStatus()
+    elif type == 'budget':
+        data = getBudget()
     else:
         data = getGeneric(type)
 
@@ -127,6 +129,22 @@ def getAllHackers(projection=None):
 
     return hackers
 
+def getBudget():
+    allocated = {'name' : 'Allocated Budget', 'pointPlacement' : 'on'}
+    spent =  {'name': 'Actual Spending', 'pointPlacement': 'on'}
+    allocatedData = {}
+    spentData = {}
+    hackers = getAllHackers(['rmax', 'rtotal'])
+    for hacker in hackers:
+        rmax = hacker.rmax
+        tier = "Tier " + str(rmax)
+        allocatedData[tier] = allocatedData.setdefault(tier, 0) + rmax
+        spentData[tier] = spentData.setdefault(tier, 0) + hacker.rtotal
+
+    allocated['data'] = allocatedData
+    spent['data'] = spentData
+    return [allocated, spent]
+
 def getAll():
     prettyKeys = {
     "School" : "school",
@@ -137,7 +155,7 @@ def getAll():
     "Year" : "year",
     "Gender" : "shirt_gen",
     "Admit Status" : "h_status",
-    "State" : "state"
+    "State" : "state",
     }
 
     data = {}
