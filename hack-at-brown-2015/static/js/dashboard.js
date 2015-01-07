@@ -99,7 +99,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       name : "Reimbursement Budget",
       value : 'budget',
       hc_type : {
-        polar : true,
+        polar : false,
         type : 'line'
       }
     }];
