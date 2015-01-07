@@ -75,6 +75,7 @@ class Hacker(ndb.Model):
 	post_registration_email_sent_date = ndb.DateTimeProperty()
 
 	waitlist_email_sent_date = ndb.DateTimeProperty()
+	rsvp_reminder_sent_date = ndb.DateTimeProperty(default=None)
 
 	rsvpd = ndb.BooleanProperty(default=False)
 	checked_in = ndb.BooleanProperty(default=False)
