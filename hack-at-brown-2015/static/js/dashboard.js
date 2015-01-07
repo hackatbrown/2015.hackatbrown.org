@@ -283,13 +283,17 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
           if ($scope.currentChart.value == "budget") {
             tooltip = {
-            shared: true,
-            pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
-            }
+              shared: true,
+              pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+            };
             serieses = _.map(data, function(series) {
               series.data = dictToSeriesData(series.data);
               return series;
             });
+            var sum = function(memo, pt) { return memo + pt.y};
+            $scope.showChartStatus = true;
+            $scope.chartStatus = "Total Allocated: $" + _.reduce(serieses[0].data, sum, 0) + " Total Spent: $" + _.reduce(serieses[1].data, sum, 0);
+
           } else {
             var series = {name : 'Hackers', data : []};
             series.data =  dictToSeriesData(data);
