@@ -34,6 +34,11 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: rmax
+  - name: rtotal
+
+- kind: Hacker
+  properties:
   - name: rsvpd
   - name: checked_in
   - name: email

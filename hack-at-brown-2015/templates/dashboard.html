@@ -7,6 +7,8 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-sanitize.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 <script src='/static/js/dashboard.js'></script>
 {% endblock %}
 
@@ -23,6 +25,7 @@
       <div>Hackers Registered: <span><h2>%%registerCount%%</h2></span></div>
       <br>
       <div><span>Accepted: <h2>%%acceptedCount%%</h2></span></div>
+      <div><span>Confirmed: <h2>%%confirmedCount%%</h2></span></div>
       <div>Waitedlisted: <span><h2>%%waitlistCount%%</h2></span></div>
       <div>Declined: <span><h2>%%declinedCount%%</h2></span></div>
 </div>
@@ -37,47 +40,12 @@
   </div>
   <div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
     <div id="breakdown-numbers" ng-show='showBreakdowns'>
-
-      <h1> Schools </h1>
-      <div ng-repeat="(key, value) in school">
-        <span><b>%%key%%:</b> %%value%%</span>
+    <div ng-repeat="(key, value) in breakdownData">
+      <h1>%%key%%</h1>
+      <div ng-repeat="(k, v) in value">
+        <span><b>%%k%%:</b> %%v%%</span>
       </div>
       <br>
-      <h1> Year </h1>
-      <div ng-repeat="(key, value) in years">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-      <br>
-      <h1> Dietary Restrictions </h1>
-      <div ng-repeat="(key, value) in diet">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-      <br>
-      <h1> Shirt Sizes </h1>
-      <div ng-repeat="(key, value) in shirt">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-      <br>
-      <h1> Hardware Hack? </h1>
-      <div ng-repeat="(key, value) in hardware_hack">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-      <br>
-      <h1> First Hackathon? </h1>
-      <div ng-repeat="(key, value) in first_hackathon">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-      <br>
-      <h1> Gender </h1>
-      <div ng-repeat="(key, value) in shirt_gen">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-      <br>
-      <h1> Status </h1>
-      <div ng-repeat="(key, value) in h_status">
-        <span><b>%%key%%:</b> %%value%%</span>
-      </div>
-
     </div>
   </div>
   <br>

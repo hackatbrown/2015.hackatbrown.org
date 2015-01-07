@@ -59,6 +59,7 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
     data['signup_count'] = EmailListEntry.query().count()
     data['registered_count'] = Hacker.query().count()
     data['accepted_count'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
+    data['confirmed_count'] = Hacker.query(Hacker.rsvpd == True).count()
     data['waitlist_count'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
     data['declined_count'] = 0
 
@@ -107,6 +108,8 @@ def getBreakdown(type):
         data = getByShirtSize()
     elif type == 'h_status':
         data = getByStatus()
+    elif type == 'budget':
+        data = getBudget()
     else:
         data = getGeneric(type)
 
@@ -126,12 +129,38 @@ def getAllHackers(projection=None):
 
     return hackers
 
+def getBudget():
+    allocated = {'name' : 'Allocated Budget', 'pointPlacement' : 'on'}
+    spent =  {'name': 'Actual Spending', 'pointPlacement': 'on'}
+    allocatedData = {}
+    spentData = {}
+    hackers = getAllHackers(['rmax', 'rtotal'])
+    for hacker in hackers:
+        rmax = hacker.rmax
+        tier = "Tier " + str(rmax)
+        allocatedData[tier] = allocatedData.setdefault(tier, 0) + rmax
+        spentData[tier] = spentData.setdefault(tier, 0) + hacker.rtotal
+
+    allocated['data'] = allocatedData
+    spent['data'] = spentData
+    return [allocated, spent]
+
 def getAll():
-    keys = ["school", "shirt", "hardware_hack", "first_hackathon", "diet",
-    "year", "shirt_gen", "h_status"]
+    prettyKeys = {
+    "School" : "school",
+    "Shirt Size" : "shirt",
+    "Hardware Hackers" : "hardware_hack",
+    "First Timers" : "first_hackathon",
+    "Dietary Restrictions" : "diet",
+    "Year" : "year",
+    "Gender" : "shirt_gen",
+    "Admit Status" : "h_status",
+    "State" : "state",
+    }
+
     data = {}
-    for key in keys:
-        data[key] = getBreakdown(key)
+    for pretty, key in prettyKeys.items():
+        data[pretty] = getBreakdown(key)
 
     return data
 
