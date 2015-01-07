@@ -278,7 +278,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
             return _.map(obj, function(v, k) { return {"name" : k, "y": v};});
           }
 
-          var serieses = [];
+          var series;
           var tooltip = {};
 
           if ($scope.currentChart.value == "budget") {
@@ -286,18 +286,16 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
               shared: true,
               pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
             };
-            serieses = _.map(data, function(series) {
+            series = _.map(data, function(series) {
               series.data = dictToSeriesData(series.data);
               return series;
             });
             var sum = function(memo, pt) { return memo + pt.y};
             $scope.showChartStatus = true;
-            $scope.chartStatus = "Total Allocated: $" + _.reduce(serieses[0].data, sum, 0) + " Total Spent: $" + _.reduce(serieses[1].data, sum, 0);
+            $scope.chartStatus = "Total Allocated: $" + _.reduce(series[0].data, sum, 0) + " Total Spent: $" + _.reduce(series[1].data, sum, 0);
 
           } else {
-            var series = {name : 'Hackers', data : []};
-            series.data =  dictToSeriesData(data);
-            serieses.push(series);
+            series = [{name : 'Hackers', data : dictToSeriesData(data)}];
           }
 
           $('#chart').highcharts({
@@ -312,7 +310,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
                   min : 0
                 },
                 tooltip : tooltip,
-                series: serieses
+                series: series
               });
         }).
         error(function(data, status) {
