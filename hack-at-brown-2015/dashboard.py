@@ -59,6 +59,7 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
     data['signup_count'] = EmailListEntry.query().count()
     data['registered_count'] = Hacker.query().count()
     data['accepted_count'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
+    data['confirmed_count'] = Hacker.query(Hacker.rsvpd == True).count()
     data['waitlist_count'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
     data['declined_count'] = 0
 

@@ -32,6 +32,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.signupCount = 0;
   $scope.registerCount = 0;
   $scope.acceptedCount = 0;
+  $scope.confirmedCount = 0;
   $scope.waitlistCount = 0;
   $scope.declinedCount = 0;
 
@@ -76,6 +77,10 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       name : 'By Status',
       value : 'h_status',
       hc_type : 'pie'
+    }, {
+      name : 'By State',
+      value : 'state',
+      hc_type : 'pie'
     }];
   $scope.currentChart = $scope.charts[0];
   $scope.showChartStatus = false;
@@ -93,6 +98,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
           $scope.signupCount = data.signup_count;
           $scope.registerCount = data.registered_count;
           $scope.acceptedCount = data.accepted_count;
+          $scope.confirmedCount = data.confirmed_count
           $scope.waitlistCount = data.waitlist_count;
           $scope.declinedCount = data.declined_count;
         }).

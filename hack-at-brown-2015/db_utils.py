@@ -143,4 +143,25 @@ def createTestHacker(number):
     hacker.hardware_hack = "yes" if prob() > 8 else "no"
     hacker.first_hackathon = "yes" if prob() > 7 else "no"
 
+    def numberString(length):
+        return ''.join(map(lambda x: str(random.randint(0, 9)), range(0, length)))
+
+    hacker.phone_number = numberString(10)
+
+    states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+
+    hacker.address1 = "Creative"
+    hacker.address2 = "Address"
+    hacker.city = "City"
+    hacker.country = "Country"
+    hacker.state = random.choice(states)
+    hacker.zip = numberString(5)
+
+    if hacker.school == "Another University":
+        hacker.rmax = 1000
+    else:
+        hacker.rmax = 0
+
+    hacker.rtotal = random.randint(0, hacker.rmax)
+
     return hacker
