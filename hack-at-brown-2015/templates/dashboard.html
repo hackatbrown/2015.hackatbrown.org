@@ -20,14 +20,10 @@
 </div>
 
 <div ng-app='dashApp' ng-init="getStats()" ng-controller="MainCtrl" >
-  <div id='menu_1st_row'  class='menu'  >
-      <div>Hackers Signed Up: <span><h2>%%signupCount%%</h2></span></div>
-      <div>Hackers Registered: <span><h2>%%registerCount%%</h2></span></div>
-      <br>
-      <div><span>Accepted: <h2>%%acceptedCount%%</h2></span></div>
-      <div><span>Confirmed: <h2>%%confirmedCount%%</h2></span></div>
-      <div>Waitedlisted: <span><h2>%%waitlistCount%%</h2></span></div>
-      <div>Declined: <span><h2>%%declinedCount%%</h2></span></div>
+  <div id='menu_1st_row'  class='menu'>
+      <div ng-repeat="(k, v) in countData">
+        %%k%%: <span><h2>%%v%%: </h2></span>
+      </div>
 </div>
 <br>
 <div class="panel-section" id="breakdowns">

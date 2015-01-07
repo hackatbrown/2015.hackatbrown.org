@@ -56,12 +56,12 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
 class DashboardBackgroundHandler(webapp2.RequestHandler):
   def get(self):
     data = {}
-    data['signup_count'] = EmailListEntry.query().count()
-    data['registered_count'] = Hacker.query().count()
-    data['accepted_count'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
-    data['confirmed_count'] = Hacker.query(Hacker.rsvpd == True).count()
-    data['waitlist_count'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
-    data['declined_count'] = 0
+    data['Signed Up'] = EmailListEntry.query().count()
+    data['Registered'] = Hacker.query().count()
+    data['Accepted'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
+    data['Confirmed'] = Hacker.query(Hacker.rsvpd == True).count()
+    data['Waitlisted'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
+    data['Declined'] = 0
 
     self.response.write(json.dumps(data))
 

@@ -29,15 +29,9 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.manualEmails = "";
   $scope.lookupResult = {found : [], notFound : []};
 
-  $scope.signupCount = 0;
-  $scope.registerCount = 0;
-  $scope.acceptedCount = 0;
-  $scope.confirmedCount = 0;
-  $scope.waitlistCount = 0;
-  $scope.declinedCount = 0;
-
   $scope.showBreakdowns = false;
   $scope.displayEmail = false;
+  $scope.countData = {"Signed Up" : 0, "Registered" : 0, "Accepted" : 0, "Confirmed" : 0, "Waitlisted" : 0, "Declined" : 0};
 
   $scope.charts = [
     {
@@ -121,7 +115,8 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
     $http({method: 'GET', url: '/dashboard/__get_dash_stats'}).
         success(function(data, status) {
-          $scope.breakdownData = data;
+          console.log(data);
+          $scope.countData = data;
           $scope.status = status;
         }).
         error(function(data, status) {
