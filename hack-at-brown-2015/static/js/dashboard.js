@@ -100,7 +100,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       value : 'budget',
       hc_type : {
         polar : false,
-        type : 'line'
+        type : 'bar'
       }
     }];
   $scope.currentChart = $scope.charts[0];
