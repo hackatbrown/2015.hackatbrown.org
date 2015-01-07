@@ -18,6 +18,12 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: admitted_email_sent_date
+  - name: rmax
+  - name: rtotal
+
+- kind: Hacker
+  properties:
   - name: checked_in
   - name: email
   - name: name

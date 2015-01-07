@@ -115,17 +115,18 @@ def getBreakdown(type):
 
     return data
 
-def getAllHackers(projection=None):
+def getAllHackers(projection=[], accepted=False):
+    memcachedKey = memcachedBase + str(projection) + str(accepted)
+    hackers = memcache.get(memcachedKey)
+    if hackers is None:
+        hackers = Hacker.query(projection=projection)
+        if accepted:
+            hackers = hackers.filter(Hacker.admitted_email_sent_date != None)
 
-    if projection:
-        memcachedKey = memcachedBase + str(projection)
-        hackers = memcache.get(memcachedKey)
-        if hackers is None:
-            hackers = Hacker.query(projection=projection).fetch()
-            if not memcache.set(memcachedKey, hackers, cacheTime):
-                logging.error("Memcache set failed")
-    else:
-        hackers = Hacker.query(projection=projection).fetch()
+        hackers = hackers.fetch()
+        logging.info(hackers)
+        if not memcache.set(memcachedKey, hackers, cacheTime):
+            logging.error("Memcache set failed")
 
     return hackers
 
@@ -134,7 +135,7 @@ def getBudget():
     spent =  {'name': 'Actual Spending', 'pointPlacement': 'on'}
     allocatedData = {}
     spentData = {}
-    hackers = getAllHackers(['rmax', 'rtotal'])
+    hackers = getAllHackers(projection=['rmax', 'rtotal'], accepted=True)
     for hacker in hackers:
         rmax = hacker.rmax
         tier = "Tier " + str(rmax)
