@@ -131,8 +131,8 @@ def getAllHackers(projection=[], accepted=False):
     return hackers
 
 def getBudget():
-    allocated = {'name' : 'Allocated Budget', 'pointPlacement' : 'on'}
-    spent =  {'name': 'Actual Spending', 'pointPlacement': 'on'}
+    allocated = {'name' : 'Allocated Budget'}
+    spent =  {'name': 'Actual Spending'}
     allocatedData = {}
     spentData = {}
     hackers = getAllHackers(projection=['rmax', 'rtotal'], accepted=True)
