@@ -509,7 +509,7 @@ section .background > .right {
 }
 
 .faq {
-    margin-top: 600px;
+    margin-top: 750px;
     margin-bottom: 420px;
     color: white;
     height: 840px;
@@ -738,9 +738,9 @@ nav.open .hamsvg {
 
 /* RESPONSIVE */
 @media screen and (max-width:1280px) {
-      html {
+    html {
         font-size: 80%;
-      }
+    }
     .schedule .background > .back {
         width: 1447.2px;
         margin-left: -750.4px;
@@ -823,7 +823,7 @@ nav.open .hamsvg {
     }
     
     .triangle.faq {
-        margin-top: 1380px;
+        margin-top: 900px;
     }
     
     .triangle.faq article {
@@ -845,6 +845,10 @@ nav.open .hamsvg {
         float: none;
         display: block;
         text-align: left;
+    }
+
+    .triangle.faq {
+        margin-top: 1560px;
     }
 
     footer {
