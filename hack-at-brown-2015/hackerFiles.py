@@ -4,7 +4,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 import urllib
 import json
 import logging
-import hacker_page
+from hacker_page import putHacker, getHacker
 import operator
 
 #Todo: shouldn't be called this.
