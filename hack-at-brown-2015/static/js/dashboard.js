@@ -97,7 +97,7 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       }
     }, {
       name : "Reimbursement Budget",
-      value : 'budget',
+      value : 'reimbursements',
       hc_type : {
         polar : false,
         type : 'bar',
@@ -124,7 +124,6 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
           $scope.data = data || "Request failed";
           $scope.status = status;
       });
-        //return $scope.signup_count;
   };
 
   $scope.showEmail = function(){
@@ -232,13 +231,13 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
         });
   };
 
-
   $scope.getBreakdowns = function(){
     $scope.showBreakdowns = !$scope.showBreakdowns;
     if ($scope.school){
       return;
     }
-    $http({method: 'GET', url: '/dashboard/__breakdown/' + "all"}).
+    var url = $scope.applyFilter('/dashboard/__breakdown/' + "all");
+    $http({method: 'GET', url: url}).
         success(function(data, status) {
 
 
@@ -254,13 +253,24 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       });
   }
 
+  $scope.applyFilter = function(urlString) {
+    var $accepted = $('#accepted');
+    if ($accepted.prop('checked')) {
+      urlString += '/accepted';
+    }
+    console.log(urlString);
+    return urlString;
+  }
+
   $scope.populateCharts = function() {
     if ($scope.currentChart.value == "none") {
       $('#chart').toggle(false);
+      $scope.showChartStatus = false;
       return;
     }
+    var url =  $scope.applyFilter('/dashboard/__breakdown/' + $scope.currentChart.value);
 
-    $http({method: 'GET', url: '/dashboard/__breakdown/' + $scope.currentChart.value}).
+    $http({method: 'GET', url: url}).
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
           $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
@@ -276,7 +286,8 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
           var series;
           var tooltip = {};
 
-          if ($scope.currentChart.value == "budget") {
+          if ($scope.currentChart.value == "reimbursements") {
+            $('#accepted').prop('checked', true);
             tooltip = {
               shared: true,
               pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'

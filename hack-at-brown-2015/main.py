@@ -61,6 +61,7 @@ app = webapp2.WSGIApplication([
 		('/__serve/([^/]+)?', hackerFiles.ServeHandler),
 		('/dashboard/__get_dash_stats', dashboard.DashboardBackgroundHandler),
 		('/dashboard/__breakdown/(\w+)', dashboard.BreakdownHandler),
+		('/dashboard/__breakdown/(\w+)/(\w+)', dashboard.FilteredBreakdownHandler),
 		('/dashboard', dashboard.DashboardHandler),
 		('/dashboard/messages', messages.MessagesDashboardHandler),
 		('/dashboard/messages/message_task_queue_work', messages.MessagesTaskQueueWork),
