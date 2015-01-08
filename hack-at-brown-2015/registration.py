@@ -16,6 +16,7 @@ from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
 from template import utils
 from config import admission_expiration_seconds
+from deletedHacker import createDeletedHacker
 
 
 
