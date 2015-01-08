@@ -5,7 +5,7 @@ import logging
 import json
 from google.appengine.api import memcache
 import hackerFiles
-from deletedHacker import createDeletedHacker
+import deletedHacker
 from google.appengine.api import urlfetch
 import urllib
 import datetime
@@ -59,7 +59,7 @@ class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
         hacker = getHacker(secret)
         if hacker:
-            createDeletedHacker(hacker, "unregistered")
+            deletedHacker.createDeletedHacker(hacker, "unregistered")
             hacker.key.delete()
             memcachedKey = memcachedBase + secret
             memcache.set(memcachedKey, None, cacheTime)

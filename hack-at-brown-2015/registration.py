@@ -16,8 +16,7 @@ from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
 from template import utils
 from config import admission_expiration_seconds
-from deletedHacker import createDeletedHacker
-
+import deletedHacker
 
 
 memcache_expiry = 10 * 60
@@ -123,7 +122,7 @@ def expire_hacker(hacker):
 	print "Expiring " + hacker.email + " with admit date: " + str(hacker.admitted_email_sent_date)
 	email = template("emails/admittance_expired.html", {"name":hacker.name.split(" ")[0]})
 	send_email(recipients=[hacker.email], html=email, subject="You didn't RSVP to Hack@Brown in time...")
-	createDeletedHacker(hacker, "expired")
+	deletedHacker.createDeletedHacker(hacker, "expired")
 	hacker.key.delete()
 
 class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):

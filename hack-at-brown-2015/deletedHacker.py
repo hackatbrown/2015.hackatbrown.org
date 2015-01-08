@@ -1,5 +1,4 @@
 from google.appengine.ext import ndb
-from registration import Hacker
 
 class DeletedHacker(ndb.Model):
     name = ndb.StringProperty()
