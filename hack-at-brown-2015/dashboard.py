@@ -56,11 +56,12 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
 class DashboardBackgroundHandler(webapp2.RequestHandler):
   def get(self):
     data = {}
-    data['signup_count'] = EmailListEntry.query().count()
-    data['registered_count'] = Hacker.query().count()
-    data['accepted_count'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
-    data['waitlist_count'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
-    data['declined_count'] = 0
+    data['Signed Up'] = EmailListEntry.query().count()
+    data['Registered'] = Hacker.query().count()
+    data['Accepted'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
+    data['Confirmed'] = Hacker.query(Hacker.rsvpd == True).count()
+    data['Waitlisted'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
+    data['Declined'] = 0
 
     self.response.write(json.dumps(data))
 
@@ -107,31 +108,60 @@ def getBreakdown(type):
         data = getByShirtSize()
     elif type == 'h_status':
         data = getByStatus()
+    elif type == 'budget':
+        data = getBudget()
     else:
         data = getGeneric(type)
 
     return data
 
-def getAllHackers(projection=None):
+def getAllHackers(projection=[], accepted=False):
+    memcachedKey = memcachedBase + str(projection) + str(accepted)
+    hackers = memcache.get(memcachedKey)
+    if hackers is None:
+        hackers = Hacker.query(projection=projection)
+        if accepted:
+            hackers = hackers.filter(Hacker.admitted_email_sent_date != None)
 
-    if projection:
-        memcachedKey = memcachedBase + str(projection)
-        hackers = memcache.get(memcachedKey)
-        if hackers is None:
-            hackers = Hacker.query(projection=projection).fetch()
-            if not memcache.set(memcachedKey, hackers, cacheTime):
-                logging.error("Memcache set failed")
-    else:
-        hackers = Hacker.query(projection=projection).fetch()
+        hackers = hackers.fetch()
+        logging.info(hackers)
+        if not memcache.set(memcachedKey, hackers, cacheTime):
+            logging.error("Memcache set failed")
 
     return hackers
 
+def getBudget():
+    allocated = {'name' : 'Allocated Budget'}
+    spent =  {'name': 'Actual Spending'}
+    allocatedData = {}
+    spentData = {}
+    hackers = getAllHackers(projection=['rmax', 'rtotal'], accepted=True)
+    for hacker in hackers:
+        rmax = hacker.rmax
+        tier = "Tier " + str(rmax)
+        allocatedData[tier] = allocatedData.setdefault(tier, 0) + rmax
+        spentData[tier] = spentData.setdefault(tier, 0) + hacker.rtotal
+
+    allocated['data'] = allocatedData
+    spent['data'] = spentData
+    return [allocated, spent]
+
 def getAll():
-    keys = ["school", "shirt", "hardware_hack", "first_hackathon", "diet",
-    "year", "shirt_gen", "h_status"]
+    prettyKeys = {
+    "School" : "school",
+    "Shirt Size" : "shirt",
+    "Hardware Hackers" : "hardware_hack",
+    "First Timers" : "first_hackathon",
+    "Dietary Restrictions" : "diet",
+    "Year" : "year",
+    "Gender" : "shirt_gen",
+    "Admit Status" : "h_status",
+    "State" : "state",
+    }
+
     data = {}
-    for key in keys:
-        data[key] = getBreakdown(key)
+    for pretty, key in prettyKeys.items():
+        data[pretty] = getBreakdown(key)
 
     return data
 
