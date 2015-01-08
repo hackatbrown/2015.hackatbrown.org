@@ -159,8 +159,11 @@ function uploadResume(uiinput) {
 
 function toggleReimbursementForm(on) {
     $form = $('#address_form');
-    $inputs = $form.find('div:not(.upload) :input')
+    $inputs = $form.find('div:not(.upload) :input');
     if (on) {
+        if ($form.is(':visible')) {
+            return;
+        }
         slideOut($form, 1000);
         $inputs.removeAttr('disabled');
     } else {
@@ -276,7 +279,7 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                 //forgive me
                 $uiInput = $uiInput.find('.ui.cards');
             }
-            
+
             var items = [];
 
             for(var i = 0; i < response.downloadLinks.length; i++) {
@@ -285,13 +288,13 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
 
                 $newItem = createFileView(key, multiple);
                 $newLink = $newItem.find('a');
-                
+
                 $newLink.attr({
                     'href' : href,
                     'download' : response.fileNames[i],
                     'target' : '_blank'
                 });
-                
+
                 if(!multiple) {
                     $newLink[0].innerHTML = filename;
                 } else {
@@ -304,13 +307,13 @@ function updateFile(newFileURL, uiinput, key, callback, multiple) {
                     $newItem.find('iframe').attr('src', iframeurl);
                 }
                 $uiInput.append($newItem);
-                
+
                 if(multiple) {
                     items.push( $newItem[0] );
                 }
-                
+
             }
-            
+
             imagesLoaded( container, function () {
                 msnry.addItems(items);
                 msnry.layout();
