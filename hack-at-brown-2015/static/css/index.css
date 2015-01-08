@@ -474,11 +474,8 @@ section .background > .right {
     vertical-align: middle;
 }
 
-.sponsor-row.peta {
-    margin-top: 30px;
-}
 .sponsor-row.peta img {
-    max-height: 80px;
+    max-height: 160px;
 }
 
 .sponsor-row.tera {

@@ -416,24 +416,24 @@
                             {% endif %}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="field">
-                                <label for="reimbursement-needed">Total Reimbursement Needed</label>
-                                <div class="ui labeled icon input">
-                                    <div class="ui label">
-                                        $
-                                    </div>
-                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
-                                    <i class="icon"></i>
-                                </div>
-                            </div>
-                        </div>
                     </form>
                 </section>
                 <section class="reciepts-section panel condensed-top">
                         <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
+                        <div class="row">
+                            <div class="field">
+                                <label for="reimbursement-needed">Total Reimbursement Needed</label>
+                                <div class="ui labeled icon input">
+                                    <div class="ui label">
+                                        USD
+                                    </div>
+                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
+                                    <i class="icon"></i>
+                                </div>
+                            </div>
+                        </div>
                             <h3>Send my reimbursement to:</h3>
 <!--                         TODO: VALIDATION -->
                             <div class="row">
