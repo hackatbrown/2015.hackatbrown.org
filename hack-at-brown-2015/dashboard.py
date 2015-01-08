@@ -99,19 +99,29 @@ class BreakdownHandler(webapp2.RequestHandler):
         data = getBreakdown(type)
         self.response.write(json.dumps(data))
 
-def getBreakdown(type):
+class FilteredBreakdownHandler(webapp2.RequestHandler):
+    def get(self, type, filter):
+        logging.info(type)
+        logging.info(filter)
+        accepted = (filter == "accepted")
+
+        data = getBreakdown(type, accepted)
+        self.response.write(json.dumps(data))
+
+def getBreakdown(type, accepted=False):
     if type == 'all':
-        data = getAll()
+        data = getAll(accepted=accepted)
     elif type == 'diet':
-        data = getByDietaryRestrictions()
+        data = getByDietaryRestrictions(accepted=accepted)
     elif type == 'shirt':
-        data = getByShirtSize()
+        data = getByShirtSize(accepted=accepted)
     elif type == 'h_status':
-        data = getByStatus()
-    elif type == 'budget':
-        data = getBudget()
+        data = getByStatus(accepted=accepted)
+    elif type == 'reimbursements':
+        #We only care about reimbursements for accepted hackers
+        data = getReimbursements()
     else:
-        data = getGeneric(type)
+        data = getGeneric(type, accepted=accepted)
 
     return data
 
@@ -119,18 +129,20 @@ def getAllHackers(projection=[], accepted=False):
     memcachedKey = memcachedBase + str(projection) + str(accepted)
     hackers = memcache.get(memcachedKey)
     if hackers is None:
-        hackers = Hacker.query(projection=projection)
+        if projection:
+            hackers = Hacker.query(projection=projection)
+        else:
+            hackers = Hacker.query()
         if accepted:
             hackers = hackers.filter(Hacker.admitted_email_sent_date != None)
 
         hackers = hackers.fetch()
-        logging.info(hackers)
         if not memcache.set(memcachedKey, hackers, cacheTime):
             logging.error("Memcache set failed")
 
     return hackers
 
-def getBudget():
+def getReimbursements():
     allocated = {'name' : 'Allocated Budget'}
     spent =  {'name': 'Actual Spending'}
     allocatedData = {}
@@ -146,7 +158,7 @@ def getBudget():
     spent['data'] = spentData
     return [allocated, spent]
 
-def getAll():
+def getAll(accepted=False):
     prettyKeys = {
     "School" : "school",
     "Shirt Size" : "shirt",
@@ -161,29 +173,29 @@ def getAll():
 
     data = {}
     for pretty, key in prettyKeys.items():
-        data[pretty] = getBreakdown(key)
+        data[pretty] = getBreakdown(key, accepted)
 
     return data
 
 
-def getGeneric(value):
-    hackers = getAllHackers([value])
+def getGeneric(value, accepted=False):
+    hackers = getAllHackers([value], accepted)
     data = {}
     for hacker in hackers:
         key = getattr(hacker, value)
         data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByShirtSize():
-    hackers =  getAllHackers(["shirt_gen", "shirt_size"])
+def getByShirtSize(accepted=False):
+    hackers =  getAllHackers(["shirt_gen", "shirt_size"], accepted)
     data = {}
     for hacker in hackers:
         key = hacker.shirt_gen + hacker.shirt_size
         data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByDietaryRestrictions():
-    hackers =  getAllHackers(["dietary_restrictions"])
+def getByDietaryRestrictions(accepted=False):
+    hackers =  getAllHackers(["dietary_restrictions"], accepted)
     data = {}
     for hacker in hackers:
         multikey = hacker.dietary_restrictions
@@ -195,8 +207,8 @@ def getByDietaryRestrictions():
             data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByStatus():
-    hackers = getAllHackers()
+def getByStatus(accepted=False):
+    hackers = getAllHackers(accepted=accepted)
     data = {}
     for hacker in hackers:
         key = computeStatus(hacker)

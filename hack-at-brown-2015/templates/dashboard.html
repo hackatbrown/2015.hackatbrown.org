@@ -24,27 +24,34 @@
       <div ng-repeat="(k, v) in countData">
         %%k%%: <span><h2>%%v%% </h2></span>
       </div>
-</div>
-<br>
-<div class="panel-section" id="breakdowns">
-  <h2 class='option'>Breakdown</h2>
-  <div id='breakdown-charts'>
-    <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
-    </select>
-      <div id='chart'></div>
-      <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
-  </div>
-  <div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
-    <div id="breakdown-numbers" ng-show='showBreakdowns'>
-    <div ng-repeat="(key, value) in breakdownData">
-      <h1>%%key%%</h1>
-      <div ng-repeat="(k, v) in value">
-        <span><b>%%k%%:</b> %%v%%</span>
-      </div>
-      <br>
-    </div>
   </div>
   <br>
+  <div class="panel-section" id="breakdowns">
+    <h2 class='option'>Breakdown</h2>
+    <div id='breakdown-charts'>
+    <div class="breakdown controls">
+        <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
+        </select>
+        <div class="ui toggle checkbox">
+          <input id="accepted" type="checkbox" name="public">
+          <label>Accepted Only</label>
+        </div>
+      </div>
+        <div id='chart'></div>
+        <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
+    </div>
+    <div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
+      <div id="breakdown-numbers" ng-show='showBreakdowns'>
+      <div ng-repeat="(key, value) in breakdownData">
+        <h1>%%key%%</h1>
+        <div ng-repeat="(k, v) in value">
+          <span><b>%%k%%:</b> %%v%%</span>
+        </div>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
   <div id='menu_2nd_row' class='menu' >
     <div id="downloads" class='panel' >
       <h2 class='option' >Downloads</h2>
@@ -95,25 +102,24 @@
   <iframe id="email-display" ng-show="displayEmail" >
   </iframe>
   <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
-</div>
-<a style="text-decoration:none" class='button' href="/dashboard/db_cleanup">DB Cleanup</a>
-{% if envIsDev or isQA %}
-<script>
-  function populateDB() {
-    var number = prompt("How many hackers do you want to generate?", "100");
-    if (number != null) {
-      window.location.href = "/dashboard/__db_populate/" + number;
+  <a style="text-decoration:none" class='button' href="/dashboard/db_cleanup">DB Cleanup</a>
+  {% if envIsDev or isQA %}
+  <script>
+    function populateDB() {
+      var number = prompt("How many hackers do you want to generate?", "100");
+      if (number != null) {
+        window.location.href = "/dashboard/__db_populate/" + number;
+      }
     }
-  }
-  function depopulateDB() {
-    var number = prompt("How many hackers to you want to eliminate?", "100");
-    if (number != null) {
-      window.location.href = "/dashboard/__db_depopulate/" + number;
+    function depopulateDB() {
+      var number = prompt("How many hackers to you want to eliminate?", "100");
+      if (number != null) {
+        window.location.href = "/dashboard/__db_depopulate/" + number;
+      }
     }
-  }
   </script>
   <a style="text-decoration:none" class='button' onclick="populateDB()">DB Populate</a>
   <a style="text-decoration:none" class='button' onclick="depopulateDB()">DB Depopulate</a>
+  </div>
 {% endif %}
-</div>
 {% endblock %}
