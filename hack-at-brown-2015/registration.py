@@ -1,3 +1,4 @@
+
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
 import json
@@ -14,6 +15,7 @@ import webapp2
 from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
 from template import utils
+from config import admission_expiration_seconds
 
 
 
@@ -22,26 +24,25 @@ hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'di
 personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 def stringValidator(prop, value):
-		cleanValue = value.strip()
+	cleanValue = value.strip()
 
-		if prop._name == 'email':
-				cleanValue = cleanValue.lower()
+	if prop._name == 'email':
+			cleanValue = cleanValue.lower()
 
-		return cleanValue
+	return cleanValue
 
 def phoneValidator(prop, value):
-	numbers = ''.join([c for c in value if c in '0123456789'])
-	if len(numbers) == 0:
-		return None
-	elif len(numbers) == 10:
-		return numbers
-	elif len(numbers) == 11 and numbers[0] == '1':
-		return numbers[1:] # remove +1 US country code
+	if any(c.isalpha() for c in value):
+		raise datastore_errors.BadValueError(prop._name)
+	elif len(value) == 10:
+		return value
+	elif len(value) == 11 and value[0] == '1':
+		return value[1:] # remove +1 US country code
 	else:
 		raise datastore_errors.BadValueError(prop._name)
 
 class Hacker(ndb.Model):
-	#TODO: If you add a new prooerty, please remember to add that property to deletedHacker.py.
+	#TODO: If you add a new property, please remember to add that property to deletedHacker.py.
 
 	name = ndb.StringProperty(validator=stringValidator)
 	school = ndb.StringProperty(validator=stringValidator)
@@ -51,7 +52,7 @@ class Hacker(ndb.Model):
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 	dietary_restrictions = ndb.StringProperty(validator=stringValidator)
 	resume = ndb.BlobKeyProperty()
-	receipts = ndb.BlobKeyProperty()
+	receipts = ndb.BlobKeyProperty(repeated=True)
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
 	teammates = ndb.StringProperty(default=None, validator=stringValidator)
@@ -77,6 +78,7 @@ class Hacker(ndb.Model):
 
 	rsvpd = ndb.BooleanProperty(default=False)
 	checked_in = ndb.BooleanProperty(default=False)
+	deadline = ndb.DateTimeProperty()
 
 	ip = ndb.StringProperty()
 
@@ -88,6 +90,10 @@ class Hacker(ndb.Model):
 	zip = ndb.StringProperty()
 	country =ndb.StringProperty()
 
+	rmax = ndb.IntegerProperty(default = 0)
+	rtotal = ndb.IntegerProperty(default = 0)
+
+
 	@classmethod
 	def WithSecret(cls, secret):
 		results = cls.query(cls.secret == secret).fetch(1)
@@ -97,9 +103,12 @@ def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
 
 def accept_hacker(hacker):
-	deadline = (datetime.datetime.now() + datetime.timedelta(days=7)).strftime("%m/%d/%y")
-	email = template("emails/admitted.html", {"hacker": hacker, "deadline": deadline})
-	send_email(recipients=[hacker.email], html=email, subject="We'd like to invite you to Hack@Brown")
+	#print "actually accepting hacker"
+	hacker.deadline = (datetime.datetime.now() + datetime.timedelta(seconds=admission_expiration_seconds()))
+	if hacker.deadline > datetime.datetime(2015, 2, 7):
+		hacker.deadline = datetime.datetime(2015, 2, 7)
+	email = template("emails/admitted.html", {"hacker": hacker, "deadline": hacker.deadline.strftime("%m/%d/%y"), "name":hacker.name.split(" ")[0]})
+	send_email(recipients=[hacker.email], html=email, subject="You got off the Waitlist for Hack@Brown!")
 
 	hacker.admitted_email_sent_date = datetime.datetime.now()
 	hacker.put()

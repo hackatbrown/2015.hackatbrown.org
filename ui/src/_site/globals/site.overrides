@@ -154,3 +154,12 @@ footer .social-links {
 .message p {
   font-weight: 300;
 }
+
+//Reimbursments
+.money {
+  color: @teal !important;
+}
+
+.money.negative {
+  color: @red !important;
+}

@@ -8,11 +8,12 @@ import hackerFiles
 from deletedHacker import createDeletedHacker
 from google.appengine.api import urlfetch
 import urllib
+import datetime
 
 cacheTime = 6 * 10
 memcachedBase = 'hacker_update/'
 
-reimbursement_keys = ["address1", "address2", "city", "state", "zip", "country", "email"]
+reimbursement_keys = ["address1", "address2", "city", "state", "zip", "country", "email", 'rtotal']
 
 
 class HackerPageHandler(webapp2.RequestHandler):
@@ -27,23 +28,23 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         status = computeStatus(hacker)
         resumeFileName = ""
-        receiptsFileName = ""
+        receiptsFileNames = ""
 
         if hacker.resume:
             resumeFileName = hackerFiles.getFileName(hacker.resume)
 
-        if hacker.receipts:
-            receiptsFileName = hackerFiles.getFileName(hacker.receipts)
-
-
+        if hacker.receipts and hacker.receipts[0] != None:
+            receiptsFileNames = hackerFiles.getFileNames(hacker.receipts)
 
         name = hacker.name.split(" ")[0] # TODO: make it better
 
         self.response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, pre-check=0, post-check=0"
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
-
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileName" : receiptsFileName}))
+        deadline = 7
+        if hacker.deadline:
+            deadline = (hacker.deadline - datetime.datetime.now()).days
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
@@ -81,24 +82,62 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         if (status == "checked in") or (status == "confirmed"):
             keys += reimbursement_keys
 
+        kv = {}
         for key in parsed_request:
-            logging.info("key: " + key)
             if key in keys:
-                requestKey = parsed_request.get(key)
-                if requestKey != 'email':
-                    logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + requestKey)
-                    setattr(hacker, key, requestKey)
+                value = parsed_request.get(key)
+                if key == 'email':
+                    continue
+                if key == 'rtotal':
+                    try:
+                        value = int(value)
+                        if value > hacker.rmax:
+                            value = hacker.rmax
+                    except Exception:
+                        success = False
+                        break
+                    # logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
+                kv[key] = value
+
             else:
-                logging.info("Key not found")
+                logging.info("Key {0}not found or authorized".format(key))
+                success = False
 
-        putHacker(hacker)
+        if kv:
+            try:
+                success = updateHacker(secret, kv)
+            except Exception:
+                success = False
 
-        self.response.write(json.dumps({"success": True}))
+        self.response.write(json.dumps({"success": success}))
+
+def updateHacker(secret, dict):
+    memcachedKey = memcachedBase + secret
+    client = memcache.Client()
+    retries = 5
+    success = False
+    while retries > 0 and not success:
+        hacker = client.gets(memcachedKey)
+        if hacker is None:
+            hacker = registration.Hacker.WithSecret(secret)
+            client.set(memcachedKey, hacker)
+
+        for k, v in dict.iteritems():
+            setattr(hacker, k, v)
+
+
+        if client.cas(memcachedKey, hacker):
+            success = True
+            hacker.put()
+
+        retries-= 1
+
+    return success
 
 def getHacker(secret):
-    logging.info(secret)
     memcachedKey = memcachedBase + secret
-    hacker = memcache.get(memcachedKey)
+    client = memcache.Client()
+    hacker = client.gets(memcachedKey)
     if hacker is None:
         hacker = registration.Hacker.WithSecret(secret)
 
@@ -131,9 +170,13 @@ def sendReimbursementFormToBrown(hacker):
     return not (failedHTML in result.content)
 
 def putHacker(hacker):
-    memcachedKey = memcachedBase + hacker.secret
 
-    if not memcache.set(memcachedKey, hacker, cacheTime):
+    if hacker.receipts == [None]:
+        hacker.receipts = []
+    memcachedKey = memcachedBase + hacker.secret
+    client = memcache.Client()
+    #TODO: consider using cas
+    if not client.set(memcachedKey, hacker, cacheTime):
         logging.error('Memcache set failed')
 
     hacker.put()

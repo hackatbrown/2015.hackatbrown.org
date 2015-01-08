@@ -4,7 +4,14 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+builtins:
+- deferred: on
+
 handlers:
+- url: /update_schema
+  script: updateSchemaHandler.app
+  login: admin
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
@@ -14,6 +21,14 @@ handlers:
 - url: /admin_checkin
   script: admin_checkin.app
   login: required
+
+- url: /dashboard/__db_populate(/.*)
+  script: main.app
+  login: admin
+
+- url: /dashboard/__db_depopulate(/.*)
+  script: main.app
+  login: admin
 
 - url: /dashboard/messages/message_task_queue_work
   script: main.app

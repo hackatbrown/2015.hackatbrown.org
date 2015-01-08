@@ -1,3 +1,18 @@
 /*******************************
     User Variable Overrides
 *******************************/
+.ui.card iframe {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+.ui.card .extra.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ui.card .extra.flex .ui.button {
+    flex-shrink: 0;
+}

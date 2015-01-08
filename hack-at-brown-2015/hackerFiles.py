@@ -5,7 +5,9 @@ import urllib
 import json
 import logging
 import hacker_page
+import operator
 
+#Todo: shouldn't be called this.
 class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self, secret, key):
         hacker = hacker_page.getHacker(secret)
@@ -14,22 +16,27 @@ class ChangeHandler(blobstore_handlers.BlobstoreUploadHandler):
             logging.error("Attempted to change hacker's uploaded" + key + " but no hacker with key: " + secret)
             return self.redirect('/')
 
-        existing = getattr(hacker, key)
-        if existing:
-            fileName = getFileName(existing)
-            downloadLink = getDownloadLink(existing)
+        newFiles = map(lambda f: f.key(), self.get_uploads(key))
+        multipleFileUpload = self.request.get('multiple') == "true"
 
-        files = self.get_uploads(key)
-        if (len(files) > 0):
-            newFile = files[0].key()
-            if existing:
-                blobstore.delete(existing)
-            setattr(hacker, key, newFile)
-            hacker_page.putHacker(hacker)
-            downloadLink = getDownloadLink(newFile)
-            fileName = getFileName(newFile)
+        if multipleFileUpload:
+            existingFiles = getattr(hacker, key, [])
+            value = existingFiles + newFiles
+        elif len(newFiles) > 0:
+            existingFile = getattr(hacker, key, None)
+            if existingFile:
+                blobstore.delete(existingFile)
+            value = newFiles[0]
+        else:
+            value = None
 
-        self.response.write(json.dumps({"success": True, "downloadLink": downloadLink, "fileName" : fileName}))
+        setattr(hacker, key, value)
+        hacker_page.putHacker(hacker)
+
+        downloadLinks = map(getDownloadLink, newFiles)
+        fileNames = getFileNames(newFiles)
+
+        self.response.write(json.dumps({"downloadLinks": downloadLinks, "fileNames" : fileNames}))
 
 def getDownloadLink(blobKey):
     return '/__serve/' + str(blobKey)
@@ -37,8 +44,35 @@ def getDownloadLink(blobKey):
 def newURL(secret, key):
     return blobstore.create_upload_url('/secret/__change/' + secret + '/' + key)
 
+class DeleteFileHandler(webapp2.RequestHandler):
+    def post(self, secret):
+        hacker = hacker_page.getHacker(secret)
+
+        if hacker is None:
+            logging.error("Attempted to change hacker's uploaded" + key + " but no hacker with key: " + secret)
+            return self.response.write("failure")
+
+        key = self.request.get('key')
+        files = getattr(hacker, key, [])
+        files.remove(self.request.get('blobKey'))
+        setattr(hacker, key, files)
+
+        blobstore.delete(self.request.get('blobKey'))
+        hacker_page.putHacker(hacker)
+
 def getFileName(blobKey):
-    return blobstore.BlobInfo.get(blobKey).filename
+    if blobKey is None:
+        return None
+    info = blobstore.BlobInfo.get(blobKey)
+    if info is None:
+        return None
+
+    return info.filename
+
+def getFileNames(blobKeys):
+    if blobKeys is None:
+        return None
+    return map(getFileName, blobKeys)
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
   def get(self, resource):

@@ -29,7 +29,7 @@ body {
   background: #ffffff;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-size: 100%;
-  line-height: 100%;
+  line-height: 1.33em;
   color: #404040;
   font-smoothing: antialiased;
 }
@@ -46,7 +46,8 @@ h4,
 h5 {
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   line-height: 1.33em;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   font-weight: bold;
   padding: 0em;
 }
@@ -74,7 +75,7 @@ h5 {
 
 p {
   margin: 0em 0em 1em;
-  line-height: 100%;
+  line-height: 1.33em;
 }
 p:first-child {
   margin-top: 0em;
@@ -267,4 +268,10 @@ footer .social-links {
 }
 .message p {
   font-weight: 300;
+}
+.money {
+  color: #26a59f !important;
+}
+.money.negative {
+  color: #d95c5c !important;
 }

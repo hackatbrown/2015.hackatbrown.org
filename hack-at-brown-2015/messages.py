@@ -19,6 +19,7 @@ from registration import Hacker
 from email_list import EmailListEntry
 import sms
 from config import isAdmin
+import datetime
 
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
@@ -71,7 +72,8 @@ class Message(ndb.Model):
 		elif self.audience == 'mailing-list-unregistered':
 			return EmailListEntry.query()
 		elif self.audience == 'waitlisted':
-			return Hacker.query(Hacker.admitted_email_sent_date == None and acker.waitlist_email_sent_date != None)
+			print "sending waitlisted emails: " + str(Hacker.query(Hacker.admitted_email_sent_date == None).count())
+			return Hacker.query(Hacker.admitted_email_sent_date == None)
 		elif self.audience == None:
 			return None
 		else:
@@ -126,6 +128,12 @@ class Message(ndb.Model):
 				is_registered = (yield Hacker.query(Hacker.email == email).count_async()) > 0
 				if not is_registered:
 					self.send_to_email(email, {})
+			elif self.audience == 'waitlisted':
+				hacker = entity
+				hacker.waitlist_email_sent_date = datetime.datetime.now()
+				self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				hacker.put()
+
 		except Exception as e:
 			print "Failed to send email '{0}' to '{1} because {2}'".format(self.email_subject, entity.email, e)
 
@@ -162,7 +170,7 @@ class MessagesDashboardHandler(webapp2.RequestHandler):
 
 class MessagesTaskQueueWork(webapp2.RequestHandler):
 	def post(self):
-		if not isAdmin(): return self.redirect('/')
+		#if not isAdmin(): return self.redirect('/')
 		if self.request.get('kickoff_message_key'):
 			ndb.Key(urlsafe=self.request.get('kickoff_message_key')).get().enqueue_tasks()
 		elif self.request.get('entity_keys'):

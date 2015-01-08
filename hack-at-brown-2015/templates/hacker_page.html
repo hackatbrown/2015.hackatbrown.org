@@ -7,7 +7,7 @@
 {% block headcss %}
 {{ super() }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
-<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
+<!--<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>-->
 
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
@@ -67,6 +67,9 @@
   <div class="content">
     <div class="description">
         <p>Confirm your attendance?</p>
+        {% if hacker.rmax %}
+        <p id="reimbursements-modal">We can reimburse you up to <a class="money" href="#reimbursements">${{hacker.rmax}}</a> in transit fees.</p>
+        {% endif %}
     </div>
   </div>
   <div class="actions">
@@ -82,31 +85,41 @@
             <div class="double_left pane pane0 active white">
                 <section id="mystatus" class="panel hero">
                     <div class="inner_container">
-                            <h1 class="hi">Hey {{ name }}!</h1>
-                            <p>your admission status is</p>
-                            <div class="status-actions">
-                                <div class="left_group">
-                                    <div class="admit_status {{ status }}">
-                                        <span>{{ status }}</span>
-                                    </div>
-                                    {% if status == "accepted" %}
-                                    <div class="rsvp field">
-                                        <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP" />
-                                    </div>
-                                    {% endif %}
+                        <h1 class="hi">Hey {{ name }}!</h1>
+                        <p>your admission status is</p>
+                        <div class="status-actions">
+                            <div class="left_group">
+                                <div class="admit_status {{ status }}">
+                                    <span>{{ status }}</span>
                                 </div>
-                                {% if status == "accepted" or status == "waitlisted" or status == "pending" or status == "confirmed" %}
-                                <div class="delete field">
-                                    <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
+                                {% if status == "accepted" %}
+                                <div class="rsvp field">
+                                    <input id="rsvp-button" class="ui teal rsvp button"  type="button" value="RSVP?" />
                                 </div>
                                 {% endif %}
                             </div>
+                            {% if status == "accepted" or status == "waitlisted" or status == "pending" or status == "confirmed" %}
+                            <div class="delete field">
+                                <input id="delete-button" class="ui basic rsvp button" type="button" value="Cancel Registration" />
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if status == "accepted" %}
+                            {% if deadline == 1 %}
+                            <p id="days-remaining">You have {{deadline}} day left to confirm your attendance.</p>
+                            {% elif deadline == 0%}
+                            <p id="days-remaining"><b>Today is the last day day to confirm your attendance.</b></p>
+                            {% else %}
+                            <p id="days-remaining">You have {{deadline}} days left to confirm your attendance.</p>
+                            {% endif %}
+
+                        {% endif %}
                     </div>
                 </section>
-                <section id="messages" class="panel grey secondary">
+                <section id="messages" class="panel grey condensed-top">
                     <div class="inner_container">
                         <h4 class="label grey">Messages</h4>
-
+                        <div class="message_container">
                         {% if not hacker.resume %}
                         <div class="message items">
                             <div class="message item prompt">
@@ -122,11 +135,11 @@
                                                 <span>Upload Resume</span>
                                                 {% endif %}
                                             </div>
-                                            <div class="file-name">
+                                            <div class="view-resume file-name">
                                                 {% if hacker.resume %}
-                                                <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                                <a href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                                 {% else %}
-                                                <span class="view-resume">No file chosen.</span>
+                                                <span>No file chosen.</span>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -134,10 +147,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% else %}
-                        <h3 class="secondary">None!</h3>
                         {% endif %}
-
+                        </div>
                     </div>
                 </section>
             </div>
@@ -241,7 +252,7 @@
                             <div class="field">
                                 <label for="phone_number">Cell Number <span class="optional">(Optional)</span></label>
 								<div class="ui icon input">
-                                    <input id="phone_number" type="text" name="phone_number" placeholder="718 555 5555" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
+                                    <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="{% if hacker.phone_number %}{{ hacker.pretty_phone() }}{% endif %}"/>
                                     <i class="icon"></i>
 								</div>
                             </div>
@@ -289,11 +300,11 @@
                                         <span>Upload Resume</span>
                                         {% endif %}
                                     </div>
-                                    <div class="file-name">
+                                    <div class="view-resume file-name">
                                         {% if hacker.resume %}
-                                        <a class="view-resume" href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
+                                        <a href='/__serve/{{ hacker.resume }}' target="_blank" download="{{resumeFileName}}">{{resumeFileName}}</a>
                                         {% else %}
-                                        <span class="view-resume">No file chosen.</span>
+                                        <span>No file chosen.</span>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -326,66 +337,205 @@
                 </section>
             </div>
             <div class="double_left pane pane2 white">
-                <section class="panel hero">
+                <section class="panel hero condensed-bottom">
                     <div class="inner_container">
-                        <h1 class="hi">Reimbursements</h1>
-                        <p>We're so excited to see you! Here's the deal: if you need to be reimbursed for <strong>more than $30,</strong> you need to <strong>upload your receipts within 7 days of receiving your acceptance email</strong>. We'll be able to reimburse up to $200 in travel costs this year. Otherwise, you have until <strong>3 weeks after the hackathon</strong> to upload receipts. </p>
-                        <p>Please upload your receipts below, and then provide your mailing address. If you have multiple receipts, please put them in a zip file.</p>
+                        {% if status == "accepted" and hacker.rmax %}
+                        <h1 class="hi" id="rsvp-link">You must <a href="#status">RSVP</a> before you can be reimbursed.</h1>
+                        {% else %}
+                        <h1 class="hi">Congratulations!</h1>
+                        {% endif %}
+                        {% if hacker.rmax %}
+                        <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
+                        <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
+                        <p>Otherwise, they're due on 3.1.2015.</p>
+                        {% else %}
+                        <p>You don't need any reimbursement to come, silly!</p>
+                        <p>Think this is an error? Email us at <a href="mailto:hello@hackatbrown.org?subject=Cancelling%20My%20Registration">hello@hackatbrown.org</a>.</p>
+                        {% endif %}
+                    </div>
+                </section>
+                {% if hacker.rmax %}
+                <section class="panel grey condensed-top">
+                    <div class="inner_container">
+                        <h4 class="label grey">Travel Tips</h4>
+                        <div class="ui accordion">
+                            <div class="active title">
+                                <i class="dropdown icon"></i>
+                                Flights
+                            </div>
+                            <div class="active indented content light">
+                                <ul class="ui list">
+                                    <li>If you’re flying, we recommend flying into <a href="http://www.massport.com/logan-airport">Boston Logan Airport (BOS)</a></li>
+                                    <li>Once you’re at Logan, take the <a href="https://www.google.com/maps/dir/Boston+Logan+International+Airport,+1+Harborside+Dr,+Boston,+MA+02128/Boston+South+Station/@42.3590236,-71.0519385,14z/data=!4m14!4m13!1m5!1m1!1s0x89e37014d5da4937:0xc9394c31f2d5144!2m2!1d-71.00956!2d42.365613!1m5!1m1!1s0x89e37081fa252f27:0x7806af60ddbe89c8!2m2!1d-71.055304!2d42.352311!5i1!12b1">Silver Line 1 Bus</a> to South Station in Boston. From there, take the <a href="http://www.mbta.com/schedules_and_maps/rail/lines/?route=PROVSTOU">MBTA Commuter Rail</a> or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a> to Providence.</li>
+                                    <li>We recommend arriving Friday night (February 6th) and leaving Sunday night (February 8th). We’ll be providing you sleeping accommodations Friday night, don’t worry!</li>
+                                </ul>
+                            </div>
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Buses + Trains
+                            </div>
+                            <div class="indented content light">
+                                <ul class="ui list">
+                                    <li>Popular modes of transportation are the <a href="http://peterpanbus.com/">Peter Pan</a> bus, <a href="http://us.megabus.com/">Megabus</a>, or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="reciepts-section panel condensed-top condensed-bottom">
+                    <form class="ui form reciepts-upload inner_container">
+                        <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
-                            <label for="receipts">Receipts</label>
-                            <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)"/>
+                            <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                 {% if hacker.receipts %}
-                                <span>Re-upload</span>
+                                <span>Upload More</span>
                                 {% else %}
                                 <span>Upload Receipts</span>
                                 {% endif %}
                             </div>
-                            <div class="file-name">
-                                {% if hacker.receipts %}
-                                <a class="view-receipts" href='/__serve/{{ hacker.receipts }}' target="_blank" download="{{receiptsFileName}}">{{receiptsFileName}}</a>
-                                {% else %}
-                                <span class="view-receipts">No file chosen.</span>
-                                {% endif %}
+                            <div class="ui cards">
+                                <div class="grid-sizer"></div>
+                            {% if hacker.receipts %}
+                                {% for receipt in hacker.receipts %}
+                                <div class="view-receipts multi ui card">
+                                    <div class="ui image dimmable">
+                                        <div class="ui dimmer">
+                                            <div class="content">
+                                                <div class="center"><a id="open" class="ui inverted button" href="/__serve/{{ receipt }}" download="{{receiptsFileNames[loop.index0]}}" target="_blank">Download</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <iframe filename="{{receiptsFileNames[loop.index0]}}" urlattr="/__serve/{{ receipt }}"></iframe>
+                                    </div>
+                                    <div class="extra flex"><span class="file-name">{{receiptsFileNames[loop.index0]}}</span>
+                                        <div id="delete" class="delete-receipt ui pink button">REMOVE</div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
                             </div>
                         </div>
-                        <form id='address_form' class='ui form inner_container'enctype="multipart/form-data" autocomplete="on" novalidate
+                        <div class="row">
+                            <div class="field">
+                                <label for="reimbursement-needed">Total Reimbursement Needed</label>
+                                <div class="ui labeled icon input">
+                                    <div class="ui label">
+                                        $
+                                    </div>
+                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
+                                    <i class="icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <section class="reciepts-section panel condensed-top">
+                        <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
+                            <h3>Send my reimbursement to:</h3>
 <!--                         TODO: VALIDATION -->
-                            <div class="field">
-                                <label for="address1">address 1</label>
-                                <input type="text" id="address1" name="address1"/>
+                            <div class="row">
+                                <div class="field">
+                                    <label for="address1">address</label>
+                                    <div class="ui icon input">
+                                        <input type="text" id="address1" name="address1" value="{{hacker.address1 or ''}}" placeholder="127 Brown St."/>
+                                        <i class="icon"></i>
+                                    </div>
+                                    <div class="ui icon input">
+                                        <input type="text" id="address2" name="address2" value="{{hacker.address2 or ''}}" placeholder="Box 001"/>
+                                        <i class="icon"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="field">
-                                <label for="address2">address2</label>
-                                <input type="text" id="address2" name="address2"/>
-                            </div>
-                            <div class="field">
-                                <label for="city">city</label>
-                                <input type="text" id="city" name="city"/>
-                            </div>
-                            <div class="field">
-                                <label for="state">state</label>
-                                <select id="state" name="state">
-                                    <option value="">Please Select</option>
-                                    <option value="N/A">N/A</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District Of Columbia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option>
-                                </select>
-                            </div>
-                            <div class="field">
-                                <label for="zip">zip</label>
-                                <input type="text" id="zip" name="zip"/>
-                            </div>
-                            <div class="field">
-                                <label for="country">country</label>
-                                <input type="text" id="country" name="country"/>
+                            <div class="row">
+                                <div class="four fields">
+                                    <div class="eight wide field">
+                                        <label for="city">city</label>
+                                        <div class="ui icon input">
+                                            <input type="text" id="city" name="city" value="{{hacker.city or ''}}" placeholder="Providence"/>
+                                            <i class="icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="two wide field">
+                                        <label for="state">state</label>
+                                        <div class="ui icon input">
+                                            <select id="state" name="state">
+                                                <option value="N/A">N/A</option>
+                                                <option value="AL">AL</option>
+                                                <option value="AK">AK</option>
+                                                <option value="AZ">AZ</option>
+                                                <option value="AR">AR</option>
+                                                <option value="CA">CA</option>
+                                                <option value="CO">CO</option>
+                                                <option value="CT">CT</option>
+                                                <option value="DE">DE</option>
+                                                <option value="FL">FL</option>
+                                                <option value="GA">GA</option>
+                                                <option value="HI">HI</option>
+                                                <option value="ID">ID</option>
+                                                <option value="IL">IL</option>
+                                                <option value="IN">IN</option>
+                                                <option value="IA">IA</option>
+                                                <option value="KS">KS</option>
+                                                <option value="KY">KY</option>
+                                                <option value="LA">LA</option>
+                                                <option value="ME">ME</option>
+                                                <option value="MD">MD</option>
+                                                <option value="MA">MA</option>
+                                                <option value="MI">MI</option>
+                                                <option value="MN">MN</option>
+                                                <option value="MS">MS</option>
+                                                <option value="MO">MO</option>
+                                                <option value="MT">MT</option>
+                                                <option value="NE">NE</option>
+                                                <option value="NV">NV</option>
+                                                <option value="NH">NH</option>
+                                                <option value="NJ">NJ</option>
+                                                <option value="NM">NM</option>
+                                                <option value="NY">NY</option>
+                                                <option value="NC">NC</option>
+                                                <option value="ND">ND</option>
+                                                <option value="OH">OH</option>
+                                                <option value="OK">OK</option>
+                                                <option value="OR">OR</option>
+                                                <option value="PA">PA</option>
+                                                <option value="RI">RI</option>
+                                                <option value="SC">SC</option>
+                                                <option value="SD">SD</option>
+                                                <option value="TN">TN</option>
+                                                <option value="TX">TX</option>
+                                                <option value="UT">UT</option>
+                                                <option value="VT">VT</option>
+                                                <option value="VA">VA</option>
+                                                <option value="WA">WA</option>
+                                                <option value="WV">WV</option>
+                                                <option value="WI">WI</option>
+                                                <option value="WY">WY</option>
+                                            </select>
+                                            <i class="icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="two wide field">
+                                        <label for="zip">zip</label>
+                                        <div class="ui icon input">
+                                            <input type="text" id="zip" name="zip" value="{{hacker.zip or ''}}" placeholder="02912"/>
+                                            <i class="icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="four wide field">
+                                        <label for="country">country</label>
+                                        <div class="ui icon input">
+                                            <input type="text" id="country" name="country" value="{{hacker.country or ''}}" placeholder="United States"/>
+                                            <i class="icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
-                        {% if status == "accepted" %}
-                        <p id="rsvp-link"><strong>You must <a href="#status">RSVP</a> before you can be reimbursed.</strong></p>
-                        {% endif %}
-                    </div>
                 </section>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -396,18 +546,29 @@
 <script type="text/javascript" src="/static/js/condor.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
-<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
+<!--<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>-->
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
 
+<script type="text/javascript" src="/static/js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="/static/js/imagesloaded.pkgd.min.js"></script>"
+
+<script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.maskMoney.min.js"></script>
 
 <script>
   var secret = "{{ hacker.secret }}";
   var status = "{{ status }}";
-  var receipts = "{{ hacker.receipts }}"
+  var receipts = "{{ hacker.receipts }}";
+  var rmax = "{{hacker.rmax}}";
+
+    var container,
+        msnry;
 
   $(document).ready(function () {
+
+    messagesCheckNone();
 
     if (receipts == "None") {
         toggleReimbursementForm(false);
@@ -420,6 +581,10 @@
     $('#rsvp-button').click(function() {
         rsvp(secret);
     });
+
+      $(".delete-receipt").click(function() {
+          deleteFile(this.parentNode.parentNode, 'receipts');
+      });
 
     if (location.hash === '#info') {
       setTabActive($("#info_top"));
@@ -438,6 +603,13 @@
           switchPanes(2);
         });
 
+        $("#reimbursements-modal").click(function () {
+            this.preventDefault;
+            $("#rsvp-modal .no").click();
+            setTabActive($("#reimbursements_top"));
+            switchPanes(2);
+        });
+
         $("#rsvp-link").click(function () {
           this.preventDefault;
           setTabActive($("#status_top"));
@@ -445,8 +617,9 @@
         });
 
         if (status == "accepted") {
-            $('#receipts-upload').hide();
+            $('.reciepts-section').hide();
         }
+
     }
 
     $("#status_top").click(function () {
@@ -464,31 +637,28 @@
     initalizeNavMenu('.top-bar_ul');
 
     //    Form stuff. Needs to stay in the html for jinja to do its thing
-    $(".form :input:not(.tags-input)").change(function () {
-      saveChange(this.name, this.value, this.parentNode, secret, true);
+    $(".form :input:not(.tags-input)").not('#reimbursement-needed').change(function () {
+        saveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
     var debouncedSaveChange = _.debounce(saveChange, 2000);
-    $(".tags-input").change(function () {
+    $(".tags-input, #reimbursement-needed").change(function () {
         debouncedSaveChange(this.name, this.value, this.parentNode, secret, true);
     });
 
 
     //Year Section
-    var $year = $('#year');
-    var $yearSelectize = $year.siblings(".selectize-control");
+      var $year = $('#year').val("{{ hacker.year }}").selectize({
+          create: false,
+          hideSelected: true,
+          onDropdownOpen: slideOut,
+          onDropdownClose: slideIn,
+      });
+    var year = $year[0].selectize;
     var $yearLabel = $year.parent().siblings("label");
-    var $yearDropdown = $yearSelectize.find(".selectize-dropdown");
-
-    $year.val("{{ hacker.year }}").selectize({
-      create: false,
-      hideSelected: true,
-      onDropdownOpen: slideOut,
-      onDropdownClose: slideIn,
-    });
 
     $yearLabel.click(function() {
-      $yearSelectize.find("input").focus();
+      year.focus();
     });
 
     //Dietary Restrictions Section
@@ -499,8 +669,7 @@
         dietaryRestrictionsData.push({"diet" : val});
     });
 
-    var $dietaryRestrictions = $('#dietary_restrictions');
-    $dietaryRestrictions.selectize({
+    var $dietaryRestrictions = $('#dietary_restrictions').selectize({
       valueField: 'diet',
       labelField: 'diet',
       searchField: ['diet'],
@@ -518,23 +687,20 @@
       }
     });
 
-    var $dietaryRestrictionsSelectize = $dietaryRestrictions.siblings(".selectize-control");
+    var dietaryRestrictions = $dietaryRestrictions[0].selectize;
     var $dietaryRestrictionsLabel = $dietaryRestrictions.parent().siblings("label");
 
     $dietaryRestrictionsLabel.click(function() {
-      $dietaryRestrictionsSelectize.find("input").focus();
+        dietaryRestrictions.focus();
     })
 
     //Teammates Section
-    var $teammates = $('#teammates');
-    var $teammatesSelectize = $teammates.siblings(".selectize-control");
-    var $teammatesLabel = $teammates.parent().siblings("label");
 
     var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
       '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
 
 
-    $teammates.selectize({
+    var $teammates = $('#teammates').selectize({
       labelField: 'email',
       valueField: 'email',
       searchField: 'email',
@@ -578,8 +744,11 @@
       }
     });
 
+    var teammates = $teammates[0].selectize;
+    var $teammatesLabel = $teammates.parent().siblings("label");
+
     $teammatesLabel.click(function() {
-      $teammatesSelectize.find("input").focus();
+        teammates.focus();
     });
 
     //Shirt Size Section
@@ -591,16 +760,16 @@
 
     //School Section
     /* Autocomplete suggestions for schools TODO */
-    var universities = [];
-    $.getJSON("/static/data/universities.json", function (data) {
-      $.each(data, function (key, val) {
-        universities[key] = val;
-      })
-    });
-
-    $(".schools").autocomplete({
-      source: universities
-    });
+//    var universities = [];
+//    $.getJSON("/static/data/universities.json", function (data) {
+//      $.each(data, function (key, val) {
+//        universities[key] = val;
+//      })
+//    });
+//
+//    $(".schools").autocomplete({
+//      source: universities
+//    });
 
     //Links Section
 
@@ -625,7 +794,69 @@
 
     trackCondor($linkRepeater);
 
+    //Telephone masking
+      $("input[type=tel]").mask("(999) 999-9999");
+
+    {% if status == "confirmed" %}
+     //State Section
+    var $state = $('#state');
+    $state.val("{{ hacker.state }}");
+    var $state2 = $state.clone().attr("id","state2").attr("tabindex","-1").insertAfter($state);
+    $state.selectize({
+        create: false,
+        hideSelected: true,
+        onDropdownOpen: slideOut,
+        onDropdownClose: slideIn,
+    });
+     var state = $state[0].selectize;
+     var $stateLabel = $state.parent().siblings("label");
+
+     $stateLabel.click(function() {
+         state.focus();
+     });
+
+     $state2.change( function() {
+         state.setValue(this.value);
+     });
+    {% endif %}
+
     initalizeHamburger();
+
+     $('.ui.accordion').accordion();
+
+     //forgive me father for i have sinned
+
+     $(".reciepts-upload iframe").each( function ( i ) {
+         href = this.getAttribute('urlattr');
+         filename = this.getAttribute('filename');
+         if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
+             $(this).replaceWith("<img src='" + href + "'></img>");
+         } else {
+             iframeurl = encodeiFrame(href);
+             this.setAttribute('src', iframeurl);
+         }
+     });
+
+     $('.reciepts-upload .dimmer').dimmer({
+         on: 'hover'
+     });
+
+
+     container = document.querySelector('.cards');
+     if (container) {
+         msnry = new Masonry( container, {
+             // options
+             itemSelector: '.card',
+             columnWidth: container.querySelector('.grid-sizer')
+         });
+
+         imagesLoaded( container, function () {
+             msnry.layout();
+         } );
+     }
+
+
+
   });
 </script>
 {% endblock %}
