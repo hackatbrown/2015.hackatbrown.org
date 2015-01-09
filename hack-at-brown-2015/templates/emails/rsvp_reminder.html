@@ -1,11 +1,15 @@
 {% extends "emails/base.html" %}
 {% block content %}
+<!-- Subject: Last day to RSVP -->
+<h1>Last day to RSVP</h1>
 <p>
     Hi {{name}},
 </p>
 <p>
     Today is your last day to RSVP for Hack@Brown!
-    We've got a lot of people on our waitlist, so if you don't RSVP, we're going to have to let your admission expire. 
+</p>
+<p>
+    We've got a lot of people on our waitlist, so if you don't RSVP, we're going to have to let your admission expire. In addition, if you need more than $30 in reimbursements, <strong>you must upload your travel receipts today.</strong>
 </p>
 
 <a href='http://hackatbrown.org/secret/{{ hacker.secret }}' class='cta-button'>RSVP</a>
@@ -14,5 +18,4 @@
 Best,<br/> 
 Team Hack@Brown 
 </p>
-
 {% endblock %}
