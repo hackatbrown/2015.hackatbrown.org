@@ -47,7 +47,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         if hacker.deadline:
             deadline = (hacker.deadline - datetime.datetime.now()).days
         if deadline < 0:
-            expire_hacker(hacker)
+            registration.expire_hacker(hacker)
             variables = {
                 "registration_status": config.REGISTRATION_CLOSED
             }
