@@ -44,8 +44,8 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
                             accept_hacker(h)
 
                     if parsed_request.get('change') == "Remove":
-                        if h.admitted_email_sent_date == None:
-                            h.key.delete()
+                        deletedHacker.createDeletedHacker(h, "manual")
+                        h.key.delete()
 
                     if parsed_request.get('change') == 'Waitlist':
                         if h.admitted_email_sent_date == None:

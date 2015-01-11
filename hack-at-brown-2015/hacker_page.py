@@ -53,7 +53,7 @@ class HackerPageHandler(webapp2.RequestHandler):
             }
             self.response.write(template.template("index.html", variables))
             return
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline, "deadlineFull": hacker.deadline.strftime("%m/%d/%y")}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
