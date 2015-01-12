@@ -39,18 +39,16 @@ class CheckinPageHandler(webapp2.RequestHandler):
         self.redirect('/admin_checkin')
 
 def page_response(success=None, message=""):
-    def formatter(hacker):
-        formattedString = ''
-        first = True
-        for key in hackerFormat:
-            if not first:
-                formattedString += divider
+    def formatter(person):
+        JSON = {}
+        key = getattr(person, 'key')
+        JSON['id'] = key.urlsafe()
+        JSON['kind'] = key.kind()
+        JSON['email'] = getattr(person, 'email')
+        JSON['name'] = getattr(person, 'name')
+        return JSON
 
-            formattedString += getattr(hacker, key)
-            first = False
-        return formattedString
-
-    source = map(formatter, getHackersToBeChecked())
+    source = map(formatter, Hacker.query().fetch())
 
     return template("checkin_page.html", {"source" : json.dumps(source),
                     "status" : json.dumps(success), "message" : message})

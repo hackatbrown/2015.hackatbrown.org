@@ -76,19 +76,19 @@ Check-in - Hack@Brown 2015
   .panes {
     width: 100%
   }
-  
+
   .ui.input.title input {
     font-size: 2.5em !important;
     line-height: 1.8em !important;
     height: auto !important;
   }
-  
+
   .ui.input.minimal input:focus {
     box-shadow: inset 1px -3px 0 -1px #404040 !important;
-    color: #404040 !important; 
+    color: #404040 !important;
     padding-left: inherit;
   }
-  
+
   .flex {
     display: -webkit-box;
     display: -webkit-flex;
@@ -99,13 +99,13 @@ Check-in - Hack@Brown 2015
     -ms-flex-pack: justify;
     justify-content: space-between;
   }
-  
+
   .flex.wrap {
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
-  
+
   .status {
     width: 100%;
     margin-top: 10px;
@@ -113,38 +113,38 @@ Check-in - Hack@Brown 2015
     padding: 2px;
     color: white;
   }
-  
+
   .panes .pane {
     width: 100%
   }
-  
+
   .ui.form .selectize-control {
-     height: auto; 
+     height: auto;
   }
-  
+
   .ui.form .selectize-control.single>.selectize-input {
-    height: auto; 
+    height: auto;
   }
-  
+
   .ui.form .selectize-control.single>.selectize-input>* {
-     line-height: 1.8em; 
+     line-height: 1.8em;
      font-size: 2.5em;
   }
-  
+
   .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
     cursor: text;
   }
-  
+
   .selectize-control.single .selectize-input:after {
     display: none;
   }
-  
+
   .textclip {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   .caption {
     color: #918f8c;
   }
@@ -157,6 +157,7 @@ Check-in - Hack@Brown 2015
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 
 <script type="text/javascript">
+  console.log('{{source}}');
 //  var source = JSON.parse($("#source").text());
   var source = [
     {id: 'cye@brown.edu', kind: 'hacker', name: 'Chen Ye'},
@@ -222,9 +223,4 @@ Check-in - Hack@Brown 2015
 {% if status == "false" %}
   <div class="status" style="background:red">{{ message }}</div>
 {% endif %}
-
-
-<div id='source' style='display:none'>
-   {{ source }}
-</div>
 {% endblock %}
