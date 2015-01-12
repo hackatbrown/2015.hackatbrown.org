@@ -50,7 +50,7 @@ Check-in - Hack@Brown 2015
         </section>
         <section id="additional" class="panel hero condensed-top">
           <p>or</p>
-          <div class="flex">
+          <div class="flex wrap">
             <div class="flex-left">
               <div id="add-hacker" class="ui pink button">
                 Add New Hacker
@@ -94,13 +94,16 @@ Check-in - Hack@Brown 2015
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
     -webkit-box-pack: justify;
     -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
+  }
+  
+  .flex.wrap {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
   }
   
   .status {
@@ -125,12 +128,25 @@ Check-in - Hack@Brown 2015
   
   .ui.form .selectize-control.single>.selectize-input>* {
      line-height: 1.8em; 
-     font-size: 2.5em; 
+     font-size: 2.5em;
+  }
+  
+  .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
     cursor: text;
   }
   
   .selectize-control.single .selectize-input:after {
     display: none;
+  }
+  
+  .textclip {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .caption {
+    color: #918f8c;
   }
 
 </style>
@@ -145,39 +161,54 @@ Check-in - Hack@Brown 2015
   var $search = $("#search");
   $search.selectize({
     options: [
-      {id: 'cye@brown.edu', make: 'dodge', model: 'Avenger'},
-      {id: 'caliber', make: 'dodge', model: 'Caliber'},
-      {id: 'caravan-grand-passenger', make: 'dodge', model: 'Caravan Grand Passenger'},
-      {id: 'challenger', make: 'dodge', model: 'Challenger'},
-      {id: 'ram-1500', make: 'dodge', model: 'Ram 1500'},
-      {id: 'viper', make: 'dodge', model: 'Viper'},
-      {id: 'a3', make: 'audi', model: 'A3'},
-      {id: 'a6', make: 'audi', model: 'A6'},
-      {id: 'r8', make: 'audi', model: 'R8'},
-      {id: 'rs-4', make: 'audi', model: 'RS 4'},
-      {id: 's4', make: 'audi', model: 'S4'},
-      {id: 's8', make: 'audi', model: 'S8'},
-      {id: 'tt', make: 'audi', model: 'TT'},
-      {id: 'avalanche', make: 'chevrolet', model: 'Avalanche'},
-      {id: 'aveo', make: 'chevrolet', model: 'Aveo'},
-      {id: 'cobalt', make: 'chevrolet', model: 'Cobalt'},
-      {id: 'silverado', make: 'chevrolet', model: 'Silverado'},
-      {id: 'suburban', make: 'chevrolet', model: 'Suburban'},
-      {id: 'tahoe', make: 'chevrolet', model: 'Tahoe'},
-      {id: 'trail-blazer', make: 'chevrolet', model: 'TrailBlazer'},
+      {id: 'cye@brown.edu', kind: 'hacker', name: 'Chen Ye'},
+      {id: 'caliber', kind: 'hacker', name: 'Caliber'},
+      {id: 'caravan-grand-passenger', kind: 'hacker', name: 'Caravan Grand Passenger'},
+      {id: 'challenger', kind: 'hacker', name: 'Challenger'},
+      {id: 'ram-1500', kind: 'hacker', name: 'Ram 1500'},
+      {id: 'viper', kind: 'hacker', name: 'Viper'},
+      {id: 'a3', kind: 'hacker', name: 'A3'},
+      {id: 'a6', kind: 'volunteer', name: 'A6'},
+      {id: 'r8', kind: 'volunteer', name: 'R8'},
+      {id: 'rs-4', kind: 'volunteer', name: 'RS 4'},
+      {id: 's4', kind: 'volunteer', name: 'S4'},
+      {id: 's8', kind: 'volunteer', name: 'S8'},
+      {id: 'tt', kind: 'volunteer', name: 'TT'},
+      {id: 'avalanche', kind: 'mentor', name: 'Avalanche'},
+      {id: 'aveo', kind: 'mentor', name: 'Aveo'},
+      {id: 'cobalt', kind: 'mentor', name: 'Cobalt'},
+      {id: 'silverado', kind: 'mentor', name: 'Silverado'},
+      {id: 'suburban', kind: 'mentor', name: 'Suburban'},
+      {id: 'tahoe', kind: 'mentor', name: 'Tahoe'},
+      {id: 'trail-blazer', kind: 'mentor', name: 'TrailBlazer'},
     ],
     optgroups: [
-      {id: 'dodge', name: 'Dodge'},
-      {id: 'audi', name: 'Audi'},
-      {id: 'chevrolet', name: 'Chevrolet'}
+      {id: 'hacker', name: 'Hacker'},
+      {id: 'volunteer', name: 'Volunteer'},
+      {id: 'mentor', name: 'Mentor'}
     ],
-    labelField: 'model',
+    render: {
+      item: function(item, escape) {
+        return '<div>' +
+          (item.name ? '<span class="select_name">' + escape(item.name) + '</span>' : '')
+          '</div>';
+      },
+      option: function(item, escape) {
+        var label = item.name || item.id;
+        var caption = item.name ? item.id : null;
+        return '<div class="flex">' +
+          '<span class="label textclip">' + escape(label) + '</span>' +
+          (caption ? '<span class="caption textclip">' + escape(caption) + '</span>' : '') +
+          '</div>';
+      }
+    },
+    labelField: 'name',
     valueField: 'id',
-    optgroupField: 'make',
+    optgroupField: 'kind',
     optgroupLabelField: 'name',
     optgroupValueField: 'id',
-    optgroupOrder: ['chevrolet', 'dodge', 'audi'],
-    searchField: ['model'],
+    optgroupOrder: ['hacker', 'volunteer', 'mentor'],
+    searchField: ['name'],
     plugins: ['optgroup_columns'],
     maxItems: 1,
   });
