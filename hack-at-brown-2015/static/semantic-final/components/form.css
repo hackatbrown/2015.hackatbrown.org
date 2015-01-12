@@ -969,7 +969,7 @@
   border-radius: 0;
   box-shadow: none;
   border: 0;
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 .ui.form .selectize-dropdown .optgroup-header,
 .ui.form .selectize-dropdown [data-selectable] {
@@ -1030,7 +1030,7 @@
           transition: box-shadow 1s bezier(0.55, 0, 0.1, 1);
 }
 .ui.form .selectize-control.multi .selectize-input.focus [data-value]:hover {
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 .ui.form .selectize-control.multi .selectize-input.focus [data-value].active {
   border: 0 !important;
