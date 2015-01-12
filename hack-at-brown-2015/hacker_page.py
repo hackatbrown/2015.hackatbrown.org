@@ -23,10 +23,10 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         hacker = getHacker(secret)
 
-        if hacker is None:
-            self.redirect('/')
-#            this shouldn't silently fail.  we should make a 404
-            return
+#         if hacker is None:
+#             self.redirect('/')
+# #            this shouldn't silently fail.  we should make a 404
+#             return
 
         status = computeStatus(hacker)
         resumeFileName = ""
@@ -50,10 +50,7 @@ class HackerPageHandler(webapp2.RequestHandler):
             deadlineFull = hacker.deadline.strftime("%m.%d.%y")
         if deadline < 0:
             registration.expire_hacker(hacker)
-            variables = {
-                "registration_status": config.REGISTRATION_CLOSED
-            }
-            self.response.write(template.template("index.html", variables))
+            self.redirect('/')
             return
         self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline, "deadlineFull": deadlineFull}))
 
