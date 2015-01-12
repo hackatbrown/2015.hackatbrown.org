@@ -134,44 +134,44 @@ Check-in - Hack@Brown 2015
   .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
     cursor: text;
   }
-  
+
   .selectize-input.not-full input {
     width: 100% !important;
   }
-  
+
   .ui.form .selectize-control input:focus {
     box-shadow: none !important;
   }
-  
+
   .selectize-control.single .selectize-input:after {
     display: none;
   }
-  
+
   .selectize-dropdown {
     top: 0 !important;
     position: relative;
     margin-top: -3px;
   }
-  
+
   .textclip {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   .optgroup-header {
     font-weight: 600;
     text-transform: uppercase;
   }
-  
+
   .caption {
     color: #918f8c;
   }
-  
+
   .active > .caption {
     color: #E2E1DF;
   }
-  
+
   .inner_container {
     max-width: 1017.6px;
   }
@@ -184,11 +184,8 @@ Check-in - Hack@Brown 2015
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 
 <script type="text/javascript">
-  var txt = document.createElement("textarea");
-  txt.innerHTML = "{{source}}";
-  console.log(txt.value);
-  var source = JSON.parse(txt.value);
-  
+  var source = {{source|safe}};
+
   var $search = $("#search");
   $search.selectize({
     onDropdownOpen: slideOut,
@@ -224,7 +221,7 @@ Check-in - Hack@Brown 2015
     plugins: ['optgroup_columns'],
     maxItems: 1,
   });
-  
+
   function slideOut($element, time) {
     time = time || 200;
     $element.stop().hide().slideToggle(time);
