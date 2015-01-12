@@ -163,3 +163,81 @@ footer .social-links {
 .money.negative {
   color: @red !important;
 }
+
+//Trigrid
+
+
+.trigrid {
+  background-image: url(/static/img/svgtriangles/trigrid-tile-5pct.svg);
+  background-size: 107.2px 120px;
+  background-position: center top;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+}
+
+
+.lightgrey {
+  background-color: @offwhite;
+}
+
+//Panels
+
+.panel {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+.panel.white {
+  background-color: rgba(255, 255, 255, .8);
+}
+
+.panel.grey {
+  background-color: rgba(145, 143, 140, .05);
+}
+
+.panel.condensed-top {
+  padding-top: 30px;
+}
+
+.panel.condensed-bottom {
+  padding-bottom: 30px;
+}
+
+.panel.hero p {
+  font-size: 1.3em;
+  font-weight: 300;
+}
+
+//Panes
+
+.panes {
+  transition: transform .8s @defaultEasing;
+  position: relative;
+  width: 300%;
+  display: flex;
+  height: auto;
+  height: auto;
+  left: 0;
+  top: 0;
+}
+
+.panes .pane {
+  display: block;
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 5%;
+}
+
+.pane.white {
+  background-color: white;
+}
+
+//Animation
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
