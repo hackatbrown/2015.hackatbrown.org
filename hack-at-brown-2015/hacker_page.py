@@ -44,8 +44,10 @@ class HackerPageHandler(webapp2.RequestHandler):
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
         deadline = 7
+        deadlineFull = "2/07/2015"
         if hacker.deadline:
             deadline = (hacker.deadline - datetime.datetime.now()).days
+            deadlineFull = hacker.deadline.strftime("%m/%d/%y")
         if deadline < 0:
             registration.expire_hacker(hacker)
             variables = {
@@ -53,7 +55,7 @@ class HackerPageHandler(webapp2.RequestHandler):
             }
             self.response.write(template.template("index.html", variables))
             return
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline, "deadlineFull": deadlineFull}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):
