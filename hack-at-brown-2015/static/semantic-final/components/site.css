@@ -275,3 +275,15 @@ footer .social-links {
 .money.negative {
   color: #d95c5c !important;
 }
+.trigrid {
+  background-image: url(/static/img/svgtriangles/trigrid-tile-5pct.svg);
+  background-size: 107.2px 120px;
+  background-position: center top;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+}
+.lightgrey {
+  background-color: #f0f0f0;
+}
