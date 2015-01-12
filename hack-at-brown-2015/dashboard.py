@@ -62,7 +62,7 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
     data['Accepted'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
     data['Confirmed'] = Hacker.query(Hacker.rsvpd == True).count()
     data['Waitlisted'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
-    data['Declined'] = 0
+    data['Declined'] = deletedHacker.DeletedHacker.query(deletedHacker.DeletedHacker.admitted_email_sent_date != None).count()
 
     self.response.write(json.dumps(data))
 
