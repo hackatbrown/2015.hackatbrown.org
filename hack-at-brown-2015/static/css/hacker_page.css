@@ -6,7 +6,7 @@
   color: rgba(145,143,140,.3) !important;
   box-shadow: inset 1px -3px 0 -1px rgba(145,143,140,.3) !important;
   transition: box-shadow .2s cubic-bezier(0.55,0,.1,1),padding .2s cubic-bezier(0.55,0,.1,1) !important;
-  font-weight: 300 !important; 
+  font-weight: 300 !important;
 }
 
 input::-webkit-outer-spin-button,
@@ -214,7 +214,7 @@ h3.secondary {
 .panes {
   transition: transform .8s cubic-bezier(.55,0,.1,1);
   position: relative;
-  width: 300%;
+  width: 400%;
   display: flex;
   height: auto;
   height: auto;
@@ -228,13 +228,18 @@ h3.secondary {
 }
 
 .panes.in-pane1 {
-  -webkit-transform: translate3d(-33.333%, 0, 0);
-  transform: translate3d(-33.333%, 0, 0);
+  -webkit-transform: translate3d(-25%, 0, 0);
+  transform: translate3d(-25%, 0, 0);
 }
 
 .panes.in-pane2 {
-  -webkit-transform: translate3d(-66.666%, 0, 0);
-  transform: translate3d(-66.666%, 0, 0);
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+}
+
+.panes.in-pane3 {
+  -webkit-transform: translate3d(-75%, 0, 0);
+  transform: translate3d(-75%, 0, 0);
 }
 
 /*Page*/
