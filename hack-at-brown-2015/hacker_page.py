@@ -23,10 +23,10 @@ class HackerPageHandler(webapp2.RequestHandler):
 
         hacker = getHacker(secret)
 
-#         if hacker is None:
-#             self.redirect('/')
-# #            this shouldn't silently fail.  we should make a 404
-#             return
+        if hacker is None:
+            self.redirect('/')
+#            this shouldn't silently fail.  we should make a 404
+            return
 
         status = computeStatus(hacker)
         resumeFileName = ""
