@@ -432,7 +432,7 @@
                                     <div class="ui label">
                                         USD
                                     </div>
-                                    <input {% if deadline < 0 hacker.rtotal >= 30 %} disabled {% endif %} type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
+                                    <input {% if deadline < 0 and hacker.rtotal >= 30 %} disabled {% endif %} type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
                                     <i class="icon"></i>
                                 </div>
                             </div>
