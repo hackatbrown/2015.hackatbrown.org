@@ -287,3 +287,64 @@ footer .social-links {
 .lightgrey {
   background-color: #f0f0f0;
 }
+.panel {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+.panel.white {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.panel.grey {
+  background-color: rgba(145, 143, 140, 0.05);
+}
+.panel.condensed-top {
+  padding-top: 30px;
+}
+.panel.condensed-bottom {
+  padding-bottom: 30px;
+}
+.panel.hero p {
+  font-size: 1.3em;
+  font-weight: 300;
+}
+.panes {
+  -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: transform 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+  position: relative;
+  width: 300%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: auto;
+  left: 0;
+  top: 0;
+}
+.panes .pane {
+  display: block;
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 5%;
+}
+.pane.white {
+  background-color: white;
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
