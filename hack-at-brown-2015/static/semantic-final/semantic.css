@@ -421,7 +421,7 @@
   outline: none;
   border: none;
   vertical-align: baseline;
-  background-color: #ebebeb;
+  background-color: #f0f0f0;
   color: #404040;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   margin: 0em 0.25em 0em 0em;
@@ -8947,7 +8947,7 @@ i.flag.zimbabwe:before {
   border-radius: 0;
   box-shadow: none;
   border: 0;
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 
 .ui.form .selectize-dropdown .optgroup-header,
@@ -9018,7 +9018,7 @@ i.flag.zimbabwe:before {
 }
 
 .ui.form .selectize-control.multi .selectize-input.focus [data-value]:hover {
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 
 .ui.form .selectize-control.multi .selectize-input.focus [data-value].active {
@@ -24800,19 +24800,19 @@ footer .social-links {
 
 .email {
   padding-top: 0.1em !important;
-  background: url("../../../../../../static/img/social-icons/email.svg");
+  background: url(/static/img/social-icons/email.svg);
 }
 
 .facebook {
-  background: url("../../../../../../static/img/social-icons/facebook.svg");
+  background: url(/static/img/social-icons/facebook.svg);
 }
 
 .twitter {
-  background: url("../../../../../../static/img/social-icons/twitter.svg");
+  background: url(/static/img/social-icons/twitter.svg);
 }
 
 .blog {
-  background: url("../../../../../../static/img/social-icons/medium.svg");
+  background: url(/static/img/social-icons/medium.svg);
 }
 
 /*Admission Status Box - TODO Put this in a more sensical place*/
@@ -24876,6 +24876,94 @@ footer .social-links {
 
 .money.negative {
   color: #d95c5c !important;
+}
+
+.trigrid {
+  background-image: url(/static/img/svgtriangles/trigrid-tile-5pct.svg);
+  background-size: 107.2px 120px;
+  background-position: center top;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+}
+
+.lightgrey {
+  background-color: #f0f0f0;
+}
+
+.panel {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.panel.white {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.panel.grey {
+  background-color: rgba(145, 143, 140, 0.05);
+}
+
+.panel.condensed-top {
+  padding-top: 30px;
+}
+
+.panel.condensed-bottom {
+  padding-bottom: 30px;
+}
+
+.panel.hero p {
+  font-size: 1.3em;
+  font-weight: 300;
+}
+
+.panes {
+  -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: transform 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+  position: relative;
+  width: 300%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: auto;
+  left: 0;
+  top: 0;
+}
+
+.panes .pane {
+  display: block;
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 5%;
+}
+
+.pane.white {
+  background-color: white;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /*
@@ -30518,7 +30606,7 @@ footer .social-links {
   border-radius: 0;
   box-shadow: none;
   border: 0;
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 
 .ui.form .selectize-dropdown .optgroup-header,
@@ -30589,7 +30677,7 @@ footer .social-links {
 }
 
 .ui.form .selectize-control.multi .selectize-input.focus [data-value]:hover {
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 
 .ui.form .selectize-control.multi .selectize-input.focus [data-value].active {
@@ -31695,7 +31783,7 @@ footer .social-links {
   border-radius: 0;
   box-shadow: none;
   border: 0;
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 
 .ui.form .selectize-dropdown .optgroup-header,
@@ -31766,7 +31854,7 @@ footer .social-links {
 }
 
 .ui.form .selectize-control.multi .selectize-input.focus [data-value]:hover {
-  background: #ebebeb;
+  background: #f0f0f0;
 }
 
 .ui.form .selectize-control.multi .selectize-input.focus [data-value].active {
