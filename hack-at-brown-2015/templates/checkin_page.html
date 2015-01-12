@@ -186,6 +186,25 @@ Check-in - Hack@Brown 2015
 <script type="text/javascript">
   var source = {{source|safe}};
 
+  function requestMoreInfo(id) {
+    $.ajax({
+      type: 'GET',
+      url: '/admin_checkin/info/' + id,
+      success : function(response) {
+        console.log(response);
+        var hacker = response.hacker;
+        var missingInfo = response.missingInfo;
+        //missingInfo will be an array of keys => ['email']
+        console.log(hacker);
+        console.log(missingInfo);
+      },
+      error: function(error) {
+        console.log('error');
+        console.log(error);
+      }
+    });
+  }
+
   var $search = $("#search");
   $search.selectize({
     onDropdownOpen: slideOut,
@@ -211,6 +230,7 @@ Check-in - Hack@Brown 2015
           '</div>';
       }
     },
+    onChange : requestMoreInfo,
     labelField: 'name',
     valueField: 'id',
     optgroupField: 'kind',

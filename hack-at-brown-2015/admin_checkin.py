@@ -6,6 +6,7 @@ from registration import Hacker
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from config import onTeam
+import hacker_page
 
 cacheTime = 6 * 10
 hackerFormat = ['name', 'email']
@@ -37,6 +38,16 @@ class CheckinPageHandler(webapp2.RequestHandler):
         self.response.write(page_response(success, successMsg if success else failureMsg))
 
         self.redirect('/admin_checkin')
+
+class MoreInfoHandler(webapp2.RequestHandler):
+    def get(self, id):
+        #required - phone number
+        #show shirt size
+        logging.info(id)
+        hacker = ndb.Key(urlsafe=id).get()
+
+        self.response.write({'hacker': 'TODO', 'missingInfo' : ['phone']})
+
 
 def page_response(success=None, message=""):
     def formatter(person):
@@ -72,4 +83,5 @@ def getHackersToBeChecked():
 
 app = webapp2.WSGIApplication([
     ('/admin_checkin', CheckinPageHandler),
+    ('/admin_checkin/info/(.+)', MoreInfoHandler)
 ], debug=True)

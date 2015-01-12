@@ -22,6 +22,11 @@ handlers:
   script: admin_checkin.app
   login: required
 
+- url: /admin_checkin(.+)
+  script: admin_checkin.app
+  login: required
+
+
 - url: /dashboard/__db_populate(/.*)
   script: main.app
   login: admin
