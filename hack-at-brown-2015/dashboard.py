@@ -14,6 +14,7 @@ import itertools
 from google.appengine.ext import ndb
 from google.appengine.api import users
 from config import onTeam, isAdmin
+import deletedHacker
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
