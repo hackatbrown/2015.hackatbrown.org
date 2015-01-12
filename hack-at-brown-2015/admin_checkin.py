@@ -50,6 +50,9 @@ def page_response(success=None, message=""):
 
     source = map(formatter, Hacker.query().fetch())
 
+    #TODO: Remove this Test Data
+    source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
+
     return template("checkin_page.html", {"source" : json.dumps(source),
                     "status" : json.dumps(success), "message" : message})
 
