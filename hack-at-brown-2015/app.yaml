@@ -30,6 +30,10 @@ handlers:
   script: main.app
   login: admin
 
+- url: /dashboard/register
+  script: main.app
+  login: admin
+
 - url: /dashboard/messages/message_task_queue_work
   script: main.app
   login: admin

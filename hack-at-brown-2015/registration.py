@@ -20,7 +20,7 @@ import deletedHacker
 
 
 memcache_expiry = 10 * 60
-hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon', 'phone_number']
+hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 def stringValidator(prop, value):
@@ -164,5 +164,7 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
 			#TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
+
+
 
 
