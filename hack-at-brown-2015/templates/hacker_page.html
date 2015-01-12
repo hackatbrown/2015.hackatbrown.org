@@ -386,13 +386,16 @@
                     <form class="ui form reciepts-upload inner_container">
                         <h3>Add receipts:</h3>
                         <div id="receipts-upload" class="upload field">
+                            
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
+                            {% if deadline < 0 and hacker.rtotal < 30 %} 
                                 {% if hacker.receipts %}
                                 <span>Upload More</span>
                                 {% else %}
                                 <span>Upload Receipts</span>
                                 {% endif %}
+                            {% endif %}
                             </div>
                             <div class="ui cards">
                                 <div class="grid-sizer"></div>
@@ -429,7 +432,7 @@
                                     <div class="ui label">
                                         $
                                     </div>
-                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
+                                    <input {% if deadline < 0 hacker.rtotal >= 30 %} disabled {% endif %} type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
                                     <i class="icon"></i>
                                     <div class="ui label">
                                         USD
