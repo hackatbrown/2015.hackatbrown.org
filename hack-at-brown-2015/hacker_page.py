@@ -48,7 +48,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         if hacker.deadline:
             deadline = (hacker.deadline - datetime.datetime.now()).days
             deadlineFull = hacker.deadline.strftime("%m.%d.%y")
-        if deadline < 0:
+        if hacker.rsvpd != True and deadline < 0:
             registration.expire_hacker(hacker)
             self.redirect('/')
             return
