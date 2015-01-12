@@ -1,12 +1,70 @@
-{% extends "page_with_chrome.html" %}
+{% extends "base.html" %}
 
-{% block centered %}
+{% block title %}
+Check-in - Hack@Brown 2015
+{% endblock %}
+
+{% block headcss %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+
+{% endblock %}
+
+{% block headjs %}
+{{ super() }}
+<script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+{% endblock %}
+
+{% block nav %}
+<div class="hamburger">
+  <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g class="hamsvg" sketch:type="MSLayerGroup">
+      <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+      <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+      <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+    </g>
+  </svg>
+</div>
+<div class="hamburger over"></div>
+<ul class="top-bar_ul" data-0="" data-1="">
+  <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/dashboard">Close</a></li>
+  <li class="top-bar_li active" id="check_hacker_top"><a href="#check_hacker">Hackers</a></li>
+  <li class="top-bar_li" id="check_other_top"><a href="#check_other">Mentors + Volunteers</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="outer_container">
+    <div class="panes">
+      <div class="pane pane0 active white">
+        <section id="input" class="panel hero">
+          <form id='checkin' class="ui form" method='POST' >
+            <div class="field">
+              <div class="ui title input">
+                <input type="text" name="name/email" id='search' placeholder="Search for a hacker"/>
+              </div>
+            </div>
+<!--            <input type='submit' value='Check in'</input>-->
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
-#search {
-  width: 100%;
-  border: 2px solid black;
-}
-
+  .panes {
+    width: 200%
+  }
+  
+  .ui.input.title input {
+    font-size: 2.5em !important;
+    line-height: 1.8em !important;
+    height: auto !important;
+  }
+  
 .status {
   width: 100%;
   margin-top: 10px;
@@ -15,13 +73,7 @@
   color: white;
 }
 
-input[type="submit"] {
-  display: flex;
-  margin: 2px auto;
-}
-
 </style>
-<script src='//code.jquery.com/jquery-1.10.2.min.js'></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css'/>
 
@@ -32,10 +84,7 @@ input[type="submit"] {
 {% if status == "false" %}
   <div class="status" style="background:red">{{ message }}</div>
 {% endif %}
-<form id='checkin' method='POST' >
-  <input name="name/email" id='search'/>
-  <input type='submit' value='Check in'</input>
-</form>
+
 
 <div id='source' style='display:none'>
    {{ source }}
