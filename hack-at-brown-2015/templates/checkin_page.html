@@ -135,8 +135,18 @@ Check-in - Hack@Brown 2015
     cursor: text;
   }
   
+  .ui.form .selectize-control input:focus {
+    box-shadow: none !important;
+  }
+  
   .selectize-control.single .selectize-input:after {
     display: none;
+  }
+  
+  .selectize-dropdown {
+    top: 0 !important;
+    position: relative;
+    margin-top: -3px;
   }
   
   .textclip {
@@ -182,6 +192,8 @@ Check-in - Hack@Brown 2015
   ];
   var $search = $("#search");
   $search.selectize({
+    onDropdownOpen: slideOut,
+    onDropdownClose: slideIn,
     options: source,
     optgroups: [
       {id: 'hacker', name: 'Hacker'},
@@ -213,6 +225,15 @@ Check-in - Hack@Brown 2015
     plugins: ['optgroup_columns'],
     maxItems: 1,
   });
+  
+  function slideOut($element, time) {
+    time = time || 200;
+    $element.stop().hide().slideToggle(time);
+  }
+
+  function slideIn($element) {
+    $element.stop().show().slideToggle(200);
+  }
 </script>
 
 
