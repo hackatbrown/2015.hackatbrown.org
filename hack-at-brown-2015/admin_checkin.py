@@ -50,7 +50,7 @@ def page_response(success=None, message=""):
 
     source = map(formatter, Hacker.query().fetch())
 
-    return template("checkin_page.html", {"source" : source,
+    return template("checkin_page.html", {"source" : json.dumps(source),
                     "status" : json.dumps(success), "message" : message})
 
 def getHackersToBeChecked():
