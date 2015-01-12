@@ -38,7 +38,7 @@
 @lightgrey        : #E2E1DF;
 
 @lightgreyalpha        : rgba(145,143,140,0.3);
-@offwhite      : #EBEBEB;
+@offwhite      : #F0F0F0;
 @white            : #FFFFFF;
 
 /*---  Brand Colors  ---*/
