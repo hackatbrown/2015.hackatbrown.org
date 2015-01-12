@@ -44,6 +44,7 @@ def createDeletedHacker(hacker, cause):
     deletedHacker.name = hacker.name
     deletedHacker.school = hacker.school
     deletedHacker.year = hacker.year
+    deletedHacker.email = hacker.email
 
     deletedHacker.shirt_gen = hacker.shirt_gen
     deletedHacker.shirt_size = hacker.shirt_size
