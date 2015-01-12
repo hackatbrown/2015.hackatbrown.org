@@ -384,19 +384,19 @@
                 </section>
                 <section class="reciepts-section panel condensed-top condensed-bottom">
                     <form class="ui form reciepts-upload inner_container">
-                        <h3>Add receipts:</h3>
+                        
+                        <h3>{% if deadline < 0 and hacker.rtotal < 30 %}Add receipts:{% else %}Uploaded Receipts:{% endif %}</h3>
                         <div id="receipts-upload" class="upload field">
-                            
+                            {% if deadline < 0 and hacker.rtotal < 30 %}
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
-                            {% if deadline < 0 and hacker.rtotal < 30 %} 
                                 {% if hacker.receipts %}
                                 <span>Upload More</span>
                                 {% else %}
                                 <span>Upload Receipts</span>
                                 {% endif %}
-                            {% endif %}
                             </div>
+                            {% endif %}
                             <div class="ui cards">
                                 <div class="grid-sizer"></div>
                             {% if hacker.receipts %}
@@ -419,12 +419,6 @@
                             {% endif %}
                             </div>
                         </div>
-                    </form>
-                </section>
-                <section class="reciepts-section panel condensed-top">
-                        <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
-                        {% if not hacker.receipts %} style="display: none;" {% endif %}
-                        >
                         <div class="row">
                             <div class="field">
                                 <label for="reimbursement-needed">Total Reimbursement Needed</label>
@@ -440,6 +434,12 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
+                </section>
+                <section class="reciepts-section panel condensed-top">
+                        <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
+                        {% if not hacker.receipts %} style="display: none;" {% endif %}
+                        >
                             <h3>Send my reimbursement to:</h3>
 <!--                         TODO: VALIDATION -->
                             <div class="row">
