@@ -29,7 +29,7 @@ class DeletedHacker(ndb.Model):
     post_registration_email_sent_date = ndb.DateTimeProperty()
     waitlist_email_sent_date = ndb.DateTimeProperty()
     rsvpd = ndb.BooleanProperty()
-
+    rsvp_reminder_sent_date = ndb.DateTimeProperty(default=None)
     checked_in = ndb.BooleanProperty()
     ip = ndb.StringProperty()
 
@@ -68,6 +68,7 @@ def createDeletedHacker(hacker, cause):
 
     deletedHacker.waitlist_email_sent_date = hacker.waitlist_email_sent_date
     deletedHacker.rsvpd = hacker.rsvpd
+    deletedHacker.rsvp_reminder_sent_date = hacker.rsvp_reminder_sent_date
     deletedHacker.checked_in = hacker.checked_in
 
     deletedHacker.ip = hacker.ip
