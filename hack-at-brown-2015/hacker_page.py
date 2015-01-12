@@ -47,7 +47,7 @@ class HackerPageHandler(webapp2.RequestHandler):
         deadlineFull = "2/07/2015"
         if hacker.deadline:
             deadline = (hacker.deadline - datetime.datetime.now()).days
-            deadlineFull = hacker.deadline.strftime("%m/%d/%y")
+            deadlineFull = hacker.deadline.strftime("%m.%d.%y")
         if deadline < 0:
             registration.expire_hacker(hacker)
             variables = {
