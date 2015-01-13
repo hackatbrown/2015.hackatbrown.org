@@ -1,4 +1,4 @@
-application: hackatbrown2015-dev
+application: hackatbrown2015
 version: 9
 runtime: python27
 api_version: 1
@@ -27,6 +27,10 @@ handlers:
   login: admin
 
 - url: /dashboard/__db_depopulate(/.*)
+  script: main.app
+  login: admin
+
+- url: /dashboard/register
   script: main.app
   login: admin
 

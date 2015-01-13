@@ -362,6 +362,9 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         } else if (value > rmax) {
             value = rmax;
             addNag("Value must be below $" + value + "!", $(uiinput).parent());
+        } else if (deadline < 0 && value > 30) {
+            value = 30;
+            addNag("We can't reimburse more than $30 after your deadline has passed.", $(uiinput).parent());
         }
         $('#reimbursement-needed').val(value);
     }

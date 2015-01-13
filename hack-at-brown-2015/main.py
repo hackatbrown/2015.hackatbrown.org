@@ -40,6 +40,15 @@ class IndexHandler(webapp2.RequestHandler):
 				variables['registration_post_url'] = blobstore.create_upload_url('/register')
 			self.response.write(template("index.html", variables))
 
+class SecretIndexHandler(webapp2.RequestHandler):
+    def get(self):
+			variables = {
+				"registration_status": "registration_open"
+			}
+			
+			variables['registration_post_url'] = blobstore.create_upload_url('/register')
+			self.response.write(template("index.html", variables))
+
 def static_page_handler(html_file):
   class Handler(webapp2.RequestHandler):
     def get(self):
@@ -76,6 +85,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
 		('/dashboard/__cleanup', db_utils.CleanupHandler),
         ('/dashboard/csv', csv_export.CsvExport),
+        ('/dashboard/register', SecretIndexHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/create_short_url', short_urls.Create),
 	    ('/goodbye', static_page_handler("goodbye.html")),
