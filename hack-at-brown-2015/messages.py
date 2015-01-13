@@ -24,7 +24,7 @@ import datetime
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 
-	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'hardware-hackers'], default=None)
 
 	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
@@ -74,6 +74,9 @@ class Message(ndb.Model):
 		elif self.audience == 'waitlisted':
 			print "sending waitlisted emails: " + str(Hacker.query(Hacker.admitted_email_sent_date == None).count())
 			return Hacker.query(Hacker.admitted_email_sent_date == None)
+		elif self.audience == 'hardware-hackers':
+			print "sending emails to hardware-hackers: " +  str(Hacker.query(Hacker.hardware_hack == 'yes').count())
+			return Hacker.query(Hacker.hardware_hack == 'yes')
 		elif self.audience == None:
 			return None
 		else:
@@ -133,6 +136,12 @@ class Message(ndb.Model):
 				hacker.waitlist_email_sent_date = datetime.datetime.now()
 				self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				hacker.put()
+			elif self.audience == 'hardware-hackers': #also send directly to hackers
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
 
 		except Exception as e:
 			print "Failed to send email '{0}' to '{1} because {2}'".format(self.email_subject, entity.email, e)
