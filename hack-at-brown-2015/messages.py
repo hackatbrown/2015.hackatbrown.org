@@ -139,7 +139,7 @@ class Message(ndb.Model):
 			elif self.audience == 'hardware-hackers': #also send directly to hackers
 				hacker = entity
 				if hacker.email and self.email_subject:
-					self.send_to_email(hacker.email, {"hacker": hacker})
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				if hacker.phone_number and self.sms_text:
 					self.send_to_phone(hacker.phone_number)
 

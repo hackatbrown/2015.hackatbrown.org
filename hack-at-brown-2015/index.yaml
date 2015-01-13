@@ -81,6 +81,11 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: hardware_hack
+  - name: admitted_email_sent_date
+
+- kind: Hacker
+  properties:
   - name: rmax
   - name: rtotal
 
