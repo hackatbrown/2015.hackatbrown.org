@@ -75,8 +75,8 @@ class Message(ndb.Model):
 			print "sending waitlisted emails: " + str(Hacker.query(Hacker.admitted_email_sent_date == None).count())
 			return Hacker.query(Hacker.admitted_email_sent_date == None)
 		elif self.audience == 'hardware-hackers':
-			print "sending emails to hardware-hackers: " +  str(Hacker.query(Hacker.hardware_hack == 'yes').count())
-			return Hacker.query(Hacker.hardware_hack == 'yes')
+			print "sending emails to admitted hardware-hackers: " +  str(Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes').count())
+			return Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes')
 		elif self.audience == None:
 			return None
 		else:
