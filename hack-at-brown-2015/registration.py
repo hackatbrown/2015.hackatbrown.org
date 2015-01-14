@@ -11,6 +11,7 @@ from google.appengine.api import memcache
 import os
 import base64
 import webapp2
+import hacker_page
 #Validation
 from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
@@ -95,10 +96,18 @@ class Hacker(ndb.Model):
 	rtotal = ndb.IntegerProperty(default = 0)
 
 
+	def asDict(self, include_keys):
+	    d = {key: getattr(self, key, None) for key in include_keys}
+	    d['status'] = hacker_page.computeStatus(self)
+	    d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==  None) else True
+	    return d
+
 	@classmethod
 	def WithSecret(cls, secret):
 		results = cls.query(cls.secret == secret).fetch(1)
 		return results[0] if len(results) else None
+
+
 
 def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))

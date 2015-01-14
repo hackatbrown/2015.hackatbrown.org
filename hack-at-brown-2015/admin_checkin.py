@@ -3,6 +3,7 @@ import webapp2
 import json
 from template import template
 from registration import Hacker
+from registration import hacker_keys
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from config import onTeam
@@ -41,12 +42,12 @@ class CheckinPageHandler(webapp2.RequestHandler):
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
-        #required - phone number
-        #show shirt size
-        logging.info(id)
+        requiredKeys = ['phone_number', 'resume']
         hacker = ndb.Key(urlsafe=id).get()
 
-        self.response.write({'hacker': 'TODO', 'missingInfo' : ['phone']})
+        missing = [key for key in requiredKeys if not getattr(hacker, key, None)]
+
+        self.response.write(json.dumps({'hacker': hacker.asDict(hacker_keys), 'missingInfo' : missing}))
 
 
 def page_response(success=None, message=""):

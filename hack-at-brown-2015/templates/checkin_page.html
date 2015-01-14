@@ -191,12 +191,9 @@ Check-in - Hack@Brown 2015
       type: 'GET',
       url: '/admin_checkin/info/' + id,
       success : function(response) {
-        console.log(response);
+        response = JSON.parse(response);
         var hacker = response.hacker;
         var missingInfo = response.missingInfo;
-        //missingInfo will be an array of keys => ['email']
-        console.log(hacker);
-        console.log(missingInfo);
       },
       error: function(error) {
         console.log('error');
