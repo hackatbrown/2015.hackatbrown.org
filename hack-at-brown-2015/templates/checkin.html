@@ -177,10 +177,6 @@ Check-in - Hack@Brown 2015
   }
 
 </style>
-<!--
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css'/>
--->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 
 <script type="text/javascript">
@@ -189,7 +185,7 @@ Check-in - Hack@Brown 2015
   function checkinHacker(id) {
     $.ajax({
       type: 'POST',
-      url: '/admin_checkin',
+      url: '/checkin',
       data: {'id' : id},
       success: function(response) {
         console.log(response);
@@ -204,7 +200,7 @@ Check-in - Hack@Brown 2015
   function requestMoreInfo(id) {
     $.ajax({
       type: 'GET',
-      url: '/admin_checkin/info/' + id,
+      url: '/checkin/info/' + id,
       success : function(response) {
         response = JSON.parse(response);
         var hacker = response.hacker;

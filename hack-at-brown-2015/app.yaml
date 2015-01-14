@@ -18,12 +18,12 @@ handlers:
 - url: /static
   static_dir: static
 
-- url: /admin_checkin
-  script: admin_checkin.app
+- url: /checkin
+  script: checkin.app
   login: required
 
-- url: /admin_checkin(.+)
-  script: admin_checkin.app
+- url: /checkin(.+)
+  script: checkin.app
   login: required
 
 

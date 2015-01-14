@@ -30,7 +30,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
         #TODO: Remove this Test Data
         source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
-        self.response.write(template("checkin_page.html", {"source" : json.dumps(source)}))
+        self.response.write(template("checkin.html", {"source" : json.dumps(source)}))
 
     def post(self):
         if not onTeam(): return self.response.write({'success' : False, 'message' : 'You do not have permission to do this'})
@@ -73,6 +73,6 @@ def getHackersToBeChecked():
     return data
 
 app = webapp2.WSGIApplication([
-    ('/admin_checkin', CheckinPageHandler),
-    ('/admin_checkin/info/(.+)', MoreInfoHandler)
+    ('/checkin', CheckinPageHandler),
+    ('/checkin/info/(.+)', MoreInfoHandler)
 ], debug=True)
