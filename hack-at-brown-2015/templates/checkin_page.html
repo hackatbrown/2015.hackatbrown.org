@@ -186,6 +186,21 @@ Check-in - Hack@Brown 2015
 <script type="text/javascript">
   var source = {{source|safe}};
 
+  function checkinHacker(id) {
+    $.ajax({
+      type: 'POST',
+      url: '/admin_checkin',
+      data: {'id' : id},
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(error) {
+        console.log('error');
+        console.log(error);
+      }
+    })
+  }
+
   function requestMoreInfo(id) {
     $.ajax({
       type: 'GET',
@@ -193,7 +208,11 @@ Check-in - Hack@Brown 2015
       success : function(response) {
         response = JSON.parse(response);
         var hacker = response.hacker;
+        console.log(hacker);
         var missingInfo = response.missingInfo;
+        var check = confirm("Check this person in?");
+        if (check) checkinHacker(id);
+
       },
       error: function(error) {
         console.log('error');

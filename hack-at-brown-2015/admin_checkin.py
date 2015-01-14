@@ -10,20 +10,34 @@ from config import onTeam
 import hacker_page
 
 cacheTime = 6 * 10
-hackerFormat = ['name', 'email']
-divider = ' - '
-
 
 class CheckinPageHandler(webapp2.RequestHandler):
 
     def get(self):
         if not onTeam(): return self.redirect('/')
-        self.response.write(page_response())
+
+        def formatter(person):
+            JSON = {}
+            key = getattr(person, 'key')
+            JSON['id'] = key.urlsafe()
+            JSON['kind'] = key.kind()
+            JSON['email'] = getattr(person, 'email')
+            JSON['name'] = getattr(person, 'name')
+            return JSON
+
+        source = map(formatter, Hacker.query().fetch())
+
+        #TODO: Remove this Test Data
+        source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
+
+        self.response.write(template("checkin_page.html", {"source" : json.dumps(source)}))
 
     def post(self):
-        if not onTeam(): return self.redirect('/')
-        nameAndEmail = self.request.get('name/email').split(divider)
-        hacker = Hacker.query(Hacker.name == nameAndEmail[0] and Hacker.email == nameAndEmail[1]).get()
+        if not onTeam(): return self.response.write({'success' : False, 'message' : 'You do not have permission to do this'})
+
+        id = self.request.get('id')
+        hacker = ndb.Key(urlsafe=id).get()
+
         if hacker is None:
             success = False
         else:
@@ -31,14 +45,9 @@ class CheckinPageHandler(webapp2.RequestHandler):
             hacker.checked_in = True
             hacker.put()
 
-        successMsg = "successfully checked in " + hacker.name
-        failureMsg = "failed to check in " + nameAndEmail[0]
+        msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
-        success = True
-
-        self.response.write(page_response(success, successMsg if success else failureMsg))
-
-        self.redirect('/admin_checkin')
+        self.response.write({'success' : success, 'message' : msg})
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
@@ -48,25 +57,6 @@ class MoreInfoHandler(webapp2.RequestHandler):
         missing = [key for key in requiredKeys if not getattr(hacker, key, None)]
 
         self.response.write(json.dumps({'hacker': hacker.asDict(hacker_keys), 'missingInfo' : missing}))
-
-
-def page_response(success=None, message=""):
-    def formatter(person):
-        JSON = {}
-        key = getattr(person, 'key')
-        JSON['id'] = key.urlsafe()
-        JSON['kind'] = key.kind()
-        JSON['email'] = getattr(person, 'email')
-        JSON['name'] = getattr(person, 'name')
-        return JSON
-
-    source = map(formatter, Hacker.query().fetch())
-
-    #TODO: Remove this Test Data
-    source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
-
-    return template("checkin_page.html", {"source" : json.dumps(source),
-                    "status" : json.dumps(success), "message" : message})
 
 def getHackersToBeChecked():
     # Cache this value, results don't need to be updated quickly.
