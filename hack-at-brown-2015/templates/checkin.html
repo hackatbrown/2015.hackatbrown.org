@@ -47,12 +47,25 @@ Check-in - Hack@Brown 2015
                 <input type="text" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or mentor"/>
               </div>
             </div>
-<!--            <input type='submit' value='Check in'</input>-->
           </form>
         </section>
         <section id="missing-info">
+          <h4>Some information is missing:</h4>
+          <form class="ui form">
+            <div class="field">
+              <label for="phone_number">
+              Cell Number
+              <span class="optional">(Optional)</span>
+              </label>
+              <div class="ui icon input">
+                <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="(119) 135-6804">
+                <i class="icon"></i>
+              </div>
+            </div>
+          </form>
         </section>
-        <section id="reminders" class="">
+        <section id="reminders">
+        <h4>Reminders</h4>
           <div class="reminder">
             Give t-shirt and swag bag:
             <br>
