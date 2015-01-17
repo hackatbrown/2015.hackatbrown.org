@@ -15,6 +15,7 @@ Check-in - Hack@Brown 2015
 {% block headjs %}
 {{ super() }}
 <script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
 <script type="text/javascript" src="/static/js/checkin.js"></script>
 {% endblock %}
 
@@ -39,17 +40,17 @@ Check-in - Hack@Brown 2015
 <div class="container">
   <div class="inner_container">
     <div class="panes">
-      <div class="pane pane0 active white">
+      <div id="scope" class="pane pane0 active white" ng-app='checkinApp' ng-controller="Controller">
         <section id="input" class="panel hero condensed-bottom">
           <form id='checkin' class="ui form" method='POST' >
             <div class="field">
               <div class="ui title input">
-                <input type="text" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or mentor"/>
+                <input type="text" ng-model='hackerID' ng-change="requestMoreInfo()" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or mentor"/>
               </div>
             </div>
           </form>
         </section>
-        <section id="missing-info">
+        <section id="missing-info" ng-show="showMissingInfo">
           <h4>Some information is missing:</h4>
           <form class="ui form">
             <div class="field">
@@ -64,8 +65,8 @@ Check-in - Hack@Brown 2015
             </div>
           </form>
         </section>
-        <section id="reminders">
-        <h4>Reminders</h4>
+        <section id="reminders" ng-show='showReminders'>
+          <h4>Reminders</h4>
           <div class="reminder">
             Give t-shirt and swag bag:
             <br>
@@ -73,22 +74,21 @@ Check-in - Hack@Brown 2015
             <div class="flex wrap">
               <div id="shirt" class="flex-left">
                 <div class="shirt_gen">
-                  Men's
+                  %% hacker.shirt_gen %%
                 </div>
                 <div class="shirt_size">
-                  S
+                  %% hacker.shirt_size %%
                 </div>
               </div>
             </div>
           </div>
-          <div class="reminder">
-            Remind this hacker about food or something.
-          </div>
-          <div class="reminder">
-            Remind this hacker that travel receipts are due on 1.2.2015
+          <div ng-repeat="reminder in reminders">
+            <div class="reminder">
+              %%reminder%%
+            </div>
           </div>
         </section>
-        <section id="status">
+        <section id="status" ng-show="showStatus">
           <h4>STATUS</h4>
           <div class="inline-flex">
             <div class="admit_status confirmed">
@@ -153,7 +153,6 @@ Check-in - Hack@Brown 2015
           '</div>';
       }
     },
-    onChange : requestMoreInfo,
     labelField: 'name',
     valueField: 'id',
     optgroupField: 'kind',
