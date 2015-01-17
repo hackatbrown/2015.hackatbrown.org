@@ -8,12 +8,14 @@ Check-in - Hack@Brown 2015
 {{ super() }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<link rel='stylesheet' href='/static/css/checkin.css' />
 
 {% endblock %}
 
 {% block headjs %}
 {{ super() }}
 <script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+<script type="text/javascript" src="/static/js/checkin.js"></script>
 {% endblock %}
 
 {% block nav %}
@@ -48,6 +50,43 @@ Check-in - Hack@Brown 2015
 <!--            <input type='submit' value='Check in'</input>-->
           </form>
         </section>
+        <section id="missing-info">
+        </section>
+        <section id="reminders" class="">
+          <div class="reminder">
+            Give t-shirt and swag bag:
+            <br>
+            <label for="shirt">T-Shirt Size</label>
+            <div class="flex wrap">
+              <div id="shirt" class="flex-left">
+                <div class="shirt_gen">
+                  Men's
+                </div>
+                <div class="shirt_size">
+                  S
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reminder">
+            Remind this hacker about food or something.
+          </div>
+          <div class="reminder">
+            Remind this hacker that travel receipts are due on 1.2.2015
+          </div>
+        </section>
+        <section id="status">
+          <h4>STATUS</h4>
+          <div class="inline-flex">
+            <div class="admit_status confirmed">
+              <span>Confirmed</span>
+            </div>
+            <div class="checkin field">
+              <input id="checkin-button" type="button" value="Check In" class="ui teal button">
+            </div>
+            <span class="help-text">(or press ENTER)</span>
+          </div>
+        </section>
         <section id="additional" class="panel hero condensed-top">
           <p>or</p>
           <div class="flex wrap">
@@ -72,151 +111,10 @@ Check-in - Hack@Brown 2015
   </div>
 </div>
 
-<style>
-  .panes {
-    width: 100%
-  }
-
-  .ui.input.title input {
-    font-size: 2.5em !important;
-    line-height: 1.8em !important;
-    height: auto !important;
-  }
-
-  .ui.input.minimal input:focus {
-    box-shadow: inset 1px -3px 0 -1px #404040 !important;
-    color: #404040 !important;
-    padding-left: inherit;
-  }
-
-  .flex {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-  }
-
-  .flex.wrap {
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-  }
-
-  .status {
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 2px;
-    padding: 2px;
-    color: white;
-  }
-
-  .panes .pane {
-    width: 100%
-  }
-
-  .ui.form .selectize-control {
-     height: auto;
-  }
-
-  .ui.form .selectize-control.single>.selectize-input {
-    height: auto;
-  }
-
-  .ui.form .selectize-control.single>.selectize-input>* {
-     line-height: 1.8em;
-     font-size: 2.5em;
-  }
-
-  .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
-    cursor: text;
-  }
-
-  .selectize-input.not-full input {
-    width: 100% !important;
-  }
-
-  .ui.form .selectize-control input:focus {
-    box-shadow: none !important;
-  }
-
-  .selectize-control.single .selectize-input:after {
-    display: none;
-  }
-
-  .selectize-dropdown {
-    top: 0 !important;
-    position: relative;
-    margin-top: -3px;
-  }
-
-  .textclip {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .optgroup-header {
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .caption {
-    color: #918f8c;
-  }
-
-  .active > .caption {
-    color: #E2E1DF;
-  }
-
-  .inner_container {
-    max-width: 1017.6px;
-  }
-
-</style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 
 <script type="text/javascript">
   var source = {{source|safe}};
-
-  function checkinHacker(id) {
-    $.ajax({
-      type: 'POST',
-      url: '/checkin',
-      data: {'id' : id},
-      success: function(response) {
-        console.log(response);
-      },
-      error: function(error) {
-        console.log('error');
-        console.log(error);
-      }
-    })
-  }
-
-  function requestMoreInfo(id) {
-    $.ajax({
-      type: 'GET',
-      url: '/checkin/info/' + id,
-      success : function(response) {
-        response = JSON.parse(response);
-        var hacker = response.hacker;
-        console.log(hacker);
-        var missingInfo = response.missingInfo;
-        var check = confirm("Check this person in?");
-        if (check) checkinHacker(id);
-
-      },
-      error: function(error) {
-        console.log('error');
-        console.log(error);
-      }
-    });
-  }
-
   var $search = $("#search");
   $search.selectize({
     onDropdownOpen: slideOut,

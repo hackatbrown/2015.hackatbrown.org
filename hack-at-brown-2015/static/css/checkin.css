@@ -1,0 +1,146 @@
+/* Sam's Bad CSS */
+
+.inline-flex {
+  /* @Chen - currently the .flex class is using justify - It'd be nice to have our own flex class for browser compatibility but we should keep it modular - flex should just handle flex.*/
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.confirmed.admit_status {
+  margin-bottom: 0px;
+}
+
+.help-text {
+  margin: auto 10px;
+  color: #918f8c;
+
+}
+
+.reminder {
+  margin: 10px 0;
+}
+
+#checkin-button {
+  height: 48px !important;
+}
+
+label {
+  text-transform: uppercase;
+  color: #1b8eb9;
+  font-weight: 300;
+  font-size: .8em;
+}
+
+#shirt > div {
+  color: #fff;
+  box-shadow: inset 1px -50px 0 -1px #1b8eb9;
+  padding: 0 11px;
+  line-height: 35px;
+  display: inline-block;
+}
+/* Existing CSS */
+
+.panes {
+  width: 100%
+}
+
+.ui.input.title input {
+  font-size: 2.5em !important;
+  line-height: 1.8em !important;
+  height: auto !important;
+}
+
+.ui.input.minimal input:focus {
+  box-shadow: inset 1px -3px 0 -1px #404040 !important;
+  color: #404040 !important;
+  padding-left: inherit;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.flex.wrap {
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.status {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  padding: 2px;
+  color: white;
+}
+
+.panes .pane {
+  width: 100%
+}
+
+.ui.form .selectize-control {
+   height: auto;
+}
+
+.ui.form .selectize-control.single>.selectize-input {
+  height: auto;
+}
+
+.ui.form .selectize-control.single>.selectize-input>* {
+   line-height: 1.8em;
+   font-size: 2.5em;
+}
+
+.selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
+  cursor: text;
+}
+
+.selectize-input.not-full input {
+  width: 100% !important;
+}
+
+.ui.form .selectize-control input:focus {
+  box-shadow: none !important;
+}
+
+.selectize-control.single .selectize-input:after {
+  display: none;
+}
+
+.selectize-dropdown {
+  top: 0 !important;
+  position: relative;
+  margin-top: -3px;
+}
+
+.textclip {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.optgroup-header {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.caption {
+  color: #918f8c;
+}
+
+.active > .caption {
+  color: #E2E1DF;
+}
+
+.inner_container {
+  max-width: 1017.6px;
+}
