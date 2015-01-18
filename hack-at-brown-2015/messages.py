@@ -24,7 +24,7 @@ import datetime
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 
-	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'hardware-hackers'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'hardware-hackers', 'accepted'], default=None)
 
 	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
@@ -40,17 +40,6 @@ class Message(ndb.Model):
 		# does the actual work of sending
 		emails = [email]
 		assert self.email_subject, "No email subject provided. Is email unchecked?"
-		# if self.audience == 'invited-friends':
-		# 	hacker = Hacker.query(Hacker.email==email).fetch()[0]
-		# 	if hacker.teammates:
-		# 		emails_found = [email.lower() for email in hacker.teammates.split(',')]
-		# 		matching_hackers =  Hacker.query(Hacker.email.IN(emails_found)).fetch()
-		# 		emails_already_registered = [h.email for h in matching_hackers]
-		# 		emails = []
-		# 		for email in emails_found:
-		# 			if email not in emails_already_registered:
-		# 				emails.append(email)
-		# 				template_args["invited_by"] = hacker
 		if self.email_from_template:
 			html = template("emails/" + self.email_html + ".html", template_args)
 		else:
@@ -67,6 +56,8 @@ class Message(ndb.Model):
 	def get_query(self):
 		if self.audience == 'registered':
 			return Hacker.query()
+		elif self.audience == 'accepted':
+			return Hacker.query(Hacker.admitted_email_sent_date != None)
 		elif self.audience == 'invited-friends':
 			return Hacker.query(Hacker.teammates != None)
 		elif self.audience == 'mailing-list-unregistered':
@@ -137,6 +128,12 @@ class Message(ndb.Model):
 				self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				hacker.put()
 			elif self.audience == 'hardware-hackers': #also send directly to hackers
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'accepted':
 				hacker = entity
 				if hacker.email and self.email_subject:
 					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
