@@ -6,20 +6,29 @@ var checkinApp = angular.module('checkinApp', []).config(function($interpolatePr
 
 checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http){
   $scope.showMissingInfo = false;
-  $scope.showReminders = true;
+  $scope.missingInfo = ['phone_number'];
+
+  $scope.showReminders = false;
+  $scope.reminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015'];
+
   $scope.showStatus = false;
   $scope.hacker = {};
 
-  $scope.reminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015'];
 
   $scope.requestMoreInfo = function() {
+    console.log('called');
     $.ajax({
       type: 'GET',
       url: '/checkin/info/' + $scope.hackerID,
       success : function(response) {
         response = JSON.parse(response);
+        console.log(response);
         $scope.hacker = response.hacker;
         var missingInfo = response.missingInfo;
+        $scope.showStatus = !!missingInfo;
+        $scope.showMissingInfo = $scope.showStatus;
+        $scope.showReminders = true;
+
       },
       error: function(error) {
         console.log('error');
