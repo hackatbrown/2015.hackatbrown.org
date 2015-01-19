@@ -5,51 +5,38 @@ var checkinApp = angular.module('checkinApp', []).config(function($interpolatePr
 
 
 checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http){
-  $scope.showMissingInfo = false;
-  $scope.missingInfo = ['phone_number'];
+  $scope.missingInfo = false;
 
-  $scope.showReminders = false;
-  $scope.reminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015'];
+  $scope.reminders = false;
 
   $scope.showStatus = false;
   $scope.hacker = {};
 
 
   $scope.requestMoreInfo = function() {
-    console.log('called');
-    $.ajax({
-      type: 'GET',
-      url: '/checkin/info/' + $scope.hackerID,
-      success : function(response) {
-        response = JSON.parse(response);
-        console.log(response);
+    $http.get('/checkin/info/' + $scope.hackerID).
+      success(function(response) {
         $scope.hacker = response.hacker;
-        var missingInfo = response.missingInfo;
-        $scope.showStatus = !!missingInfo;
-        $scope.showMissingInfo = $scope.showStatus;
-        $scope.showReminders = true;
+        $scope.missingInfo = response.missingInfo;
+        $scope.reminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015'];
 
-      },
-      error: function(error) {
+        $scope.showStatus = !$scope.missingInfo;
+      }).
+      error(function(error) {
         console.log('error');
         console.log(error);
-      }
-    });
+      });
   }
 
   $scope.checkinHacker = function() {
-    $.ajax({
-      type: 'POST',
-      url: '/checkin',
-      data: {'id' : $scope.hackerID},
-      success: function(response) {
+    $http.post('/checkin', {'id' : $scope.hackerID})/
+      success(function(response) {
         console.log(response);
-      },
-      error: function(error) {
+      }).
+      error(function(error) {
         console.log('error');
         console.log(error);
-      }
-    });
+      });
   }
 
 
