@@ -28,7 +28,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       success(function(response) {
         $scope.hacker = response.hacker;
         console.log($scope.hacker);
-        response.missingInfo = [];
         $scope.missingInfo = response.missingInfo;
         $scope.reminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015'];
 
@@ -45,6 +44,8 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     return;
     $http.post('/checkin', {'id' : $scope.hackerID}).
       success(function(response) {
+        $scope.total_checked_in = response.total_checked_in;
+        $scope.session_checked_in++;
         console.log(response);
       }).
       error(function(error) {

@@ -21,8 +21,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
             key = getattr(person, 'key')
             JSON['id'] = key.urlsafe()
             JSON['kind'] = key.kind()
-            JSON['email'] = getattr(person, 'email')
-            JSON['name'] = getattr(person, 'name')
+            JSON.update(person.asDict(['email', 'name', 'checked_in']))
             return JSON
 
         source = map(formatter, Hacker.query().fetch())
@@ -52,11 +51,13 @@ class CheckinPageHandler(webapp2.RequestHandler):
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
         requiredKeys = ['phone_number', 'resume']
+        infoKeys = hacker_keys + ['checked_in']
+
         hacker = ndb.Key(urlsafe=id).get()
 
         missing = [key for key in requiredKeys if not getattr(hacker, key, None)]
 
-        self.response.write(json.dumps({'hacker': hacker.asDict(hacker_keys), 'missingInfo' : missing}))
+        self.response.write(json.dumps({'hacker': hacker.asDict(infoKeys), 'missingInfo' : missing}))
 
 def getHackersToBeChecked():
     # Cache this value, results don't need to be updated quickly.

@@ -128,6 +128,7 @@ Check-in - Hack@Brown 2015
 
 <script type="text/javascript">
   var source = {{source|safe}};
+  console.log(source);
   var $search = $("#search");
   $search.selectize({
     onDropdownOpen: slideOut,
@@ -147,8 +148,9 @@ Check-in - Hack@Brown 2015
       option: function(item, escape) {
         var label = item.name || item.email;
         var caption = item.name ? item.email : null;
-        return '<div class="flex">' +
-          '<span class="label textclip">' + escape(label) + '</span>' +
+
+        return '<div class="flex"' + (item.checked_in ? 'disabled' : '') +
+          '><span class="label textclip">' + escape(label) + '</span>' +
           (caption ? '<span class="caption textclip">' + escape(caption) + '</span>' : '') +
           '</div>';
       }
@@ -165,11 +167,4 @@ Check-in - Hack@Brown 2015
   });
 </script>
 
-
-{% if status == "true" %}
-  <div class="status" style="background:lightgreen">{{ message }}</div>
-{% endif %}
-{% if status == "false" %}
-  <div class="status" style="background:red">{{ message }}</div>
-{% endif %}
 {% endblock %}
