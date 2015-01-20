@@ -1,6 +1,7 @@
 $(document).on('keyup', function(event) {
   if (event.which == 13) {
     angular.element($('#scope')).scope().checkinHacker();
+    //TODO only fire on page, not in address bar.
   }
 });
 
@@ -11,12 +12,17 @@ var checkinApp = angular.module('checkinApp', []).config(function($interpolatePr
 
 
 checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http){
-  $scope.missingInfo = null;
-
+  $scope.missingOptionalInfo = null;
+  $scope.requiredInfo = null;
   $scope.reminders = null;
 
   $scope.showStatus = null;
   $scope.hacker = {};
+
+  $scope.session_checked_in = 0;
+  //TODO: figure out a better way to do this & dynamically update from server.
+  //TODO: animate counter
+  $scope.total_checked_in = initial_total_checked_in;
 
 
   $scope.requestMoreInfo = function() {
@@ -27,11 +33,14 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $http.get('/checkin/info/' + $scope.hackerID).
       success(function(response) {
         $scope.hacker = response.hacker;
-        console.log($scope.hacker);
-        $scope.missingInfo = response.missingInfo;
-        $scope.reminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015'];
+        console.log(response);
 
-        $scope.showStatus = $scope.missingInfo.length === 0;
+        $scope.missingOptionalInfo = (response.missingOptionalInfo.length > 0) ? response.missingOptionalInfo : null;
+
+        $scope.requiredInfo = (response.requiredInfo.length > 0) ? response.requiredInfo : null;
+
+        $scope.reminders = response.reminders;
+        $scope.showStatus = !$scope.requiredInfo
       }).
       error(function(error) {
         console.log('error');
@@ -40,10 +49,32 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   }
 
   $scope.checkinHacker = function() {
-    console.log('neh');
-    return;
+    if (!$scope.showStatus || $scope.hackerID === '') {
+      console.log('no status or id is null');
+      return;
+    }
+
+    if ($scope.hacker.id !== $('#search').val()) {
+      console.log("didn't update id");
+      return;
+    }
+
+    if ($scope.hacker.status != "confirmed") {
+      console.log('status not confiremd');
+    }
+
+    if ($scope.hacker.checked_in) {
+      console.log('already checked in');
+      return;
+    }
+
+    //TODO: update source in selectize
+    // w/ hacker.checked_in = true;
+
     $http.post('/checkin', {'id' : $scope.hackerID}).
       success(function(response) {
+        $scope.hacker.checked_in = true;
+        $scope.hacker.status = 'checked in';
         $scope.total_checked_in = response.total_checked_in;
         $scope.session_checked_in++;
         console.log(response);
@@ -54,6 +85,9 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       });
   }
 
+  $scope.createPerson = function(kind) {
+    console.log('kind', kind);
+  }
 
 }]);
 

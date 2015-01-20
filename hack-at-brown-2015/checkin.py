@@ -29,12 +29,12 @@ class CheckinPageHandler(webapp2.RequestHandler):
         #TODO: Remove this Test Data
         source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
-        self.response.write(template("checkin.html", {"source" : json.dumps(source)}))
+        self.response.write(template("checkin.html", {"source" : json.dumps(source), 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count()}))
 
     def post(self):
         if not onTeam(): return self.response.write({'success' : False, 'message' : 'You do not have permission to do this'})
 
-        id = self.request.get('id')
+        id = json.loads(self.request.body).get('id')
         hacker = ndb.Key(urlsafe=id).get()
 
         if hacker is None:
@@ -46,18 +46,28 @@ class CheckinPageHandler(webapp2.RequestHandler):
 
         msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
-        self.response.write({'success' : success, 'message' : msg})
+
+        #TODO: Deal w/eventual consistency in timer
+        self.response.write(json.dumps({'success' : success, 'message' : msg, 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count()}))
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
-        requiredKeys = ['phone_number', 'resume']
         infoKeys = hacker_keys + ['checked_in']
 
         hacker = ndb.Key(urlsafe=id).get()
+        hackerDict = hacker.asDict(infoKeys)
+        hackerDict.update({'id' : id})
 
-        missing = [key for key in requiredKeys if not getattr(hacker, key, None)]
+        optionalKeys = ['phone_number', 'resume']
+        missingOptional = [key for key in optionalKeys if not getattr(hacker, key, None)]
 
-        self.response.write(json.dumps({'hacker': hacker.asDict(infoKeys), 'missingInfo' : missing}))
+        required = []
+        if hacker.year == "highschool":
+            required += ['parental_waiver']
+
+        defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
+
+        self.response.write(json.dumps({'hacker': hackerDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
 
 def getHackersToBeChecked():
     # Cache this value, results don't need to be updated quickly.

@@ -1,5 +1,17 @@
 /* Sam's Bad CSS */
 
+.counter {
+  float: right;
+}
+
+.counter > div {
+  width: 10px;
+  height: 24px;
+  margin: 2px;
+  margin-right: 10px;
+}
+
+
 .inline-flex {
   /* @Chen - currently the .flex class is using justify - It'd be nice to have our own flex class for browser compatibility but we should keep it modular - flex should just handle flex.*/
   display: -webkit-box;

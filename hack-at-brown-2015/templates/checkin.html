@@ -41,6 +41,12 @@ Check-in - Hack@Brown 2015
   <div class="inner_container">
     <div class="panes">
       <div id="scope" class="pane pane0 active white" ng-app='checkinApp' ng-controller="Controller">
+        <div class="counter inline-flex">
+          <label for="session-counter">Session:</label>
+          <div id='session-counter'>%%session_checked_in%%</div>
+          <label for="total-counter">Total:</label>
+          <div id='total-counter' ng-model="total_checked_in">%%total_checked_in%%</div>
+        </div>
         <section id="input" class="panel hero condensed-bottom">
           <form id='checkin' class="ui form" method='POST' >
             <div class="field">
@@ -50,8 +56,8 @@ Check-in - Hack@Brown 2015
             </div>
           </form>
         </section>
-        <section id="missing-info" ng-show="missingInfo">
-          <h4>Some information is missing:</h4>
+        <section id="required-info" ng-show="requiredInfo">
+          <h4>The following information is required before checkin:</h4>
           <form class="ui form">
             <div class="field">
               <label for="phone_number">
@@ -62,6 +68,24 @@ Check-in - Hack@Brown 2015
                 <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="(119) 135-6804">
                 <i class="icon"></i>
               </div>
+            </div>
+          </form>
+        </section>
+        <section id="missing-optional-info" ng-show="missingOptionalInfo">
+          <h4>Some non-required information is missing:</h4>
+          <form class="ui form">
+            <div class="field">
+              <label for="phone_number">
+              Cell Number
+              <span class="optional">(Optional)</span>
+              </label>
+              <div class="ui icon input">
+                <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="(119) 135-6804">
+                <i class="icon"></i>
+              </div>
+            </div>
+            <div ng-repeat = "info in missingOptionalInfo">
+              <div>%%info%%</div>
             </div>
           </form>
         </section>
@@ -91,9 +115,10 @@ Check-in - Hack@Brown 2015
         <section id="status" ng-show="showStatus">
           <h4>STATUS</h4>
           <div class="inline-flex">
-            <div class="admit_status confirmed">
-              <span>Confirmed</span>
+            <div class="admit_status %%hacker.status%%">
+              <span>%%hacker.status%%</span>
             </div>
+
             <div class="checkin field">
               <input id="checkin-button" type="submit" value="Check In" class="ui teal button" ng-click="checkinHacker()">
             </div>
@@ -104,13 +129,13 @@ Check-in - Hack@Brown 2015
           <p>or</p>
           <div class="flex wrap">
             <div class="flex-left">
-              <div id="add-hacker" class="ui pink button">
+              <div id="add-hacker" class="ui pink button" ng-click="createPerson(hacker)">
                 Add New Hacker
               </div>
-              <div id="add-hacker" class="ui pink button">
+              <div id="add-hacker" class="ui pink button" ng-click="createPerson(volunteer)">
                 Add New Volunteer
               </div>
-              <div id="add-hacker" class="ui pink button">
+              <div id="add-hacker" class="ui pink button" ng-click='createPerson(mentor)'>
                 Add New Mentor
               </div>
             </div>
@@ -127,8 +152,9 @@ Check-in - Hack@Brown 2015
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 
 <script type="text/javascript">
+  var initial_total_checked_in = {{total_checked_in}};
+
   var source = {{source|safe}};
-  console.log(source);
   var $search = $("#search");
   $search.selectize({
     onDropdownOpen: slideOut,
