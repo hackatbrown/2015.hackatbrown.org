@@ -345,12 +345,12 @@
                         <h1 class="hi">Congratulations!</h1>
                         {% endif %}
                         {% if hacker.rmax %}
-                        
+
                         {% if deadline < 0 and hacker.rtotal < 30 %}
                         p><strong>Your reimbursement deadline has elapsed, so we can only reimburse you <span class="money">$30</span>.  Reciepts are due on 3.1.2015</strong></p>
                         {% else %}
                         <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
-                        <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by {{deadlineFull}}.</strong></p>
+                        <p><strong>Reimbursement requests of more than <span class="money">$30</span> must be uploaded by {{deadlineFull}}.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
                         {% endif %}
                         {% else %}
@@ -389,10 +389,10 @@
                 </section>
                 <section class="reciepts-section panel condensed-top condensed-bottom">
                     <form class="ui form reciepts-upload inner_container">
-                        
-                        <h3>{% if (deadline < 0 and hacker.rtotal) or (deadline > 0) < 30 %}Add receipts:{% else %}Uploaded Receipts:{% endif %}</h3>
+
+                        <h3>{% if (deadline < 0 and hacker.rtotal) or (deadline >= 0) %}Add receipts:{% else %}Uploaded Receipts:{% endif %}</h3>
                         <div id="receipts-upload" class="upload field">
-                            {% if (deadline < 0 and hacker.rtotal) or (deadline > 0) < 30 %}
+                            {% if (deadline < 0 and hacker.rtotal) or (deadline >= 0) %}
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                 {% if hacker.receipts %}
