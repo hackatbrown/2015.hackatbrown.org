@@ -155,6 +155,13 @@ Check-in - Hack@Brown 2015
   var initial_total_checked_in = {{total_checked_in}};
 
   var source = {{source|safe}};
+
+  //TODO: get appengine script
+  var channel = new goog.appengine.Channel('{{ token }}');
+  var socket = channel.open();
+
+  socket.onmessage = onMessage;
+
   var $search = $("#search");
   $search.selectize({
     onDropdownOpen: slideOut,

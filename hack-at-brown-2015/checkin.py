@@ -6,15 +6,26 @@ from registration import Hacker
 from registration import hacker_keys
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
+from google.appengine.api import channel
+from google.appengine.api import users
 from config import onTeam
 import hacker_page
+import datetime
 
 cacheTime = 6 * 10
+
+class CheckInSession(ndb.Model):
+    total = ndb.IntegerProperty(default=0)
 
 class CheckinPageHandler(webapp2.RequestHandler):
 
     def get(self):
         if not onTeam(): return self.redirect('/')
+
+        user = users.get_current_user()
+        if not user:
+          self.redirect(users.create_login_url(self.request.uri))
+          return
 
         def formatter(person):
             JSON = {}
@@ -29,7 +40,11 @@ class CheckinPageHandler(webapp2.RequestHandler):
         #TODO: Remove this Test Data
         source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
-        self.response.write(template("checkin.html", {"source" : json.dumps(source), 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count()}))
+        session = CheckInSession()
+        token = channel.create_channel(session.key.urlsafe())
+        session.put()
+
+        self.response.write(template("checkin.html", {"source" : json.dumps(source), 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count(), 'token' : token}))
 
     def post(self):
         if not onTeam(): return self.response.write({'success' : False, 'message' : 'You do not have permission to do this'})
@@ -39,16 +54,20 @@ class CheckinPageHandler(webapp2.RequestHandler):
 
         if hacker is None:
             success = False
+            newTotal = 0
         else:
+            newTotal = Hacker.query(Hacker.checked_in == True).count() + 1
+            #We do this before so eventual consistency doesn't confuse users
             success = True
             hacker.checked_in = True
             hacker.put()
 
+        for session in CheckInSession.query():
+            channel.send_message(session.key.urlsafe(), json.dumps({'newTotal' : newTotal}))
+
         msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
-
-        #TODO: Deal w/eventual consistency in timer
-        self.response.write(json.dumps({'success' : success, 'message' : msg, 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count()}))
+        self.response.write(json.dumps({'success' : success, 'message' : msg, 'total_checked_in' : newTotal}))
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
@@ -83,7 +102,14 @@ def getHackersToBeChecked():
             logging.error('Memcache set failed')
     return data
 
+class deleteSessionHandler(webapp2.RequestHandler):
+    def get(self):
+        client_id = self.request.get('from')
+        if client_id is not None:
+            ndb.Key(urlsafe=client_id).delete()
+
 app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
-    ('/checkin/info/(.+)', MoreInfoHandler)
+    ('/checkin/info/(.+)', MoreInfoHandler),
+    ('/_ah/channel/disconnected/', DeleteSessionHandler)
 ], debug=True)

@@ -4,6 +4,9 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+inbound_services:
+- channel_presence
+
 builtins:
 - deferred: on
 
@@ -21,6 +24,11 @@ handlers:
 - url: /checkin
   script: checkin.app
   login: required
+
+- url: /_ah/channel/disconnected/
+  script: checkin.app
+  login: required
+
 
 - url: /checkin(.+)
   script: checkin.app

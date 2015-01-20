@@ -10,6 +10,11 @@ var checkinApp = angular.module('checkinApp', []).config(function($interpolatePr
     }
 );
 
+function onMessage(message) {
+  console.log(message);
+  console.log(JSON.parse(message));
+}
+
 
 checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http){
   $scope.missingOptionalInfo = null;
