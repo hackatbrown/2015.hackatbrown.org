@@ -149,14 +149,14 @@ Check-in - Hack@Brown 2015
             </label>
             <div class="field" ng-repeat='f in newPerson.fields'>
               <div class="ui icon input">
-                <label for="newPerson-%%f%%">
+                <label for="newPerson-%%f.field%%">
                   %%f%%
                 </label>
-                <input id="newPerson-%%f%%" type="text" name='%%f%%'>
+                <input id="newPerson-%%f.field%%" type="text" name='%%f.field%%'>
                 <i class="icon"></i>
               </div>
             </div>
-            <input type="submit" value="Create %%newPerson.kind%%" class="ui teal button" ng-submit='submitNewPerson()'>
+            <input type="submit" value="Create %%newPerson.kind%%" class="ui teal button" ng-click='submitNewPerson()'>
           </form>
         </section>
       </div>

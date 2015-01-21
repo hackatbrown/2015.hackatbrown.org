@@ -1,7 +1,7 @@
 $(document).on('keyup', function(event) {
   if (event.which == 13) {
-    // angular.element($('#scope')).scope().checkinHacker();
-    angular.element($('#scope')).scope().updateTotal(1);
+    angular.element($('#scope')).scope().checkinHacker();
+    // angular.element($('#scope')).scope().updateTotal(1);
 
     //TODO only fire on page, not in address bar.
   }
@@ -104,17 +104,20 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         break;
       case 'Volunteer':
         //TODO: lock this down.
-        requiredFields += ['name', 'team/role'];
+        requiredFields = requiredFields.concat(['name', 'team/role']);
         break;
       case 'Mentor':
-        requiredFields += ['name', 'company'];
+        requiredFields = requiredFields.concat(['name', 'company']);
         break;
     }
+
     $scope.newPerson = {'kind' : kind, 'fields' : requiredFields};
   }
 
   $scope.submitNewPerson = function() {
+    console.log('hey');
     console.log($scope.newPerson);
+
 
     $scope.newPerson = null;
   }
