@@ -347,7 +347,7 @@
                         {% if hacker.rmax %}
 
                         {% if deadline < 0 and hacker.rtotal < 30 %}
-                        p><strong>Your reimbursement deadline has elapsed, so we can only reimburse you <span class="money">$30</span>.  Reciepts are due on 3.1.2015</strong></p>
+                        <strong>Your reimbursement deadline has elapsed, so we can only reimburse you <span class="money">$30</span>.  Reciepts are due on 3.1.2015</strong></p>
                         {% else %}
                         <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
                         <p><strong>Reimbursement requests of more than <span class="money">$30</span> must be uploaded by {{deadlineFull}}.</strong></p>
