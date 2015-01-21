@@ -129,13 +129,13 @@ Check-in - Hack@Brown 2015
           <p>or</p>
           <div class="flex wrap">
             <div class="flex-left">
-              <div id="add-hacker" class="ui pink button" ng-click='createPerson("hacker")'>
+              <div id="add-hacker" class="ui pink button" ng-click='createPerson("Hacker")'>
                 Add New Hacker
               </div>
-              <div id="add-hacker" class="ui pink button" ng-click='createPerson("volunteer")'>
+              <div id="add-hacker" class="ui pink button" ng-click='createPerson("Volunteer")'>
                 Add New Volunteer
               </div>
-              <div id="add-hacker" class="ui pink button" ng-click='createPerson("mentor")'>
+              <div id="add-hacker" class="ui pink button" ng-click='createPerson("Mentor")'>
                 Add New Mentor
               </div>
             </div>
@@ -143,6 +143,21 @@ Check-in - Hack@Brown 2015
               Admin Tools
             </div>
           </div>
+          <form class="ui form" ng-show='newPerson'>
+            <label>
+              Create %%newPerson.kind%%
+            </label>
+            <div class="field" ng-repeat='f in newPerson.fields'>
+              <div class="ui icon input">
+                <label for="newPerson-%%f%%">
+                  %%f%%
+                </label>
+                <input id="newPerson-%%f%%" type="text" name='%%f%%'>
+                <i class="icon"></i>
+              </div>
+            </div>
+            <input type="submit" value="Create %%newPerson.kind%%" class="ui teal button" ng-submit='submitNewPerson()'>
+          </form>
         </section>
       </div>
     </div>

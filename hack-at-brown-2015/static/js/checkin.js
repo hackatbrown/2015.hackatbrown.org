@@ -65,7 +65,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     }
 
     if ($scope.hacker.status != "confirmed") {
-      console.log('status not confiremd');
+      console.log('status not confirmed');
     }
 
     if ($scope.hacker.checked_in) {
@@ -98,7 +98,25 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   }
 
   $scope.createPerson = function(kind) {
-    console.log('kind', kind);
+    var requiredFields = ['email'];
+    switch (kind) {
+      case 'Hacker':
+        break;
+      case 'Volunteer':
+        //TODO: lock this down.
+        requiredFields += ['name', 'team/role'];
+        break;
+      case 'Mentor':
+        requiredFields += ['name', 'company'];
+        break;
+    }
+    $scope.newPerson = {'kind' : kind, 'fields' : requiredFields};
+  }
+
+  $scope.submitNewPerson = function() {
+    console.log($scope.newPerson);
+
+    $scope.newPerson = null;
   }
 
 }]);
