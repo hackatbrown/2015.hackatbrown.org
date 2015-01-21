@@ -1,6 +1,8 @@
 $(document).on('keyup', function(event) {
   if (event.which == 13) {
-    angular.element($('#scope')).scope().checkinHacker();
+    // angular.element($('#scope')).scope().checkinHacker();
+    angular.element($('#scope')).scope().updateTotal(1);
+
     //TODO only fire on page, not in address bar.
   }
 });
@@ -11,8 +13,7 @@ var checkinApp = angular.module('checkinApp', []).config(function($interpolatePr
 );
 
 function onMessage(message) {
-  console.log(message);
-  console.log(JSON.parse(message));
+    angular.element($('#scope')).scope().updateTotal(message.data);
 }
 
 
@@ -25,7 +26,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   $scope.hacker = {};
 
   $scope.session_checked_in = 0;
-  //TODO: figure out a better way to do this & dynamically update from server.
   //TODO: animate counter
   $scope.total_checked_in = initial_total_checked_in;
 
@@ -88,6 +88,13 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         console.log('error');
         console.log(error);
       });
+  }
+
+  $scope.updateTotal = function(newTotal) {
+    $scope.$apply(function() {
+      // $scope.total_checked_in = newTotal;
+      $scope.total_checked_in++;
+    });
   }
 
   $scope.createPerson = function(kind) {

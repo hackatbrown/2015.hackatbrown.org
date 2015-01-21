@@ -150,13 +150,13 @@ Check-in - Hack@Brown 2015
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
+<script type="text/javascript" src="/_ah/channel/jsapi"></script>
 
 <script type="text/javascript">
   var initial_total_checked_in = {{total_checked_in}};
 
   var source = {{source|safe}};
 
-  //TODO: get appengine script
   var channel = new goog.appengine.Channel('{{ token }}');
   var socket = channel.open();
 

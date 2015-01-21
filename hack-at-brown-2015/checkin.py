@@ -41,8 +41,8 @@ class CheckinPageHandler(webapp2.RequestHandler):
         source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
         session = CheckInSession()
-        token = channel.create_channel(session.key.urlsafe())
         session.put()
+        token = channel.create_channel(session.key.urlsafe())
 
         self.response.write(template("checkin.html", {"source" : json.dumps(source), 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count(), 'token' : token}))
 
@@ -63,7 +63,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
             hacker.put()
 
         for session in CheckInSession.query():
-            channel.send_message(session.key.urlsafe(), json.dumps({'newTotal' : newTotal}))
+            channel.send_message(session.key.urlsafe(), str(newTotal))
 
         msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
@@ -102,11 +102,12 @@ def getHackersToBeChecked():
             logging.error('Memcache set failed')
     return data
 
-class deleteSessionHandler(webapp2.RequestHandler):
+class DeleteSessionHandler(webapp2.RequestHandler):
     def get(self):
         client_id = self.request.get('from')
         if client_id is not None:
             ndb.Key(urlsafe=client_id).delete()
+            logging.info('deleted client', client_id)
 
 app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
