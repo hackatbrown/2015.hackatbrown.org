@@ -174,8 +174,9 @@ Check-in - Hack@Brown 2015
 
   var channel = new goog.appengine.Channel('{{ token }}');
   var socket = channel.open();
-
   socket.onmessage = onMessage;
+  socket.onerror = function() { socket.close() };
+  socket.onclose = function() { socket.close(); };
 
   var $search = $("#search");
   $search.selectize({
@@ -213,6 +214,14 @@ Check-in - Hack@Brown 2015
     plugins: ['optgroup_columns'],
     maxItems: 1,
   });
+
+  $('.selectize-input').on('keyup', function(event) {
+    if (event.which == 13) {
+      angular.element($('#scope')).scope().checkinHacker();
+      //TODO - fires twice on select - kinda ugly rn
+    }
+  });
+
 </script>
 
 {% endblock %}

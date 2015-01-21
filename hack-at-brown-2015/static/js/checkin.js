@@ -1,21 +1,13 @@
-$(document).on('keyup', function(event) {
-  if (event.which == 13) {
-    angular.element($('#scope')).scope().checkinHacker();
-    // angular.element($('#scope')).scope().updateTotal(1);
-
-    //TODO only fire on page, not in address bar.
-  }
-});
-
-var checkinApp = angular.module('checkinApp', []).config(function($interpolateProvider){
-        $interpolateProvider.startSymbol('%%').endSymbol('%%');
-    }
-);
-
+/* Vanilla JS */
 function onMessage(message) {
     angular.element($('#scope')).scope().updateTotal(message.data);
 }
 
+/* Angular JS */
+var checkinApp = angular.module('checkinApp', []).config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('%%').endSymbol('%%');
+    }
+);
 
 checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http){
   $scope.missingOptionalInfo = null;
@@ -28,7 +20,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   $scope.session_checked_in = 0;
   //TODO: animate counter
   $scope.total_checked_in = initial_total_checked_in;
-
 
   $scope.requestMoreInfo = function() {
     if ($scope.hackerID === "") {
