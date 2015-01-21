@@ -25,9 +25,8 @@ handlers:
   script: checkin.app
   login: required
 
-- url: /_ah/channel/disconnected/
+- url: /_ah/channel/disconnected(.+)
   script: checkin.app
-  login: required
 
 
 - url: /checkin(.+)

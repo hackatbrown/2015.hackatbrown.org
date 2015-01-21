@@ -103,11 +103,11 @@ def getHackersToBeChecked():
     return data
 
 class DeleteSessionHandler(webapp2.RequestHandler):
-    def get(self):
+    #TOOD: - should all be memcached
+    def post(self):
         client_id = self.request.get('from')
         if client_id is not None:
             ndb.Key(urlsafe=client_id).delete()
-            logging.info('deleted client', client_id)
 
 app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
