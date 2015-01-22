@@ -72,7 +72,7 @@ class Message(ndb.Model):
 			return Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes')
 		elif self.audience == 'accepted-highschool-freshmen':
 			print "sending emails to accepted highschool and freshman hackers"
-			return Hacker.query(ndb.OR(Hacker.year == 'highschool', Hacker.year == 'freshman'))
+			return Hacker.query(ndb.AND(Hacker.admitted_email_sent_date != None, ndb.OR(Hacker.year == 'highschool', Hacker.year == 'freshman')))
 		elif self.audience == None:
 			return None
 		else:
