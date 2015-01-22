@@ -24,7 +24,7 @@ import datetime
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 
-	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'hardware-hackers', 'accepted', 'accepted-non-local'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'accepted-highschool-freshmen','hardware-hackers', 'accepted', 'accepted-non-local'], default=None)
 
 	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
@@ -70,6 +70,9 @@ class Message(ndb.Model):
 		elif self.audience == 'hardware-hackers':
 			print "sending emails to admitted hardware-hackers: " +  str(Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes').count())
 			return Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes')
+		elif self.audience == 'accepted-highschool-freshmen':
+			print "sending emails to accepted highschool and freshman hackers"
+			return Hacker.query(ndb.OR(Hacker.year == 'highschool', Hacker.year == 'freshman')
 		elif self.audience == None:
 			return None
 		else:
@@ -145,6 +148,12 @@ class Message(ndb.Model):
 				hacker = entity
 				if hacker.school == "Brown University" or hacker.school == "Rhode Island School of Design":
 					return
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'accepted-highschool-freshmen':
+				hacker = entity
 				if hacker.email and self.email_subject:
 					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				if hacker.phone_number and self.sms_text:
