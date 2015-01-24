@@ -184,7 +184,7 @@ a:active {
 }
 .title {
     color: #EF5D93;
-    font-size: 3em;
+    font-size: 4em;
     font-weight: bold;
     margin: 0 auto;
     margin-top: 3%;
@@ -192,6 +192,10 @@ a:active {
 }
 .title>span {
     margin-left: 10px;
+}
+.sellout {
+    color: #918f8c !important;
+    font-weight: 300;
 }
 .hr {
     margin: 0 auto;
