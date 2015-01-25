@@ -100,3 +100,8 @@ indexes:
   properties:
   - name: shirt_gen
   - name: shirt_size
+
+- kind: Hacker
+  properties:
+  - name: year
+  - name: admitted_email_sent_date
