@@ -1,5 +1,10 @@
 /* Sam's Bad CSS */
 
+.notification {
+  border-bottom: 1px solid #ef5d93;
+}
+
+
 .counter {
   float: right;
 }

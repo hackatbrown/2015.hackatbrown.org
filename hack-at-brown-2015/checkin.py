@@ -81,8 +81,8 @@ class MoreInfoHandler(webapp2.RequestHandler):
         missingOptional = [key for key in optionalKeys if not getattr(hacker, key, None)]
 
         required = {}
-        # if hacker.year == "highschool":
-        required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
+        if hacker.year == "highschool":
+            required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
 
         defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
 

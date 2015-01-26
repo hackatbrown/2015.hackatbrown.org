@@ -30,8 +30,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $http.get('/checkin/info/' + $scope.hackerID).
       success(function(response) {
         $scope.hacker = response.hacker;
-        console.log(response);
-
         $scope.missingOptionalInfo = (response.missingOptionalInfo.length > 0) ? response.missingOptionalInfo : null;
 
         $scope.requiredInfo = (Object.keys(response.requiredInfo).length > 0) ? response.requiredInfo : null;
@@ -66,7 +64,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     }
 
     if ($scope.hacker.id !== $('#search').val()) {
-      console.log("didn't update id");
+      //We need this so the enter event when selecting doesn't checkin people
       return;
     }
 
