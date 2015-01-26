@@ -17,6 +17,8 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   $scope.showStatus = null;
   $scope.hacker = {};
 
+  $scope.notification;
+
   $scope.session_checked_in = 0;
   $scope.total_checked_in = initial_total_checked_in;
 
@@ -43,9 +45,23 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       });
   }
 
+  $scope.notify = function(message) {
+    $scope.notification = message;
+    setTimeout(function() {
+      $scope.$apply(function() {
+        $scope.notification = null;
+      });
+    }, 3000);
+  }
+
   $scope.checkinHacker = function() {
-    if (!$scope.showStatus || $scope.hackerID === '') {
-      console.log('no status or id is null');
+    if ($scope.hackerID === '') {
+      console.log('id is null');
+      return;
+    }
+
+    if ($scope.requiredInfo) {
+      $scope.notify("You must obtain the required info before you can check in.")
       return;
     }
 
@@ -55,17 +71,12 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     }
 
     if ($scope.hacker.status != "confirmed") {
-      console.log('status not confirmed');
+      $scope.notify('Status Not Confirmed')
       return;
     }
 
     if ($scope.hacker.checked_in) {
-      console.log('already checked in');
-      return;
-    }
-
-    if ($scope.requiredInfo) {
-      console.log('you must address the required info before you can check them in');
+      $scope.notify("Already Checked In");
       return;
     }
 
@@ -126,10 +137,10 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   }
 
   $scope.submitNewPerson = function() {
-    console.log($scope.newPerson);
 
     $http.post('/checkin/new', $scope.newPerson).
       success(function(response) {
+        $scope.notify("Success!");
         console.log('created');
         $scope.newPerson = null;
       }).

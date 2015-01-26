@@ -19,7 +19,6 @@ h4 {
   margin-right: 10px;
 }
 
-
 .inline-flex {
   /* @Chen - currently the .flex class is using justify - It'd be nice to have our own flex class for browser compatibility but we should keep it modular - flex should just handle flex.*/
   display: -webkit-box;

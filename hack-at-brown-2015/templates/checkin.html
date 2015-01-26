@@ -56,6 +56,9 @@ Check-in - Hack@Brown 2015
             </div>
           </form>
         </section>
+        <section id="notifications" ng-show="notification">
+          <h2>%%notification%%</h2>
+        </section>
         <section id="required-info" ng-show="requiredInfo">
           <h4>The following information is required before checkin:</h4>
           <div ng-repeat='(required, description) in requiredInfo'>
@@ -102,7 +105,6 @@ Check-in - Hack@Brown 2015
             <div class="admit_status %%hacker.status%%">
               <span>%%hacker.status%%</span>
             </div>
-
             <div class="checkin field">
               <input id="checkin-button" type="submit" value="Check In" class="ui teal button" ng-click="checkinHacker()">
             </div>
