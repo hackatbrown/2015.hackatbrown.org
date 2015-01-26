@@ -18,6 +18,53 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: admitted_email_sent_date
+  - name: dietary_restrictions
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: first_hackathon
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: hardware_hack
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: rmax
+  - name: rtotal
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: school
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: shirt_gen
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: shirt_gen
+  - name: shirt_size
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: state
+
+- kind: Hacker
+  properties:
+  - name: admitted_email_sent_date
+  - name: year
+
+- kind: Hacker
+  properties:
   - name: checked_in
   - name: email
   - name: name
@@ -34,5 +81,27 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: hardware_hack
+  - name: admitted_email_sent_date
+
+- kind: Hacker
+  properties:
+  - name: rmax
+  - name: rtotal
+
+- kind: Hacker
+  properties:
+  - name: rsvpd
+  - name: checked_in
+  - name: email
+  - name: name
+
+- kind: Hacker
+  properties:
   - name: shirt_gen
   - name: shirt_size
+
+- kind: Hacker
+  properties:
+  - name: year
+  - name: admitted_email_sent_date

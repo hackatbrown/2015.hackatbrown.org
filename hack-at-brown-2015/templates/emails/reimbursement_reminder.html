@@ -1,0 +1,29 @@
+{% extends "emails/base.html" %}
+{% block content %}
+
+<!-- Subject: Last day for Travel Reimbursements -->
+<h1>Last day for Travel Reimbursements</h1>
+
+<p>
+    Hi {{name}},
+</p>
+<p>
+    We noticed that even though you've confirmed your attendance at Hack@Brown, you haven't requested a reimbursement yet! Today is the last day we can guarantee you more than $30 in reimbursements (your maximum allocated is ${{rmax}}), so make sure the information on the reimbursements tab of your profile is correct and <strong>all your travel receipts are uploaded by today.</strong>
+</p>
+
+<p>
+    As a reminder, if you're booking flights to Hack@Brown, we recommend you arrive Friday (February 6th) and depart Sunday (February 8th). The best airport to fly into is either Boston Logan Airport (BOS) or T.F. Green Airport (PVD). If you arrive Friday, don't worry -- we'll be providing you housing for the night!
+</p>
+
+<a href='http://hackatbrown.org/secret/{{ hacker.secret }}#reimbursements' class='cta-button'>Request Reimbursements</a>
+
+<p>
+    We look forward to seeing you in Providence, RI soon!
+</p>
+
+<p> 
+Best,<br/> 
+Team Hack@Brown 
+</p>
+
+{% endblock %}

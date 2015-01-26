@@ -27,54 +27,81 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.showManualStatus = false;
   $scope.manualStatus = "";
   $scope.manualEmails = "";
-
-  $scope.signupCount = 0;
-  $scope.registerCount = 0;
-  $scope.acceptedCount = 0;
-  $scope.waitlistCount = 0;
-  $scope.declinedCount = 0;
+  $scope.lookupResult = {found : [], notFound : []};
 
   $scope.showBreakdowns = false;
   $scope.displayEmail = false;
+  $scope.countData = {"Signed Up" : 0, "Registered" : 0, "Accepted" : 0, "Confirmed" : 0, "Waitlisted" : 0, "Declined" : 0};
 
   $scope.charts = [
     {
       name : 'No Chart',
       value : 'none',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     },
     {
       name : 'By School',
       value : 'school',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Shirt Size',
       value : 'shirt',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Dietary Restrictions',
       value : 'diet',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Gender',
       value : 'shirt_gen',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Year',
       value : 'year',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'First Hackathon',
       value : 'first_hackathon',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'Hardware Hackers',
       value : 'hardware_hack',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
     }, {
       name : 'By Status',
       value : 'h_status',
-      hc_type : 'pie'
+      hc_type : {
+        type : 'pie'
+      }
+    }, {
+      name : 'By State',
+      value : 'state',
+      hc_type : {
+        type : 'pie'
+      }
+    }, {
+      name : "Reimbursement Budget",
+      value : 'reimbursements',
+      hc_type : {
+        polar : false,
+        type : 'bar',
+      }
     }];
   $scope.currentChart = $scope.charts[0];
   $scope.showChartStatus = false;
@@ -86,21 +113,17 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
 
   $scope.getStats = function () {
 
-    $http({method: 'GET', url: '/__get_dash_stats'}).
+    $http({method: 'GET', url: '/dashboard/__get_dash_stats'}).
         success(function(data, status) {
+          console.log(data);
+          $scope.countData = data;
           $scope.status = status;
-          $scope.signupCount = data.signup_count;
-          $scope.registerCount = data.registered_count;
-          $scope.acceptedCount = data.accepted_count;
-          $scope.waitlistCount = data.waitlist_count;
-          $scope.declinedCount = data.declined_count;
         }).
         error(function(data, status) {
           console.log('failed to hit __get_dash_stats')
           $scope.data = data || "Request failed";
           $scope.status = status;
       });
-        //return $scope.signup_count;
   };
 
   $scope.showEmail = function(){
@@ -111,16 +134,22 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       console.log("Failed")
       return "Failed";
     };
+    var check = true;
     var request = {recipient: $scope.emailRecipient, subject: $scope.emailSubject, emailName:$scope.emailName }
     if (display === true){
           request.display = true;
         }
+    else
+       check = confirm("Are you sure you want to actually send emails?");
+    if(!check)
+      return;
     $http.post('/__send_email', request).
     success(function(data, status, headers, config) {
       if(data.success = true){
-        console.log("sent emails!");
+        console.log("sent email request!");
         $scope.emailStatus = "Sent Email to " + $scope.emailRecipient + "!";
         if (data.html) {
+          $scope.emailStatus = "Displaying Email Below";
           //$scope.displayEmail = $sce.trustAsHtml(data.html);
           $scope.displayEmail = true;
           var iframe = document.getElementById("email-display")
@@ -155,8 +184,11 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
     if (emails == []) {
       return;
     };
+    check = confirm("Are you sure you want change hacker status?");
+    if(!check)
+      return;
 
-    $http.post('/__manual', {change: action, emails: emails}).
+    $http.post('/dashboard/__manual', {change: action, emails: emails}).
     success(function(data, status, headers, config) {
         $scope.manualStatus = action + " Success!";
         $scope.showManualStatus = true;
@@ -171,9 +203,30 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
   $scope.lookupHacker = function(){
     $scope.manualEmails = $scope.manualEmails.toLowerCase();
     emails = $scope.manualEmails.trim().replace(/\s+/g, '');
-    $http({method: 'GET', url: '/__lookup_hacker/' + emails}).
+
+    if (emails) {
+      if (emails == _.pluck($scope.lookupResult.found, 'email')) {
+        emails = emails.replace(/(hacker_)(\d+)(@.+)/, function(full, a, b, c) { return a + (Number(b) + 1) + c;
+        });
+      }
+      data = emails;
+    } else {
+      data = "feeling_lucky";
+    }
+
+    $http({method: 'GET', url: '/dashboard/__lookup_hacker/' + data}).
         success(function(data) {
           $scope.lookupResult = data;
+          $scope.manualEmails = _.pluck(data.found, 'email').join();
+          $scope.manualEmails += _.map(data.notFound, function(email) {
+            var emailArray = email.split('@');
+            if (emailArray[1] == 'another.edu') {
+              emailArray[1] = 'brown.edu';
+            } else if (emailArray[1] == 'brown.edu') {
+              emailArray[1] = 'another.edu';
+            }
+            return emailArray.join("@");
+          }).join();
         }).
         error(function(data) {
           $scope.manualStatus = data;
@@ -181,25 +234,18 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
         });
   };
 
-
   $scope.getBreakdowns = function(){
     $scope.showBreakdowns = !$scope.showBreakdowns;
     if ($scope.school){
       return;
     }
-    $http({method: 'GET', url: '/__breakdown/' + "all"}).
+    var url = $scope.applyFilter('/dashboard/__breakdown/' + "all");
+    $http({method: 'GET', url: url}).
         success(function(data, status) {
 
 
           if (data != "null") {
-            $scope.school = data.school;
-            $scope.shirt = data.shirt;
-            $scope.hardware_hack = data.hardware_hack;
-            $scope.first_hackathon = data.first_hackathon;
-            $scope.diet = data.diet;
-            $scope.years = data.year;
-            $scope.shirt_gen = data.shirt_gen
-            $scope.h_status = data.h_status
+            $scope.breakdownData = data;
           }
 
         }).
@@ -210,34 +256,71 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
       });
   }
 
+  $scope.applyFilter = function(urlString) {
+    var $accepted = $('#accepted');
+    if ($accepted.prop('checked')) {
+      urlString += '/accepted';
+    }
+    console.log(urlString);
+    return urlString;
+  }
+
   $scope.populateCharts = function() {
     if ($scope.currentChart.value == "none") {
-      $('#chart_1').toggle(false);
+      $('#chart').toggle(false);
+      $scope.showChartStatus = false;
       return;
     }
+    var url =  $scope.applyFilter('/dashboard/__breakdown/' + $scope.currentChart.value);
 
-    $http({method: 'GET', url: '/__breakdown/' + $scope.currentChart.value}).
+    $http({method: 'GET', url: url}).
         success(function(data, status) {
           $scope.showChartStatus = (data == "null");
           $scope.chartStatus = (data == "null") ? "Could not load chart data" : "";
-          $('#chart_1').toggle(data != "null");
-
-          if (data != "null") {
-            var series = [];
-            $.each(data, function(key, value) {
-              series.push({"name" : key, "y": value});
-            });
-            $('#chart_1').highcharts({
-                  title : {
-                    text : $scope.currentChart.name
-                  },
-                  series: [{
-                      type : $scope.currentChart.hc_type,
-                      name: 'Hackers',
-                      data: series
-                  }]
-                });
+          $('#chart').toggle(data != "null");
+          if (data == "null") {
+            return;
           }
+
+          var dictToSeriesData = function(obj) {
+            return _.map(obj, function(v, k) { return {"name" : k, "y": v};});
+          }
+
+          var series;
+          var tooltip = {};
+
+          if ($scope.currentChart.value == "reimbursements") {
+            $('#accepted').prop('checked', true);
+            tooltip = {
+              shared: true,
+              pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+            };
+            series = _.map(data, function(series) {
+              series.data = dictToSeriesData(series.data);
+              return series;
+            });
+            var sum = function(memo, pt) { return memo + pt.y};
+            $scope.showChartStatus = true;
+            $scope.chartStatus = "Total Allocated: $" + _.reduce(series[0].data, sum, 0) + " Total Spent: $" + _.reduce(series[1].data, sum, 0);
+
+          } else {
+            series = [{name : 'Hackers', data : dictToSeriesData(data)}];
+          }
+
+          $('#chart').highcharts({
+                chart :  $scope.currentChart.hc_type,
+                title : {
+                  text : $scope.currentChart.name
+                },
+                xAxis : {
+                  categories : []
+                },
+                yAxis : {
+                  min : 0
+                },
+                tooltip : tooltip,
+                series: series
+              });
         }).
         error(function(data, status) {
           $scope.data = data || "Request failed";

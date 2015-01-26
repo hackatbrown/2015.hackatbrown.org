@@ -1,3 +1,10 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.modal > .content > .description {
+    font-weight: 300;
+}
+
+.ui.modal .actions>.button {
+    margin-left: inherit;
+}

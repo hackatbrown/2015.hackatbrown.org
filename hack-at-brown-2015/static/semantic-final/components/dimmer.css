@@ -29,7 +29,7 @@
   vertical-align: middle;
   background: rgba(0, 0, 0, 0.85);
   opacity: 0;
-  line-height: 100%;
+  line-height: 1.33em;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   -webkit-animation-duration: 0.5s;
@@ -97,8 +97,8 @@
 
 .ui.page.dimmer {
   position: fixed;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
+  -webkit-transform-style: '';
+          transform-style: '';
   -webkit-perspective: 2000px;
           perspective: 2000px;
   -webkit-transform-origin: center center;

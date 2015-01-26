@@ -15,13 +15,6 @@
              Page
 *******************************/
 
-
-/* UI requires Border-Box */
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
 html,
 body {
   height: 100%;
@@ -36,7 +29,7 @@ body {
   background: #ffffff;
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   font-size: 100%;
-  line-height: 100%;
+  line-height: 1.33em;
   color: #404040;
   font-smoothing: antialiased;
 }
@@ -53,7 +46,8 @@ h4,
 h5 {
   font-family: 'Brown', Arial, Helvetica, sans-serif;
   line-height: 1.33em;
-  margin: 1em 0em 1rem;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
   font-weight: bold;
   padding: 0em;
 }
@@ -81,7 +75,7 @@ h5 {
 
 p {
   margin: 0em 0em 1em;
-  line-height: 100%;
+  line-height: 1.33em;
 }
 p:first-child {
   margin-top: 0em;
@@ -108,15 +102,15 @@ a:hover {
 *******************************/
 
 ::-webkit-selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 ::-moz-selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 ::selection {
-  background-color: rgba(255, 255, 160, 0.4);
+  background-color: rgba(200, 200, 200, 0.2);
   color: #404040;
 }
 
@@ -125,9 +119,6 @@ a:hover {
         Global Overrides
 *******************************/
 
-body {
-  line-height: normal;
-}
 
 
 /*******************************
@@ -236,20 +227,28 @@ footer .social-links {
 /*Admission Status Box - TODO Put this in a more sensical place*/
 .admit_status {
   background-color: #404040;
-  padding: .5em;
-  padding-top: .1em;
-  padding-bottom: .15em;
+  padding: 0 .5em;
+  line-height: 48px;
   display: inline-block;
   color: white;
   font-size: 2rem;
   text-transform: uppercase;
+  margin-right: .25em;
+  margin-bottom: 30px;
+  -webkit-transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1), width 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: box-shadow 0.3s cubic-bezier(0.55, 0, 0.1, 1), color 0.3s cubic-bezier(0.55, 0, 0.1, 1), width 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 .admit_status.pending {
   background-color: #1b8eb9;
 }
-.admit_status.accepted,
+.admit_status.accepted {
+  background: none;
+  box-shadow: 0 0 0 2px #26a59f inset;
+  color: #26a59f;
+}
 .admit_status.confirmed {
-  background-color: #26a59f;
+  background: none;
+  box-shadow: 0 -60px 0 2px #26a59f inset;
 }
 .admit_status.checked.in {
   background-color: #ef5d93;
@@ -259,4 +258,93 @@ footer .social-links {
 }
 .admit_status.not-accepted {
   background-color: #404040;
+}
+.ui.rsvp.button {
+  line-height: 48px !important;
+  height: 48px !important;
+  margin-bottom: 15px;
+  font-size: 16px;
+  margin-right: 0;
+}
+.message p {
+  font-weight: 300;
+}
+.money {
+  color: #26a59f !important;
+}
+.money.negative {
+  color: #d95c5c !important;
+}
+.trigrid {
+  background-image: url(/static/img/svgtriangles/trigrid-tile-5pct.svg);
+  background-size: 107.2px 120px;
+  background-position: center top;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+}
+.lightgrey {
+  background-color: #f0f0f0;
+}
+.panel {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+.panel.white {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.panel.grey {
+  background-color: rgba(145, 143, 140, 0.05);
+}
+.panel.condensed-top {
+  padding-top: 30px;
+}
+.panel.condensed-bottom {
+  padding-bottom: 30px;
+}
+.panel.hero p {
+  font-size: 1.3em;
+  font-weight: 300;
+}
+.panes {
+  -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+          transition: transform 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+  position: relative;
+  width: 300%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: auto;
+  left: 0;
+  top: 0;
+}
+.panes .pane {
+  display: block;
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom: 5%;
+}
+.pane.white {
+  background-color: white;
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

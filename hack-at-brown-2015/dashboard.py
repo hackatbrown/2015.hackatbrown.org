@@ -9,29 +9,44 @@ from hacker_page import computeStatus
 from background_work import waitlist_hacker
 from google.appengine.api import memcache
 import logging
+from config import envIsDev, envIsQA
+import itertools
+from google.appengine.ext import ndb
+from google.appengine.api import users
+from config import onTeam, isAdmin
+import deletedHacker
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write(template("dashboard.html"))
+
+        if not onTeam():
+            logging.info("Not authorized")
+            return self.redirect('/')
+
+        isQA = envIsQA()
+        isDev = envIsDev()
+
+        self.response.write(template("dashboard.html", {"envIsDev" : isDev, "isQA" : isQA, "admin" : isAdmin(), "onTeam" : onTeam(), "logout" : users.create_logout_url('/')}))
 
 class ManualRegistrationHandler(webapp2.RequestHandler):
     def post(self):
+        if not isAdmin(): return self.redirect('/')
         parsed_request = json.loads(self.request.body) # Angular apparently only sends json as text not as 'JSON'
         emails = parsed_request.get('emails')
         for address in emails:
             hacker = Hacker.query(Hacker.email == address).fetch()
             if hacker:
                 for h in hacker: # should only be one
-                    if parsed_request.get('change') == "Register":
+                    if parsed_request.get('change') == "Accept":
                         if h.admitted_email_sent_date == None:
                             accept_hacker(h)
 
                     if parsed_request.get('change') == "Remove":
-                        if h.admitted_email_sent_date == None:
-                            h.key.delete()
+                        deletedHacker.createDeletedHacker(h, "manual")
+                        h.key.delete()
 
                     if parsed_request.get('change') == 'Waitlist':
                         if h.admitted_email_sent_date == None:
@@ -42,19 +57,34 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
 class DashboardBackgroundHandler(webapp2.RequestHandler):
   def get(self):
     data = {}
-    data['signup_count'] = EmailListEntry.query().count()
-    data['registered_count'] = Hacker.query().count()
-    data['accepted_count'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
-    data['waitlist_count'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
-    data['declined_count'] = 0
+    data['Signed Up'] = EmailListEntry.query().count()
+    data['Registered'] = Hacker.query().count()
+    data['Accepted'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
+    data['Confirmed'] = Hacker.query(Hacker.rsvpd == True).count()
+    data['Waitlisted'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
+    data['Declined'] = deletedHacker.DeletedHacker.query(deletedHacker.DeletedHacker.admitted_email_sent_date != None).count()
 
     self.response.write(json.dumps(data))
 
+class RankingDashHandler(webapp2.RequestHandler):
+  def get(self):
+    if not isAdmin(): return self.redirect('/')
+    self.response.write(template("ranking.html"))
+
+
 class LookupHackerHandler(webapp2.RequestHandler):
     def get(self, emails):
+        response = {'found' : [], 'notFound' : []}
+
+        if (emails == 'feeling_lucky'):
+            #I'm feeling lucky!
+            luckyHacker = Hacker.query().get()
+            response['found'].append({'email': luckyHacker.email, 'secret' : luckyHacker.secret})
+            return self.response.write(json.dumps(response))
+
         emails = emails.split(',')
 
-        response = {'found' : [], 'notFound' : []}
+
 
         for email in emails:
             hacker = Hacker.query(Hacker.email == email).fetch(projection=Hacker.secret)
@@ -65,99 +95,108 @@ class LookupHackerHandler(webapp2.RequestHandler):
 
         self.response.write(json.dumps(response))
 
-class SendEmail(webapp2.RequestHandler):
-  def post(self):
-    parsed_request = json.loads(self.request.body)
-    subject = parsed_request.get("subject")
-    email_name = parsed_request.get("emailName")
-    recipient = parsed_request.get("recipient")
-    template_hacker = Hacker.query(Hacker.email == recipient).fetch()[0]
-    template_name = template_hacker.name.split(" ")[0]
-
-    html = template("emails/" + email_name + ".html", {"hacker": template_hacker, "name": template_name})
-    try:
-        if parsed_request.get("display"):
-            self.response.write(json.dumps({"success": True, "html": html }))
-            return
-    except Exception, e:
-        raise e
-    send_to = [recipient]
-    # if parsed_request.get("recipients") == "ALL":
-    #     send_to = [hacker.email for hacker in Hacker.query()]
-    # elif parsed_request.get("recipients") == "WAITLISTED":
-    #     send_to = [hacker.email for hacker in Hacker.query(Hacker.waitlist_email_sent_date != None)]
-    # elif parsed_request.get("recipients") == "ACCEPTED":
-    #     send_to = [hacker.email for hacker in Hacker.query(Hacker.admitted_email_sent_date != None)]
-
-
-    send_email(recipients=send_to, html=html, subject=subject)
-    self.response.write(json.dumps({"success": True, "html":None }))
-
-class ViewBreakdownsHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(template("breakdowns.html"))
-
 class BreakdownHandler(webapp2.RequestHandler):
     def get(self, type):
         data = getBreakdown(type)
         self.response.write(json.dumps(data))
 
-def getBreakdown(type):
+class FilteredBreakdownHandler(webapp2.RequestHandler):
+    def get(self, type, filter):
+        logging.info(type)
+        logging.info(filter)
+        accepted = (filter == "accepted")
+
+        data = getBreakdown(type, accepted)
+        self.response.write(json.dumps(data))
+
+def getBreakdown(type, accepted=False):
     if type == 'all':
-        data = getAll()
+        data = getAll(accepted=accepted)
     elif type == 'diet':
-        data = getByDietaryRestrictions()
+        data = getByDietaryRestrictions(accepted=accepted)
     elif type == 'shirt':
-        data = getByShirtSize()
+        data = getByShirtSize(accepted=accepted)
     elif type == 'h_status':
-        data = getByStatus()
+        data = getByStatus(accepted=accepted)
+    elif type == 'reimbursements':
+        #We only care about reimbursements for accepted hackers
+        data = getReimbursements()
     else:
-        data = getGeneric(type)
+        data = getGeneric(type, accepted=accepted)
 
     return data
 
-def getAllHackers(projection=None):
+def getAllHackers(projection=[], accepted=False):
+    memcachedKey = memcachedBase + str(projection) + str(accepted)
+    hackers = memcache.get(memcachedKey)
+    if hackers is None:
+        if projection:
+            hackers = Hacker.query(projection=projection)
+        else:
+            hackers = Hacker.query()
+        if accepted:
+            hackers = hackers.filter(Hacker.admitted_email_sent_date != None)
 
-    if projection:
-        memcachedKey = memcachedBase + str(projection)
-        hackers = memcache.get(memcachedKey)
-        if hackers is None:
-            hackers = Hacker.query(projection=projection).fetch()
-            if not memcache.set(memcachedKey, hackers, cacheTime):
-                logging.error("Memcache set failed")
-    else:
-        hackers = Hacker.query().fetch()
+        hackers = hackers.fetch()
+        if not memcache.set(memcachedKey, hackers, cacheTime):
+            logging.error("Memcache set failed")
 
     return hackers
 
-def getAll():
-    keys = ["school", "shirt", "hardware_hack", "first_hackathon", "diet",
-    "year", "shirt_gen", "h_status"]
+def getReimbursements():
+    allocated = {'name' : 'Allocated Budget'}
+    spent =  {'name': 'Actual Spending'}
+    allocatedData = {}
+    spentData = {}
+    hackers = getAllHackers(projection=['rmax', 'rtotal'], accepted=True)
+    for hacker in hackers:
+        rmax = hacker.rmax
+        tier = "Tier " + str(rmax)
+        allocatedData[tier] = allocatedData.setdefault(tier, 0) + rmax
+        spentData[tier] = spentData.setdefault(tier, 0) + hacker.rtotal
+
+    allocated['data'] = allocatedData
+    spent['data'] = spentData
+    return [allocated, spent]
+
+def getAll(accepted=False):
+    prettyKeys = {
+    "School" : "school",
+    "Shirt Size" : "shirt",
+    "Hardware Hackers" : "hardware_hack",
+    "First Timers" : "first_hackathon",
+    "Dietary Restrictions" : "diet",
+    "Year" : "year",
+    "Gender" : "shirt_gen",
+    "Admit Status" : "h_status",
+    "State" : "state",
+    }
+
     data = {}
-    for key in keys:
-        data[key] = getBreakdown(key)
+    for pretty, key in prettyKeys.items():
+        data[pretty] = getBreakdown(key, accepted)
 
     return data
 
 
-def getGeneric(value):
-    hackers = getAllHackers([value])
+def getGeneric(value, accepted=False):
+    hackers = getAllHackers([value], accepted)
     data = {}
     for hacker in hackers:
-        key = getattr(hacker, value).title()
+        key = getattr(hacker, value)
         data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByShirtSize():
-    hackers =  getAllHackers(["shirt_gen", "shirt_size"])
+def getByShirtSize(accepted=False):
+    hackers =  getAllHackers(["shirt_gen", "shirt_size"], accepted)
     data = {}
     for hacker in hackers:
         key = hacker.shirt_gen + hacker.shirt_size
         data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByDietaryRestrictions():
-    hackers =  getAllHackers(["dietary_restrictions"])
+def getByDietaryRestrictions(accepted=False):
+    hackers =  getAllHackers(["dietary_restrictions"], accepted)
     data = {}
     for hacker in hackers:
         multikey = hacker.dietary_restrictions
@@ -169,8 +208,8 @@ def getByDietaryRestrictions():
             data[key] = data.setdefault(key, 0) + 1
     return data
 
-def getByStatus():
-    hackers = getAllHackers()
+def getByStatus(accepted=False):
+    hackers = getAllHackers(accepted=accepted)
     data = {}
     for hacker in hackers:
         key = computeStatus(hacker)
@@ -237,3 +276,29 @@ class BreakdownHandler(webapp2.RequestHandler):
         bd_counts_as_tuples = {field: sorted(count_dict.items(), key=lambda (k,v): v, reverse=True) for field, count_dict in bd_counts.iteritems()}
         self.response.write(template('breakdowns.html', {"field_counts": bd_counts_as_tuples}))
 '''
+
+class NormalizeEmailsHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("<form method='POST'><input type='submit' value='Do it'/></form>")
+    def post(self):
+        to_put = []
+        for h in itertools.chain(Hacker.query(), EmailListEntry.query()):
+            if h.email != h.email.lower():
+                h.email = h.email.lower()
+                to_put.append(h)
+        ndb.put_multi(to_put)
+        self.response.write("Well, it seemed to work...")
+
+
+class NormalizeEmailsHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.write("<form method='POST'><input type='submit' value='Do it'/></form>")
+	def post(self):
+		to_put = []
+		for h in itertools.chain(Hacker.query(), EmailListEntry.query()):
+			if h.email != h.email.lower():
+				h.email = h.email.lower()
+				to_put.append(h)
+		ndb.put_multi(to_put)
+		self.response.write("Well, it seemed to work...")
+

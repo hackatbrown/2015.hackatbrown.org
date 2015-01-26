@@ -8,6 +8,7 @@
  * http://opensource.org/licenses/MIT
  *
  */
+@import url(http://fonts.googleapis.com/css?family=Roboto);
 
 
 
@@ -26,8 +27,8 @@
   margin-left: -45%;
   background: #ffffff;
   border: none;
-  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3);
-  border-radius: 0;
+  box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.22);
+  border-radius: 0em;
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
@@ -36,12 +37,12 @@
 }
 .ui.modal > :first-child:not(.icon),
 .ui.modal > .icon:first-child + * {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-top-left-radius: 0em;
+  border-top-right-radius: 0em;
 }
 .ui.modal > :last-child {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0em;
+  border-bottom-right-radius: 0em;
 }
 
 
@@ -77,17 +78,17 @@
 
 .ui.modal > .header {
   display: block;
-  font-family: 'Brown', Arial, Helvetica, sans-serif;
-  background: -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.05)) #ffffff;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.05)) #ffffff;
-  margin: 1em 0em 1rem;
-  padding: 1.2rem 2rem;
+  font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif;
+  background: #ffffff;
+  margin: -webkit-calc(2rem -  0.165em ) 0em 1rem;
+  margin: calc(2rem -  0.165em ) 0em 1rem;
+  padding: 1.7142rem 2rem;
   box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.05);
   font-size: 1.6em;
   line-height: 1.3em;
-  font-weight: bold;
+  font-weight: 400;
   color: rgba(0, 0, 0, 0.85);
-  border-bottom: 1px solid rgba(39, 41, 43, 0.15);
+  border-bottom: none;
 }
 
 /*--------------
@@ -98,9 +99,9 @@
   display: table;
   table-layout: fixed;
   width: 100%;
-  font-size: 1em;
+  font-size: 1.3em;
   line-height: 1.4;
-  padding: 2rem;
+  padding: 1rem 2rem 2rem;
   background: #ffffff;
 }
 
@@ -141,10 +142,10 @@
 ---------------*/
 
 .ui.modal .actions {
-  background: #efefef;
+  background: #ffffff;
   padding: 1rem 2rem;
-  border-top: 1px solid rgba(39, 41, 43, 0.15);
-  text-align: right;
+  border-top: none;
+  text-align: left;
 }
 .ui.modal .actions > .button {
   margin-left: 0.75em;
@@ -193,7 +194,7 @@
     padding-right: 2.25rem;
   }
   .ui.modal > .close {
-    top: 99.575rem;
+    top: 1.4192rem;
     right: 1rem;
     color: #404040;
   }
@@ -332,15 +333,9 @@
   padding-right: 2.25rem;
 }
 .ui.fullscreen.modal > .close {
-  top: 99.575rem;
+  top: 1.4192rem;
   right: 1rem;
   color: #404040;
-}
-@media only screen and (max-width: 767px) {
-  .ui.fullscreen.modal {
-    width: auto !important;
-    margin: 1em !important;
-  }
 }
 
 /*--------------
@@ -422,15 +417,19 @@
     margin: 0em 0em 0em -25.2%;
   }
 }
-
-
-/*******************************
-         Theme Overrides
-*******************************/
-
+.ui.modal .header {
+  font-family: "Roboto", Arial, Sans-serif !important;
+  font-weight: 400 !important;
+}
 
 
 /*******************************
          Site Overrides
 *******************************/
 
+.ui.modal > .content > .description {
+  font-weight: 300;
+}
+.ui.modal .actions > .button {
+  margin-left: inherit;
+}

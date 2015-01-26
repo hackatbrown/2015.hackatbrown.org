@@ -7,6 +7,8 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-sanitize.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 <script src='/static/js/dashboard.js'></script>
 {% endblock %}
 
@@ -14,99 +16,61 @@
 {% block content %}
 <div id='header' class='vertically-centered vertically-centered-content'>
   <img src='/static/img/logo.png' width="134" height="144"/>
-  <h1>Hack@Brown Dashboard</h1>
+  <h1>Hack@Brown {% if envIsDev %}Dev-{% endif %}{% if isQA %}QA-{% endif %}Dashboard</h1>
 </div>
 
 <div ng-app='dashApp' ng-init="getStats()" ng-controller="MainCtrl" >
-  <div id='menu_1st_row'  class='menu'  >
-      <div>Hackers Signed Up: <span><h2>%%signupCount%%</h2></span></div>
-      <div>Hackers Registered: <span><h2>%%registerCount%%</h2></span></div>
-      <br>
-      <div><span>Accepted: <h2>%%acceptedCount%%</h2></span></div>
-      <div>Waitedlisted: <span><h2>%%waitlistCount%%</h2></span></div>
-      <div>Declined: <span><h2>%%declinedCount%%</h2></span></div>
-</div>
-<br>
-<div><h2 class='option'>Breakdown</h2></div>
-<div id='charts'>
-  <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
-  </select>
-    <div id='chart_1'></div>
-    <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
-</div>
-<div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
-  <div id="breakdowns" ng-show='showBreakdowns'>
-
-    <h1 style=""> Schools </h1>
-    <div ng-repeat="(key, value) in school">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Year </h1>
-    <div ng-repeat="(key, value) in years">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Dietary Restrictions </h1>
-    <div ng-repeat="(key, value) in diet">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Shirt Sizes </h1>
-    <div ng-repeat="(key, value) in shirt">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Hardware Hack? </h1>
-    <div ng-repeat="(key, value) in hardware_hack">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> First Hackathon? </h1>
-    <div ng-repeat="(key, value) in first_hackathon">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Gender </h1>
-    <div ng-repeat="(key, value) in shirt_gen">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-    <br>
-    <h1 style=""> Status </h1>
-    <div ng-repeat="(key, value) in h_status">
-      <span><b>%%key%%:</b> %%value%%</span>
-    </div>
-
+  <div id='menu_1st_row'  class='menu'>
+      <div ng-repeat="(k, v) in countData">
+        %%k%%: <span><h2>%%v%% </h2></span>
+      </div>
   </div>
-
+  <br>
+  <div class="panel-section" id="breakdowns">
+    <h2 class='option'>Breakdown</h2>
+    <div id='breakdown-charts'>
+    <div class="breakdown controls">
+        <select ng-model='currentChart' ng-change='populateCharts()' ng-options="chart.name for chart in charts" id='chart_types'>
+        </select>
+        <div class="ui toggle checkbox">
+          <input id="accepted" type="checkbox" name="public">
+          <label>Accepted Only</label>
+        </div>
+      </div>
+        <div id='chart'></div>
+        <label ng-show='showChartStatus'><b>%%chartStatus%%</b></label>
+    </div>
+    <div ng-click='getBreakdowns()'class='button'> Show Numbers</div>
+      <div id="breakdown-numbers" ng-show='showBreakdowns'>
+      <div ng-repeat="(key, value) in breakdownData">
+        <h1>%%key%%</h1>
+        <div ng-repeat="(k, v) in value">
+          <span><b>%%k%%:</b> %%v%%</span>
+        </div>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
   <div id='menu_2nd_row' class='menu' >
     <div id="downloads" class='panel' >
       <h2 class='option' >Downloads</h2>
       <div class='panel-content'>
-        <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes</div>
-        <div ng-click='downloadAcceptedCSV()'id='csv_accepted_download_button' class='button' > Download Accepted CSV</div>
-        <div ng-click='downloadAllCSV()'id='csv_all_download_button' class='button' > Download All CSV</div>
+        <div ng-click='downloadResumes()'id='resume_download_button' class='button'> Download Resumes (TODO)</div>
+        <a href='/dashboard/csv' download="HAB_all_apps_anon.csv"><div class='button' >Download All CSV</div></a>
+        {% if admin %}
+        <a href='/dashboard/csv?include_personally_identifiable_info=1' download="HAB_all_apps.csv"><div class='button' >Download All CSV <div class='button-subtitle'>Including personal information</div></div></a>
+        {% endif %}
       </div>
     </div>
     <div id="email-panel" class='panel' >
-      <h2 class='option'> Email</h2>
-      <label ng-show='showEmailStatus' style='display: block' ><b>%%emailStatus%%</b></label>
-      <ul ng-init='emailOption = "all"' id='email-options' class='panel-content'>
-        <!-- <li ng-click='emailOption = "all"' ng-class='emailOption == "all" ? "selected" : "unselected"'> All </li>
-        <li ng-click='emailOption = "accepted"' ng-class='emailOption == "accepted" ? "selected" : "unselected"'>Accepted</li>
-        <li ng-click='emailOption = "waitlisted"' ng-class='emailOption == "waitlisted" ? "selected" : "unselected"'>Waitlisted</li> -->
-        <label>Recipient</label>
-        <input ng-model= "emailRecipient" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-      </ul>
-      <div>
-        <label>Subject</label>
-        <input ng-model= "emailSubject" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-        <label>Email name</label>
-        <input ng-model= "emailName" type='text' name='body' style='text-align: center; width: 100%; height: 50'>
-        <!-- <textarea ng-model="emailBody" name='body' style='width: 100%; height: 300px'></textarea> -->
-        <div id="send_email" class="button" ng-click='sendEmail()'> Send Email</div>
-        <div id="show_email" class="button" ng-click='showEmail()'> Show Email</div>
-      </div>
+      <h2 class='option'> Messages</h2>
+		<p><em>Email and SMS</em></p>
+    {% if admin %}
+		<a href='/dashboard/messages'>Go to messages dashboard</a>
+    {% else %}
+    <span>Off limits for now</span>
+    {% endif %}
     </div>
     <div id="manual-panel" class='panel' >
       <h2 class='option' >Manual</h2>
@@ -115,11 +79,16 @@
         <label>Emails</label>
         <input ng-model= "manualEmails" type='text' name='emails' style='text-align: center; width: 100%; height: 50'>
         <label ng-show='showManualStatus' style='display: block' ><b>%%manualStatus%%</b></label>
-        <div ng-click='changeStatus("Register")' class='button'>Sign Up</div>
+        {% if admin %}
+        <div ng-click='changeStatus("Accept")' class='button'>Accept</div>
         <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
-        <div ng-click='lookupHacker()' class='button'>Lookup</div>
         <a style="text-decoration:none" class='button' href="/admin_checkin">Go To Checkin</a>
+        {% endif %}
+        <div ng-click='lookupHacker()' class='button'>Lookup</div>
+        {% if admin %}
+        <a style="text-decoration:none" class='button' href="/dashboard/ranking">Go To Ranking Dashboard</a>
+        {% endif %}
       </div>
       <div class="found" ng-repeat="hacker in lookupResult.found">
         <span><b>Found <a ng-href="secret/%%hacker.secret%%">%%hacker.email%%</a></b></span><br>
@@ -127,14 +96,30 @@
       <div class="notFound" ng-repeat="hacker in lookupResult.notFound">
         <span><b>Could not find %%hacker%%</b></span><br>
       </div>
-
-
     </div>
   </div>
 
   <iframe id="email-display" ng-show="displayEmail" >
   </iframe>
   <div class="button"  ng-click="displayEmail = null" ng-show="displayEmail">Close Email</div>
-</div>
-
+  <a style="text-decoration:none" class='button' href="/dashboard/db_cleanup">DB Cleanup</a>
+  {% if envIsDev or isQA %}
+  <script>
+    function populateDB() {
+      var number = prompt("How many hackers do you want to generate?", "100");
+      if (number != null) {
+        window.location.href = "/dashboard/__db_populate/" + number;
+      }
+    }
+    function depopulateDB() {
+      var number = prompt("How many hackers to you want to eliminate?", "100");
+      if (number != null) {
+        window.location.href = "/dashboard/__db_depopulate/" + number;
+      }
+    }
+  </script>
+  <a style="text-decoration:none" class='button' onclick="populateDB()">DB Populate</a>
+  <a style="text-decoration:none" class='button' onclick="depopulateDB()">DB Depopulate</a>
+  </div>
+{% endif %}
 {% endblock %}

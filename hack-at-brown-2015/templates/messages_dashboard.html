@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<title>Hack@Brown 2015 — Messages Dashboard</title>
+
+
+<style>
+/* please forgive me */
+#status:empty {
+	display: none;
+}
+#status {
+	width: 80%;
+	margin: auto;
+	padding: 10px;
+	background-color: #f55;
+	font-weight: bold;
+	text-align: center;
+}
+#label {
+	text-transform: uppercase;
+	font-size: 0.9em;
+	letter-spacing: -1px;
+}
+#centered {
+	width: 90%;
+	max-width: 800px;
+	margin: auto;
+}
+#centered > div {
+	padding: 1em;
+}
+
+#message-compose {
+	display: block;
+	width: 100%;
+	height: 400px;
+	margin-top: 0.5em;
+}
+textarea {
+	width: 100%;
+	height: 3em;
+	display: block;
+	margin-top: 0.5em;
+	font-family: monospace;
+}
+textarea[name='email-html'] {
+	height: 6em;
+}
+form > div {
+	margin-bottom: 1em;
+}
+#main-submit {
+	font-size: 1.2em;
+	padding: 4px;
+	display: block;
+	margin: auto;
+}
+.box {
+	border-radius: 4px;
+	background-color: rgba(0,0,0,0.025);
+	padding: 1em;
+}
+[data-show-for-recipient] {
+	font-size: small;
+	font-style: italic;
+	display: none;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div id='centered'>
+	<div>
+		
+		<div id='status'>{% if status %}{{status}}{% endif %}</div>
+		
+		<div id='header'>
+			<h1>Messages</h1>
+		</div>
+		<div id='thread'>
+			<form method='POST' id='send'>
+				<h2>Send a message</h2>
+				<p>
+					<label>Recipient:</label>
+					<select name="audience">
+						<option value=''>None</option>
+						<option value='accepted'>All Accepted Hackers</option>
+						<option value='accepted-non-local'>All Accepted, Non-Local Hackers</option>
+						<option value='accepted-highschool-freshmen'>Accepted Highschool and Freshmen Hackers</option>
+						<option value='registered'>All Registered Hackers</option>
+						<option value='invited-friends'>Unregistered Invited Teammates</option>
+						<option value='mailing-list-unregistered'>Unregistered Mailing List Members</option>
+						<option value='waitlisted'>Waitlisted Hackers</option>
+						<option value='hardware-hackers'>Accepted Prospective Hardware Hackers</option>
+					</select>
+				</p>
+				
+				<p class='box'>
+					<label><input type='checkbox' name='email'/>Email:</label>
+					<input placeholder='Email Subject' name='email-subject'/>
+					<br>
+					<br>
+					<label>Write Email Body Here</label>
+					<textarea name='email-html'><p>email HTML goes here</p></textarea>
+					<span data-show-for-recipient='registered'>{% raw %} {{ {%endraw %} hacker.name {% raw %}}}{% endraw %} will insert the hackers' name in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>
+					<span data-show-for-recipient='invited-friends'>{% raw %} {{ {%endraw %} invited_by.name {% raw %}}}{% endraw %} will insert the name of the person who's invited this person in email body or subject. This works for other Hacker properties as well. This doesn't work in test emails.</span>
+					<br>
+					<label> Or, Select an Email from the Filesystem:</label>
+				<input name="email-name">	
+				</p>
+				
+		
+				<p class='box'>
+					<label><input type='checkbox' name='sms'/>SMS:</label>
+					<textarea name='sms-text'></textarea>
+				</p>
+		
+				<p>
+					<label>Test this message:</label>
+					<input name='test-recipient' placeholder='Email address or phone #'/>
+					<input type='submit' value='Send test message' id='send-test'/>
+				</p>
+				
+				<p>
+					<input type='submit' value="Send Now" id='main-submit'/>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+// disable submit-on-enter
+$('form#send input, form#send select').keypress(function(event) { return event.keyCode != 13; });
+
+$("form#send").submit(function(e) {
+	if (location.hostname != 'localhost' && prompt("This is live. Type 'okay' if you really want to send.") != 'okay') {
+		e.preventDefault();
+		return false;
+	}
+	return true;
+})
+$("#send-test").click(function(e) {
+	e.preventDefault();
+	$.ajax({
+		url: '?test=1',
+		type: 'post',
+		data: $("form#send").serialize(),
+		success: function(result) {
+			$("#status").text(result);
+		},
+		error: function(e) {
+			$("#status").text("Error: " + e.responseText);
+		}
+	})
+})
+$("[name=audience]").change(function(e) {
+	var audience = $(e.target).val();
+	$("[data-show-for-recipient]").hide();
+	$("[data-show-for-recipient='"+audience+"']").show().css({display:'block'});
+})
+</script>
+
+{% endblock %}

@@ -1,29 +1,77 @@
+function fieldInvalid(fieldName) {
+    var $element;
+    var msg;
+    console.log(fieldName);
+    switch (fieldName) {
+        case 'email':
+            msg = "Please enter a valid email address.";
+            console.log("Invalid email");
+            break;
+        case 'name':
+            msg = "Please enter your full name";
+            console.log("Invalid name");
+            break;
+        case 'school':
+            msg = "Please enter your school";
+            console.log("Invalid school");
+            break;
+        case 'year':
+            $element = $("select[name='year']");
+            msg = "Please choose your current year.";
+            console.log("Invalid year");
+            $(".select2-container.drop").addClass("invalid");
+            break;
+        case 'shirt_size':
+            msg = "Please choose a complete shirt size.";
+            $element = $(".shirt_size");
+            break;
+        case 'teammates':
+            msg = "Please make sure all your teammates' emails are valid.";
+            $element = $("#teammates");
+            console.log("Invalid teammate email(s)");
+            break;
+        case 'hardware_hack':
+            msg = "Please indicate whether youre interested in hardware hacking.";
+            $element = $("label[for='hardware_hack']");
+            console.log("Invalid hardware hack");
+            break;
+        case 'first_hackathon':
+            msg = "Please indicate if this will be your first hackathon.";
+            $element = $("label[for='first_hackathon']");
+            console.log("Invalid first hackathon");
+            break;
+        case 'agree':
+            msg = "You must agree to the Code of Conduct before registering."
+            $element = $("#agree");
+            console.log("Invalid agree");
+            break;
+        default:
+            $element = $("input[name='" + fieldName + "']");
+            msg = "Error";
+            break;
+    }
+
+    if ($element) {
+        $element.addClass("invalid");
+        if (msg) {
+            addNag(msg, $element.parent());
+        }
+    }
+}
+
 function validateForm() {
     var validated = true;
 
     // Check if name is filled out
     if (!$("input[name='name']").val()) {
-        $("input[name='name']").addClass("invalid");
-        addNag("Please enter your full name.", $("input[name='name']").parent());
+        fieldInvalid('name');
         validated = false;
-        console.log("Invalid name");
     }
 
     // Check if email is filled out
     if (!validateEmail($(".field input[name='email']").val())) {
-        $(".field input[name='email']").addClass("invalid");
-        addNag("Please enter a valid email address.", $(".field input[name='email']").parent());
+        fieldInvalid('email');
         validated = false;
-        console.log("Invalid email");
-    }
-
-
-    // Check if school is filled out
-    if (!$("input[name='school']").val()) {
-        $("input[name='school']").addClass("invalid");
-        addNag("Please enter your school.", $("input[name='school']").parent());
-        validated = false;
-        console.log("Invalid school");
     }
 
     if (!$("select[name='year']").val()) {
@@ -33,39 +81,47 @@ function validateForm() {
         console.log("Invalid year");
     }
 
-    var shirt_valid = true;
-
-    // Check if they filled out shirt gender & size
-    if (!$("input[name='shirt_gen']:checked").val()) {
-        shirt_valid = false;
+    // Check if school is filled out
+    if (!$("input[name='school']").val()) {
+        fieldInvalid('school');
         validated = false;
-        console.log("Invalid shirt gender");
     }
 
-    if (!$("input[name='shirt_size']:checked").val()) {
-        shirt_valid = false;
+    if (!$("select[name='year']").val()) {
+        fieldInvalid('year');
         validated = false;
-        console.log("Invalid shirt size");
+    }
+
+   var shirt_valid = true;
+
+    // Check if they filled out shirt gender & size
+    if (!($("input[name='shirt_gen']").is(":checked"))) {
+        shirt_valid = false;
+    }
+
+    if (!($("input[name='shirt_size']").is(":checked"))) {
+        shirt_valid = false;
     }
 
     if (!shirt_valid) {
-        addNag("Please choose a complete shirt size.", $("div.shirt_size").parent());
+        fieldInvalid('shirt_size');
+        validated = false;
     }
 
     // Check for valid teammate emails
     var $mates = $("#teammates").val();
-    if ($mates) {
+    if($mates) {
         $mates = $mates.split(",");
         var validEmails = true;
-        $.each($mates, function (index, email) {
+        $.each($mates, function(index, email) {
             if (!validateEmail(email)) {
                 validEmails = false;
             }
         });
 
         if (!validEmails) {
-            console.log("Invalid teammate email(s)");
-            addNag("Please make sure all your teammates' emails are valid.", $("#teammates").parent());
+            fieldInvalid('teammates');
+            validated = false;
         } else {
             $("#teammates").addClass("valid");
         }
@@ -75,16 +131,14 @@ function validateForm() {
 
     // Check if they filled out hardware hack
     if (!$("input[name='hardware_hack']:checked").val()) {
-        addNag("Please indicate whether you're interested in hardware hacking.", $("label[for='hardware_hack']").parent());
+        fieldInvalid('hardware_hack');
         validated = false;
-        console.log("Invalid hardware hack");
     }
 
     // Check if they filled out first time question
     if (!$("input[name='first_hackathon']:checked").val()) {
-        addNag("Please indicate if this will be your first hackathon.", $("label[for='first_hackathon']").parent());
+        fieldInvalid('first_hackathon');
         validated = false;
-        console.log("Invalid first hackathon");
     }
 
     /* // Check for resume
@@ -96,9 +150,8 @@ function validateForm() {
 
     // Check if they agree to the Code of Conduct
     if (!$("#agree").prop('checked')) {
-        addNag("You must agree to the Code of Conduct before registering.", $("#agree").parent());
+        fieldInvalid('agree');
         validated = false;
-        console.log("Invalid agree");
     }
 
     return validated;
@@ -142,33 +195,52 @@ $(document).ready(function () {
     H5F.setup(document.getElementById("registration_form"), {
         onSubmit: function (e) {
             e.preventDefault();
-            if (validateForm()) {
-                $("#registration_form input[type=submit]").val("Registering you...").attr({
-                    disabled: true
-                });
-                $("#registration_form").ajaxSubmit({
-                    success: function (response) {
-                        //$('#submit_button').removeAttr('disabled');
-                        response = JSON.parse(response)
-                        if (response.success === true) {
-                            $(".splash .double_right").html(response.replace_splash_with_html);
-                            window.location.hash = "";
-                        } else {
-                            $("#registration_form input[type=submit]").val("Email already Registered!").attr({
-                                disabled: false
-                            });
-                        }
-                        return false;
-                    }
-                });
-            } else {
-                $(".errorsPresent").addClass("nag");
-                $('html,body').animate({
-                    scrollTop: 0
-                }, 1000);
+            if (!validateForm()) {
+                indicateFailure();
+                return;
             }
+            $formButton = $("#registration_form input[type=submit]");
+
+            $formButton.val("Registering you...").attr({
+                disabled: true
+            });
+
+            $("#registration_form").ajaxSubmit({
+                success: function (response) {
+                    response = JSON.parse(response)
+
+                    if (response.success === true) {
+                        $(".splash .double_right").html(response.replace_splash_with_html);
+                        window.location.hash = "";
+                        return;
+                    }
+
+                    indicateFailure();
+                    $formButton.removeAttr('disabled');
+
+                    if (response.msg) {
+                        $formButton.val(response.msg);
+                    }
+
+                    if (response.field) {
+                        fieldInvalid(response.field);
+                    }
+                    //We need a new blobstore url for each time we submit the form.
+                    if (response.newURL) {
+                        $('#registration_form').get(0).setAttribute('action', response.newURL);
+                    }
+
+
+                    return false;
+                }
+            });
         }
     });
+
+    function indicateFailure() {
+        $(".errorsPresent").addClass("nag");
+        $('html,body').animate({scrollTop: 0}, 1000);
+    }
 
 
     /* Validation Styling */
@@ -221,12 +293,12 @@ $(document).ready(function () {
         $("table[for='first_hackathon'").addClass("valid");
     });
 
-    // Check for file upload
+        // Check for file upload
     $("input[type='file']").change(function () {
         $(this).addClass("valid");
     });
 
-    // Check for agreement with CoC
+        // Check for agreement with CoC
     $("input[type='checkbox'][name='agree']").click(function () {
         $("label[for='agree']").addClass("valid");
     });
@@ -242,7 +314,8 @@ $(document).ready(function () {
     $("#resume-over").click(function () {
         $("#resume").click();
     });
-    $("#resume").change(function () {
+
+    $("#resume").change(function() {
         if ($("#resume").val()) {
             var $parsed_val = $("#resume").val().split("\\");
             $(".file-name").html($parsed_val[$parsed_val.length - 1]);
@@ -252,7 +325,6 @@ $(document).ready(function () {
             $(".resume-button").removeClass("on");
         }
     });
-
 
     /* On email change & valid, check for university domain */
     function searchUniversities(domain) {
@@ -289,7 +361,7 @@ $(document).ready(function () {
         addCallback: fixSplashHeight,
         inputType: 'url',
     });
-    
+
     trackCondor(linkRepeater);
 
     //select2 dropdown
@@ -329,13 +401,8 @@ $(document).ready(function () {
         dropdownCssClass: "bigdrop"
     });
 
-    //        $("#teammates").on("select2-opening", function(e) {
-    //            e.preventDefault();
-    //        });
 
-
-
-    /* Prevent horizontal scrolling of element into view on focus */
+/* Prevent horizontal scrolling of element into view on focus */
     $(document).on('keydown', ':focus', function (event) {
         if ((event.keyCode || event.which) == 9) {
             //TODO: Generalize and support selecting other kinds of input
@@ -358,4 +425,4 @@ $(document).ready(function () {
     });
 
 
-})
+});

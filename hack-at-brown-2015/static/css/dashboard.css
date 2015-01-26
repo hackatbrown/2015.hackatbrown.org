@@ -23,7 +23,22 @@ h1, h2{
   cursor: pointer;
   display: inline-block;
   margin: 10px;
+  color: black;
 }
+.button-subtitle {
+	font-size: x-small;
+	opacity: 0.7;
+}
+
+.breakdown.controls {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.breakdown.controls > div {
+    margin: 0px 5px;
+}
+
 .menu {
   display: inline-flex;
 }
@@ -31,6 +46,11 @@ h1, h2{
   display: inline-block;
   width: 100%;
   margin : 20px;
+}
+
+.panel-section {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .notFound {
@@ -77,6 +97,7 @@ h1, h2{
 }
 .option {
   border-bottom: 2px solid orange;
+  padding: 5px;
 }
 
 #email-display{

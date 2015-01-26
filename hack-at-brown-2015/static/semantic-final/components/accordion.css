@@ -86,7 +86,7 @@
 }
 .ui.accordion.menu .item .title > .dropdown.icon {
   float: right;
-  margin: 49.5% 0em 0em 1em;
+  margin: 0.165em 0em 0em 1em;
   -webkit-transform: rotate(180deg);
       -ms-transform: rotate(180deg);
           transform: rotate(180deg);
@@ -212,6 +212,14 @@
 .ui.fluid.accordion,
 .ui.fluid.accordion .accordion {
   width: 100%;
+}
+
+/*--------------
+     Inverted
+---------------*/
+
+.ui.inverted.accordion .title:not(.ui) {
+  color: #ffffff;
 }
 
 

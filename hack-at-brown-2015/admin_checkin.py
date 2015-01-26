@@ -4,6 +4,8 @@ import json
 from template import template
 from registration import Hacker
 from google.appengine.api import memcache
+from google.appengine.ext import ndb
+from config import onTeam
 
 cacheTime = 6 * 10
 hackerFormat = ['name', 'email']
@@ -13,19 +15,21 @@ divider = ' - '
 class CheckinPageHandler(webapp2.RequestHandler):
 
     def get(self):
+        if not onTeam(): return self.redirect('/')
         self.response.write(page_response())
 
     def post(self):
+        if not onTeam(): return self.redirect('/')
         nameAndEmail = self.request.get('name/email').split(divider)
-        matches = filter(lambda hacker: hacker.name == nameAndEmail[0] and nameAndEmail[1], getHackersToBeChecked())
-        if len(matches) == 0:
+        hacker = Hacker.query(Hacker.name == nameAndEmail[0] and Hacker.email == nameAndEmail[1]).get()
+        if hacker is None:
             success = False
         else:
             success = True
-            matches[0].checked_in = True
-            matches[0].put()
+            hacker.checked_in = True
+            hacker.put()
 
-        successMsg = "successfully checked in " + nameAndEmail[0]
+        successMsg = "successfully checked in " + hacker.name
         failureMsg = "failed to check in " + nameAndEmail[0]
 
         success = True
@@ -59,9 +63,7 @@ def getHackersToBeChecked():
         logging.debug("Used cache")
         return data
     else:
-        data = Hacker.query(Hacker.rsvpd == True
-                            and Hacker.checked_in != True).fetch(
-            projection=[Hacker.name, Hacker.email])
+        data = Hacker.query(ndb.AND(Hacker.rsvpd == True, Hacker.checked_in != True)).fetch(projection=[Hacker.name, Hacker.email])
         logging.debug("Could not use cache")
         if not memcache.add(toCheckIn, data, cacheTime):
             logging.error('Memcache set failed')

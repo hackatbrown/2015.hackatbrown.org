@@ -5,7 +5,7 @@
 <g>
 	<polygon opacity="0.6" fill="#EF5D93" points="107.2,0 107.2,180 268,90"/>
 	<polygon fill="#EF5D93" points="107.2,120 268,30 268,209"/>
-	<polygon opacity="0.4" fill="#EF5D93" points="268,390 268,90 0,"/>
+	<polygon opacity="0.4" fill="#EF5D93" points="268,390 268,90 0,240"/>
 	<polygon opacity="0.2" fill="#EF5D93" points="107.2,180 107.2,270 187.6,225"/>
 </g>
 </svg>
