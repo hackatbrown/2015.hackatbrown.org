@@ -81,6 +81,11 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: hardware_hack
+  - name: admitted_email_sent_date
+
+- kind: Hacker
+  properties:
   - name: rmax
   - name: rtotal
 
@@ -95,3 +100,8 @@ indexes:
   properties:
   - name: shirt_gen
   - name: shirt_size
+
+- kind: Hacker
+  properties:
+  - name: year
+  - name: admitted_email_sent_date

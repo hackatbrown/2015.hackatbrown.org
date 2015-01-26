@@ -21,8 +21,8 @@ import deletedHacker
 
 
 memcache_expiry = 10 * 60
-hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon', 'phone_number']
-personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
+hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
+personal_info_keys = ['name', 'email', 'teammates', 'links']
 
 def stringValidator(prop, value):
 	cleanValue = value.strip()
@@ -153,12 +153,12 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 			if len(resume_files) > 0:
 					hacker.resume = resume_files[0].key()
 			hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
-			try:
-				email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
-				send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
-				hacker.post_registration_email_sent_date = datetime.datetime.now()
-			except Exception, e:
-				pass
+			# try:
+			# 	email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
+			# 	send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
+			# 	hacker.post_registration_email_sent_date = datetime.datetime.now()
+			# except Exception, e:
+			# 	pass
 			hacker.put()
 			name = hacker.name.title().split(" ")[0] # TODO: make it better
 			confirmation_html = template("post_registration_splash.html", {"name": name, "secret": hacker.secret})
@@ -173,5 +173,7 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
 			#TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
+
+
 
 

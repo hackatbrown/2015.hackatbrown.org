@@ -24,7 +24,7 @@ import datetime
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 
-	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'accepted-highschool-freshmen','hardware-hackers', 'accepted', 'accepted-non-local'], default=None)
 
 	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
@@ -40,17 +40,6 @@ class Message(ndb.Model):
 		# does the actual work of sending
 		emails = [email]
 		assert self.email_subject, "No email subject provided. Is email unchecked?"
-		# if self.audience == 'invited-friends':
-		# 	hacker = Hacker.query(Hacker.email==email).fetch()[0]
-		# 	if hacker.teammates:
-		# 		emails_found = [email.lower() for email in hacker.teammates.split(',')]
-		# 		matching_hackers =  Hacker.query(Hacker.email.IN(emails_found)).fetch()
-		# 		emails_already_registered = [h.email for h in matching_hackers]
-		# 		emails = []
-		# 		for email in emails_found:
-		# 			if email not in emails_already_registered:
-		# 				emails.append(email)
-		# 				template_args["invited_by"] = hacker
 		if self.email_from_template:
 			html = template("emails/" + self.email_html + ".html", template_args)
 		else:
@@ -67,6 +56,10 @@ class Message(ndb.Model):
 	def get_query(self):
 		if self.audience == 'registered':
 			return Hacker.query()
+		elif self.audience == 'accepted':
+			return Hacker.query(Hacker.admitted_email_sent_date != None)
+		elif self.audience == 'accepted-non-local':
+			return Hacker.query(Hacker.admitted_email_sent_date != None)
 		elif self.audience == 'invited-friends':
 			return Hacker.query(Hacker.teammates != None)
 		elif self.audience == 'mailing-list-unregistered':
@@ -74,6 +67,12 @@ class Message(ndb.Model):
 		elif self.audience == 'waitlisted':
 			print "sending waitlisted emails: " + str(Hacker.query(Hacker.admitted_email_sent_date == None).count())
 			return Hacker.query(Hacker.admitted_email_sent_date == None)
+		elif self.audience == 'hardware-hackers':
+			print "sending emails to admitted hardware-hackers: " +  str(Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes').count())
+			return Hacker.query(Hacker.admitted_email_sent_date != None, Hacker.hardware_hack == 'yes')
+		elif self.audience == 'accepted-highschool-freshmen':
+			print "sending emails to accepted highschool and freshman hackers"
+			return Hacker.query(ndb.AND(Hacker.admitted_email_sent_date != None, ndb.OR(Hacker.year == 'highschool', Hacker.year == 'freshman')))
 		elif self.audience == None:
 			return None
 		else:
@@ -133,6 +132,32 @@ class Message(ndb.Model):
 				hacker.waitlist_email_sent_date = datetime.datetime.now()
 				self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				hacker.put()
+			elif self.audience == 'hardware-hackers': #also send directly to hackers
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'accepted':
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'accepted-non-local':
+				hacker = entity
+				if hacker.school == "Brown University" or hacker.school == "Rhode Island School of Design":
+					return
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'accepted-highschool-freshmen':
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
 
 		except Exception as e:
 			print "Failed to send email '{0}' to '{1} because {2}'".format(self.email_subject, entity.email, e)

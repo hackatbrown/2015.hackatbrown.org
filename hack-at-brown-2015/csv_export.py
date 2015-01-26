@@ -2,6 +2,7 @@ import csv
 import webapp2
 from registration import Hacker, hacker_keys, personal_info_keys
 from config import onTeam, isAdmin
+import logging
 
 class CsvExport(webapp2.RequestHandler):
     def get(self):
@@ -15,4 +16,9 @@ class CsvExport(webapp2.RequestHandler):
         writer = csv.DictWriter(self.response, fieldnames=keys)
         writer.writeheader()
         for hacker in Hacker.query():
+            try:
+                writer.writerow(dict_from_hacker(hacker, keys))
+            except UnicodeEncodeError:
+                logging.error('could not encode\n')
+                print(hacker)
             writer.writerow(hacker.asDict(keys))
