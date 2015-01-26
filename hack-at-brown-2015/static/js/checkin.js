@@ -114,6 +114,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       case 'Hacker':
         break;
       case 'Visitor':
+        requiredFields = requiredFields.concat(['org']);
         break;
       case 'Volunteer':
         requiredFields = requiredFields.concat(['role', 'phone']);
