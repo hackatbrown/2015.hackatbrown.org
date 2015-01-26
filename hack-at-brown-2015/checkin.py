@@ -10,12 +10,15 @@ from google.appengine.api import channel
 from google.appengine.api import users
 from config import onTeam
 import hacker_page
+import registration
 import datetime
+import volunteer_reg
 
 cacheTime = 6 * 10
 
 class CheckInSession(ndb.Model):
-    total = ndb.IntegerProperty(default=0)
+    user = ndb.StringProperty(default=None)
+    active = ndb.BooleanProperty(default=True)
 
 class CheckinPageHandler(webapp2.RequestHandler):
 
@@ -41,6 +44,8 @@ class CheckinPageHandler(webapp2.RequestHandler):
         source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
         session = CheckInSession()
+        session.user = user.email()
+
         session.put()
         token = channel.create_channel(session.key.urlsafe())
 
@@ -62,7 +67,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
             hacker.checked_in = True
             hacker.put()
 
-        for session in CheckInSession.query():
+        for session in CheckInSession.query(CheckInSession.active == True):
             channel.send_message(session.key.urlsafe(), str(newTotal))
 
         msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
@@ -91,7 +96,31 @@ class MoreInfoHandler(webapp2.RequestHandler):
 
 class CreateNewPersonHandler(webapp2.RequestHandler):
     def post(self):
-        logging.info(self.request.body)
+        request = json.loads(self.request.body)
+        logging.info(request)
+        kind = request.get('kind')
+        fields = request.get('fields')
+
+        if kind == 'Hacker':
+            hacker = {'email' : request.get('email'), 'name' : request.get('name'), 'checked_in' : True}
+            person = registration.create_hacker(hacker)
+            return self.response.write('success')
+        elif kind == 'Visitor':
+            #TODO
+            # person = Visitor()
+        elif kind == 'Volunteer':
+            person = volunteer_reg.Volunteer()
+        elif kind == 'Company Rep':
+            #TODO
+            # person = Rep()
+        else:
+            return self.response.write('No such kind')
+
+        for field in fields:
+            setattr(person, field, request.get(field))
+
+        person.put()
+
         self.response.write('success')
 
 
@@ -109,16 +138,17 @@ def getHackersToBeChecked():
             logging.error('Memcache set failed')
     return data
 
-class DeleteSessionHandler(webapp2.RequestHandler):
-    #TOOD: - should all be memcached
+class DisconnectSessionHandler(webapp2.RequestHandler):
     def post(self):
         client_id = self.request.get('from')
         if client_id is not None:
-            ndb.Key(urlsafe=client_id).delete()
+            session = ndb.Key(urlsafe=client_id).get()
+            session.active=False
+            session.put()
 
 app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
     ('/checkin/new', CreateNewPersonHandler),
     ('/checkin/info/(.+)', MoreInfoHandler),
-    ('/_ah/channel/disconnected/', DeleteSessionHandler)
+    ('/_ah/channel/disconnected/', DisconnectSessionHandler)
 ], debug=True)

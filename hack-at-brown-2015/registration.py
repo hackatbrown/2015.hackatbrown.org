@@ -124,6 +124,18 @@ def accept_hacker(hacker):
 	hacker.put()
 	memcache.add("admitted:{0}".format(hacker.secret), "1", memcache_expiry)
 
+def create_hacker(dict):
+	hacker = Hacker()
+	for key, value in dict.items():
+		setattr(hacker, key, value)
+
+	if not hacker.email:
+		return None
+
+	hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
+	accept_hacker(hacker)
+
+
 def expire_hacker(hacker):
 	if hacker.rsvpd == True or hacker.admitted_email_sent_date == None:
 			#hacker has rsvp'd or was never accepted

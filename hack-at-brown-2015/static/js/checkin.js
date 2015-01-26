@@ -109,19 +109,18 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $scope.hacker = {};
     $search[0].selectize.clear();
 
-    var requiredFields = ['email'];
+    var requiredFields = ['email', 'name'];
     switch (kind) {
       case 'Hacker':
         break;
       case 'Visitor':
-        requiredFields = requiredFields.concat(['name']);
         break;
       case 'Volunteer':
         //TODO: lock this down.
-        requiredFields = requiredFields.concat(['name', 'team/role', 'phone number']);
+        requiredFields = requiredFields.concat(['role', 'phone']);
         break;
       case 'Company Rep':
-        requiredFields = requiredFields.concat(['name', 'company']);
+        requiredFields = requiredFields.concat(['company']);
         break;
     }
 

@@ -9,7 +9,7 @@ import webapp2
 class Volunteer(ndb.Model):
 	name = ndb.StringProperty()
 	email = ndb.StringProperty()
-	phone_number = ndb.StringProperty()
+	phone = ndb.StringProperty()
 	role = ndb.StringProperty()
 
 
@@ -21,11 +21,11 @@ class VolunteerRegistrationHandler(webapp2.RequestHandler):
 		vol = Volunteer()
 		vol.name = self.request.get("name")
 		vol.email = self.request.get("email")
-		vol.phone_number = self.request.get("phone")
+		vol.phone = self.request.get("phone")
 		vol.role = self.request.get("role")
 
 		vol.put()
-		
+
 		self.redirect("volunteer_confirmation")
 
 
