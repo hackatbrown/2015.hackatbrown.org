@@ -18,7 +18,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   $scope.hacker = {};
 
   $scope.session_checked_in = 0;
-  //TODO: animate counter
   $scope.total_checked_in = initial_total_checked_in;
 
   $scope.requestMoreInfo = function() {
@@ -33,10 +32,10 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
         $scope.missingOptionalInfo = (response.missingOptionalInfo.length > 0) ? response.missingOptionalInfo : null;
 
-        $scope.requiredInfo = (response.requiredInfo.length > 0) ? response.requiredInfo : null;
+        $scope.requiredInfo = (Object.keys(response.requiredInfo).length > 0) ? response.requiredInfo : null;
 
         $scope.reminders = response.reminders;
-        $scope.showStatus = !$scope.requiredInfo
+        $scope.showStatus = !$scope.requiredInfo;
       }).
       error(function(error) {
         console.log('error');
@@ -57,10 +56,16 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
     if ($scope.hacker.status != "confirmed") {
       console.log('status not confirmed');
+      return;
     }
 
     if ($scope.hacker.checked_in) {
       console.log('already checked in');
+      return;
+    }
+
+    if ($scope.requiredInfo) {
+      console.log('you must address the required info before you can check them in');
       return;
     }
 
@@ -83,21 +88,30 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
   $scope.updateTotal = function(newTotal) {
     $scope.$apply(function() {
-      // $scope.total_checked_in = newTotal;
-      $scope.total_checked_in++;
+      $scope.total_checked_in = newTotal;
     });
   }
 
   $scope.createPerson = function(kind) {
+    $scope.missingOptionalInfo = null;
+    $scope.requiredInfo = null;
+    $scope.reminders = null;
+    $scope.showStatus = null;
+    $scope.hacker = {};
+    $search[0].selectize.clear();
+
     var requiredFields = ['email'];
     switch (kind) {
       case 'Hacker':
         break;
+      case 'Visitor':
+        requiredFields = requiredFields.concat(['name']);
+        break;
       case 'Volunteer':
         //TODO: lock this down.
-        requiredFields = requiredFields.concat(['name', 'team/role']);
+        requiredFields = requiredFields.concat(['name', 'team/role', 'phone number']);
         break;
-      case 'Mentor':
+      case 'Company Rep':
         requiredFields = requiredFields.concat(['name', 'company']);
         break;
     }
@@ -105,12 +119,32 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $scope.newPerson = {'kind' : kind, 'fields' : requiredFields};
   }
 
+  $scope.cancelPerson = function() {
+    $scope.$apply(function() {
+      $scope.newPerson = null;
+    });
+  }
+
   $scope.submitNewPerson = function() {
-    console.log('hey');
     console.log($scope.newPerson);
 
+    $http.post('/checkin/new', $scope.newPerson).
+      success(function(response) {
+        console.log('created');
+        $scope.newPerson = null;
+      }).
+      error(function(error) {
+        console.log('error');
+        console.log(error);
+      });
 
-    $scope.newPerson = null;
+
+
+  }
+
+  $scope.requiredHandled = function() {
+    $scope.requiredInfo = null;
+    $scope.showStatus = true;
   }
 
 }]);

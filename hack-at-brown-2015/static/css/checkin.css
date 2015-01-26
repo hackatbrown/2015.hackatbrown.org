@@ -4,6 +4,14 @@
   float: right;
 }
 
+h4 {
+  border-bottom: 1px solid #1b8eb9;
+}
+
+.admit_status {
+  margin-bottom: 0px;
+}
+
 .counter > div {
   width: 10px;
   height: 24px;

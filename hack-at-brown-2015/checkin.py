@@ -38,7 +38,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
         source = map(formatter, Hacker.query().fetch())
 
         #TODO: Remove this Test Data
-        source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Mentor', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
+        source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
         session = CheckInSession()
         session.put()
@@ -80,13 +80,20 @@ class MoreInfoHandler(webapp2.RequestHandler):
         optionalKeys = ['phone_number', 'resume']
         missingOptional = [key for key in optionalKeys if not getattr(hacker, key, None)]
 
-        required = []
-        if hacker.year == "highschool":
-            required += ['parental_waiver']
+        required = {}
+        # if hacker.year == "highschool":
+        required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
 
         defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
 
         self.response.write(json.dumps({'hacker': hackerDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
+
+
+class CreateNewPersonHandler(webapp2.RequestHandler):
+    def post(self):
+        logging.info(self.request.body)
+        self.response.write('success')
+
 
 def getHackersToBeChecked():
     # Cache this value, results don't need to be updated quickly.
@@ -111,6 +118,7 @@ class DeleteSessionHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
+    ('/checkin/new', CreateNewPersonHandler),
     ('/checkin/info/(.+)', MoreInfoHandler),
     ('/_ah/channel/disconnected/', DeleteSessionHandler)
 ], debug=True)

@@ -58,39 +58,23 @@ Check-in - Hack@Brown 2015
         </section>
         <section id="required-info" ng-show="requiredInfo">
           <h4>The following information is required before checkin:</h4>
-          <form class="ui form">
-            <div class="field">
-              <label for="phone_number">
-              Cell Number
-              <span class="optional">(Optional)</span>
-              </label>
-              <div class="ui icon input">
-                <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="(119) 135-6804">
-                <i class="icon"></i>
-              </div>
-            </div>
-          </form>
+          <div ng-repeat='(required, description) in requiredInfo'>
+            <label>%%required%%</label><span class="help-text">%%description%%</span>
+          </div>
+          <div class="requiredHandled field">
+            <input id="required-button" type="submit" value="Proceed" class="ui teal button" ng-click="requiredHandled()">
+          </div>
         </section>
         <section id="missing-optional-info" ng-show="missingOptionalInfo">
           <h4>Some non-required information is missing:</h4>
           <form class="ui form">
-            <div class="field">
-              <label for="phone_number">
-              Cell Number
-              <span class="optional">(Optional)</span>
-              </label>
-              <div class="ui icon input">
-                <input id="phone_number" type="tel" name="phone_number" placeholder="(123) 456-7890" value="(119) 135-6804">
-                <i class="icon"></i>
-              </div>
-            </div>
             <div ng-repeat = "info in missingOptionalInfo">
-              <div>%%info%%</div>
+              <label>%%info%%</label>
             </div>
           </form>
         </section>
         <section id="reminders" ng-show='reminders'>
-          <h4>Reminders</h4>
+          <h4>Reminders:</h4>
           <div class="reminder">
             Give t-shirt and swag bag:
             <br>
@@ -132,31 +116,34 @@ Check-in - Hack@Brown 2015
               <div id="add-hacker" class="ui pink button" ng-click='createPerson("Hacker")'>
                 Add New Hacker
               </div>
-              <div id="add-hacker" class="ui pink button" ng-click='createPerson("Volunteer")'>
+              <div id="add-volunteer" class="ui pink button" ng-click='createPerson("Volunteer")'>
                 Add New Volunteer
               </div>
-              <div id="add-hacker" class="ui pink button" ng-click='createPerson("Mentor")'>
-                Add New Mentor
+              <div id="add-rep" class="ui pink button" ng-click='createPerson("Company Rep")'>
+                Add New Rep
+              </div>
+              <div id="add-visitor" class="ui pink button" ng-click='createPerson("Visitor")'>
+                Add New Visitor
               </div>
             </div>
             <div id="admin-tools" class="ui button">
               Admin Tools
             </div>
           </div>
-          <form class="ui form" ng-show='newPerson'>
+          <form class="ui form" ng-show='newPerson' ng-submit='submitNewPerson()'>
             <label>
               Create %%newPerson.kind%%
             </label>
             <div class="field" ng-repeat='f in newPerson.fields'>
               <div class="ui icon input">
-                <label for="newPerson-%%f.field%%">
+                <label for="newPerson-%%f%%">
                   %%f%%
                 </label>
-                <input id="newPerson-%%f.field%%" type="text" name='%%f.field%%'>
+                <input id="newPerson-%%f%%" ng-model='newPerson[f]' type="text" name='%%f%%'>
                 <i class="icon"></i>
               </div>
             </div>
-            <input type="submit" value="Create %%newPerson.kind%%" class="ui teal button" ng-click='submitNewPerson()'>
+            <input type="submit" value="Create %%newPerson.kind%%" class="ui teal button">
           </form>
         </section>
       </div>
@@ -178,15 +165,14 @@ Check-in - Hack@Brown 2015
   socket.onerror = function() { socket.close() };
   socket.onclose = function() { socket.close(); };
 
-  var $search = $("#search");
-  $search.selectize({
+  var $search = $("#search").selectize({
     onDropdownOpen: slideOut,
     onDropdownClose: slideIn,
     options: source,
     optgroups: [
       {id: 'Hacker', name: 'Hackers'},
       {id: 'Volunteer', name: 'Volunteers'},
-      {id: 'Mentor', name: 'Mentors'}
+      {id: 'Company Rep', name: 'Company Reps'}
     ],
     render: {
       item: function(item, escape) {
@@ -209,11 +195,12 @@ Check-in - Hack@Brown 2015
     optgroupField: 'kind',
     optgroupLabelField: 'name',
     optgroupValueField: 'id',
-    optgroupOrder: ['Hacker', 'Volunteer', 'Mentor'],
+    optgroupOrder: ['Hacker', 'Volunteer', 'Company Rep'],
     searchField: ['name'],
     plugins: ['optgroup_columns'],
     maxItems: 1,
   });
+
 
   $('.selectize-input').on('keyup', function(event) {
     if (event.which == 13) {
@@ -221,6 +208,11 @@ Check-in - Hack@Brown 2015
       //TODO - fires twice on select - kinda ugly rn
     }
   });
+
+  $('.selectize-input > input').focus(function(event) {
+      angular.element($('#scope')).scope().cancelPerson();
+  });
+
 
 </script>
 
