@@ -17,8 +17,7 @@ class CsvExport(webapp2.RequestHandler):
         writer.writeheader()
         for hacker in Hacker.query():
             try:
-                writer.writerow(dict_from_hacker(hacker, keys))
+                writer.writerow(hacker.asDict(keys))
             except UnicodeEncodeError:
                 logging.error('could not encode\n')
                 print(hacker)
-            writer.writerow(hacker.asDict(keys))
