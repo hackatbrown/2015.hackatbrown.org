@@ -1,13 +1,12 @@
-<html>
-	<head>
-		<title>H@B Volunteer</title>
-	</head>
+{% extends "centered.html" %}
 
-	<body>
-		<h1>
-		Thanks for Volunteering!
-		</h1>
-		<a href="volunteer_registration">Register another volunteer</a>
-	</body>
 
-</html>
+{% block head %}
+{{ super() }}
+<title>H@B Volunteer</title>
+{% endblock %}
+
+{% block centered_content %}
+<h1>Thanks for Volunteering!</h1><br><br>
+<a href="/dashboard">Back to Dashboard</a>
+{% endblock %}

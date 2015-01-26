@@ -1,24 +1,46 @@
-<html>
-	<head>
-		<title>H@B Volunteer</title>
-	</head>
+{% extends "centered.html" %}
 
-	<body>
-		<form method="POST" action="volunteer_registration">
-			Name:<br>
-			<input type="text" name="name">
-			<br>
-			e-mail:<br>
-			<input type="text" name="email">
-			<br>
-			Phone number:<br>
-			<input type="text" name="phone">
-			<br>
-			Role:<br>
-			<input type="text" name="role">
-			<br><br>
-			<input type="submit" value="Submit">
-		</form>
-	</body>
+{% block head %}
+{{ super() }}
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<title>H@B Volunteer</title>
+{% endblock %}
 
-</html>
+{% block centered_content %}
+<style>
+label {
+  text-transform: uppercase;
+  color: #1b8eb9;
+  font-weight: 300;
+  font-size: .8em;
+}
+</style>
+
+	<img src='/static/img/logo.png'/><br>
+	<h2>Volunteer Sign-Up</h2><br>
+
+	<form method="POST" action="volunteer_registration" class="ui form">
+		<div class="ui input">
+			<input type="text" name="name" placeholder="Josiah Carberry" required>
+			<label>name</label><br>
+		</div><br>
+		
+		<div class="ui input">
+			<input type="text" name="email" placeholder="example@place.com" pattern="(.+)@(.+).([a-zA-Z]+)" required>
+			<label>email</label><br>
+		</div><br>
+		
+		<div class="ui input">
+			<input type="text" name="phone" placeholder="123.456.7890" pattern="\d{3}\D*\d{3}\D*\d{4}" required>
+			<label>phone number</label><br>
+		</div><br>
+		
+		<div class="ui input">
+			<input type="text" name="role" placeholder="Logistics" required>
+			<label>role</label><br>
+		</div><br><br>
+		
+		<input type="submit" value="Submit" class="ui button">
+	</form>
+{% endblock %}
+
