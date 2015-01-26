@@ -184,7 +184,7 @@ a:active {
 }
 .title {
     color: #EF5D93;
-    font-size: 3em;
+    font-size: 4em;
     font-weight: bold;
     margin: 0 auto;
     margin-top: 3%;
@@ -192,6 +192,10 @@ a:active {
 }
 .title>span {
     margin-left: 10px;
+}
+.sellout {
+    color: #918f8c !important;
+    font-weight: 300;
 }
 .hr {
     margin: 0 auto;
@@ -468,7 +472,7 @@ section .background > .right {
 
 .sponsor-row img {
     height: auto;
-    max-height: 52px;
+    max-height: 47px;
     max-width: 100%;
     margin: 25px 0px;
     vertical-align: middle;
@@ -485,19 +489,39 @@ section .background > .right {
     max-height: 80px;
 }
 
-#akamai {
-    max-height: 75px;
+.sponsor-row.giga img {
+    max-height: 52px;
+}
+
+#akamai, #tripadvisor {
+    max-height: 80px;
+}
+
+#facebook {
+    max-height: 45px;
 }
 
 #uber {
     max-height: 30px;
 }
 
-#thalmic-labs {
-    max-height: 45px;
+#pmd, #sig {
+    max-height: 55px;
 }
 
-#tessel {
+#sailthru {
+    max-height: 38px;
+}
+
+#mongodb {
+    max-height: 52px;
+}
+
+#thalmic-labs {
+    max-height: 38px;
+}
+
+#bowery, #spark, #tessel {
     max-height: 70px;
 }
 
@@ -506,15 +530,16 @@ section .background > .right {
 }
 
 .faq {
-    margin-top: 750px;
+    margin-top: 930px;
     margin-bottom: 420px;
+    margin-left: -5px;
     color: white;
     height: 840px;
 }
 .faq article {
     max-width: 589.6px;
     padding-bottom: 300px;
-    margin-top: -240px;
+    margin-top: -300px;
 }
 
 .faq article h2 {
@@ -734,7 +759,7 @@ nav.open .hamsvg {
 
 
 /* RESPONSIVE */
-@media screen and (max-width:1280px) {
+@media screen and (max-width:1024px) {
     html {
         font-size: 80%;
     }
@@ -743,6 +768,10 @@ nav.open .hamsvg {
         margin-left: -750.4px;
         height: 2520px;
         background-image: url(/static/img/svgtriangles/0bg_1_fallback-sky-trapezoid.svg);
+    }
+
+    .triangle.faq {
+        margin-top: 1080px;
     }
 }
 
@@ -820,7 +849,7 @@ nav.open .hamsvg {
     }
     
     .triangle.faq {
-        margin-top: 900px;
+        margin-top: 1350px;
     }
     
     .triangle.faq article {
@@ -833,7 +862,7 @@ nav.open .hamsvg {
         height: calc(100vw + 1232.8px);
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     .title {
         font-size: 2em;
     }
@@ -845,7 +874,7 @@ nav.open .hamsvg {
     }
 
     .triangle.faq {
-        margin-top: 1560px;
+        margin-top: 1740px;
     }
 
     footer {
@@ -866,6 +895,12 @@ nav.open .hamsvg {
         display: inline-block;
     }
 }
+@media screen and (max-width: 400px) {
+    .triangle.faq {
+        margin-top: 1950px;
+    }
+}
+
 @media screen and (max-width: 320px) {
     .about {
         margin-bottom: 120px;

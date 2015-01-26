@@ -14,6 +14,7 @@ import itertools
 from google.appengine.ext import ndb
 from google.appengine.api import users
 from config import onTeam, isAdmin
+import deletedHacker
 
 cacheTime = 6 * 10 * 2
 memcachedBase = 'all_hackers_with_prop'
@@ -44,8 +45,8 @@ class ManualRegistrationHandler(webapp2.RequestHandler):
                             accept_hacker(h)
 
                     if parsed_request.get('change') == "Remove":
-                        if h.admitted_email_sent_date == None:
-                            h.key.delete()
+                        deletedHacker.createDeletedHacker(h, "manual")
+                        h.key.delete()
 
                     if parsed_request.get('change') == 'Waitlist':
                         if h.admitted_email_sent_date == None:
@@ -61,7 +62,7 @@ class DashboardBackgroundHandler(webapp2.RequestHandler):
     data['Accepted'] = Hacker.query(Hacker.admitted_email_sent_date != None).count()
     data['Confirmed'] = Hacker.query(Hacker.rsvpd == True).count()
     data['Waitlisted'] = Hacker.query(Hacker.waitlist_email_sent_date != None).count()
-    data['Declined'] = 0
+    data['Declined'] = deletedHacker.DeletedHacker.query(deletedHacker.DeletedHacker.admitted_email_sent_date != None).count()
 
     self.response.write(json.dumps(data))
 

@@ -11,57 +11,41 @@ from google.appengine.api import memcache
 import os
 import base64
 import webapp2
+import hacker_page
 #Validation
 from google.appengine.ext import blobstore
 from google.appengine.api import datastore_errors
 from template import utils
 from config import admission_expiration_seconds
 import deletedHacker
+import models
 
 
 memcache_expiry = 10 * 60
-hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon', 'phone_number']
-personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
-
-def stringValidator(prop, value):
-	cleanValue = value.strip()
-
-	if prop._name == 'email':
-			cleanValue = cleanValue.lower()
-
-	return cleanValue
-
-def phoneValidator(prop, value):
-	if any(c.isalpha() for c in value):
-		raise datastore_errors.BadValueError(prop._name)
-	elif len(value) == 10:
-		return value
-	elif len(value) == 11 and value[0] == '1':
-		return value[1:] # remove +1 US country code
-	else:
-		raise datastore_errors.BadValueError(prop._name)
+hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
+personal_info_keys = ['name', 'email', 'teammates', 'links']
 
 class Hacker(ndb.Model):
 	#TODO: If you add a new property, please remember to add that property to deletedHacker.py.
 
-	name = ndb.StringProperty(validator=stringValidator)
-	school = ndb.StringProperty(validator=stringValidator)
+	name = ndb.StringProperty(validator=models.stringValidator)
+	school = ndb.StringProperty(validator=models.stringValidator)
 	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior', 'grad_student'])
-	email = ndb.StringProperty(validator=stringValidator)
+	email = ndb.StringProperty(validator=models.stringValidator)
 	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
-	dietary_restrictions = ndb.StringProperty(validator=stringValidator)
+	dietary_restrictions = ndb.StringProperty(validator=models.stringValidator)
 	resume = ndb.BlobKeyProperty()
 	receipts = ndb.BlobKeyProperty(repeated=True)
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
-	teammates = ndb.StringProperty(default=None, validator=stringValidator)
+	teammates = ndb.StringProperty(default=None, validator=models.stringValidator)
 	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
 
 
-	phone_number = ndb.StringProperty(validator=phoneValidator) # normalized to only digits, no country code
+	phone_number = ndb.StringProperty(validator=models.phoneValidator) # normalized to only digits, no country code
 	def pretty_phone(self):
 		if self.phone_number:
 			return "({0}) {1}-{2}".format(self.phone_number[:3], self.phone_number[3:6], self.phone_number[6:])
@@ -95,10 +79,18 @@ class Hacker(ndb.Model):
 	rtotal = ndb.IntegerProperty(default = 0)
 
 
+	def asDict(self, include_keys):
+	    d = {key: getattr(self, key, None) for key in include_keys}
+	    d['status'] = hacker_page.computeStatus(self)
+	    d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==  None) else True
+	    return d
+
 	@classmethod
 	def WithSecret(cls, secret):
 		results = cls.query(cls.secret == secret).fetch(1)
 		return results[0] if len(results) else None
+
+
 
 def generate_secret_for_hacker_with_email(email):
 	return base64.urlsafe_b64encode(email.encode('utf-8') + ',' + os.urandom(64))
@@ -114,6 +106,21 @@ def accept_hacker(hacker):
 	hacker.admitted_email_sent_date = datetime.datetime.now()
 	hacker.put()
 	memcache.add("admitted:{0}".format(hacker.secret), "1", memcache_expiry)
+
+def create_hacker(dict):
+	hacker = Hacker()
+	for key, value in dict.items():
+		setattr(hacker, key, value)
+
+	if not hacker.email:
+		return False
+
+	hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
+	try:
+		accept_hacker(hacker)
+		return True
+	except datastore_errors.BadValueError:
+		return False
 
 def expire_hacker(hacker):
 	if hacker.rsvpd == True or hacker.admitted_email_sent_date == None:
@@ -144,12 +151,12 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 			if len(resume_files) > 0:
 					hacker.resume = resume_files[0].key()
 			hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
-			try:
-				email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
-				send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
-				hacker.post_registration_email_sent_date = datetime.datetime.now()
-			except Exception, e:
-				pass
+			# try:
+			# 	email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
+			# 	send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
+			# 	hacker.post_registration_email_sent_date = datetime.datetime.now()
+			# except Exception, e:
+			# 	pass
 			hacker.put()
 			name = hacker.name.title().split(" ")[0] # TODO: make it better
 			confirmation_html = template("post_registration_splash.html", {"name": name, "secret": hacker.secret})
@@ -164,5 +171,7 @@ class CheckRegistrationHandler(webapp2.RequestHandler):
 			#TODO: move this into a more semantic place
 			EmailListEntry.add_email(email)
 			self.response.write(json.dumps({"registered":False}))
+
+
 
 

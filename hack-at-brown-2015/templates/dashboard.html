@@ -26,6 +26,10 @@
       </div>
   </div>
   <br>
+  <div>
+  <a style="text-decoration:none" class='button' href="/dashboard/volunteer_registration">Register to Volunteer</a>
+  </div>
+  <br>
   <div class="panel-section" id="breakdowns">
     <h2 class='option'>Breakdown</h2>
     <div id='breakdown-charts'>
@@ -83,7 +87,7 @@
         <div ng-click='changeStatus("Accept")' class='button'>Accept</div>
         <div ng-click='changeStatus("Remove")' class='button'>Remove</div>
         <div ng-click='changeStatus("Waitlist")' class='button'>Waitlist</div>
-        <a style="text-decoration:none" class='button' href="/admin_checkin">Go To Checkin</a>
+        <a style="text-decoration:none" class='button' href="/checkin">Go To Checkin</a>
         {% endif %}
         <div ng-click='lookupHacker()' class='button'>Lookup</div>
         {% if admin %}

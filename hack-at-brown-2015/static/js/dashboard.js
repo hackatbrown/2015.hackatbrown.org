@@ -184,6 +184,9 @@ dashApp.controller('MainCtrl', ['$scope', '$http', '$sce', function ($scope, $ht
     if (emails == []) {
       return;
     };
+    check = confirm("Are you sure you want change hacker status?");
+    if(!check)
+      return;
 
     $http.post('/dashboard/__manual', {change: action, emails: emails}).
     success(function(data, status, headers, config) {

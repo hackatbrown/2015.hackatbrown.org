@@ -334,17 +334,7 @@ function encodeiFrame(href) {
     return 'http://docs.google.com/viewer?url=' + encodeURIComponent('http://' + document.domain + href) + '&embedded=true';
 }
 
-function slideOut($element, time) {
-    time = time || 200;
-    $element.stop().hide().slideToggle(time);
-}
-
-function slideIn($element) {
-    $element.stop().show().slideToggle(200);
-}
-
 //  Form processing out
-
 function saveChange(key, value, uiinput, secret, responseStatus) {
     if (key === 'resume') {
         if (value) {
@@ -362,6 +352,10 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
         } else if (value > rmax) {
             value = rmax;
             addNag("Value must be below $" + value + "!", $(uiinput).parent());
+        } else if (deadline < 0 && value > 30) {
+            console.log(deadline);
+            value = 30;
+            addNag("We can't reimburse more than $30 after your deadline has passed.", $(uiinput).parent());
         }
         $('#reimbursement-needed').val(value);
     }

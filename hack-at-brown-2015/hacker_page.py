@@ -44,16 +44,15 @@ class HackerPageHandler(webapp2.RequestHandler):
         self.response.headers["Pragma"] = "no-cache"
         self.response.headers["Expires"] = "0"
         deadline = 7
+        deadlineFull = "2/07/2015"
         if hacker.deadline:
             deadline = (hacker.deadline - datetime.datetime.now()).days
-        if deadline < 0:
-            expire_hacker(hacker)
-            variables = {
-                "registration_status": config.REGISTRATION_CLOSED
-            }
-            self.response.write(template.template("index.html", variables))
+            deadlineFull = hacker.deadline.strftime("%m.%d.%y")
+        if hacker.rsvpd != True and deadline < 0:
+            registration.expire_hacker(hacker)
+            self.redirect('/')
             return
-        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline}))
+        self.response.write(template.template("hacker_page.html", {"hacker": hacker, "status": status, "name": name, "resumeFileName" : resumeFileName, "receiptsFileNames" : receiptsFileNames, "deadline": deadline, "deadlineFull": deadlineFull}))
 
 class DeleteHackerHandler(webapp2.RequestHandler):
     def get(self, secret):

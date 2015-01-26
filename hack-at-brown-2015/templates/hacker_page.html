@@ -80,10 +80,10 @@
 </div>
 
 
-<div id="skrollr-body" class="trigrid container lightgrey">
+<div class="trigrid container lightgrey">
     <div class="outer_container">
-        <div class="double panes">
-            <div class="double_left pane pane0 active white">
+        <div class="panes">
+            <div class="pane pane0 active white">
                 <section id="mystatus" class="panel hero">
                     <div class="inner_container">
                         <h1 class="hi">Hey {{ name }}!</h1>
@@ -153,7 +153,7 @@
                     </div>
                 </section>
             </div>
-            <div class="double_left pane pane1 white">
+            <div class="pane pane1 white">
                 <section id="myinfo" class="panel">
 
                     <form id='update_form' class='ui form inner_container' method='POST' enctype="multipart/form-data" novalidate>
@@ -337,7 +337,7 @@
                     </form>
                 </section>
             </div>
-            <div class="double_left pane pane2 white">
+            <div class="pane pane2 white">
                 <section class="panel hero condensed-bottom">
                     <div class="inner_container">
                         {% if status == "accepted" and hacker.rmax %}
@@ -346,9 +346,14 @@
                         <h1 class="hi">Congratulations!</h1>
                         {% endif %}
                         {% if hacker.rmax %}
+
+                        {% if deadline < 0 and hacker.rtotal < 30 %}
+                        <strong>Your reimbursement deadline has elapsed, so we can only reimburse you <span class="money">$30</span>.  Reciepts are due on 3.1.2015</strong></p>
+                        {% else %}
                         <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
-                        <p><strong>Reimbursments requests of more than <span class="money">$30</span> must be uploaded by 1.10.2015.</strong></p>
+                        <p><strong>Reimbursement requests of more than <span class="money">$30</span> must be uploaded by {{deadlineFull}}.</strong></p>
                         <p>Otherwise, they're due on 3.1.2015.</p>
+                        {% endif %}
                         {% else %}
                         <p>You don't need any reimbursement to come, silly!</p>
                         <p>Think this is an error? Email us at <a href="mailto:hello@hackatbrown.org?subject=Cancelling%20My%20Registration">hello@hackatbrown.org</a>.</p>
@@ -360,11 +365,11 @@
                     <div class="inner_container">
                         <h4 class="label grey">Travel Tips</h4>
                         <div class="ui accordion">
-                            <div class="active title">
+                            <div class="title">
                                 <i class="dropdown icon"></i>
                                 Flights
                             </div>
-                            <div class="active indented content light">
+                            <div class="indented content light">
                                 <ul class="ui list">
                                     <li>If you’re flying, we recommend flying into <a href="http://www.massport.com/logan-airport">Boston Logan Airport (BOS)</a></li>
                                     <li>Once you’re at Logan, take the <a href="https://www.google.com/maps/dir/Boston+Logan+International+Airport,+1+Harborside+Dr,+Boston,+MA+02128/Boston+South+Station/@42.3590236,-71.0519385,14z/data=!4m14!4m13!1m5!1m1!1s0x89e37014d5da4937:0xc9394c31f2d5144!2m2!1d-71.00956!2d42.365613!1m5!1m1!1s0x89e37081fa252f27:0x7806af60ddbe89c8!2m2!1d-71.055304!2d42.352311!5i1!12b1">Silver Line 1 Bus</a> to South Station in Boston. From there, take the <a href="http://www.mbta.com/schedules_and_maps/rail/lines/?route=PROVSTOU">MBTA Commuter Rail</a> or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a> to Providence.</li>
@@ -377,7 +382,7 @@
                             </div>
                             <div class="indented content light">
                                 <ul class="ui list">
-                                    <li>Popular modes of transportation are the <a href="http://peterpanbus.com/">Peter Pan</a> bus, <a href="http://us.megabus.com/">Megabus</a>, or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a>.</li>
+                                    <li>Popular modes of transportation are the <a href="http://peterpanbus.com/">Peter Pan</a> bus, <a href="http://us.megabus.com/">Megabus</a>, or <a href="http://tickets.amtrak.com/itd/amtrak">Amtrak</a>. For Peter Pan, we recommend you arrive to the Providence, Downtown RI terminal.</li>
                                 </ul>
                             </div>
                         </div>
@@ -385,8 +390,10 @@
                 </section>
                 <section class="reciepts-section panel condensed-top condensed-bottom">
                     <form class="ui form reciepts-upload inner_container">
-                        <h3>Add receipts:</h3>
+
+                        <h3>{% if (deadline < 0 and hacker.rtotal) or (deadline >= 0) %}Add receipts:{% else %}Uploaded Receipts:{% endif %}</h3>
                         <div id="receipts-upload" class="upload field">
+                            {% if (deadline < 0 and hacker.rtotal) or (deadline >= 0) %}
                             <input id="receipts" class="receipts-upload upload" type="file" name="receipts" onchange="uploadReceipts(this.parentNode)" multiple/>
                             <div id="receipts-over" class="receipts-upload upload ui button" onclick="document.getElementById('receipts').click()">
                                 {% if hacker.receipts %}
@@ -395,6 +402,7 @@
                                 <span>Upload Receipts</span>
                                 {% endif %}
                             </div>
+                            {% endif %}
                             <div class="ui cards">
                                 <div class="grid-sizer"></div>
                             {% if hacker.receipts %}
@@ -417,24 +425,27 @@
                             {% endif %}
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="field">
+                                <label for="reimbursement-needed">Total Reimbursement Needed</label>
+                                <div class="ui labeled icon input">
+                                    <div class="ui label">
+                                        $
+                                    </div>
+                                    <input {% if deadline < 0 and hacker.rtotal >= 30 %} disabled {% endif %} type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
+                                    <i class="icon"></i>
+                                    <div class="ui label">
+                                        USD
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </section>
                 <section class="reciepts-section panel condensed-top">
                         <form id='address_form' class='ui form inner_container condensed'enctype="multipart/form-data" autocomplete="on" novalidate
                         {% if not hacker.receipts %} style="display: none;" {% endif %}
                         >
-                        <div class="row">
-                            <div class="field">
-                                <label for="reimbursement-needed">Total Reimbursement Needed</label>
-                                <div class="ui labeled icon input">
-                                    <div class="ui label">
-                                        USD
-                                    </div>
-                                    <input type="number" id="reimbursement-needed" name="rtotal" value="{{hacker.rtotal or ''}}" placeholder="0" max="{{hacker.rmax}}" min="0" />
-                                    <i class="icon"></i>
-                                </div>
-                            </div>
-                        </div>
                             <h3>Send my reimbursement to:</h3>
 <!--                         TODO: VALIDATION -->
                             <div class="row">
@@ -571,6 +582,7 @@
   var status = "{{ status }}";
   var receipts = "{{ hacker.receipts }}";
   var rmax = "{{hacker.rmax}}";
+  var deadline = "{{deadline}}";
 
     var container,
         msnry;
