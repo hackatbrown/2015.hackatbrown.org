@@ -1,0 +1,11 @@
+<div id='messages'>
+<div class='optional-sidebar'>
+	{% include "day_of/help.html" %}
+</div>
+{% for message in messages %}
+<div>
+	{{ message.day_of_html | safe }}
+	<p class='date'>{{ message.added | day_of_date }}</p>
+</div>
+{% endfor %}
+</div>

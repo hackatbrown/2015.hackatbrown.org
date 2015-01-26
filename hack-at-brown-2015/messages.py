@@ -31,6 +31,9 @@ class Message(ndb.Model):
 	email_html = ndb.TextProperty()
 
 	sms_text = ndb.TextProperty()
+	
+	show_in_day_of = ndb.BooleanProperty()
+	day_of_html = ndb.TextProperty()
 
 	def kick_off(self):
 		q = taskqueue.Queue("messages")
@@ -180,6 +183,9 @@ class MessagesDashboardHandler(webapp2.RequestHandler):
 				message.email_html = self.request.get('email-html')
 		if self.request.get('sms'):
 			message.sms_text = self.request.get('sms-text')
+		if self.request.get('show-in-day-of'):
+			message.day_of_html = self.request.get('day-of-html')
+			message.show_in_day_of = True
 		if self.request.get('test'):
 			recip = self.request.get('test-recipient')
 			if '@' in recip:

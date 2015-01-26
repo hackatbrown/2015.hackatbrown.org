@@ -30,6 +30,7 @@ import m
 import messages
 import ranking2015
 import csv_export
+import day_of
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -87,8 +88,10 @@ app = webapp2.WSGIApplication([
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
+		('/__day_of', day_of.DayOfHandler),
+		('/__day_of/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
 	    ('/goodbye', static_page_handler("goodbye.html")),
-		('/(.+)', short_urls.Serve)
+		('/(.+)', short_urls.Serve),
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)
