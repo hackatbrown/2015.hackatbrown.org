@@ -18,51 +18,34 @@ from google.appengine.api import datastore_errors
 from template import utils
 from config import admission_expiration_seconds
 import deletedHacker
+import models
 
 
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
 personal_info_keys = ['name', 'email', 'teammates', 'links']
 
-def stringValidator(prop, value):
-	cleanValue = value.strip()
-
-	if prop._name == 'email':
-			cleanValue = cleanValue.lower()
-
-	return cleanValue
-
-def phoneValidator(prop, value):
-	if any(c.isalpha() for c in value):
-		raise datastore_errors.BadValueError(prop._name)
-	elif len(value) == 10:
-		return value
-	elif len(value) == 11 and value[0] == '1':
-		return value[1:] # remove +1 US country code
-	else:
-		raise datastore_errors.BadValueError(prop._name)
-
 class Hacker(ndb.Model):
 	#TODO: If you add a new property, please remember to add that property to deletedHacker.py.
 
-	name = ndb.StringProperty(validator=stringValidator)
-	school = ndb.StringProperty(validator=stringValidator)
+	name = ndb.StringProperty(validator=models.stringValidator)
+	school = ndb.StringProperty(validator=models.stringValidator)
 	year = ndb.StringProperty(choices=['highschool', 'freshman', 'sophomore', 'junior', 'senior', 'grad_student'])
-	email = ndb.StringProperty(validator=stringValidator)
+	email = ndb.StringProperty(validator=models.stringValidator)
 	shirt_gen = ndb.StringProperty(choices=['M', 'W'])
 	shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
-	dietary_restrictions = ndb.StringProperty(validator=stringValidator)
+	dietary_restrictions = ndb.StringProperty(validator=models.stringValidator)
 	resume = ndb.BlobKeyProperty()
 	receipts = ndb.BlobKeyProperty(repeated=True)
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	links = ndb.StringProperty(default=None)
-	teammates = ndb.StringProperty(default=None, validator=stringValidator)
+	teammates = ndb.StringProperty(default=None, validator=models.stringValidator)
 	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
 
 
-	phone_number = ndb.StringProperty(validator=phoneValidator) # normalized to only digits, no country code
+	phone_number = ndb.StringProperty(validator=models.phoneValidator) # normalized to only digits, no country code
 	def pretty_phone(self):
 		if self.phone_number:
 			return "({0}) {1}-{2}".format(self.phone_number[:3], self.phone_number[3:6], self.phone_number[6:])
@@ -130,11 +113,14 @@ def create_hacker(dict):
 		setattr(hacker, key, value)
 
 	if not hacker.email:
-		return None
+		return False
 
 	hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
-	accept_hacker(hacker)
-
+	try:
+		accept_hacker(hacker)
+		return True
+	except datastore_errors.BadValueError:
+		return False
 
 def expire_hacker(hacker):
 	if hacker.rsvpd == True or hacker.admitted_email_sent_date == None:

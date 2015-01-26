@@ -116,7 +116,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       case 'Visitor':
         break;
       case 'Volunteer':
-        //TODO: lock this down.
         requiredFields = requiredFields.concat(['role', 'phone']);
         break;
       case 'Company Rep':
@@ -135,18 +134,23 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
   $scope.submitNewPerson = function() {
 
+    function failure(msg) {
+      $scope.notify("Could not create person: " + msg);
+    }
+
     $http.post('/checkin/new', $scope.newPerson).
       success(function(response) {
-        $scope.notify("Success!");
-        console.log('created');
+        if (response.success) {
+          $scope.notify("Success!");
+        } else {
+          failure(response.msg);
+        }
         $scope.newPerson = null;
       }).
       error(function(error) {
         console.log('error');
-        console.log(error);
+        failure(error);
       });
-
-
 
   }
 

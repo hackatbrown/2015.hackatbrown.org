@@ -12,13 +12,10 @@ from config import onTeam
 import hacker_page
 import registration
 import datetime
-import volunteer_reg
+import models
+from google.appengine.api import datastore_errors
 
 cacheTime = 6 * 10
-
-class CheckInSession(ndb.Model):
-    user = ndb.StringProperty(default=None)
-    active = ndb.BooleanProperty(default=True)
 
 class CheckinPageHandler(webapp2.RequestHandler):
 
@@ -43,7 +40,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
         #TODO: Remove this Test Data
         source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
-        session = CheckInSession()
+        session = models.CheckInSession()
         session.user = user.email()
 
         session.put()
@@ -97,31 +94,29 @@ class MoreInfoHandler(webapp2.RequestHandler):
 class CreateNewPersonHandler(webapp2.RequestHandler):
     def post(self):
         request = json.loads(self.request.body)
-        logging.info(request)
         kind = request.get('kind')
-        fields = request.get('fields')
 
         if kind == 'Hacker':
             hacker = {'email' : request.get('email'), 'name' : request.get('name'), 'checked_in' : True}
-            person = registration.create_hacker(hacker)
-            return self.response.write('success')
+            return self.response.write(json.dumps({'success':registration.create_hacker(hacker)
+            }))
         elif kind == 'Visitor':
-            #TODO
-            # person = Visitor()
+            person = models.Visitor()
         elif kind == 'Volunteer':
-            person = volunteer_reg.Volunteer()
+            person = models.Volunteer()
         elif kind == 'Company Rep':
-            #TODO
-            # person = Rep()
+            person = models.Rep()
         else:
-            return self.response.write('No such kind')
+            return self.response.write(json.dumps({'sucess' : False}))
 
-        for field in fields:
-            setattr(person, field, request.get(field))
+        try:
+            for field in request.get('fields'):
+                setattr(person, field, request.get(field))
+            person.put()
+        except datastore_errors.BadValueError as err:
+            return self.response.write(json.dumps({'success':False, 'msg' : err.args[0]}))
 
-        person.put()
-
-        self.response.write('success')
+        self.response.write(json.dumps({'success' : True}))
 
 
 def getHackersToBeChecked():
