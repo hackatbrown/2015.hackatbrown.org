@@ -43,7 +43,7 @@ class MentorRequest(ndb.Model):
     responses = ndb.KeyProperty(kind=MentorResponse, repeated=True)
     issue = ndb.TextProperty(required=True)
     tags = ndb.StringProperty(repeated=True)
-    solved = ndb.BooleanProperty(default=False)
+    status = ndb.StringProperty(choices=['solved', 'assigned', 'unassigned'], default='unassigned')
 
 class MentorRequestHandler(webapp2.RequestHandler):
     def get(self):
@@ -62,8 +62,6 @@ class MentorRequestHandler(webapp2.RequestHandler):
 
         return self.response.write('success')
 
-
-
 class DispatchHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write("MENTOR DISPATCH")
+        self.response.write(template("mentor_dispatch.html"))

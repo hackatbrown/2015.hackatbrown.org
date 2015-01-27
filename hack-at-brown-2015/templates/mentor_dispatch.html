@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<style>
+label {
+  text-transform: uppercase;
+  color: #1b8eb9;
+  font-weight: 300;
+  font-size: .8em;
+}
+
+.list {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.col {
+  width: 20%;
+  height: 200%;
+}
+
+.requests {
+  float: left;
+  margin: 2px;
+}
+.center {
+/*  clear:both;
+  margin: 0px auto;
+*/}
+
+.mentors {
+  float:right;
+}
+
+.list > .card {
+  display: block;
+  background-color: red;
+  border: 2px solid black;
+  margin: 2px;
+  text-overflow: ellipsis;
+  height: 80px;
+}
+
+.time {
+  background-color: blue;
+}
+
+.responses {
+  background-color: green;
+}
+
+.tags-container {
+  margin: 3px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 1px;
+  background-color: yellow;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+</style>
+<h2>Mentor Dispatch</h2>
+<div class="requests col">
+  <h2>REQUESTS</h2>
+  <div class="list">
+    <div class="card">
+      <div class="metadata flex">
+        <div class="time">
+          1 hour ago
+        </div>
+        <div class="responses number">
+          1 Responses
+        </div>
+      </div>
+        <div class="tags-container small">
+          <span class="tag">Angular.JS</span>
+          <span class="tag">Web</span>
+          <span class="tag">Node</span>
+          <span class="tag">Javascript</span>
+        </div>
+    </div>
+    <div class="card">Request 2</div>
+    <div class="card">Request 3</div>
+  </div>
+</div>
+<div class="mentors col">
+  <h2>MENTORS</h2>
+  <div class="list">
+    <div class="card">Mentor 1</div>
+    <div class="card">Mentor 2</div>
+    <div class="card">Mentor 3</div>
+  </div>
+</div>
+
+{% endblock %}
+{% block content %}
+<div class="center">
+  <h1>Issue:</h1>
+  <p>
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+
+
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum us</p>
+  <h1>Tags:</h1>
+  <div class="tags-container large">
+    <span class="tag">Angular.JS</span>
+    <span class="tag">Node.JS</span>
+    <span class="tag">Meteor.JS</span>
+  </div>
+</div>
+{% endblock %}
