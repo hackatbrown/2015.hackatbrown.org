@@ -34,9 +34,8 @@
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
     <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
-    {% if status == "accepted" or status == "confirmed" %}
+    {% if status == "accepted" or status == "confirmed" or status == "checked in" %}
     <li class="top-bar_li" id="reimbursements_top"><a href="#reimbursements">Reimbursements</a></li>
-    <li class="top-bar_li" id="mentoring_top"><a href="#mentoring">Mentoring</a></li>
     {% endif %}
 
 </ul>
@@ -549,14 +548,6 @@
                 </section>
                 {% endif %}
             </div>
-            <div class="double_left pane pane3 white">
-                <section class="panel hero condensed-bottom">
-                    <div class="inner_container">
-                    <h1>MENTORING!!!</h1>
-
-                    </div>
-                </section>
-            </div>
         </div>
     </div>
 </div>
@@ -637,12 +628,6 @@
           switchPanes(0);
         });
 
-        $("#mentoring_top").click(function () {
-          this.preventDefault;
-          setTabActive(this);
-          switchPanes(3);
-        });
-
         if (status == "accepted") {
             $('.reciepts-section').hide();
         }
@@ -659,12 +644,6 @@
       this.preventDefault;
       setTabActive(this);
       switchPanes(1);
-    });
-
-    $("#mentoring_top").click(function () {
-      this.preventDefault;
-      setTabActive(this);
-      switchPanes(3);
     });
 
 

@@ -171,13 +171,13 @@ h3.secondary {
 }
 
 .panes.in-pane1 {
-  -webkit-transform: translate3d(-25%, 0, 0);
-  transform: translate3d(-25%, 0, 0);
+  -webkit-transform: translate3d(-33.3%, 0, 0);
+  transform: translate3d(-33.3%, 0, 0);
 }
 
 .panes.in-pane2 {
-  -webkit-transform: translate3d(-50%, 0, 0);
-  transform: translate3d(-50%, 0, 0);
+  -webkit-transform: translate3d(-66.7%, 0, 0);
+  transform: translate3d(-66.7%, 0, 0);
 }
 
 /*Fuck everything*/
