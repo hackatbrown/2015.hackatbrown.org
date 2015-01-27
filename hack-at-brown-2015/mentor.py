@@ -64,4 +64,13 @@ class MentorRequestHandler(webapp2.RequestHandler):
 
 class DispatchHandler(webapp2.RequestHandler):
     def get(self):
+        #TODO: clicking a request should load the issue in centered
+        #      and populate the mentor list. Clicking a mentor in
+        #      should bring up that mentor's contact info and all
+        #      skills. Another click should assign that mentor.
+        #TODO: sort requests by created, #responses.
+        #TODO: sort mentors by tags match, #responded, rating
+        #TODO: color code mentors by Sponsor/Hacker/Volunteer
+        #TODO: mentor cards need tags, number responses.
+
         self.response.write(template("mentor_dispatch.html"))
