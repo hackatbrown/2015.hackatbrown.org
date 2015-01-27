@@ -31,6 +31,7 @@ import m
 import messages
 import ranking2015
 import csv_export
+import mentor
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -46,7 +47,7 @@ class SecretIndexHandler(webapp2.RequestHandler):
 			variables = {
 				"registration_status": "registration_open"
 			}
-			
+
 			variables['registration_post_url'] = blobstore.create_upload_url('/register')
 			self.response.write(template("index.html", variables))
 
@@ -87,10 +88,12 @@ app = webapp2.WSGIApplication([
 		('/dashboard/__cleanup', db_utils.CleanupHandler),
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
-		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
-		('/create_short_url', short_urls.Create),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
+		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
+		('/dashboard/mentor_request', mentor.MentorRequestHandler),
+		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
+		('/create_short_url', short_urls.Create),
 	    ('/goodbye', static_page_handler("goodbye.html")),
 		('/(.+)', short_urls.Serve)
 ], debug=True)

@@ -1,6 +1,9 @@
+import webapp2
+from template import template
 from google.appengine.ext import ndb
 from google.appengine.api import datastore_errors
 import models
+from registration import Hacker
 
 maxRating = 5
 minRating = 0
@@ -12,13 +15,13 @@ def ratingValidator(prop, value):
     if value < minRating:
         value = minRating
 
-def MentorResponse(ndb.Model):
-    rating = ndb.IntegerProperty(default=None, validator=ratingValidator):
-    request = ndb.KeyProperty(kind=MentorRequest)
-    mentor = ndb.KeyProperty(kind=Mentor)
+class MentorResponse(ndb.Model):
+    rating = ndb.IntegerProperty(default=None, validator=ratingValidator)
+    request = ndb.KeyProperty(kind='MentorRequest')
+    mentor = ndb.KeyProperty(kind='Mentor')
     dispatched = ndb.DateTimeProperty(auto_now_add=True)
     dispatcher = ndb.StringProperty(validator=models.stringValidator)
-    finished == ndb.DateTimeProperty()
+    finished = ndb.DateTimeProperty()
 
 class Mentor(ndb.Model):
     phone = ndb.StringProperty(validator=models.phoneValidator, default=None)
@@ -34,10 +37,33 @@ class Mentor(ndb.Model):
         return (reduce(lambda x, y: x.rating + y, ratedResponded) / len(ratedResponded))
 
 class MentorRequest(ndb.Model):
-    requested = ndb.KeyPropery(default=None)
+    requester = ndb.KeyProperty(default=None)
     location = ndb.StringProperty(default=None)
-    sent = ndb.DateTimeProperty(auto_now_add=True)
+    created = ndb.DateTimeProperty(auto_now_add=True)
     responses = ndb.KeyProperty(kind=MentorResponse, repeated=True)
     issue = ndb.TextProperty(required=True)
     tags = ndb.StringProperty(repeated=True)
     solved = ndb.BooleanProperty(default=False)
+
+class MentorRequestHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write(template('mentor_request.html', {}))
+
+    def post(self):
+        hacker = Hacker.query(Hacker.email == self.request.get('email')).fetch(keys_only=True)
+        if hacker is None:
+            return self.response.write('failure')
+
+        request = MentorRequest()
+        request.location = self.request.get('location')
+        request.issue = self.request.get('issue')
+        request.tags = self.request.get('tags').split(', ')
+        request.put()
+
+        return self.response.write('success')
+
+
+
+class DispatchHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("MENTOR DISPATCH")
