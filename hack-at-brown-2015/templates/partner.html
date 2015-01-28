@@ -1,18 +1,72 @@
-{% extends "centered.html" %}
+{% extends "poly_app.html" %}
 
-
-{% block head %}
-{{ super() }}
-
+{% block title %}
+Hacker Info Download - {{ super() }} 2015
 {% endblock %}
 
-{% block centered_content %}
+{% block headcss %}
+{{ super() }}
+<link rel='stylesheet' href='/static/css/hacker_page.css' />
+<style>
+</style>
+{% endblock %}
 
-<div id='centered'>
-<form method='POST' id='send' action="/__partner_csv">
-    <label>Passcode:</label><input type='password' name='password'> 
+{% block nav %}
+{{ super() }}
+<ul class="top-bar_ul constrained" data-0="" data-1="">
+    <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
+    <li class="top-bar_li active" id="status_top"><a href="#partner">Hacker Info Download</a></li>
+</ul>
+{% endblock %}
 
-</form>
-</div>
+{% block content %}
+    <div class="outer_container">
+        <div class="pane pane0 active white">
+            <section class="panel hero condensed-bottom">
+                <div class="inner_container">
+                    <h1 class="hi" style="text-transform: none">Hey there, Partner</h1>
+                    <p>Enter your passcode to download hacker info.</p>
+                </div>
+            </section>
+            <section class="panel condensed-bottom condensed-top">
+                <form class="inner_container ui form" method='POST' id='send' action="/__partner_csv">
+                    <div class="field">
+                        <label for="password">Passcode:</label><input type='password' name='password'> 
+                    </div>
+                </form> 
+            </section>
+            <section class="panel hero">
+                <div class="inner_container">
+                    <p>Questions or Problems? Email us at <a href="mailto:sponsor@hackatbrown.org?subject=Partner%20CSV%20Download">sponsor@hackatbrown.org</a>.</p>
+                    <p>Thanks for sponsoring!</p>
+                </div>
+            </section>
+            <section class="panel grey condensed-top">
+                <div class="inner_container">
+                    <footer>
+                        <span class="copyright">Copyright(ish) © 2015 Hack@Brown.</span>
+                        <a class="coc" href="https://github.com/hackatbrown/online-learning">GitHub</a>
+                        <ul class="social-links">
+                            <li>
+                                <a href="mailto:hello@hackatbrown.org" title="Email" class="email" target="_blank"></a>
+                            </li>
+                            <li>
+                                <a href="http://facebook.com/hackatbrown" title="Facebook" class="facebook" target="_blank"></a>
+                            </li>
+                            <li>
+                                <a href="http://twitter.com/hackatbrown" title="Twitter" class="twitter" target="_blank"></a>
+                            </li>
+                            <li>
+                                <a href="http://medium.com/hack-at-brown" title="Blog" class="blog" target="_blank"></a>
+                            </li>
+                        </ul>
+                    </footer>
+                </div>
+            </section>
+        </div>
+    </div>
 
+{% block bodyjs %}
+{{ super() }}
+{% endblock %}
 {% endblock %}
