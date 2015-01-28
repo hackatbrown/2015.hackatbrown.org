@@ -30,6 +30,7 @@ import m
 import messages
 import ranking2015
 import csv_export
+import partner
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -57,6 +58,8 @@ def static_page_handler(html_file):
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
+	    ('/partner', partner.PartnerPageHandler),
+	    ('/__partner_csv',partner.PartnerCSVDownload),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/__check_registered', registration.CheckRegistrationHandler),

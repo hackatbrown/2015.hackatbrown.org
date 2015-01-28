@@ -1,0 +1,18 @@
+{% extends "centered.html" %}
+
+
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block centered_content %}
+
+<div id='centered'>
+<form method='POST' id='send' action="/__partner_csv">
+    <label>Passcode:</label><input type='password' name='password'> 
+
+</form>
+</div>
+
+{% endblock %}
