@@ -85,10 +85,9 @@ class HackerUpdateHandler(webapp2.RequestHandler):
 
         status = computeStatus(hacker)
 
-        keys = registration.hacker_keys
-
-        if (status == "checked in") or (status == "confirmed"):
-            keys += reimbursement_keys
+        keys = registration.Hacker._properties
+        if not (status == "checked in" or status == "confirmed"):
+            keys = [key for key in keys if not key in reimbursement_keys]
 
         kv = {}
         for key in parsed_request:
@@ -103,8 +102,8 @@ class HackerUpdateHandler(webapp2.RequestHandler):
                             value = hacker.rmax
                     except Exception:
                         success = False
+                        # logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
                         break
-                    # logging.info("Update Hacker: " + hacker.name + " (" + secret + ") attr: " + key + " val: " + value)
                 kv[key] = value
 
             else:
@@ -137,6 +136,7 @@ def updateHacker(secret, dict):
         if client.cas(memcachedKey, hacker):
             success = True
             hacker.put()
+            print("DONE")
 
         retries-= 1
 

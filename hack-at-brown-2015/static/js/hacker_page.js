@@ -368,6 +368,8 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             addNag("We can't reimburse more than $30 after your deadline has passed.", $(uiinput).parent());
         }
         $('#reimbursement-needed').val(value);
+    } else if (key === 'phone_number') {
+        value = value.replace('(', '').replace(')', '').replace(' ', '').replace('-', '');
     }
 
     var data = {},
