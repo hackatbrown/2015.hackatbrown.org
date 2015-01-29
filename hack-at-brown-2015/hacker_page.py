@@ -85,7 +85,7 @@ class HackerUpdateHandler(webapp2.RequestHandler):
 
         status = computeStatus(hacker)
 
-        keys = registration.hacker_keys
+        keys = registration.hacker_keys + registration.personal_info_keys
 
         if (status == "checked in") or (status == "confirmed"):
             keys += reimbursement_keys

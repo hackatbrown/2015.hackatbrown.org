@@ -32,6 +32,9 @@ def stringValidator(prop, value):
 	return cleanValue
 
 def phoneValidator(prop, value):
+	# strip dividers: (e.g. "(718) 594-7958" -> "7185947958")
+	dividers = '()- '
+	value = ''.join((c for c in value if c not in dividers))
 	if any(c.isalpha() for c in value):
 		raise datastore_errors.BadValueError(prop._name)
 	elif len(value) == 10:
