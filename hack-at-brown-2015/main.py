@@ -88,8 +88,8 @@ app = webapp2.WSGIApplication([
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
-		('/__day_of', day_of.DayOfHandler),
-		('/__day_of/([a-z]+)', day_of.DayOfHandler),
+		('/dayof', day_of.DayOfHandler),
+		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
 	    ('/goodbye', static_page_handler("goodbye.html")),
 		('/(.+)', short_urls.Serve),
