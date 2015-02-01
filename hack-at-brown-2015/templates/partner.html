@@ -27,15 +27,19 @@ Hacker Info Download - {{ super() }} 2015
         <div class="pane pane0 active white">
             <section class="panel hero condensed-bottom">
                 <div class="inner_container">
-                    <h1 class="hi" style="text-transform: none">Hey there, Partner</h1>
+                    <h1 class="hi" style="text-transform: none">Hey there!</h1>
                     <p>Enter your passcode to download hacker info.</p>
                 </div>
             </section>
             <section class="panel condensed-bottom condensed-top">
                 <form class="inner_container ui form" method='POST' id='send' action="/__partner_csv">
                     <div class="field">
+                        <label for="user">Sponsor ID:</label><input type='text' id='user' name='user'>
+                    </div>
+                    <div class="field">
                         <label for="password">Passcode:</label><input type='password' id='password' name='password'> 
                     </div>
+                    <input type='submit' class="ui button" name="submit">
                 </form> 
             </section>
             <section class="panel hero">
