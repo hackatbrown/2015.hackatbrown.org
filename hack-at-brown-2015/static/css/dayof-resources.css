@@ -28,6 +28,8 @@
 	font-size: 1.2em;
 }
 
+
+
 #apis #oracle {
 	border-top-color: #e6001c;
 }
@@ -45,7 +47,7 @@
 }
 
 #apis #tripadvisor {
-	border-top-color: #ffda8e;
+	border-top-color: #cfaa6e;
 }
 
 #apis #tessel {
@@ -69,7 +71,7 @@
 }
 
 #apis #bowery {
-	border-top-color: #dde87d;
+	border-top-color: #bdc85d;
 }
 
 #apis #dropbox {
@@ -87,3 +89,68 @@
 #apis #facebook {
 	border-top-color: #2f4688;
 }
+
+
+
+
+
+#apis #oracle a:link, #apis #oracle a:visited {
+	color: #e6001c;
+}
+
+#apis #mongodb a:link, #apis #mongodb a:visited {
+	color: #301e12;
+}
+
+#apis #uber a:link, #apis #uber a:visited {
+	color: black;
+}
+
+#apis #microsoft a:link, #apis #microsoft a:visited {
+	color: #1292ec;
+}
+
+#apis #tripadvisor a:link, #apis #tripadvisor a:visited {
+	color: #cfaa6e;
+}
+
+#apis #tessel a:link, #apis #tessel a:visited {
+	color: #ec3133;
+}
+
+#apis #twosigma a:link, #apis #twosigma a:visited {
+	color: #128a95;
+}
+
+#apis #akamai a:link, #apis #akamai a:visited {
+	color: #fe8728;
+}
+
+#apis #myo a:link, #apis #myo a:visited {
+	color: #1ab0d7;
+}
+
+#apis #spark a:link, #apis #spark a:visited {
+	color: #139eeb;
+}
+
+#apis #bowery a:link, #apis #bowery a:visited {
+	color: #bdc85d;
+}
+
+#apis #dropbox a:link, #apis #dropbox a:visited {
+	color: #0c67e0;
+}
+
+#apis #sailthru a:link, #apis #sailthru a:visited {
+	color: #2fb9e0;
+}
+
+#apis #swipely a:link, #apis #swipely a:visited {
+	color: #1c5eab;
+}
+
+#apis #facebook a:link, #apis #facebook a:visited {
+	color: #2f4688;
+}
+
