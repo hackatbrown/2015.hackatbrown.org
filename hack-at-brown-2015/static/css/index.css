@@ -513,6 +513,10 @@ section .background > .right {
     max-height: 38px;
 }
 
+#wolfram {
+    max-height: 80px;
+}
+
 #mongodb {
     max-height: 52px;
 }
@@ -530,7 +534,7 @@ section .background > .right {
 }
 
 .faq {
-    margin-top: 990px;
+    margin-top: 1110px;
     margin-bottom: 420px;
     margin-left: -5px;
     color: white;
@@ -771,7 +775,7 @@ nav.open .hamsvg {
     }
 
     .triangle.faq {
-        margin-top: 1290px;
+        margin-top: 1440px;
     }
 }
 
@@ -874,7 +878,7 @@ nav.open .hamsvg {
     }
 
     .triangle.faq {
-        margin-top: 1980px;
+        margin-top: 2130px;
     }
 
     footer {
@@ -901,7 +905,7 @@ nav.open .hamsvg {
 }
 @media screen and (max-width: 400px) {
     .triangle.faq {
-        margin-top: 2100px;
+        margin-top: 2250px;
     }
 }
 
