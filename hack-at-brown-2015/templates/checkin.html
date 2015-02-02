@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}
+Check-in - Hack@Brown 2015
+{% endblock %}
+
+{% block headcss %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<link rel='stylesheet' href='/static/css/checkin.css' />
+
+{% endblock %}
+
+{% block headjs %}
+{{ super() }}
+<script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/checkin.js"></script>
+{% endblock %}
+
+{% block nav %}
+<div class="hamburger">
+  <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g class="hamsvg" sketch:type="MSLayerGroup">
+      <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+      <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+      <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+    </g>
+  </svg>
+</div>
+<div class="hamburger over"></div>
+<ul class="top-bar_ul" data-0="" data-1="">
+  <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/dashboard">Close</a></li>
+  <li class="top-bar_li active" id="check_hacker_top"><a href="#check_hacker">Check-in</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="inner_container">
+    <div class="panes">
+      <div id="scope" class="pane pane0 active white" ng-app='checkinApp' ng-controller="Controller">
+        <div class="counter inline-flex">
+          <label for="session-counter">Session:</label>
+          <div id='session-counter'>%%session_checked_in%%</div>
+          <label for="total-counter">Total:</label>
+          <div id='total-counter' ng-model="total_checked_in">%%total_checked_in%%</div>
+        </div>
+        <section id="input" class="panel hero condensed-bottom">
+          <form id='checkin' class="ui form" method='POST' >
+            <div class="field">
+              <div class="ui title input">
+                <input type="text" ng-model='hackerID' ng-change="requestMoreInfo()" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or mentor"/>
+              </div>
+            </div>
+          </form>
+        </section>
+        <section id="notifications" ng-show="notification">
+          <span class="notification">%%notification%%</span>
+        </section>
+        <section id="required-info" ng-show="requiredInfo">
+          <h4>The following information is required before checkin:</h4>
+          <div ng-repeat='(required, description) in requiredInfo'>
+            <label>%%required%%</label><span class="help-text">%%description%%</span>
+          </div>
+          <div class="requiredHandled field">
+            <input id="required-button" type="submit" value="Proceed" class="ui teal button" ng-click="requiredHandled()">
+          </div>
+        </section>
+        <section id="missing-optional-info" ng-show="missingOptionalInfo">
+          <h4>Some non-required information is missing:</h4>
+          <form class="ui form">
+            <div ng-repeat = "info in missingOptionalInfo">
+              <label>%%info%%</label>
+            </div>
+          </form>
+        </section>
+        <section id="reminders" ng-show='reminders'>
+          <h4>Reminders:</h4>
+          <div class="reminder">
+            Give t-shirt and swag bag:
+            <br>
+            <label for="shirt">T-Shirt Size</label>
+            <div class="flex wrap">
+              <div id="shirt" class="flex-left">
+                <div class="shirt_gen">
+                  %% hacker.shirt_gen %%
+                </div>
+                <div class="shirt_size">
+                  %% hacker.shirt_size %%
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-repeat="reminder in reminders">
+            <div class="reminder">
+              %%reminder%%
+            </div>
+          </div>
+        </section>
+        <section id="status" ng-show="showStatus">
+          <h4>STATUS</h4>
+          <div class="inline-flex">
+            <div class="admit_status %%hacker.status%%">
+              <span>%%hacker.status%%</span>
+            </div>
+            <div class="checkin field">
+              <input id="checkin-button" type="submit" value="Check In" class="ui teal button" ng-click="checkinHacker()">
+            </div>
+            <span class="help-text">(or press ENTER)</span>
+          </div>
+        </section>
+        <section id="additional" class="panel hero condensed-top">
+          <p>or</p>
+          <div class="flex wrap">
+            <div class="flex-left">
+              <div id="add-hacker" class="ui pink button" ng-click='createPerson("Hacker")'>
+                Add New Hacker
+              </div>
+              <div id="add-volunteer" class="ui pink button" ng-click='createPerson("Volunteer")'>
+                Add New Volunteer
+              </div>
+              <div id="add-rep" class="ui pink button" ng-click='createPerson("Company Rep")'>
+                Add New Rep
+              </div>
+              <div id="add-visitor" class="ui pink button" ng-click='createPerson("Visitor")'>
+                Add New Visitor
+              </div>
+            </div>
+            <div id="admin-tools" class="ui button">
+              Admin Tools
+            </div>
+          </div>
+          <form class="ui form" ng-show='newPerson' ng-submit='submitNewPerson()'>
+            <label>
+              Create %%newPerson.kind%%
+            </label>
+            <div class="field" ng-repeat='f in newPerson.fields'>
+              <div class="ui icon input">
+                <label for="newPerson-%%f%%">
+                  %%f%%
+                </label>
+                <input id="newPerson-%%f%%" ng-model='newPerson[f]' type="text" name='%%f%%' required>
+                <i class="icon"></i>
+              </div>
+            </div>
+            <input type="submit" value="Create %%newPerson.kind%%" class="ui teal button">
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
+<script type="text/javascript" src="/_ah/channel/jsapi"></script>
+
+<script type="text/javascript">
+  var initial_total_checked_in = {{total_checked_in}};
+
+  var source = {{source|safe}};
+
+  var channel = new goog.appengine.Channel('{{ token }}');
+  var socket = channel.open();
+  socket.onmessage = onMessage;
+  socket.onerror = function() { socket.close() };
+  socket.onclose = function() { socket.close(); };
+
+  var $search = $("#search").selectize({
+    onDropdownOpen: slideOut,
+    onDropdownClose: slideIn,
+    options: source,
+    optgroups: [
+      {id: 'Hacker', name: 'Hackers'},
+      {id: 'Volunteer', name: 'Volunteers'},
+      {id: 'Company Rep', name: 'Company Reps'}
+    ],
+    render: {
+      item: function(item, escape) {
+        return '<div>' +
+          (item.name ? '<span class="select_name">' + escape(item.name) + '</span>' : '')
+          '</div>';
+      },
+      option: function(item, escape) {
+        var label = item.name || item.email;
+        var caption = item.name ? item.email : null;
+
+        return '<div class="flex"' + (item.checked_in ? 'disabled' : '') +
+          '><span class="label textclip">' + escape(label) + '</span>' +
+          (caption ? '<span class="caption textclip">' + escape(caption) + '</span>' : '') +
+          '</div>';
+      }
+    },
+    labelField: 'name',
+    valueField: 'id',
+    optgroupField: 'kind',
+    optgroupLabelField: 'name',
+    optgroupValueField: 'id',
+    optgroupOrder: ['Hacker', 'Volunteer', 'Company Rep'],
+    searchField: ['name'],
+    plugins: ['optgroup_columns'],
+    maxItems: 1,
+  });
+
+
+  $('.selectize-input').on('keyup', function(event) {
+    if (event.which == 13) {
+      angular.element($('#scope')).scope().checkinHacker();
+      //TODO - fires twice on select - kinda ugly rn
+    }
+  });
+
+  $('.selectize-input > input').focus(function(event) {
+      angular.element($('#scope')).scope().cancelPerson();
+  });
+
+
+</script>
+
+{% endblock %}

@@ -5,20 +5,21 @@
 		{% block head %}
 		<meta charset='utf-8'/>
 		<meta name="viewport" content="width=device-width, user-scalable=no"/>
-        
+
         {% block headcss %}
         <!-- Stylesheets -->
-        <link rel='stylesheet' href='/static/css/normalize.css'/> 
+        <link rel='stylesheet' href='/static/css/normalize.css'/>
         <link rel='stylesheet' href='/static/font/Brown/stylesheet.css'>
 		<link rel='stylesheet' href='/static/css/base.css'/>
         {% endblock %}
-        
+
         {% block headjs %}
         <!-- Javascript -->
+        <script type="text/javascript" src='/static/js/base.js'></script>
         <script type="text/javascript" src='/static/js/prefixfree.min.js'></script>
         <script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
 		<script src='//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.50/jquery.form.min.js'></script>
-      
+
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-one-page-nav/3.0.0/jquery.nav.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
@@ -29,18 +30,18 @@
         <meta property="og:url" content="http://hackatbrown.org"/>
         <meta property="og:type" content="website"/>
         <meta property="og:site_name" content="Hack@Brown 2015"/>
-        <meta property="og:description" content="Make, Play, Learn. Join us and 400 of your friends 
+        <meta property="og:description" content="Make, Play, Learn. Join us and 400 of your friends
         from February 7-8 for Brown's annual 24 hour hackathon." />
         <meta property="og:image" content="http://hackatbrown.org/static/img/registrations_open.png"/>
 
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Hack@Brown 2015">
-        <meta name="twitter:description" content="Make, Play, Learn. Join us and 400 of your friends 
+        <meta name="twitter:description" content="Make, Play, Learn. Join us and 400 of your friends
         from February 7-8 for Brown's annual 24 hour hackathon.">
         <meta name="twitter:creator" content="@hackatbrown">
         <meta name="twitter:image:src" content="http://hackatbrown.org/static/img/registrations_open.png">
         <meta name="twitter:domain" content="hackatbrown.org">
-        <meta name="twitter:site" content="@hackatbrown"> 
+        <meta name="twitter:site" content="@hackatbrown">
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="/static/favicon/favicon.ico" type="image/x-icon" />
@@ -60,15 +61,15 @@
         <meta name="msapplication-square70x70logo" content="/static/favicon/smalltile.png" />
         <meta name="msapplication-square150x150logo" content="/static/favicon/mediumtile.png" />
         <meta name="msapplication-square310x310logo" content="/static/favicon/largetile.png" />
-      
+
 		<title>
 		{% block title %}
 		Hack@Brown
 		{% endblock %}
 		</title>
-				
+
 		{% endblock %}
-        
+
 	</head>
 	<body>
         {% block header %}
@@ -81,7 +82,7 @@
             </header>
         {% endblock %}
 		{% block content %}
-		
+
 		{% endblock %}
 	</body>
 </html>
