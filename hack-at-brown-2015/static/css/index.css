@@ -530,7 +530,7 @@ section .background > .right {
 }
 
 .faq {
-    margin-top: 930px;
+    margin-top: 990px;
     margin-bottom: 420px;
     margin-left: -5px;
     color: white;
@@ -570,12 +570,12 @@ footer {
     margin-bottom: 50px;
     font-weight: 300;
 }
-footer .coc {
+footer .coc, footer .press {
     color: #918f8c;
     margin-left: 0.5em;
 }
 
-.coc:hover {
+.coc:hover, .press:hover {
     border: none;
     color: inherit;
 }
@@ -771,7 +771,7 @@ nav.open .hamsvg {
     }
 
     .triangle.faq {
-        margin-top: 1080px;
+        margin-top: 1290px;
     }
 }
 
@@ -849,7 +849,7 @@ nav.open .hamsvg {
     }
     
     .triangle.faq {
-        margin-top: 1350px;
+        margin-top: 1560px;
     }
     
     .triangle.faq article {
@@ -874,7 +874,7 @@ nav.open .hamsvg {
     }
 
     .triangle.faq {
-        margin-top: 1740px;
+        margin-top: 1980px;
     }
 
     footer {
@@ -882,12 +882,16 @@ nav.open .hamsvg {
         margin-top: 0px;
     }
 
-    footer .copyright, footer .coc {
+    footer .copyright, footer .coc, footer .press {
         display: block;
     }
 
-    footer .coc {
+    footer .coc, footer .press {
         margin: 0.7em 0 1.2em 0;
+    }
+
+    footer .press {
+        margin-bottom: 0;
     }
 
     footer .social-links {
@@ -897,7 +901,7 @@ nav.open .hamsvg {
 }
 @media screen and (max-width: 400px) {
     .triangle.faq {
-        margin-top: 1950px;
+        margin-top: 2100px;
     }
 }
 
