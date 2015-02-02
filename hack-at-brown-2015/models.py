@@ -22,6 +22,7 @@ def phoneValidator(prop, value):
 class Visitor(ndb.Model):
     name = ndb.StringProperty(default=None, validator=stringValidator)
     email = ndb.StringProperty(default=None, validator=stringValidator)
+    checked_in = ndb.BooleanProperty(default=False)
     org = ndb.StringProperty(default=None, validator=stringValidator)
 
     def asDict(self, include_keys):
@@ -30,6 +31,7 @@ class Visitor(ndb.Model):
 class Rep(ndb.Model):
     name = ndb.StringProperty(default=None, validator=stringValidator)
     email = ndb.StringProperty(default=None, validator=stringValidator)
+    checked_in = ndb.BooleanProperty(default=False)
     company = ndb.StringProperty(default=None, validator=stringValidator)
 
     def asDict(self, include_keys):
@@ -38,6 +40,7 @@ class Rep(ndb.Model):
 class Volunteer(ndb.Model):
     name = ndb.StringProperty(default=None, validator=stringValidator)
     email = ndb.StringProperty(default=None, validator=stringValidator)
+    checked_in = ndb.BooleanProperty(default=False)
     phone = ndb.StringProperty(default=None, validator=phoneValidator)
     role = ndb.StringProperty(default=None, validator=stringValidator)
 
