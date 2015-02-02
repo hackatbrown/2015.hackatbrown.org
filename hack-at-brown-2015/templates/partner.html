@@ -1,7 +1,7 @@
 {% extends "poly_app.html" %}
 
 {% block title %}
-Hacker Info Download - {{ super() }} 2015
+Sponsor Dashboard - {{ super() }} 2015
 {% endblock %}
 
 {% block headcss %}
@@ -18,7 +18,7 @@ Hacker Info Download - {{ super() }} 2015
 {{ super() }}
 <ul class="top-bar_ul constrained" data-0="" data-1="">
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
-    <li class="top-bar_li active" id="status_top"><a href="#partner">Hacker Info Download</a></li>
+    <li class="top-bar_li active" id="status_top"><a href="#partner">Sponsor Dashboard</a></li>
 </ul>
 {% endblock %}
 
@@ -27,8 +27,10 @@ Hacker Info Download - {{ super() }} 2015
         <div class="pane pane0 active white">
             <section class="panel hero condensed-bottom">
                 <div class="inner_container">
-                    <h1 class="hi" style="text-transform: none">Hey there!</h1>
-                    <p>Enter your passcode to download hacker info.</p>
+                    <h1 class="hi" style="text-transform: none">Welcome to the Sponsor Dashboard</h1>
+                    <p>Enter your username and password to download student info.</p>
+                    <p>Please note that phone numbers as well as more resumes (including those of the organizing team) will be added soon after the hackathon.</p>
+                    <p>Please refrain from mass-emailing students before the hackathon. You're free to contact them after the event.    </p>
                 </div>
             </section>
             <section class="panel condensed-bottom condensed-top">
@@ -37,22 +39,21 @@ Hacker Info Download - {{ super() }} 2015
                         <label for="user">Sponsor ID:</label><input type='text' id='user' name='user'>
                     </div>
                     <div class="field">
-                        <label for="password">Passcode:</label><input type='password' id='password' name='password'> 
+                        <label for="password">Password:</label><input type='password' id='password' name='password'> 
                     </div>
-                    <input type='submit' class="ui button" name="submit">
+                    <input type='submit' class="ui button" name="submit" value="Download">
                 </form> 
             </section>
             <section class="panel hero">
                 <div class="inner_container">
-                    <p>Questions or Problems? Email us at <a href="mailto:sponsor@hackatbrown.org?subject=Partner%20CSV%20Download">sponsor@hackatbrown.org</a>.</p>
+                    <p>Questions or problems? Email us at <a href="mailto:sponsor@hackatbrown.org?subject=Partner%20CSV%20Download">sponsor@hackatbrown.org</a>.</p>
                     <p>Thanks for sponsoring!</p>
                 </div>
             </section>
             <section class="panel grey condensed-top">
                 <div class="inner_container">
                     <footer>
-                        <span class="copyright">Copyright(ish) © 2015 Hack@Brown.</span>
-                        <a class="coc" href="https://github.com/hackatbrown/online-learning">GitHub</a>
+                        <span class="copyright">Copyright © 2015 Hack@Brown</span>
                         <ul class="social-links">
                             <li>
                                 <a href="mailto:hello@hackatbrown.org" title="Email" class="email" target="_blank"></a>
