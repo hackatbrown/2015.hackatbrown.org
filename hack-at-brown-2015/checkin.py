@@ -64,7 +64,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
             hacker.checked_in = True
             hacker.put()
 
-        for session in CheckInSession.query(CheckInSession.active == True):
+        for session in models.CheckInSession.query(models.CheckInSession.active == True):
             channel.send_message(session.key.urlsafe(), str(newTotal))
 
         msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)

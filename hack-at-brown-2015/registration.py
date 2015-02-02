@@ -77,10 +77,23 @@ class Hacker(ndb.Model):
 	rmax = ndb.IntegerProperty(default = 0)
 	rtotal = ndb.IntegerProperty(default = 0)
 
+	def computeStatus(self):
+	    if self is None:
+	        return "not found"
+	    if self.checked_in == True:
+	        return "checked in"
+	    elif self.rsvpd == True:
+	        return "confirmed"
+	    elif self.admitted_email_sent_date != None:
+	        return "accepted"
+	    elif self.waitlist_email_sent_date != None:
+	        return "waitlisted"
+	    else:
+	        return "pending"
 
 	def asDict(self, include_keys):
 	    d = {key: getattr(self, key, None) for key in include_keys}
-	    d['status'] = hacker_page.computeStatus(self)
+	    d['status'] = self.computeStatus()
 	    d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==  None) else True
 	    return d
 

@@ -28,7 +28,7 @@ class HackerPageHandler(webapp2.RequestHandler):
 #            this shouldn't silently fail.  we should make a 404
             return
 
-        status = computeStatus(hacker)
+        status = hacker.computeStatus()
         resumeFileName = ""
         receiptsFileNames = ""
 
@@ -83,7 +83,7 @@ class HackerUpdateHandler(webapp2.RequestHandler):
         if hacker is None:
             return self.response.write(json.dumps({"success": False}))
 
-        status = computeStatus(hacker)
+        status = hacker.computeStatus()
 
         keys = registration.Hacker._properties
         if not (status == "checked in" or status == "confirmed"):
@@ -187,17 +187,3 @@ def putHacker(hacker):
         logging.error('Memcache set failed')
 
     hacker.put()
-
-def computeStatus(hacker):
-    if hacker is None:
-        return "not found"
-    if hacker.checked_in == True:
-        return "checked in"
-    elif hacker.rsvpd == True:
-        return "confirmed"
-    elif hacker.admitted_email_sent_date != None:
-        return "accepted"
-    elif hacker.waitlist_email_sent_date != None:
-        return "waitlisted"
-    else:
-        return "pending"

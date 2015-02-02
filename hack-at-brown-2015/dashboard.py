@@ -5,7 +5,6 @@ from registration import Hacker, accept_hacker
 from send_email import send_email
 from template import template
 from email_list import EmailListEntry
-from hacker_page import computeStatus
 from background_work import waitlist_hacker
 from google.appengine.api import memcache
 import logging
@@ -212,7 +211,7 @@ def getByStatus(accepted=False):
     hackers = getAllHackers(accepted=accepted)
     data = {}
     for hacker in hackers:
-        key = computeStatus(hacker)
+        key = hacker.computeStatus()
         data[key] = data.setdefault(key, 0) + 1
     return data
 
