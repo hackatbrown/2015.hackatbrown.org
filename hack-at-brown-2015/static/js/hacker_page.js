@@ -334,17 +334,7 @@ function encodeiFrame(href) {
     return 'http://docs.google.com/viewer?url=' + encodeURIComponent('http://' + document.domain + href) + '&embedded=true';
 }
 
-function slideOut($element, time) {
-    time = time || 200;
-    $element.stop().hide().slideToggle(time);
-}
-
-function slideIn($element) {
-    $element.stop().show().slideToggle(200);
-}
-
 //  Form processing out
-
 function saveChange(key, value, uiinput, secret, responseStatus) {
     if (key === 'resume') {
         if (value) {
@@ -368,6 +358,8 @@ function saveChange(key, value, uiinput, secret, responseStatus) {
             addNag("We can't reimburse more than $30 after your deadline has passed.", $(uiinput).parent());
         }
         $('#reimbursement-needed').val(value);
+    } else if (key === 'phone_number') {
+        value = value.replace('(', '').replace(')', '').replace(' ', '').replace('-', '');
     }
 
     var data = {},

@@ -45,7 +45,7 @@ textarea {
 	margin-top: 0.5em;
 	font-family: monospace;
 }
-textarea[name='email-html'] {
+textarea[name='email-html'], textarea[name='day-of-html'] {
 	height: 6em;
 }
 form > div {
@@ -66,6 +66,10 @@ form > div {
 	font-size: small;
 	font-style: italic;
 	display: none;
+}
+[data-show-for-recipient], .hint {
+	font-size: small;
+	font-style: italic;
 }
 </style>
 
@@ -117,6 +121,14 @@ form > div {
 				<p class='box'>
 					<label><input type='checkbox' name='sms'/>SMS:</label>
 					<textarea name='sms-text'></textarea>
+				</p>
+				
+				<p class='box'>
+					<label><input type='checkbox' name='show-in-day-of'/>Show on "day of" page</label>
+					<textarea name='day-of-html'></textarea>
+					<p class='hint'>
+						Default CSS will be applied. Use &lt;h1&gt; for the post title.
+					</p>
 				</p>
 		
 				<p>

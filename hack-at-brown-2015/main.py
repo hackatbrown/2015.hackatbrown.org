@@ -31,6 +31,7 @@ import m
 import messages
 import ranking2015
 import csv_export
+import day_of
 import partner
 
 class IndexHandler(webapp2.RequestHandler):
@@ -91,6 +92,8 @@ app = webapp2.WSGIApplication([
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
+		('/dayof', day_of.DayOfHandler),
+		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),

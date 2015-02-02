@@ -57,7 +57,7 @@
 .ui.form input[type=tel]:focus,
 .ui.form input[type=text]:focus, 
 .ui.form input[type=url]:focus {
-    box-shadow: inset 1px -50px 0px -1px @black !important;
+    box-shadow: inset 1px -100px 0px -1px @black !important;
     color: white !important;
     padding-left: .65em;
 }
