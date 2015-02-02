@@ -24,6 +24,7 @@ import registration
 from google.appengine.ext import blobstore
 import background_work
 import hacker_page
+import volunteer_reg
 import db_utils
 import short_urls
 import m
@@ -31,6 +32,7 @@ import messages
 import ranking2015
 import csv_export
 import day_of
+import partner
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -58,6 +60,8 @@ def static_page_handler(html_file):
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
+	    ('/partner', partner.PartnerPageHandler),
+	    ('/__partner_csv',partner.PartnerCSVDownload),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/__check_registered', registration.CheckRegistrationHandler),
@@ -91,7 +95,9 @@ app = webapp2.WSGIApplication([
 		('/dayof', day_of.DayOfHandler),
 		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
+		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
+		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 	    ('/goodbye', static_page_handler("goodbye.html")),
-		('/(.+)', short_urls.Serve),
+		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)

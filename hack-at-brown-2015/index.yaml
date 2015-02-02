@@ -101,6 +101,11 @@ indexes:
   - name: shirt_gen
   - name: shirt_size
 
+- kind: Hacker
+  properties:
+  - name: year
+  - name: admitted_email_sent_date
+
 - kind: Message
   properties:
   - name: show_in_day_of
