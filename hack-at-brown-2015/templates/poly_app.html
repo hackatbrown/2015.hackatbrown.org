@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block headcss %}
+{{ super() }}
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+{% endblock %}
+
+{% block headjs %}
+{{ super() }}
+<script type="application/javascript" src="/static/semantic-final/semantic.min.js"></script>
+{% endblock %}
+
+{% block nav %}
+<div class="hamburger">
+    <svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+        <g class="hamsvg" sketch:type="MSLayerGroup">
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="25" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="12.5" width="30" height="5"></rect>
+            <rect class="bar" fill="#404040" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="5"></rect>
+        </g>
+    </svg>
+</div>
+<div class="hamburger over"></div>
+{% endblock %}
+
+{% block bodyclass %}trigrid lightgrey{% endblock %}
+
+{% block content %}
+<div class="outer_container">
+    <div class="panes">
+        {% block panes %}
+        {% endblock %}
+    </div>
+</div>
+
+{% block bodyjs %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+<script type="text/javascript" src='http://hackatbrown.org/static/js/gutabslider.js'></script>
+<script type="text/javascript">
+    function initalizeNavMenu(selector) {
+        setTimeout(function () {
+            $(selector).gutabslider();
+        }, 800);
+    }
+    function initalizeHamburger() {
+        // Hamburger menu for mobile
+        $("nav ul > li a").click(function () {
+            $("nav").removeClass("open");
+        });
+        $(".hamburger").click(function () {
+            $("nav").toggleClass("open");
+        });
+    }
+    $(document).ready(function () {
+        $('.ui.accordion').accordion();
+        initalizeNavMenu('.top-bar_ul');
+        initalizeHamburger();
+    });
+</script>
+{% endblock %}
+{% endblock %}
