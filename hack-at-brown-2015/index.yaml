@@ -98,6 +98,11 @@ indexes:
 
 - kind: Hacker
   properties:
+  - name: rsvpd
+  - name: name
+
+- kind: Hacker
+  properties:
   - name: shirt_gen
   - name: shirt_size
 
