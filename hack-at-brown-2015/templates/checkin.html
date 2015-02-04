@@ -59,10 +59,11 @@ Check-in - Hack@Brown 2015
         <section id="notifications" ng-show="notification">
           <span class="notification">%%notification%%</span>
         </section>
-        <section id="required-info" ng-show="requiredInfo">
+        <section id="required-info" ng-show="requiredInfo" ng-init="collectedInfo={}">
           <h4>The following information is required before checkin:</h4>
           <div ng-repeat='(required, description) in requiredInfo'>
             <label>%%required%%</label><span class="help-text">%%description%%</span>
+            <input id="phone_number" type="tel" name="phone_number" ng-model="collectedInfo.phone_number" placeholder="(123) 456-7890" ng-show="required == 'Phone Number'"/>
           </div>
           <div class="requiredHandled field">
             <input id="required-button" type="submit" value="Proceed" class="ui teal button" ng-click="requiredHandled()">

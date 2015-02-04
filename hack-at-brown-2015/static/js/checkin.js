@@ -24,9 +24,15 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
   $scope.requestMoreInfo = function() {
     if ($scope.hackerID === "") {
+      $scope.hacker = {};
+      $scope.missingOptionalInfo = null;
+      $scope.requiredInfo = null;
+      $scope.reminders = null;
+      $scope.showStatus = null;
       return;
     }
 
+    $scope.collectedInfo = {};
     $http.get('/checkin/info/' + $scope.hackerID).
       success(function(response) {
         $scope.hacker = response.hacker;
@@ -153,14 +159,30 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         console.log('error');
         failure(error);
       });
-
   }
 
   $scope.requiredHandled = function() {
-    $scope.requiredInfo = null;
-    $scope.showStatus = true;
-  }
+    if ($.isEmptyObject($scope.collectedInfo)) {
+        $scope.requiredInfo = null;
+        $scope.showStatus = true;
+        return;
+    }
 
+    $scope.collectedInfo['id'] = $scope.hackerID;
+    $http.post('/checkin/requiredInfo', $scope.collectedInfo).
+      success(function(response) {
+        console.log(response);
+        if (response.success) {
+          $scope.requiredInfo = null;
+          $scope.showStatus = true;
+        }
+      }).
+      error(function(error) {
+        console.log(error);
+        $scope.collectedInfo = {};
+      });
+
+  }
 }]);
 
 

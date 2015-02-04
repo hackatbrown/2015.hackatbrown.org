@@ -126,7 +126,6 @@ class MoreInfoHandler(webapp2.RequestHandler):
             required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
 
 
-        logging.info(hacker.phone_number)
         if hacker.phone_number is None:
             required.update({'Phone Number' : "Enter this hacker's phone number"})
 
@@ -134,6 +133,30 @@ class MoreInfoHandler(webapp2.RequestHandler):
 
         self.response.write(json.dumps({'hacker': hackerDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
 
+class AddRequiredInfoHandler(webapp2.RequestHandler):
+    def post(self):
+        request = json.loads(self.request.body)
+        id = request.get('id')
+        phone_number = request.get('phone_number')
+        if not id or not phone_number:
+            return self.response.write(json.dumps({'success' : False}))
+
+        person = ndb.Key(urlsafe=id).get()
+        if not person:
+            logging.info('no person')
+            return self.response.write(json.dumps({'success' : False}))
+        try:
+            if person.key.kind() == 'Hacker':
+                person.phone_number = phone_number
+            elif person.key.kind() == 'Volunteer':
+                person.phone = phone_number
+            else:
+                return self.response.write(json.dumps({'success' : False}))
+            person.put()
+        except datastore_errors.BadValueError as err:
+            return self.response.write(json.dumps({'success' : False}))
+
+        self.response.write(json.dumps({'success' : True}))
 
 class CreateNewPersonHandler(webapp2.RequestHandler):
     def post(self):
@@ -190,5 +213,6 @@ app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
     ('/checkin/new', CreateNewPersonHandler),
     ('/checkin/info/(.+)', MoreInfoHandler),
+    ('/checkin/requiredInfo', AddRequiredInfoHandler),
     ('/_ah/channel/disconnected/', DisconnectSessionHandler)
 ], debug=True)
