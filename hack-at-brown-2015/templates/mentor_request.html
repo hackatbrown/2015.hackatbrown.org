@@ -1,0 +1,46 @@
+{% extends "centered.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
+<title>Request A Mentor</title>
+{% endblock %}
+
+{% block centered_content %}
+<style>
+label {
+  text-transform: uppercase;
+  color: #1b8eb9;
+  font-weight: 300;
+  font-size: .8em;
+}
+</style>
+
+  <img src='/static/img/logo.png'/><br>
+  <h2>Request A Mentor</h2><br>
+
+  <form method="POST" action="mentor_request" class="ui form">
+    <div class="ui input">
+      <input type="text" name="email" placeholder="example@place.com" pattern="(.+)@(.+).([a-zA-Z]+)" required>
+      <label>Your Email</label><br>
+    </div><br>
+
+    <div class="ui input">
+      <input type="text" name="location" placeholder="Sayles Hall" required>
+      <label>Your Location</label><br>
+    </div><br>
+
+    <div class="ui input">
+      <input type="text" name="issue" placeholder="Angular.js Animating Counter" required>
+      <label>Your Issue</label><br>
+    </div><br>
+
+    <div class="ui input">
+      <input type="text" name="tags" placeholder="Angualar, JS, Animations" required>
+      <label>Tags (Comma Separated 4 Now)</label><br>
+    </div><br><br>
+
+    <input type="submit" value="Submit" class="ui button">
+  </form>
+{% endblock %}
+
