@@ -112,18 +112,23 @@ def getTotal(increment_first=False):
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
-        infoKeys = hacker_keys + ['checked_in']
+        infoKeys = hacker_keys + ['checked_in', 'status']
 
         hacker = ndb.Key(urlsafe=id).get()
         hackerDict = hacker.asDict(infoKeys)
         hackerDict.update({'id' : id})
 
-        optionalKeys = ['phone_number', 'resume']
+        optionalKeys = ['resume']
         missingOptional = [key for key in optionalKeys if not getattr(hacker, key, None)]
 
         required = {}
         if hacker.year == "highschool":
             required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
+
+
+        logging.info(hacker.phone_number)
+        if hacker.phone_number is None:
+            required.update({'Phone Number' : "Enter this hacker's phone number"})
 
         defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
 

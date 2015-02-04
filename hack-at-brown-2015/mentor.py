@@ -23,6 +23,7 @@ class MentorResponse(ndb.Model):
     dispatcher = ndb.StringProperty(validator=models.stringValidator)
     finished = ndb.DateTimeProperty()
 
+#Anyone who will give help to a hacker.
 class Mentor(ndb.Model):
     phone = ndb.StringProperty(validator=models.phoneValidator, default=None)
     email = ndb.StringProperty(validator=models.stringValidator, default=None)
@@ -41,7 +42,7 @@ class MentorRequest(ndb.Model):
     location = ndb.StringProperty(default=None)
     created = ndb.DateTimeProperty(auto_now_add=True)
     responses = ndb.KeyProperty(kind=MentorResponse, repeated=True)
-    issue = ndb.TextProperty(required=True)
+    issue = ndb.TextProperty(required=False)
     tags = ndb.StringProperty(repeated=True)
     status = ndb.StringProperty(choices=['solved', 'assigned', 'unassigned'], default='unassigned')
 
