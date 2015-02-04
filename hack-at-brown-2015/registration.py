@@ -97,6 +97,8 @@ class Hacker(ndb.Model):
 				d['status'] = self.computeStatus()
 			if 'has_resume' in include_keys:
 				d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==	None) else True
+			if 'resume' in include_keys:
+				d['resume'] = "None" if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==	 None) else "http://hackatbrown.org/__serve/" + str(self.resume)
 			return d
 
 	@classmethod
