@@ -33,6 +33,7 @@ import ranking2015
 import csv_export
 import day_of
 import partner
+import rewriter
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -101,3 +102,4 @@ app = webapp2.WSGIApplication([
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)
+app = rewriter.WSGIMiddleware(app) # rewrite at.hackatbrown.org/xyz -> hackatbrown.org/dayof/xyz (also hackatbrown.org/xyz?dayof -> hackatbrown.org/dayof/xyz)
