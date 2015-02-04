@@ -34,7 +34,7 @@
     <li class="top-bar_li left close" id="back_top"><a class="secondary" href="/">Close</a></li>
     <li class="top-bar_li active" id="status_top"><a href="#status">Status</a></li>
     <li class="top-bar_li" id="info_top"><a href="#info">My Info</a></li>
-    {% if status == "accepted" or status == "confirmed" %}
+    {% if status == "accepted" or status == "confirmed" or status == "checked in" %}
     <li class="top-bar_li" id="reimbursements_top"><a href="#reimbursements">Reimbursements</a></li>
     {% endif %}
 
@@ -658,6 +658,7 @@
       setTabActive(this);
       switchPanes(1);
     });
+
 
     initalizeNavMenu('.top-bar_ul');
 
