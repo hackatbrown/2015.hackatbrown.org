@@ -35,10 +35,16 @@ class CheckinPageHandler(webapp2.RequestHandler):
             JSON.update(person.asDict(['email', 'name', 'checked_in']))
             return JSON
 
-        source = map(formatter, Hacker.query().fetch())
+        from models import Volunteer, Rep
+
+        source = map(formatter, Hacker.query(Hacker.checked_in == False).fetch())
+        source += map(formatter, Rep.query(Rep.checked_in == False).fetch())
+        source += map(formatter, Volunteer.query(Volunteer.checked_in == False).fetch())
+
+        total_checked_in = getTotal()
 
         #TODO: Remove this Test Data
-        source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
+        # source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
 
         session = models.CheckInSession()
         session.user = user.email()
@@ -46,7 +52,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
         session.put()
         token = channel.create_channel(session.key.urlsafe())
 
-        self.response.write(template("checkin.html", {"source" : json.dumps(source), 'total_checked_in' : Hacker.query(Hacker.checked_in == True).count(), 'token' : token}))
+        self.response.write(template("checkin.html", {"source" : json.dumps(source), 'total_checked_in' : total_checked_in, 'token' : token}))
 
     def post(self):
         if not onTeam(): return self.response.write({'success' : False, 'message' : 'You do not have permission to do this'})
@@ -58,7 +64,7 @@ class CheckinPageHandler(webapp2.RequestHandler):
             success = False
             newTotal = 0
         else:
-            newTotal = Hacker.query(Hacker.checked_in == True).count() + 1
+            newTotal = getTotal(increment_first=True)
             #We do this before so eventual consistency doesn't confuse users
             success = True
             hacker.checked_in = True
@@ -70,6 +76,39 @@ class CheckinPageHandler(webapp2.RequestHandler):
         msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
         self.response.write(json.dumps({'success' : success, 'message' : msg, 'total_checked_in' : newTotal}))
+
+
+def getTotalFromDB():
+    from models import Volunteer, Rep
+    total_checked_in = Hacker.query(Hacker.checked_in == True).count()
+    total_checked_in += Rep.query(Rep.checked_in == True).count()
+    total_checked_in += Volunteer.query(Volunteer.checked_in == True).count()
+    return total_checked_in
+
+def getTotal(increment_first=False):
+    key = 'total_checked_in'
+    client = memcache.Client()
+    retries = 5
+    success = False
+    total_checked_in = 0
+    while retries > 0 and not success:
+        total = client.gets(key)
+        if total is None:
+            total = getTotalFromDB()
+            if increment_first:
+                total += 1
+            client.set(key, total)
+            return total
+
+        if increment_first:
+            total += 1
+        if client.cas(key, total):
+            success = True
+            return total
+
+        retries -= 1
+
+    return success
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
@@ -112,6 +151,7 @@ class CreateNewPersonHandler(webapp2.RequestHandler):
         try:
             for field in request.get('fields'):
                 setattr(person, field, request.get(field))
+            setattr(person, 'checked_in', True)
             person.put()
         except datastore_errors.BadValueError as err:
             return self.response.write(json.dumps({'success':False, 'msg' : err.args[0]}))

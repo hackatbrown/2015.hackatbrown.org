@@ -329,9 +329,20 @@
                             </div>
 
                             <div class="field">
-                                <label for="links">Links <span class="optional">(Optional)</span></label>
-                                <div class="condor"></div>
+	                            <div class="field">
+	                                <label for="major">Major</label>
+	                                <div class="ui icon input">
+	                                    <input id="major" class="tags-input" type="text" name="major" value="{% if hacker.major %}{{ hacker.major }}{% endif %}"/>
+	                                    <i class="icon"></i>
+	                                </div>
+	                            </div>
                             </div>
+                        </div>
+                        <div class=" row">
+													
+                          <label for="links">Links <span class="optional">(Optional)</span></label>
+                          <div class="condor"></div>
+													
                         </div>
                     </form>
                 </section>
@@ -568,6 +579,8 @@
 <script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.maskMoney.min.js"></script>
 
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
 <script>
   var secret = "{{ hacker.secret }}";
   var status = "{{ status }}";
@@ -782,7 +795,18 @@
 //    $(".schools").autocomplete({
 //      source: universities
 //    });
-
+		
+		// Major Section
+		var majors = {% include "majors.json" %};
+		$("#major").autocomplete({
+			source: majors,
+			select: function(event, ui) {
+				setTimeout(function() {
+					$("#major").change();
+				}, 0); // setTimeout() since `select` is fired before the field actually changes
+			}
+		})
+		
     //Links Section
 
     // Split the links into an array
