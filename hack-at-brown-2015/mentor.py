@@ -75,3 +75,26 @@ class DispatchHandler(webapp2.RequestHandler):
         #TODO: mentor cards need tags, number responses.
 
         self.response.write(template("mentor_dispatch.html"))
+
+# These should sum to 1
+mweight_tags    = 0.6
+mweight_rating  = 0.25
+mweight_numdone = 0.15
+
+def findMentorsForRequest(request):
+    tags = [t.lowercase for t in request.tags]
+    all_mentors = Mentor.query().fetch()
+    # Each mentor should be assessed based on:
+    # 1. # of tags matching that of request
+    # 2. # of previously completed tasks balanced with rating
+    # should return list of best mentors
+    tagmap = {m:[request.tags.contains(t.lowercase) for t in tags].len for m in all_mentors}
+    appropriate_mentors = [(k,v) for (k,v) in tagmap.iteritems() if v > 0]
+    appropriate_mentors.sort(lambda x: 
+        ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)), 
+        reverse=True)
+    return appropriate_mentors
+
+
+
+
