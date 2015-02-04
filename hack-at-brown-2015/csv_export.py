@@ -1,6 +1,6 @@
 import csv
 import webapp2
-from registration import Hacker, hacker_keys, personal_info_keys
+from registration import Hacker, hacker_keys, non_required_keys, personal_info_keys
 from config import onTeam, isAdmin
 import logging
 
@@ -8,7 +8,7 @@ class CsvExport(webapp2.RequestHandler):
     def get(self):
         if not onTeam(): return self.redirect('/')
 
-        keys = list(hacker_keys) + ['status', 'admit_priority', 'rsvpd', 'checked_in', 'has_resume']
+        keys = list(set(list(hacker_keys) + list(personal_info_keys) + list(non_required_keys) + ['status', 'admit_priority', 'rsvpd', 'checked_in', 'has_resume']))
         if (not self.request.get('include_personally_identifiable_info')) or not isAdmin():
             for key in personal_info_keys:
                 keys.remove(key)

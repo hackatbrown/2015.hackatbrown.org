@@ -22,7 +22,8 @@ import models
 
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
-personal_info_keys = ['name', 'email', 'teammates', 'links']
+non_required_keys = ['phone_number', 'major']
+personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 class Hacker(ndb.Model):
 	#TODO: If you add a new property, please remember to add that property to deletedHacker.py.
@@ -42,6 +43,7 @@ class Hacker(ndb.Model):
 	teammates_emailed = ndb.BooleanProperty(default=False)
 	hardware_hack = ndb.StringProperty(choices=["yes", 'no'])
 	first_hackathon = ndb.StringProperty(choices=['yes', 'no'])
+	major = ndb.StringProperty()
 
 
 	phone_number = ndb.StringProperty(validator=models.phoneValidator) # normalized to only digits, no country code
