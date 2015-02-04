@@ -78,24 +78,26 @@ class Hacker(ndb.Model):
 	rtotal = ndb.IntegerProperty(default = 0)
 
 	def computeStatus(self):
-	    if self is None:
-	        return "not found"
-	    if self.checked_in == True:
-	        return "checked in"
-	    elif self.rsvpd == True:
-	        return "confirmed"
-	    elif self.admitted_email_sent_date != None:
-	        return "accepted"
-	    elif self.waitlist_email_sent_date != None:
-	        return "waitlisted"
-	    else:
-	        return "pending"
+			if self is None:
+					return "not found"
+			if self.checked_in == True:
+					return "checked in"
+			elif self.rsvpd == True:
+					return "confirmed"
+			elif self.admitted_email_sent_date != None:
+					return "accepted"
+			elif self.waitlist_email_sent_date != None:
+					return "waitlisted"
+			else:
+					return "pending"
 
 	def asDict(self, include_keys):
-	    d = {key: getattr(self, key, None) for key in include_keys}
-	    d['status'] = self.computeStatus()
-	    d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==  None) else True
-	    return d
+			d = {key: getattr(self, key, None) for key in include_keys}
+			if 'status' in include_keys:
+				d['status'] = self.computeStatus()
+			if 'has_resume' in include_keys:
+				d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==	None) else True
+			return d
 
 	@classmethod
 	def WithSecret(cls, secret):
@@ -164,11 +166,11 @@ class RegistrationHandler(blobstore_handlers.BlobstoreUploadHandler):
 					hacker.resume = resume_files[0].key()
 			hacker.secret = generate_secret_for_hacker_with_email(hacker.email)
 			# try:
-			# 	email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
-			# 	send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
-			# 	hacker.post_registration_email_sent_date = datetime.datetime.now()
+			#		email_html = template("emails/confirm_registration.html", {"name": hacker.name.split(" ")[0], "hacker": hacker})
+			#		send_email(recipients=[hacker.email], subject="You've applied to Hack@Brown!", html=email_html)
+			#		hacker.post_registration_email_sent_date = datetime.datetime.now()
 			# except Exception, e:
-			# 	pass
+			#		pass
 			hacker.put()
 			name = hacker.name.title().split(" ")[0] # TODO: make it better
 			confirmation_html = template("post_registration_splash.html", {"name": name, "secret": hacker.secret})
