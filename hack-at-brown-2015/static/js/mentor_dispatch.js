@@ -40,6 +40,16 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
     tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
   }];
 
+  $scope.request = {
+    requester : 'Sam',
+    location : 'Sayles',
+    created : '1 hour ago',
+    responses : '3',
+    issue : 'lipsum',
+    tags : ['a', 'b', 'c'],
+    status : 'unassigned'
+  };
+
   $scope.poll = function() {
       $timeout(function() {
           console.log('sup');
