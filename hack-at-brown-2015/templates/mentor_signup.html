@@ -121,6 +121,11 @@ form input[type=submit]:active, button:active {
 	margin: 1em auto;
 }
 
+.required, .invalid {
+	background-color: rgba(255, 100, 100, 0.2);
+	box-shadow: 0px 0px 0px 2px rgba(255, 100, 100, 0.2);
+}
+
 
 </style>
 {% if show_confirmation %}
@@ -138,7 +143,7 @@ form input[type=submit]:active, button:active {
   <p class='error'>{{ error }}</p>
   {% endif %}
 
-  <form method="POST">
+  <form method="POST" id='signup'>
   	<div class='two controls'>
 	  	<div>
 		  	<label for='name'>Name</label>
@@ -146,7 +151,7 @@ form input[type=submit]:active, button:active {
 	  	</div>
 	  	<div>
 	  		<label for='role'>Role</label>
-	  		<input id='role' type='text' name='role' placeholder='Oracle engineer; WICS mentor' required/>
+	  		<input id='role' type='text' name='role' placeholder='Oracle engineer; WICS mentor'/>
 	  	</div>
   	</div>
   	<div>
@@ -156,12 +161,12 @@ form input[type=submit]:active, button:active {
   	<div class='two controls'>
   		<label>How can we reach you?</label>
   		<div>
-	  		<label class='secondary-label' for='phone' required>Phone number</label>
-	  		<input type='tel' id='phone' name='phone' placeholder='(877) 393 4448'/>
+	  		<label class='secondary-label' for='phone'>Phone number</label>
+	  		<input type='tel' id='phone' name='phone' placeholder='(877) 393 4448' required='required'/>
   		</div>
   		<div>
 	  		<label class='secondary-label' for='email' required>Email address</label>
-	  		<input type='email' id='email' name='email' placeholder='jcarberry@brown.edu'/>
+	  		<input type='email' id='email' name='email' placeholder='jcarberry@brown.edu' required='required'/>
   		</div>
   	</div>
   	<div>
@@ -176,5 +181,12 @@ form input[type=submit]:active, button:active {
   		<input type='submit' value='Register as a mentor'/>
   	</div>
   </form>
+  <script src='/static/js/H5F.js'></script>
+  <script>
+  H5F.setup(document.getElementById('signup'), {
+  	requiredClass: "required",
+  	invalidClass: "invalid"
+  });
+  </script>
  {% endif %}
 {% endblock %}
