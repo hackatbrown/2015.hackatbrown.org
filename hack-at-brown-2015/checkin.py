@@ -63,17 +63,18 @@ class CheckinPageHandler(webapp2.RequestHandler):
         if hacker is None:
             success = False
             newTotal = 0
+        elif hacker.phone_number is None:
+            success = False
         else:
             newTotal = getTotal(increment_first=True)
             #We do this before so eventual consistency doesn't confuse users
             success = True
             hacker.checked_in = True
             hacker.put()
+            for session in models.CheckInSession.query(models.CheckInSession.active == True):
+                channel.send_message(session.key.urlsafe(), str(newTotal))
 
-        for session in models.CheckInSession.query(models.CheckInSession.active == True):
-            channel.send_message(session.key.urlsafe(), str(newTotal))
-
-        msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
+        msg = "{0} in {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
         self.response.write(json.dumps({'success' : success, 'message' : msg, 'total_checked_in' : newTotal}))
 
@@ -112,26 +113,29 @@ def getTotal(increment_first=False):
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
-        infoKeys = hacker_keys + ['checked_in', 'status']
 
-        hacker = ndb.Key(urlsafe=id).get()
-        hackerDict = hacker.asDict(infoKeys)
-        hackerDict.update({'id' : id})
+        person = ndb.Key(urlsafe=id).get()
+        kind = person.key.kind()
 
-        optionalKeys = ['resume']
-        missingOptional = [key for key in optionalKeys if not getattr(hacker, key, None)]
+        infoKeys = ['checked_in', 'status', 'shirt_size', 'shirt_gen']
+        optionalKeys = ['resume'] if kind == 'Hacker' else []
+
+        personDict = person.asDict(infoKeys)
+        personDict.update({'id' : id})
+
+        missingOptional = [key for key in optionalKeys if not getattr(person, key, None)]
 
         required = {}
-        if hacker.year == "highschool":
+        if getattr(person, 'year', None) == "highschool":
             required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
 
 
-        if hacker.phone_number is None:
+        if person.phone_number is None:
             required.update({'Phone Number' : "Enter this hacker's phone number"})
 
         defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
 
-        self.response.write(json.dumps({'hacker': hackerDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
+        self.response.write(json.dumps({'hacker': personDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
 
 class AddRequiredInfoHandler(webapp2.RequestHandler):
     def post(self):

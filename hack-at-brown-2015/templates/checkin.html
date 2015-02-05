@@ -52,7 +52,7 @@ Check-in - Hack@Brown 2015
           <form id='checkin' class="ui form" method='POST' >
             <div class="field">
               <div class="ui title input">
-                <input type="text" ng-model='hackerID' ng-change="requestMoreInfo()" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or mentor"/>
+                <input type="text" ng-model='hackerID' ng-change="requestMoreInfo()" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or rep"/>
               </div>
             </div>
           </form>
@@ -162,6 +162,7 @@ Check-in - Hack@Brown 2015
   var initial_total_checked_in = {{total_checked_in}};
 
   var source = {{source|safe}};
+  console.log(source);
 
   var channel = new goog.appengine.Channel('{{ token }}');
   var socket = channel.open();
@@ -176,7 +177,7 @@ Check-in - Hack@Brown 2015
     optgroups: [
       {id: 'Hacker', name: 'Hackers'},
       {id: 'Volunteer', name: 'Volunteers'},
-      {id: 'Company Rep', name: 'Company Reps'}
+      {id: 'Rep', name: 'Reps'}
     ],
     render: {
       item: function(item, escape) {
@@ -199,7 +200,7 @@ Check-in - Hack@Brown 2015
     optgroupField: 'kind',
     optgroupLabelField: 'name',
     optgroupValueField: 'id',
-    optgroupOrder: ['Hacker', 'Volunteer', 'Company Rep'],
+    optgroupOrder: ['Hacker', 'Volunteer', 'Rep'],
     searchField: ['name'],
     plugins: ['optgroup_columns'],
     maxItems: 1,

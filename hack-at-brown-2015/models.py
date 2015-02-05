@@ -40,7 +40,10 @@ class Rep(ndb.Model):
     shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 
     def asDict(self, include_keys):
-        return {key: getattr(self, key, None) for key in include_keys}
+        me = {key: getattr(self, key, None) for key in include_keys}
+        if 'status' in include_keys:
+          me['status'] = 'confirmed'
+        return me
 
 class Volunteer(ndb.Model):
     name = ndb.StringProperty(default=None, validator=stringValidator)
@@ -52,7 +55,11 @@ class Volunteer(ndb.Model):
     shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 
     def asDict(self, include_keys):
-        return {key: getattr(self, key, None) for key in include_keys}
+        me = {key: getattr(self, key, None) for key in include_keys}
+        if 'status' in include_keys:
+          me['status'] = 'confirmed'
+        return me
+
 
 class CheckInSession(ndb.Model):
     user = ndb.StringProperty(default=None)

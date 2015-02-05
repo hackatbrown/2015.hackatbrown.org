@@ -124,6 +124,11 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
     $http.post('/checkin', {'id' : $scope.hackerID}).
       success(function(response) {
+        if (!response.success) {
+          return;
+          $scope.notify(response.msg);
+        }
+
         $scope.hacker.checked_in = true;
         $scope.hacker.status = 'checked in';
         $scope.total_checked_in = response.total_checked_in;
