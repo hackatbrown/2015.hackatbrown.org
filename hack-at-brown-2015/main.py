@@ -63,7 +63,7 @@ def static_page_handler(html_file):
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
-	    ('/partner', partner.PartnerPageHandler),
+	    ('/sponsor-dashboard', partner.PartnerPageHandler),
 	    ('/__partner_csv',partner.PartnerCSVDownload),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
