@@ -116,6 +116,7 @@ body:before {
 /* schedule */
 #schedule {
 	text-align: center;
+	font-size: 1.3em;
 }
 #schedule .day {
 	vertical-align: top;
@@ -133,6 +134,7 @@ body:before {
 #schedule h2 {
 	font-size: 1em;
 	margin-bottom: 0.3em;
+	border-bottom: none;
 }
 #schedule .day span {
 	float: right;
