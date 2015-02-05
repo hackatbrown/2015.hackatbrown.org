@@ -9,6 +9,19 @@ var checkinApp = angular.module('checkinApp', []).config(function($interpolatePr
     }
 );
 
+checkinApp.directive('shortcut', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: true,
+    link:    function postLink(scope, iElement, iAttrs){
+      $(document).on('keyup', function(e){
+         scope.$apply(scope.keyPressed(e));
+       });
+    }
+  };
+});
+
 checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http){
   $scope.missingOptionalInfo = null;
   $scope.requiredInfo = null;
@@ -22,7 +35,31 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   $scope.session_checked_in = 0;
   $scope.total_checked_in = initial_total_checked_in;
 
+  $scope.keyPressed = function(event) {
+    if (!event.ctrlKey)
+      return;
+
+    switch (event.which) {
+      case 13:
+        $scope.checkinHacker();
+        break;
+      case 72: //'h'
+        $scope.createPerson('Hacker');
+        break;
+      case 86: //'v'
+        $scope.createPerson('Volunteer');
+        break;
+      case 82: //'r'
+        $scope.createPerson('Rep');
+        break;
+      case 73: //'i'
+        $scope.createPerson('Visitor');
+        break;
+    }
+  }
+
   $scope.requestMoreInfo = function() {
+    $scope.clearNotifications();
     if ($scope.hackerID === "") {
       $scope.hacker = {};
       $scope.missingOptionalInfo = null;
@@ -36,7 +73,6 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $http.get('/checkin/info/' + $scope.hackerID).
       success(function(response) {
         $scope.hacker = response.hacker;
-        console.log(response.hacker);
         $scope.missingOptionalInfo = (response.missingOptionalInfo.length > 0) ? response.missingOptionalInfo : null;
 
         $scope.requiredInfo = (Object.keys(response.requiredInfo).length > 0) ? response.requiredInfo : null;
@@ -45,18 +81,15 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.showStatus = !$scope.requiredInfo;
       }).
       error(function(error) {
-        console.log('error');
         console.log(error);
       });
   }
 
+  $scope.clearNotifications = function() {
+    $scope.notify("");
+  }
   $scope.notify = function(message) {
     $scope.notification = message;
-    setTimeout(function() {
-      $scope.$apply(function() {
-        $scope.notification = null;
-      });
-    }, 3000);
   }
 
   $scope.checkinHacker = function() {
@@ -66,7 +99,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     }
 
     if ($scope.requiredInfo) {
-      $scope.notify("You must obtain the required info before you can check in.")
+      $scope.notify("You must obtain the required info before you can check in.");
       return;
     }
 
@@ -94,10 +127,8 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.hacker.status = 'checked in';
         $scope.total_checked_in = response.total_checked_in;
         $scope.session_checked_in++;
-        console.log(response);
       }).
       error(function(error) {
-        console.log('error');
         console.log(error);
       });
   }
@@ -132,6 +163,8 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     }
 
     $scope.newPerson = {'kind' : kind, 'fields' : requiredFields};
+
+    $('#newPerson-email').focus();
   }
 
   $scope.cancelPerson = function() {
@@ -167,18 +200,19 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.showStatus = true;
         return;
     }
-
+    console.log('heehh');
     $scope.collectedInfo['id'] = $scope.hackerID;
     $http.post('/checkin/requiredInfo', $scope.collectedInfo).
       success(function(response) {
-        console.log(response);
         if (response.success) {
           $scope.requiredInfo = null;
           $scope.showStatus = true;
+          $scope.notify('Saved!');
+        } else {
+          $scope.notify('Invalid Number');
         }
       }).
       error(function(error) {
-        console.log(error);
         $scope.collectedInfo = {};
       });
 

@@ -41,6 +41,7 @@ Check-in - Hack@Brown 2015
   <div class="inner_container">
     <div class="panes">
       <div id="scope" class="pane pane0 active white" ng-app='checkinApp' ng-controller="Controller">
+        <shortcut></shortcut>
         <div class="counter inline-flex">
           <label for="session-counter">Session:</label>
           <div id='session-counter'>%%session_checked_in%%</div>
@@ -109,7 +110,7 @@ Check-in - Hack@Brown 2015
             <div class="checkin field">
               <input id="checkin-button" type="submit" value="Check In" class="ui teal button" ng-click="checkinHacker()">
             </div>
-            <span class="help-text">(or press ENTER)</span>
+            <span class="help-text">(or press &#x2303;ENTER)</span>
           </div>
         </section>
         <section id="additional" class="panel hero condensed-top">
@@ -117,16 +118,16 @@ Check-in - Hack@Brown 2015
           <div class="flex wrap">
             <div class="flex-left">
               <div id="add-hacker" class="ui pink button" ng-click='createPerson("Hacker")'>
-                Add New Hacker
+                New Hacker &#x2303;H
               </div>
               <div id="add-volunteer" class="ui pink button" ng-click='createPerson("Volunteer")'>
-                Add New Volunteer
+                New Volunteer &#x2303;V
               </div>
               <div id="add-rep" class="ui pink button" ng-click='createPerson("Company Rep")'>
-                Add New Rep
+                New Rep &#x2303;R
               </div>
               <div id="add-visitor" class="ui pink button" ng-click='createPerson("Visitor")'>
-                Add New Visitor
+                New Visitor &#x2303;I
               </div>
             </div>
             <div id="admin-tools" class="ui button">
@@ -204,13 +205,6 @@ Check-in - Hack@Brown 2015
     maxItems: 1,
   });
 
-
-  $('.selectize-input').on('keyup', function(event) {
-    if (event.which == 13) {
-      angular.element($('#scope')).scope().checkinHacker();
-      //TODO - fires twice on select - kinda ugly rn
-    }
-  });
 
   $('.selectize-input > input').focus(function(event) {
       angular.element($('#scope')).scope().cancelPerson();
