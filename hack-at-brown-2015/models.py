@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 from google.appengine.api import datastore_errors
+import logging
 
 def stringValidator(prop, value):
    cleanValue = value.strip()
@@ -17,6 +18,7 @@ def phoneValidator(prop, value):
    elif len(value) == 11 and value[0] == '1':
        return value[1:] # remove +1 US country code
    else:
+       logging.info(value)
        raise datastore_errors.BadValueError(prop._name)
 
 class Visitor(ndb.Model):

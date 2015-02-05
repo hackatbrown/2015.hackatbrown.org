@@ -35,6 +35,7 @@ import day_of
 import partner
 import rewriter
 import mentor
+import csv_import
 
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
@@ -97,6 +98,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
 		('/dashboard/mentor_request', mentor.MentorRequestHandler),
+		('/dashboard/upload_csv', csv_import.ImportPageHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),
 		('/dayof/([a-z]+)', day_of.DayOfHandler),
