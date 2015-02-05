@@ -96,9 +96,9 @@ app = webapp2.WSGIApplication([
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
-		('/dashboard/mentor_request', mentor.MentorRequestHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),
+		('/dayof/mentor_request', mentor.MentorRequestHandler),
 		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
 	    ('/goodbye', static_page_handler("goodbye.html")),
