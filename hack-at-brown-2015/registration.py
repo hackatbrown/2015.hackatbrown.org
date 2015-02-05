@@ -22,7 +22,7 @@ import models
 
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
-non_required_keys = ['phone_number', 'major']
+non_required_keys = ['phone_number', 'major', 'rmax', 'rtotal']
 personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 class Hacker(ndb.Model):

@@ -26,7 +26,11 @@ class MentorResponse(ndb.Model):
 class Mentor(ndb.Model):
 		phone = ndb.StringProperty(validator=models.phoneValidator, default=None)
 		email = ndb.StringProperty(validator=models.stringValidator, default=None)
+		name = ndb.StringProperty()
 		tags = ndb.StringProperty(validator=models.stringValidator, repeated=True)
+		role = ndb.TextProperty() # e.g. Oracle Engineer
+		availability = ndb.TextProperty()
+		details = ndb.TextProperty()
 		responded = ndb.KeyProperty(kind=MentorResponse, repeated=True)
 
 		def getResponded(self):
@@ -77,3 +81,22 @@ class DispatchHandler(webapp2.RequestHandler):
 				#TODO: mentor cards need tags, number responses.
 
 				self.response.write(template("mentor_dispatch.html"))
+
+class MentorSignupHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.write(template("mentor_signup.html"))
+	def post(self):
+		keys = ['name', 'role', 'email', 'phone', 'availability', 'tags', 'details']
+		try:
+			mentor = Mentor()
+			for key in keys:
+				val = self.request.get(key)
+				if key == 'tags':
+					val = [tag.strip().lower() for tag in val.split(',')]
+				setattr(mentor, key, val)
+			mentor.put()
+			first_name = mentor.name.split(' ')[0] if mentor.name else 'mentor'
+			self.response.write(template("mentor_signup.html", {"show_confirmation": True, "first_name": first_name}))
+		except datastore_errors.BadValueError as e:
+			print "MENTOR SIGNUP ERROR: {0}".format(e)
+			self.response.write(template("mentor_signup.html", {"error": "There's an invalid or missing field on your form!"}))

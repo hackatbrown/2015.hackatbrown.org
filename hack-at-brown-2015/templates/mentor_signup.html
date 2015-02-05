@@ -1,0 +1,180 @@
+{% extends "centered.html" %}
+
+{% block head %}
+{{ super() }}
+<title>Mentor at Hack@Brown</title>
+{% endblock %}
+
+{% block centered_content %}
+<style>
+
+#logo {
+	height: 100px;
+}
+h1 {
+	margin-top: 0;
+}
+@media screen and (max-width: 420px) {
+	h1 {
+		font-size: 1.4em;
+	}
+}
+
+form {
+	width: 100%;
+}
+body > div > div > div {
+	width: 100%;
+	box-sizing: border-box;
+}
+body {
+	background-image: none !important;
+}
+body:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 200px;
+	z-index: -1;
+	content: "";
+	background-image: linear-gradient(rgba(255,255,255,0), white), url("/static/img/svgtriangles/trigrid-tile-5pct.svg");
+	background-size: 100%, 107.2px 120px;
+	background-position: center top;
+}
+
+form {
+	text-align: left;
+}
+form > div, form .controls > div {
+	margin-bottom: 2em;
+}
+@media screen and (min-width: 500px) {
+	form .two.controls > div {
+		display: inline-block;
+		width: 49%;
+		box-sizing: border-box;
+		margin-bottom: 0;
+	}
+	form .two.controls > div:last-child {
+		float: right;
+	}
+}
+form input, button {
+	appearance: none;
+	border-radius: 0;
+	outline: none;
+	border: none;
+	width: 100%;
+	box-sizing: border-box;
+	box-shadow: inset 1px -3px 0 -1px rgba(145,143,140,0.3);
+	transition: box-shadow .2s,padding .2s,color .2s;
+	height: 35px;
+}
+form input:focus {
+		box-shadow: inset 1px -50px 0 -1px #404040; 
+		padding: 2px 6px;
+		color: white;
+}
+form label {
+	display: block;
+	font-size: 1em;
+	text-transform: uppercase;
+  	color: #1b8eb9;
+  	font-weight: 300;
+  	font-size: .8em;
+  	margin-bottom: 0.2em;
+}
+label.secondary-label {
+	opacity: 0.7;
+	text-transform: none;
+}
+form input {
+	font-weight: 300;
+}
+form label span {
+	opacity: 0.5;
+}
+form input[type=submit], button {
+	background-color: #26a59f;
+	color: #fff;
+	width: auto;
+	padding: 6px 10px 20px 10px;
+	margin: auto;
+	display: block;
+}
+button {
+	padding: 8px 10px 20px 10px;
+	font-family: "Brown", sans-serif;
+	font-size: small;
+	font-weight: 300;
+}
+form input[type=submit]:active, button:active {
+	background-color: #175b53;
+}
+
+.error {
+	background-color: #bad4d1;
+	padding: 10px;
+	width: 65%;
+	box-sizing: border-box;
+	margin: 1em auto;
+}
+
+
+</style>
+{% if show_confirmation %}
+	  <img id='logo' src='/static/img/logo.png'/>
+  		<h1>Thanks, {{ first_name }}!</h1>
+  		<p>
+  			Feel free to wander the hackathon and give help as needed! We'll ping you if a team needs your help.
+  		</p>
+  		<button onclick='window.location = window.location'>Register another mentor</button>
+{% else %}
+  <img id='logo' src='/static/img/logo.png'/>
+  <h1>Mentor at Hack@Brown</h1>
+
+  {% if error %}
+  <p class='error'>{{ error }}</p>
+  {% endif %}
+
+  <form method="POST">
+  	<div class='two controls'>
+	  	<div>
+		  	<label for='name'>Name</label>
+		  	<input id='name' name='name' type='text' placeholder='Josiah Carberry' required/>
+	  	</div>
+	  	<div>
+	  		<label for='role'>Role</label>
+	  		<input id='role' type='text' name='role' placeholder='Oracle engineer; WICS mentor' required/>
+	  	</div>
+  	</div>
+  	<div>
+  		<label for='availability'>Which hours are you available to mentor? <span>(best estimate)</span></label>
+  		<input id='availability' type='text' name='availability' placeholder="Saturday until 11 PM; Sunday after 8 AM" />
+  	</div>
+  	<div class='two controls'>
+  		<label>How can we reach you?</label>
+  		<div>
+	  		<label class='secondary-label' for='phone' required>Phone number</label>
+	  		<input type='tel' id='phone' name='phone' placeholder='(877) 393 4448'/>
+  		</div>
+  		<div>
+	  		<label class='secondary-label' for='email' required>Email address</label>
+	  		<input type='email' id='email' name='email' placeholder='jcarberry@brown.edu'/>
+  		</div>
+  	</div>
+  	<div>
+	  	<label for='tags'>What skills/technologies are you comfortable helping hackers with? <span>Separate them with commas</span></label>
+	  	<input id='tags' name='tags' type='text' placeholder='CSS, Illustrator, Swift, machine learning'/>
+  	</div>
+  	<div>
+	  	<label for='details'>Any more details we should know? <span>Optional</span></label>
+	  	<input id='details' name='details' type='text'/>
+  	</div>
+  	<div>
+  		<input type='submit' value='Register as a mentor'/>
+  	</div>
+  </form>
+ {% endif %}
+{% endblock %}
