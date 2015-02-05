@@ -33,6 +33,8 @@ class Rep(ndb.Model):
     email = ndb.StringProperty(default=None, validator=stringValidator)
     checked_in = ndb.BooleanProperty(default=False)
     company = ndb.StringProperty(default=None, validator=stringValidator)
+    shirt_gen = ndb.StringProperty(choices=['M', 'W'])
+    shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 
     def asDict(self, include_keys):
         return {key: getattr(self, key, None) for key in include_keys}
@@ -43,6 +45,8 @@ class Volunteer(ndb.Model):
     checked_in = ndb.BooleanProperty(default=False)
     phone = ndb.StringProperty(default=None, validator=phoneValidator)
     role = ndb.StringProperty(default=None, validator=stringValidator)
+    shirt_gen = ndb.StringProperty(choices=['M', 'W'])
+    shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
 
     def asDict(self, include_keys):
         return {key: getattr(self, key, None) for key in include_keys}
