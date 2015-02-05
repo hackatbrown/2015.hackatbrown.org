@@ -82,6 +82,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       }).
       error(function(error) {
         console.log(error);
+        $scope.notify('Error!');
       });
   }
 
@@ -127,6 +128,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.hacker.status = 'checked in';
         $scope.total_checked_in = response.total_checked_in;
         $scope.session_checked_in++;
+        $scope.notify('Checked In!');
       }).
       error(function(error) {
         console.log(error);
@@ -182,7 +184,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $http.post('/checkin/new', $scope.newPerson).
       success(function(response) {
         if (response.success) {
-          $scope.notify("Success!");
+          $scope.notify("Created and checked in!");
         } else {
           failure(response.msg);
         }
@@ -200,7 +202,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.showStatus = true;
         return;
     }
-    console.log('heehh');
+
     $scope.collectedInfo['id'] = $scope.hackerID;
     $http.post('/checkin/requiredInfo', $scope.collectedInfo).
       success(function(response) {
