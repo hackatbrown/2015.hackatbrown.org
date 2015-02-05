@@ -45,7 +45,7 @@ class Mentor(ndb.Model):
 
 class MentorRequest(ndb.Model):
 	requester = ndb.KeyProperty(default=None)
-	requester_email = ndb.StringProperty(default=None, validator=models.stringValidator())
+	requester_email = ndb.StringProperty(default=None, validator=models.stringValidator)
 	location = ndb.StringProperty(default=None)
 	created = ndb.DateTimeProperty(auto_now_add=True)
 	responses = ndb.KeyProperty(kind=MentorResponse, repeated=True)
@@ -106,7 +106,7 @@ class MentorSignupHandler(webapp2.RequestHandler):
 		except datastore_errors.BadValueError as e:
 			print "MENTOR SIGNUP ERROR: {0}".format(e)
 			self.response.write(template("mentor_signup.html", {"error": "There's an invalid or missing field on your form!"}))
-        self.response.write(template("mentor_dispatch.html"))
+		self.response.write(template("mentor_dispatch.html"))
 
 
 class GetRequestsHandler(webapp2.RequestHandler):
@@ -126,8 +126,8 @@ class ViewRequestHandler(webapp2.RequestHandler):
 	def get(self, id):
 		request = ndb.Key(urlsafe=id).get()
 
-	def formatter(m):
-		return m.asDict(Mentor._properties)
+		def formatter(m):
+			return m.asDict(Mentor._properties)
 
 		mentors = map(formatter, findMentorsForRequest(request))
 		return self.response.write(json.dumps({'issue' : request.issue, 'mentors' : mentors}))
