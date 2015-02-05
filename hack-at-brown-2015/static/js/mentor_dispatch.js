@@ -26,17 +26,14 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   $scope.mentors = [{
     rating : 1,
     responses : 2,
-    lastResponse : {id : 120, time : 1},
     tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
   }, {
     rating : 1,
     responses : 2,
-    lastResponse : {id : 120, time : 1},
     tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
   }, {
     rating : 1,
     responses : 2,
-    lastResponse : {id : 120, time : 1},
     tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
   }];
 
@@ -74,6 +71,8 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   $scope.viewRequest = function(request) {
     $http.get('/dashboard/mentor_dispatch/request/' + request.id).
       success(function(response) {
+        $scope.request = response.request;
+        $scope.mentors = response.mentors;
         console.log(response);
       }).error(function(error) {
         console.log(error);

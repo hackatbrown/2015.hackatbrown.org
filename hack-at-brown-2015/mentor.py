@@ -41,7 +41,13 @@ class Mentor(ndb.Model):
 
 		def computeAvg(self):
 				ratedResponded = [x for x in self.getResponded() if x.rating]
-				return (reduce(lambda x, y: x.rating + y, ratedResponded) / len(ratedResponded))
+				if len(ratedResponded) == 0:
+					return 3
+				else:
+					return (reduce(lambda x, y: x.rating + y, ratedResponded, 0) / len(ratedResponded))
+
+		def asDict(self, include_keys):
+			return {key: getattr(self, key, None) for key in include_keys}
 
 class MentorRequest(ndb.Model):
 	requester = ndb.KeyProperty(default=None)
@@ -53,8 +59,9 @@ class MentorRequest(ndb.Model):
 	tags = ndb.StringProperty(repeated=True)
 	status = ndb.StringProperty(choices=['solved', 'assigned', 'unassigned'], default='unassigned')
 	def asDict(self, include_keys):
-		return {key: getattr(self, key, None) for key in include_keys}
-		requester = ndb.KeyProperty(default=None)
+		d = {key: getattr(self, key, None) for key in include_keys}
+		return d
+
 
 class MentorRequestHandler(webapp2.RequestHandler):
 		def get(self):
@@ -111,26 +118,29 @@ class MentorSignupHandler(webapp2.RequestHandler):
 
 class GetRequestsHandler(webapp2.RequestHandler):
 	def get(self):
-		def formatter(mentorRequest):
-			mr =  mentorRequest.asDict(MentorRequest._properties)
-			mr['created'] = pretty_date(mr['created'])
-			mr['id'] = mentorRequest.key.urlsafe()
-			mr['responses'] = len(mr['responses'])
-			return mr
 
-		requests = map(formatter, MentorRequest.query(MentorRequest.status == 'unassigned').fetch())
+		requests = map(formatRequest, MentorRequest.query(MentorRequest.status == 'unassigned').fetch())
 		return self.response.write(json.dumps({'requests' : requests}))
 
+def formatRequest(mentorRequest):
+	mr =  mentorRequest.asDict(MentorRequest._properties)
+	mr['created'] = pretty_date(mr['created'])
+	mr['id'] = mentorRequest.key.urlsafe()
+	mr['responses'] = len(mr['responses'])
+	return mr
 
 class ViewRequestHandler(webapp2.RequestHandler):
 	def get(self, id):
+		logging.info(id)
 		request = ndb.Key(urlsafe=id).get()
 
 		def formatter(m):
-			return m.asDict(Mentor._properties)
+			md = m.asDict(Mentor._properties)
+			md['responses'] = len(m.responded)
+			return md
 
 		mentors = map(formatter, findMentorsForRequest(request))
-		return self.response.write(json.dumps({'issue' : request.issue, 'mentors' : mentors}))
+		return self.response.write(json.dumps({'request' : formatRequest(request), 'mentors' : mentors}))
 
 
 # These should sum to 1
@@ -140,15 +150,25 @@ mweight_numdone = 0.15
 
 def findMentorsForRequest(request):
 	tags = [t.lower() for t in request.tags]
-	all_mentors = Mentor.query().fetch()
+	mentors = Mentor.query(Mentor.tags.IN(tags)).fetch()
 	# Each mentor should be assessed based on:
 	# 1. # of tags matching that of request
 	# 2. # of previously completed tasks balanced with rating
 	# should return list of best mentors
-	tagmap = {m:[request.tags.contains(t.lowercase) for t in tags].len for m in all_mentors}
-	appropriate_mentors = [(k,v) for (k,v) in tagmap.iteritems() if v > 0]
-	appropriate_mentors.sort(lambda x: ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)), reverse=True)
-	return appropriate_mentors
+	#First sort by responded.
+	mentors.sort(key=lambda m: len(m.responded))
+	#Then sort by rating
+	mentors.sort(key=lambda m: m.computeAvg())
+	#Finally sort by relevance of tags
+	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]))
+	#https://wiki.python.org/moin/HowTo/Sorting
+
+
+
+	# tagmap = {m:len([t for t in tags if t.lower() in request.tags]) for m in all_mentors}
+	# appropriate_mentors = [(k,v) for (k,v) in tagmap.iteritems() if v > 0]
+	# appropriate_mentors.sort(lambda x: ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)), reverse=True)
+	return mentors
 
 def pretty_date(time=False):
 	"""
@@ -157,6 +177,7 @@ def pretty_date(time=False):
 	'just now', etc
 	"""
 	from datetime import datetime
+	logging.info(time)
 	now = datetime.now()
 	if type(time) is int:
 		diff = now - datetime.fromtimestamp(time)
