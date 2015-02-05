@@ -171,7 +171,7 @@ class CreateNewPersonHandler(webapp2.RequestHandler):
             person = models.Visitor()
         elif kind == 'Volunteer':
             person = models.Volunteer()
-        elif kind == 'Company Rep':
+        elif kind == 'Rep':
             person = models.Rep()
         else:
             return self.response.write(json.dumps({'sucess' : False}))

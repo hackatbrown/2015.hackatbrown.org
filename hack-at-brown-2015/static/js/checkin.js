@@ -152,16 +152,20 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     var requiredFields = ['email', 'name'];
     switch (kind) {
       case 'Hacker':
+        requiredFields = requiredFields.concat(['phone_number']);
         break;
       case 'Visitor':
         requiredFields = requiredFields.concat(['org']);
         break;
       case 'Volunteer':
-        requiredFields = requiredFields.concat(['role', 'phone']);
+        requiredFields = requiredFields.concat(['role', 'phone_number', 'shirt_gen', 'shirt_size']);
         break;
-      case 'Company Rep':
-        requiredFields = requiredFields.concat(['company']);
+      case 'Rep':
+        requiredFields = requiredFields.concat(['company', 'phone_number', 'shirt_gen', 'shirt_size']);
         break;
+      default:
+        console.log('not a thing');
+        return;
     }
 
     $scope.newPerson = {'kind' : kind, 'fields' : requiredFields};

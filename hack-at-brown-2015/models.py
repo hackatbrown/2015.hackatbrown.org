@@ -31,6 +31,7 @@ class Visitor(ndb.Model):
 class Rep(ndb.Model):
     name = ndb.StringProperty(default=None, validator=stringValidator)
     email = ndb.StringProperty(default=None, validator=stringValidator)
+    phone_number = ndb.StringProperty(default=None, validator=phoneValidator)
     checked_in = ndb.BooleanProperty(default=False)
     company = ndb.StringProperty(default=None, validator=stringValidator)
     shirt_gen = ndb.StringProperty(choices=['M', 'W'])
@@ -43,7 +44,7 @@ class Volunteer(ndb.Model):
     name = ndb.StringProperty(default=None, validator=stringValidator)
     email = ndb.StringProperty(default=None, validator=stringValidator)
     checked_in = ndb.BooleanProperty(default=False)
-    phone = ndb.StringProperty(default=None, validator=phoneValidator)
+    phone_number = ndb.StringProperty(default=None, validator=phoneValidator)
     role = ndb.StringProperty(default=None, validator=stringValidator)
     shirt_gen = ndb.StringProperty(choices=['M', 'W'])
     shirt_size = ndb.StringProperty(choices=['XS', 'S', 'M', 'L', 'XL', 'XXL'])
