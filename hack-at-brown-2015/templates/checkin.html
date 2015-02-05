@@ -41,6 +41,7 @@ Check-in - Hack@Brown 2015
   <div class="inner_container">
     <div class="panes">
       <div id="scope" class="pane pane0 active white" ng-app='checkinApp' ng-controller="Controller">
+        <shortcut></shortcut>
         <div class="counter inline-flex">
           <label for="session-counter">Session:</label>
           <div id='session-counter'>%%session_checked_in%%</div>
@@ -51,7 +52,7 @@ Check-in - Hack@Brown 2015
           <form id='checkin' class="ui form" method='POST' >
             <div class="field">
               <div class="ui title input">
-                <input type="text" ng-model='hackerID' ng-change="requestMoreInfo()" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or mentor"/>
+                <input type="text" ng-model='hackerID' ng-change="requestMoreInfo()" name="name/email" id='search' placeholder="Search for a hacker, volunteer, or rep"/>
               </div>
             </div>
           </form>
@@ -59,10 +60,11 @@ Check-in - Hack@Brown 2015
         <section id="notifications" ng-show="notification">
           <span class="notification">%%notification%%</span>
         </section>
-        <section id="required-info" ng-show="requiredInfo">
+        <section id="required-info" ng-show="requiredInfo" ng-init="collectedInfo={}">
           <h4>The following information is required before checkin:</h4>
           <div ng-repeat='(required, description) in requiredInfo'>
             <label>%%required%%</label><span class="help-text">%%description%%</span>
+            <input id="phone_number" type="tel" name="phone_number" ng-model="collectedInfo.phone_number" placeholder="(123) 456-7890" ng-show="required == 'Phone Number'"/>
           </div>
           <div class="requiredHandled field">
             <input id="required-button" type="submit" value="Proceed" class="ui teal button" ng-click="requiredHandled()">
@@ -108,7 +110,7 @@ Check-in - Hack@Brown 2015
             <div class="checkin field">
               <input id="checkin-button" type="submit" value="Check In" class="ui teal button" ng-click="checkinHacker()">
             </div>
-            <span class="help-text">(or press ENTER)</span>
+            <span class="help-text">(or press &#x2303;ENTER)</span>
           </div>
         </section>
         <section id="additional" class="panel hero condensed-top">
@@ -116,16 +118,16 @@ Check-in - Hack@Brown 2015
           <div class="flex wrap">
             <div class="flex-left">
               <div id="add-hacker" class="ui pink button" ng-click='createPerson("Hacker")'>
-                Add New Hacker
+                New Hacker &#x2303;H
               </div>
               <div id="add-volunteer" class="ui pink button" ng-click='createPerson("Volunteer")'>
-                Add New Volunteer
+                New Volunteer &#x2303;V
               </div>
-              <div id="add-rep" class="ui pink button" ng-click='createPerson("Company Rep")'>
-                Add New Rep
+              <div id="add-rep" class="ui pink button" ng-click='createPerson("Rep")'>
+                New Rep &#x2303;R
               </div>
               <div id="add-visitor" class="ui pink button" ng-click='createPerson("Visitor")'>
-                Add New Visitor
+                New Visitor &#x2303;I
               </div>
             </div>
             <div id="admin-tools" class="ui button">
@@ -160,6 +162,7 @@ Check-in - Hack@Brown 2015
   var initial_total_checked_in = {{total_checked_in}};
 
   var source = {{source|safe}};
+  console.log(source);
 
   var channel = new goog.appengine.Channel('{{ token }}');
   var socket = channel.open();
@@ -174,7 +177,7 @@ Check-in - Hack@Brown 2015
     optgroups: [
       {id: 'Hacker', name: 'Hackers'},
       {id: 'Volunteer', name: 'Volunteers'},
-      {id: 'Company Rep', name: 'Company Reps'}
+      {id: 'Rep', name: 'Reps'}
     ],
     render: {
       item: function(item, escape) {
@@ -197,19 +200,12 @@ Check-in - Hack@Brown 2015
     optgroupField: 'kind',
     optgroupLabelField: 'name',
     optgroupValueField: 'id',
-    optgroupOrder: ['Hacker', 'Volunteer', 'Company Rep'],
+    optgroupOrder: ['Hacker', 'Volunteer', 'Rep'],
     searchField: ['name'],
     plugins: ['optgroup_columns'],
     maxItems: 1,
   });
 
-
-  $('.selectize-input').on('keyup', function(event) {
-    if (event.which == 13) {
-      angular.element($('#scope')).scope().checkinHacker();
-      //TODO - fires twice on select - kinda ugly rn
-    }
-  });
 
   $('.selectize-input > input').focus(function(event) {
       angular.element($('#scope')).scope().cancelPerson();

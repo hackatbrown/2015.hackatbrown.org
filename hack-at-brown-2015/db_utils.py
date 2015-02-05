@@ -10,6 +10,7 @@ from config import isMasterDB
 import random
 from google.appengine.api import taskqueue
 from config import isAdmin
+import datetime
 
 #Example:
 # json = {
@@ -146,7 +147,14 @@ def createTestHacker(number):
     def numberString(length):
         return ''.join(map(lambda x: str(random.randint(0, 9)), range(0, length)))
 
-    hacker.phone_number = numberString(10)
+    if prob() < 1:
+        hacker.phone_number = numberString(10)
+
+    #MOst will be confirmed, some will be waitlisted.
+    if prob() < 8:
+        hacker.rsvpd = True
+    elif prob() < 3:
+        hacker.waitlist_email_sent_date = datetime.datetime.now()
 
     states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
 

@@ -35,6 +35,7 @@ import day_of
 import partner
 import rewriter
 import mentor
+import csv_import
 
 class IndexHandler(webapp2.RequestHandler):
 		def get(self):
@@ -61,9 +62,9 @@ def static_page_handler(html_file):
 	return Handler
 
 app = webapp2.WSGIApplication([
-			('/', IndexHandler),
-			('/sponsor-dashboard', partner.PartnerPageHandler),
-			('/__partner_csv',partner.PartnerCSVDownload),
+	    ('/', IndexHandler),
+	    ('/partner', partner.PartnerPageHandler),
+	    ('/__partner_csv',partner.PartnerCSVDownload),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
 		('/__check_registered', registration.CheckRegistrationHandler),
@@ -91,11 +92,13 @@ app = webapp2.WSGIApplication([
 		('/dashboard/__db_populate/worker', db_utils.CreateTestHackerWorker),
 		('/dashboard/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
 		('/dashboard/__cleanup', db_utils.CleanupHandler),
-				('/dashboard/csv', csv_export.CsvExport),
-				('/dashboard/register', SecretIndexHandler),
+        ('/dashboard/csv', csv_export.CsvExport),
+        ('/dashboard/register', SecretIndexHandler),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
+		('/dashboard/mentor_dispatch/request/(.+)', mentor.ViewRequestHandler),
+		('/dashboard/mentor_dispatch/get_requests', mentor.GetRequestsHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),
 		('/dayof/mentor_request', mentor.MentorRequestHandler),

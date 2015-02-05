@@ -43,9 +43,6 @@ class CheckinPageHandler(webapp2.RequestHandler):
 
         total_checked_in = getTotal()
 
-        #TODO: Remove this Test Data
-        # source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
-
         session = models.CheckInSession()
         session.user = user.email()
 
@@ -63,17 +60,18 @@ class CheckinPageHandler(webapp2.RequestHandler):
         if hacker is None:
             success = False
             newTotal = 0
+        elif hacker.phone_number is None:
+            success = False
         else:
             newTotal = getTotal(increment_first=True)
             #We do this before so eventual consistency doesn't confuse users
             success = True
             hacker.checked_in = True
             hacker.put()
+            for session in models.CheckInSession.query(models.CheckInSession.active == True):
+                channel.send_message(session.key.urlsafe(), str(newTotal))
 
-        for session in models.CheckInSession.query(models.CheckInSession.active == True):
-            channel.send_message(session.key.urlsafe(), str(newTotal))
-
-        msg = "{0} in hacker {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
+        msg = "{0} in {1} - {2}".format('successfully checked' if success else 'failed to check', hacker.name, hacker.email)
 
         self.response.write(json.dumps({'success' : success, 'message' : msg, 'total_checked_in' : newTotal}))
 
@@ -112,23 +110,54 @@ def getTotal(increment_first=False):
 
 class MoreInfoHandler(webapp2.RequestHandler):
     def get(self, id):
-        infoKeys = hacker_keys + ['checked_in']
 
-        hacker = ndb.Key(urlsafe=id).get()
-        hackerDict = hacker.asDict(infoKeys)
-        hackerDict.update({'id' : id})
+        person = ndb.Key(urlsafe=id).get()
+        kind = person.key.kind()
 
-        optionalKeys = ['phone_number', 'resume']
-        missingOptional = [key for key in optionalKeys if not getattr(hacker, key, None)]
+        infoKeys = ['checked_in', 'status', 'shirt_size', 'shirt_gen']
+        optionalKeys = ['resume'] if kind == 'Hacker' else []
+
+        personDict = person.asDict(infoKeys)
+        personDict.update({'id' : id})
+
+        missingOptional = [key for key in optionalKeys if not getattr(person, key, None)]
 
         required = {}
-        if hacker.year == "highschool":
+        if getattr(person, 'year', None) == "highschool":
             required.update({'Parental Waiver' : 'Confirm this hacker is 18 or has a waiver.'})
+
+
+        if person.phone_number is None:
+            required.update({'Phone Number' : "Enter this hacker's phone number"})
 
         defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
 
-        self.response.write(json.dumps({'hacker': hackerDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
+        self.response.write(json.dumps({'hacker': personDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
 
+class AddRequiredInfoHandler(webapp2.RequestHandler):
+    def post(self):
+        request = json.loads(self.request.body)
+        id = request.get('id')
+        phone_number = request.get('phone_number')
+        if not id or not phone_number:
+            return self.response.write(json.dumps({'success' : False}))
+
+        person = ndb.Key(urlsafe=id).get()
+        if not person:
+            logging.info('no person')
+            return self.response.write(json.dumps({'success' : False}))
+        try:
+            if person.key.kind() == 'Hacker':
+                person.phone_number = phone_number
+            elif person.key.kind() == 'Volunteer':
+                person.phone = phone_number
+            else:
+                return self.response.write(json.dumps({'success' : False}))
+            person.put()
+        except datastore_errors.BadValueError as err:
+            return self.response.write(json.dumps({'success' : False}))
+
+        self.response.write(json.dumps({'success' : True}))
 
 class CreateNewPersonHandler(webapp2.RequestHandler):
     def post(self):
@@ -143,7 +172,7 @@ class CreateNewPersonHandler(webapp2.RequestHandler):
             person = models.Visitor()
         elif kind == 'Volunteer':
             person = models.Volunteer()
-        elif kind == 'Company Rep':
+        elif kind == 'Rep':
             person = models.Rep()
         else:
             return self.response.write(json.dumps({'sucess' : False}))
@@ -185,5 +214,6 @@ app = webapp2.WSGIApplication([
     ('/checkin', CheckinPageHandler),
     ('/checkin/new', CreateNewPersonHandler),
     ('/checkin/info/(.+)', MoreInfoHandler),
+    ('/checkin/requiredInfo', AddRequiredInfoHandler),
     ('/_ah/channel/disconnected/', DisconnectSessionHandler)
 ], debug=True)
