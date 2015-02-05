@@ -5,7 +5,7 @@ import logging
 def stringValidator(prop, value):
    cleanValue = value.strip()
 
-   if prop._name == 'email':
+   if prop._name == 'email' or prop._name == 'requester_email':
            cleanValue = cleanValue.lower()
 
    return cleanValue

@@ -6,7 +6,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#			http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,7 +38,7 @@ import mentor
 import csv_import
 
 class IndexHandler(webapp2.RequestHandler):
-    def get(self):
+		def get(self):
 			variables = {
 				"registration_status": config.registration_status()
 			}
@@ -47,7 +47,7 @@ class IndexHandler(webapp2.RequestHandler):
 			self.response.write(template("index.html", variables))
 
 class SecretIndexHandler(webapp2.RequestHandler):
-    def get(self):
+		def get(self):
 			variables = {
 				"registration_status": "registration_open"
 			}
@@ -56,10 +56,10 @@ class SecretIndexHandler(webapp2.RequestHandler):
 			self.response.write(template("index.html", variables))
 
 def static_page_handler(html_file):
-  class Handler(webapp2.RequestHandler):
-    def get(self):
-      self.response.write(template(html_file))
-  return Handler
+	class Handler(webapp2.RequestHandler):
+		def get(self):
+			self.response.write(template(html_file))
+	return Handler
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
@@ -97,15 +97,13 @@ app = webapp2.WSGIApplication([
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
-		('/dashboard/mentor_dispatch/request/(.+)', mentor.ViewRequestHandler),
-		('/dashboard/mentor_dispatch/get_requests', mentor.GetRequestsHandler),
-		('/dashboard/mentor_request', mentor.MentorRequestHandler),
-		('/dashboard/upload_csv', csv_import.ImportPageHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),
+		('/dayof/mentor_request', mentor.MentorRequestHandler),
 		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
-	    ('/goodbye', static_page_handler("goodbye.html")),
+		('/goodbye', static_page_handler("goodbye.html")),
+		('/mentor', mentor.MentorSignupHandler),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)

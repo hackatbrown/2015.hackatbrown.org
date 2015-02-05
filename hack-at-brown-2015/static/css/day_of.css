@@ -64,6 +64,24 @@ body:before {
 	border-bottom: 2px solid #009fda;
 }
 
+/* confirmation boxes */
+
+.hud {
+	display: none;
+	width: 70%;
+	max-width: 500px;
+	margin: 1em auto;
+	padding: 10px;
+	background-color: #DF5C74;
+	color: white;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.hud:target {
+	display: block;
+}
+
 /* sidebar (for help) */
 .optional-sidebar {
 	display: none;
@@ -116,6 +134,7 @@ body:before {
 /* schedule */
 #schedule {
 	text-align: center;
+	font-size: 1.3em;
 }
 #schedule .day {
 	vertical-align: top;
@@ -133,6 +152,7 @@ body:before {
 #schedule h2 {
 	font-size: 1em;
 	margin-bottom: 0.3em;
+	border-bottom: none;
 }
 #schedule .day span {
 	float: right;

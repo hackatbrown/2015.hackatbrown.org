@@ -1,20 +1,25 @@
-<form action='/__day_of/request_help' method='post' id='help' class='ui form'>
+<form action='/mentor_request?dayof=1' method='post' id='help' class='ui form'>
 	<h1>Need help?</h1>
 	<h3>We'll find an expert and send them to you.</h3>
 	
 	<p class='field'>
 		<label>What's the topic?</label>
-		<input type='text' name="topic" placeholder="CSS, Illustrator, Android"/>
+		<input type='text' name="tags" placeholder="Javascript, Illustrator, Android"/>
+	</p>
+	
+	<p class='field'>
+		<label>What's the issue?</label>
+		<input type='text' name="issue" placeholder="'undefined is not a function' error"/>
 	</p>
 	
 	<p class='field'>
 		<label>Where can we find you?</label>
-		<input type='text' name="location" placeholder="Room 315"/>
+		<input type='text' name="location" placeholder="Sayles Room 315"/>
 	</p>
 	
 	<p class='field'>
-		<label>What's your name?</label>
-		<input type='text' name="name" placeholder="Josiah Carberry" />
+		<label>What's your email?</label>
+		<input type='email' name="email" placeholder="jcarberry@brown.edu" />
 	</p>
 	
 	<p>
