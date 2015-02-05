@@ -43,9 +43,6 @@ class CheckinPageHandler(webapp2.RequestHandler):
 
         total_checked_in = getTotal()
 
-        #TODO: Remove this Test Data
-        # source += [{'id': 1, 'kind': 'Volunteer', 'email': 'samuel_kortchmar@brown.edu', 'name': 'Samuel Kortchmar'}, {'id': 2, 'kind': 'Company Rep', 'email': 'hats@brown.edu', 'name': 'Sponsor Sponsor'}]
-
         session = models.CheckInSession()
         session.user = user.email()
 

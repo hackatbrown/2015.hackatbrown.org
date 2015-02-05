@@ -92,31 +92,26 @@ label {
   <h2>Mentor Dispatch</h2>
   <div class="requests col">
     <h2>REQUESTS</h2>
-    <div class="list">
-      <div class="card">
+    <div class="list" ng-init="getRequests()">
+      <div class="card" ng-repeat="request in requests" ng-click="viewRequest(request)">
         <div class="metadata flex">
           <div class="time">
-            1 hour ago
+            %%request.created%%
           </div>
           <div class="responses number">
-            1 Responses
+            %%request.responses%% Responses
           </div>
         </div>
           <div class="tags-container small">
-            <span class="tag">Angular.JS</span>
-            <span class="tag">Web</span>
-            <span class="tag">Node</span>
-            <span class="tag">Javascript</span>
+            <span ng-repeat="tag in request.tags" class="tag %%tag%%">%%tag%%</span>
           </div>
       </div>
-      <div class="card">Request 2</div>
-      <div class="card">Request 3</div>
     </div>
   </div>
   <div class="mentors col">
     <h2>AVAILABLE MENTORS</h2>
     <div class="list">
-      <div class="card">
+      <div class="card" ng-repeat="mentor in mentors">
           <div class="metadata flex">
             <div class="rating">
               4.5

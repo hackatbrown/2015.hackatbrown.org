@@ -4,6 +4,8 @@ from google.appengine.ext import ndb
 from google.appengine.api import datastore_errors
 import models
 from registration import Hacker
+import logging
+import json
 
 maxRating = 5
 minRating = 0
@@ -45,6 +47,8 @@ class MentorRequest(ndb.Model):
     issue = ndb.TextProperty(required=False)
     tags = ndb.StringProperty(repeated=True)
     status = ndb.StringProperty(choices=['solved', 'assigned', 'unassigned'], default='unassigned')
+    def asDict(self, include_keys):
+        return {key: getattr(self, key, None) for key in include_keys}
 
 class MentorRequestHandler(webapp2.RequestHandler):
     def get(self):
@@ -76,13 +80,41 @@ class DispatchHandler(webapp2.RequestHandler):
 
         self.response.write(template("mentor_dispatch.html"))
 
+
+class GetRequestsHandler(webapp2.RequestHandler):
+    def get(self):
+        def formatter(mentorRequest):
+            mr =  mentorRequest.asDict(MentorRequest._properties)
+            mr['created'] = pretty_date(mr['created'])
+            mr['id'] = mentorRequest.key.urlsafe()
+            mr['responses'] = len(mr['responses'])
+            return mr
+
+
+        rs = MentorRequest.query().fetch()
+        logging.info(rs)
+        requests = map(formatter, rs)
+        logging.info(requests)
+        return self.response.write(json.dumps({'requests' : requests}))
+
+
+class ViewRequestHandler(webapp2.RequestHandler):
+    def get(self, id):
+        request = ndb.Key(urlsafe=id).get()
+        def formatter(m):
+            return m.asDict(Mentor._properties)
+        mentors = map(formatter, findMentorsForRequest(request))
+        logging.info(mentors)
+        return self.response.write(json.dumps({'issue' : request.issue, 'mentors' : mentors}))
+
+
 # These should sum to 1
 mweight_tags    = 0.6
 mweight_rating  = 0.25
 mweight_numdone = 0.15
 
 def findMentorsForRequest(request):
-    tags = [t.lowercase for t in request.tags]
+    tags = [t.lower() for t in request.tags]
     all_mentors = Mentor.query().fetch()
     # Each mentor should be assessed based on:
     # 1. # of tags matching that of request
@@ -90,11 +122,52 @@ def findMentorsForRequest(request):
     # should return list of best mentors
     tagmap = {m:[request.tags.contains(t.lowercase) for t in tags].len for m in all_mentors}
     appropriate_mentors = [(k,v) for (k,v) in tagmap.iteritems() if v > 0]
-    appropriate_mentors.sort(lambda x: 
-        ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)), 
+    appropriate_mentors.sort(lambda x:
+        ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)),
         reverse=True)
     return appropriate_mentors
 
+def pretty_date(time=False):
+    """
+    Get a datetime object or a int() Epoch timestamp and return a
+    pretty string like 'an hour ago', 'Yesterday', '3 months ago',
+    'just now', etc
+    """
+    from datetime import datetime
+    now = datetime.now()
+    if type(time) is int:
+        diff = now - datetime.fromtimestamp(time)
+    elif isinstance(time,datetime):
+        diff = now - time
+    elif not time:
+        diff = now - now
+    second_diff = diff.seconds
+    day_diff = diff.days
 
+    if day_diff < 0:
+        return ''
+
+    if day_diff == 0:
+        if second_diff < 10:
+            return "just now"
+        if second_diff < 60:
+            return str(second_diff) + " seconds ago"
+        if second_diff < 120:
+            return "a minute ago"
+        if second_diff < 3600:
+            return str(second_diff / 60) + " minutes ago"
+        if second_diff < 7200:
+            return "an hour ago"
+        if second_diff < 86400:
+            return str(second_diff / 3600) + " hours ago"
+    if day_diff == 1:
+        return "Yesterday"
+    if day_diff < 7:
+        return str(day_diff) + " days ago"
+    if day_diff < 31:
+        return str(day_diff / 7) + " weeks ago"
+    if day_diff < 365:
+        return str(day_diff / 30) + " months ago"
+    return str(day_diff / 365) + " years ago"
 
 
