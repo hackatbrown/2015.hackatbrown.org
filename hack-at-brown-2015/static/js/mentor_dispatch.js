@@ -16,7 +16,7 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
     mentor : null,
     request : null,
     id : ''
-  }
+  };
 
   $scope.poll = function() {
       $timeout(function() {
@@ -44,7 +44,6 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
         $scope.pair.request = response.request;
         $scope.mentors = response.mentors;
         $scope.pair.mentor = null;
-        console.log(response);
       }).error(function(error) {
         console.log(error);
       });
@@ -105,6 +104,7 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
     $scope.form['id'] = $scope.pair.id;
     $http.post('/dashboard/mentor_dispatch/unpair', $scope.form).
       success(function(response) {
+        $scope.pair = {};
         console.log(response);
       }).error(function(error) {
         console.log(error);
