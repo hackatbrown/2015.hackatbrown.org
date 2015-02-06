@@ -68,7 +68,7 @@ def formatMentor(mentor):
 
 class MentorRequest(ndb.Model):
 	requester = ndb.KeyProperty(default=None)
-	requester_email = ndb.StringProperty(default=None, validator=models.stringValidator)
+	requester_phone = ndb.StringProperty(default=None, validator=models.stringValidator)
 	location = ndb.StringProperty(default=None)
 	created = ndb.DateTimeProperty(auto_now_add=True)
 	responses = ndb.KeyProperty(kind=MentorResponse, repeated=True)
@@ -80,10 +80,12 @@ class MentorRequest(ndb.Model):
 		return d
 
 def formatRequest(mentorRequest):
-	mr =  mentorRequest.asDict(MentorRequest._properties)
-	mr['created'] = pretty_date(mr['created'])
+	mr =  mentorRequest.asDict(['location', 'created', 'issue', 'tags', 'status'])
+	mr['created'] = pretty_date(mentorRequest.created)
 	mr['id'] = mentorRequest.key.urlsafe()
-	mr['responses'] = len(mr['responses'])
+	mr['responses'] = len(mentorRequest.responses)
+	mr['requester_phone'] = mentorRequest.requester_phone
+	mr['requester_name'] = mentorRequest.requester.get().name if mentorRequest.requester else None
 	return mr
 
 
@@ -92,7 +94,7 @@ class MentorRequestHandler(webapp2.RequestHandler):
 				self.response.write(template('mentor_request.html', {}))
 
 		def post(self):
-				hackers = Hacker.query(Hacker.email == self.request.get('email')).fetch(keys_only=True)
+				hackers = Hacker.query(Hacker.phone_number == self.request.get('phone')).fetch(keys_only=True)
 
 				request = MentorRequest()
 				request.location = self.request.get('location')
@@ -100,8 +102,7 @@ class MentorRequestHandler(webapp2.RequestHandler):
 				request.tags = self.request.get('tags').split(', ')
 				if len(hackers):
 					request.requester = hackers[0]
-				else:
-					request.requester_email = self.request.get('email')
+				request.requester_phone = self.request.get('phone')
 				request.put()
 
 				self.redirect('/?dayof=1#mrc') # #mrc: mentor-request-confirm (we don't want that showing up in URLs)
