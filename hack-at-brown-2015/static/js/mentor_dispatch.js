@@ -12,10 +12,11 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   $scope.assignedPairs = [];
   $scope.assignedMentors = [];
 
-
-  $scope.currentMentor = null;
-
-  $scope.request = {};
+  $scope.pair = {
+    mentor : null,
+    request : null,
+    id : ''
+  }
 
   $scope.poll = function() {
       $timeout(function() {
@@ -40,9 +41,9 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   $scope.viewRequest = function(request) {
     $http.get('/dashboard/mentor_dispatch/request/' + request.id).
       success(function(response) {
-        $scope.request = response.request;
+        $scope.pair.request = response.request;
         $scope.mentors = response.mentors;
-        $scope.currentMentor = null;
+        $scope.pair.mentor = null;
         console.log(response);
       }).error(function(error) {
         console.log(error);
@@ -50,40 +51,50 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   }
 
   $scope.viewAssignedRequest = function(request) {
+      $scope.pair.request = request;
+      $scope.getMatch(request.id, false);
+  }
 
-      $scope.request = request;
+  $scope.getMatch = function(id, isMentor) {
+    var matchedPairs = $.grep($scope.assignedPairs, function(pair){
+      return pair[(isMentor ? 'mentor' : 'request')] == id;
+    });
 
-      var matchedPairs = $.grep($scope.assignedPairs, function(pair){ return pair.request == request.id; });
+    if (matchedPairs.length == 0) {
+      console.log('no match');
+      return;
+    }
 
-      if (matchedPairs.length > 0) {
-        var mentor = matchedPairs[0].mentor;
-        $scope.currentMentor = $.grep($scope.assignedMentors, function(m){return m.id == mentor;})[0];
-      } else {
-        $scope.currentMentor = null;
-      }
+    var matchedPair = matchedPairs[0];
+    var matchedID = matchedPair[(isMentor ? 'request' : 'mentor')];
+    var counterParts = isMentor ? $scope.assignedRequests : $scope.assignedMentors;
 
+    var out = $.grep(counterParts, function(cp){
+      return cp.id == matchedID;
+    });
+
+    if (out.length == 0) {
+      return;
+    }
+
+    $scope.pair[(isMentor ? 'request' : 'mentor')] = out[0];
+    $scope.pair.id = matchedPair.id;
   }
 
   $scope.viewMentor = function(mentor) {
-    $scope.currentMentor = mentor;
+    $scope.pair.mentor = mentor;
     if (mentor.assigned) {
-      var matchedPairs = $.grep($scope.assignedPairs, function(pair){ return pair.mentor == mentor.id; });
-      if (matchedPairs.length > 0) {
-        var request = matchedPairs[0].request;
-
-        $scope.request = $.grep($scope.assignedRequests, function(r){return r.id == request;})[0];
-      } else {
-        $scope.request = {};
-      }
+      $scope.getMatch(mentor.id, true);
     }
   }
 
-  $scope.pair = function() {
-    $http.post('/dashboard/mentor_dispatch', {mentor : $scope.currentMentor.id, request : $scope.request.id}).
+  $scope.sendPair = function() {
+    console.log('pair');
+    $http.post('/dashboard/mentor_dispatch', {mentor : $scope.pair.mentor.id, request : $scope.pair.request.id}).
       success(function(response) {
         $scope.getRequests();
         $scope.mentors = [];
-        $scope.request = {};
+        $scope.pair.request = null;
 
       }).error(function(error) {
         console.log(error);
@@ -91,7 +102,13 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   }
 
   $scope.unpair = function() {
-    console.log('unpair');
+    $scope.form['id'] = $scope.pair.id;
+    $http.post('/dashboard/mentor_dispatch/unpair', $scope.form).
+      success(function(response) {
+        console.log(response);
+      }).error(function(error) {
+        console.log(error);
+      });
   }
 
   $scope.getAssignedMentors = function() {

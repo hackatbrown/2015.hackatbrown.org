@@ -99,6 +99,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
 		('/dashboard/mentor_dispatch/request/(.+)', mentor.ViewRequestHandler),
 		('/dashboard/mentor_dispatch/get_requests', mentor.GetRequestsHandler),
+		('/dashboard/mentor_dispatch/unpair', mentor.ResponseFinishedHandler),
 		('/dashboard/mentor_dispatch/assigned', mentor.GetAssignedHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),

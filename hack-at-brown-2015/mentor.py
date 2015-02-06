@@ -7,7 +7,7 @@ from registration import Hacker
 import logging
 import json
 from google.appengine.api import users
-
+import datetime
 
 maxRating = 5
 minRating = 0
@@ -29,7 +29,7 @@ class MentorResponse(ndb.Model):
 
 def formatMentorResponse(mentorResponse):
 	mr = mentorResponse.get()
-	return {'mentor' : mr.mentor.urlsafe(), 'request' : mr.request.urlsafe()}
+	return {'mentor' : mr.mentor.urlsafe(), 'request' : mr.request.urlsafe(), 'id' : mr.key.urlsafe()}
 
 #Anyone who will give help to a hacker.
 class Mentor(ndb.Model):
@@ -41,17 +41,20 @@ class Mentor(ndb.Model):
 		availability = ndb.TextProperty()
 		details = ndb.TextProperty()
 		responded = ndb.KeyProperty(kind=MentorResponse, repeated=True)
+		#perhaps should be key property
 		assigned = ndb.BooleanProperty(default=False)
 
 		def getResponded(self):
 				return [key.get() for key in self.responded]
 
 		def computeAvg(self):
-				ratedResponded = [x for x in self.getResponded() if x.rating]
+				responded = self.getResponded()
+				ratedResponded = [x for x in responded if x.rating]
+
 				if len(ratedResponded) == 0:
 					return 3
 				else:
-					return (reduce(lambda x, y: x.rating + y, ratedResponded, 0) / len(ratedResponded))
+					return (reduce(lambda x, y: x + y.rating, ratedResponded, 0) / len(ratedResponded))
 
 		def asDict(self, include_keys):
 			return {key: getattr(self, key, None) for key in include_keys}
@@ -148,6 +151,27 @@ class DispatchHandler(webapp2.RequestHandler):
 
 			return self.response.write(json.dumps({'success' : True}))
 
+class ResponseFinishedHandler(webapp2.RequestHandler):
+	def post(self):
+		data = json.loads(self.request.body)
+
+		response = ndb.Key(urlsafe=data['id']).get()
+		mentor = response.mentor.get()
+		request = response.request.get()
+
+		if data.get('rating'):
+			response.rating = int(data.get('rating'))
+
+		request.status = data['status'] #could be completed or unassigned
+		response.finished = datetime.datetime.now()
+		mentor.assigned = False
+
+		response.put()
+		mentor.put()
+		request.put()
+		return self.response.write(json.dumps({'success' : True}))
+
+
 class GetRequestsHandler(webapp2.RequestHandler):
 	def get(self):
 
@@ -177,12 +201,6 @@ class ViewRequestHandler(webapp2.RequestHandler):
 		mentors = map(formatMentor, findMentorsForRequest(request))
 		return self.response.write(json.dumps({'request' : formatRequest(request), 'mentors' : mentors}))
 
-
-# These should sum to 1
-mweight_tags    = 0.6
-mweight_rating  = 0.25
-mweight_numdone = 0.15
-
 def findMentorsForRequest(request):
 	tags = [t.lower() for t in request.tags]
 	mentors = Mentor.query(Mentor.assigned == False).fetch()
@@ -196,7 +214,6 @@ def findMentorsForRequest(request):
 	mentors.sort(key=lambda m: m.computeAvg(), reverse=True)
 	#Finally sort by relevance of tags
 	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]), reverse=True)
-	#https://wiki.python.org/moin/HowTo/Sorting
 	return mentors
 
 def pretty_date(time=False):
@@ -205,12 +222,10 @@ def pretty_date(time=False):
 	pretty string like 'an hour ago', 'Yesterday', '3 months ago',
 	'just now', etc
 	"""
-	from datetime import datetime
-	logging.info(time)
-	now = datetime.now()
+	now = datetime.datetime.now()
 	if type(time) is int:
-		diff = now - datetime.fromtimestamp(time)
-	elif isinstance(time,datetime):
+		diff = now - datetime.datetime.fromtimestamp(time)
+	elif isinstance(time,datetime.datetime):
 		diff = now - time
 	elif not time:
 		diff = now - now
