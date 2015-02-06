@@ -111,33 +111,54 @@ label {
   <div class="mentors col">
     <h2>AVAILABLE MENTORS</h2>
     <div class="list">
-      <div class="card" ng-repeat="mentor in mentors">
+      <div class="card" ng-repeat="mentor in mentors" ng-click="viewMentor(mentor)">
           <div class="metadata flex">
             <div class="rating">
               %%mentor.rating%%
             </div>
             <div class="responses number">
-              %%mentor.responses%% Responses
+              %%mentor.responded%% Responses
             </div>
           </div>
+          %%mentor.name%%
           <div class="tags-container small">
             <span class="tag %%tag%%" ng-repeat="tag in mentor.tags">%%tag%%</span>
           </div>
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="inner_container %%request.status%%" ng-model="request">
-      <h1>Issue:</h1>
-      <p>%%request.issue%%</p>
-      <p>%%request.created%%</p>
-      <p>%%request.location%%</p>
-      <p>%%request.responses%%</p>
-      <p>%%request.status%%</p>
-      <h1>Tags:</h1>
-      <div class="tags-container large">
-        <span ng-repeat="tag in request.tags" class="tag %%tag%%">%%tag%%</span>
+  <div class="interactions flex">
+    <div class="container">
+      <div class="inner_container %%request.status%%" ng-model="request">
+        <h1>Request:</h1>
+        <p>%%request.issue%%</p>
+        <p>%%request.requester_email%%</p>
+        <p>%%request.created%%</p>
+        <p>%%request.location%%</p>
+        <p>%%request.responses%%</p>
+        <p>%%request.availability%%</p>
+        <p>%%request.status%%</p>
+        <h1>Tags:</h1>
+        <div class="tags-container large">
+          <span ng-repeat="tag in request.tags" class="tag %%tag%%">%%tag%%</span>
+        </div>
       </div>
+    </div>
+    <div class="inner_container" ng-show='currentMentor'>
+      <h1>Mentor:</h1>
+      <p>%%currentMentor.availability%%</p>
+      <p>%%currentMentor.details%%</p>
+      <p>%%currentMentor.email%%</p>
+      <p>%%currentMentor.name%%</p>
+      <p>%%currentMentor.responded%%</p>
+      <p>%%currentMentor.role%%</p>
+      <p>%%currentMentor.phone%%</p>
+      <div class="tags-container large">
+        <span ng-repeat="tag in currentMentor.tags" class="tag %%tag%%">%%tag%%</span>
+      </div>
+    </div>
+    <div ng-show='currentMentor && request'>
+      <input type="submit" value="PAIR" ng-click="pair()"/>
     </div>
   </div>
 </div>

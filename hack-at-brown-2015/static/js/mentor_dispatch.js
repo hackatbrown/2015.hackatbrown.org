@@ -6,39 +6,13 @@ var dispatchApp = angular.module('dispatchApp', []).config(function($interpolate
 
 dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout){
 
-  $scope.requests = [{
-    created : 1,
-    responses : 1,
-    tags : ['Angular JS', 'Web', 'Node', "Javascript"],
-    id : 1
-  }, {
-    created : 2,
-    responses : 1,
-    tags : ['Hats', "Java"],
-    id : 2
-  }, {
-    created : 1,
-    responses : 5,
-    tags : ['Cats', "Rats"],
-    id : 3
-  }];
-
-  $scope.mentors = [{
-    rating : 1,
-    responses : 2,
-    tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
-  }, {
-    rating : 1,
-    responses : 2,
-    tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
-  }, {
-    rating : 1,
-    responses : 2,
-    tags : ['Angular.JS', 'Hats', 'Bats', 'Rats']
-  }];
+  $scope.requests = [];
+  $scope.mentors = [];
+  $scope.currentMentor = null;
 
   $scope.request = {
     requester : 'Sam',
+    requester_email : 'sam@brown.edu',
     location : 'Sayles',
     created : '1 hour ago',
     responses : '3',
@@ -53,7 +27,7 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
           $scope.getRequests();
           //check if new data
           $scope.poll();
-      }, 500000);
+      }, 5000);
   };
 
   $scope.poll();
@@ -77,6 +51,22 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
       }).error(function(error) {
         console.log(error);
       });
+  }
+
+  $scope.viewMentor = function(mentor) {
+    console.log(mentor);
+    $scope.currentMentor = mentor;
+  }
+
+  $scope.pair = function() {
+    $http.post('/dashboard/mentor_dispatch', {mentor : $scope.currentMentor.id, request : $scope.request.id}).
+      success(function(response) {
+        console.log(response);
+        $scope.getRequests();
+      }).error(function(error) {
+        console.log(error);
+      });
+
   }
 
 }]);

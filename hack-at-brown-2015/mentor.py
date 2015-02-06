@@ -6,6 +6,8 @@ import models
 from registration import Hacker
 import logging
 import json
+from google.appengine.api import users
+
 
 maxRating = 5
 minRating = 0
@@ -35,6 +37,7 @@ class Mentor(ndb.Model):
 		availability = ndb.TextProperty()
 		details = ndb.TextProperty()
 		responded = ndb.KeyProperty(kind=MentorResponse, repeated=True)
+		assigned = ndb.BooleanProperty(default=False)
 
 		def getResponded(self):
 				return [key.get() for key in self.responded]
@@ -94,6 +97,27 @@ class DispatchHandler(webapp2.RequestHandler):
 				#TODO: mentor cards need tags, number responses.
 
 				self.response.write(template("mentor_dispatch.html"))
+		def post(self):
+			data = json.loads(self.request.body)
+			request = ndb.Key(urlsafe=data['request']).get()
+			mentor  = ndb.Key(urlsafe=data['mentor']).get()
+
+			response = MentorResponse()
+			response.dispatcher = users.get_current_user().email()
+			response.mentor = mentor.key
+			response.request = request.key
+			response.put()
+
+
+			mentor.responded.append(response.key)
+			mentor.assigned = True
+			request.responses.append(response.key)
+			request.status='assigned'
+
+			request.put()
+			mentor.put()
+
+			return self.response.write(json.dumps({'success' : True}))
 
 class MentorSignupHandler(webapp2.RequestHandler):
 	def get(self):
@@ -131,12 +155,13 @@ def formatRequest(mentorRequest):
 
 class ViewRequestHandler(webapp2.RequestHandler):
 	def get(self, id):
-		logging.info(id)
 		request = ndb.Key(urlsafe=id).get()
 
 		def formatter(m):
 			md = m.asDict(Mentor._properties)
-			md['responses'] = len(m.responded)
+			md['responded'] = len(m.responded)
+			md['id'] = m.key.urlsafe()
+			md['rating'] = m.computeAvg()
 			return md
 
 		mentors = map(formatter, findMentorsForRequest(request))
@@ -150,7 +175,7 @@ mweight_numdone = 0.15
 
 def findMentorsForRequest(request):
 	tags = [t.lower() for t in request.tags]
-	mentors = Mentor.query(Mentor.tags.IN(tags)).fetch()
+	mentors = Mentor.query(Mentor.assigned == False).fetch()
 	# Each mentor should be assessed based on:
 	# 1. # of tags matching that of request
 	# 2. # of previously completed tasks balanced with rating
@@ -158,16 +183,10 @@ def findMentorsForRequest(request):
 	#First sort by responded.
 	mentors.sort(key=lambda m: len(m.responded))
 	#Then sort by rating
-	mentors.sort(key=lambda m: m.computeAvg())
+	mentors.sort(key=lambda m: m.computeAvg(), reverse=True)
 	#Finally sort by relevance of tags
-	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]))
+	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]), reverse=True)
 	#https://wiki.python.org/moin/HowTo/Sorting
-
-
-
-	# tagmap = {m:len([t for t in tags if t.lower() in request.tags]) for m in all_mentors}
-	# appropriate_mentors = [(k,v) for (k,v) in tagmap.iteritems() if v > 0]
-	# appropriate_mentors.sort(lambda x: ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)), reverse=True)
 	return mentors
 
 def pretty_date(time=False):
