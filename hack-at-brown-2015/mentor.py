@@ -124,7 +124,7 @@ class MentorSignupHandler(webapp2.RequestHandler):
 		except datastore_errors.BadValueError as e:
 			print "MENTOR SIGNUP ERROR: {0}".format(e)
 			self.response.write(template("mentor_signup.html", {"error": "There's an invalid or missing field on your form!"}))
-		self.response.write(template("mentor_dispatch.html"))
+			self.response.write(template("mentor_dispatch.html"))
 
 class DispatchHandler(webapp2.RequestHandler):
 		def get(self):
