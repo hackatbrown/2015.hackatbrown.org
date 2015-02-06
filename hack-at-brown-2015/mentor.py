@@ -6,6 +6,8 @@ import models
 from registration import Hacker
 import logging
 import json
+from google.appengine.api import users
+import datetime
 
 maxRating = 5
 minRating = 0
@@ -25,6 +27,10 @@ class MentorResponse(ndb.Model):
 		dispatcher = ndb.StringProperty(validator=models.stringValidator)
 		finished = ndb.DateTimeProperty()
 
+def formatMentorResponse(mentorResponse):
+	mr = mentorResponse.get()
+	return {'mentor' : mr.mentor.urlsafe(), 'request' : mr.request.urlsafe(), 'id' : mr.key.urlsafe()}
+
 #Anyone who will give help to a hacker.
 class Mentor(ndb.Model):
 		phone = ndb.StringProperty(validator=models.phoneValidator, default=None)
@@ -35,19 +41,30 @@ class Mentor(ndb.Model):
 		availability = ndb.TextProperty()
 		details = ndb.TextProperty()
 		responded = ndb.KeyProperty(kind=MentorResponse, repeated=True)
+		#perhaps should be key property
+		assigned = ndb.BooleanProperty(default=False)
 
 		def getResponded(self):
 				return [key.get() for key in self.responded]
 
 		def computeAvg(self):
-				ratedResponded = [x for x in self.getResponded() if x.rating]
+				responded = self.getResponded()
+				ratedResponded = [x for x in responded if x.rating]
+
 				if len(ratedResponded) == 0:
 					return 3
 				else:
-					return (reduce(lambda x, y: x.rating + y, ratedResponded, 0) / len(ratedResponded))
+					return (reduce(lambda x, y: x + y.rating, ratedResponded, 0) / len(ratedResponded))
 
 		def asDict(self, include_keys):
 			return {key: getattr(self, key, None) for key in include_keys}
+
+def formatMentor(mentor):
+	md = mentor.asDict(Mentor._properties)
+	md['responded'] = len(mentor.responded)
+	md['id'] = mentor.key.urlsafe()
+	md['rating'] = mentor.computeAvg()
+	return md
 
 class MentorRequest(ndb.Model):
 	requester = ndb.KeyProperty(default=None)
@@ -61,6 +78,13 @@ class MentorRequest(ndb.Model):
 	def asDict(self, include_keys):
 		d = {key: getattr(self, key, None) for key in include_keys}
 		return d
+
+def formatRequest(mentorRequest):
+	mr =  mentorRequest.asDict(MentorRequest._properties)
+	mr['created'] = pretty_date(mr['created'])
+	mr['id'] = mentorRequest.key.urlsafe()
+	mr['responses'] = len(mr['responses'])
+	return mr
 
 
 class MentorRequestHandler(webapp2.RequestHandler):
@@ -82,19 +106,6 @@ class MentorRequestHandler(webapp2.RequestHandler):
 
 				self.redirect('/?dayof=1#mrc') # #mrc: mentor-request-confirm (we don't want that showing up in URLs)
 
-class DispatchHandler(webapp2.RequestHandler):
-		def get(self):
-				#TODO: clicking a request should load the issue in centered
-				#			 and populate the mentor list. Clicking a mentor in
-				#			 should bring up that mentor's contact info and all
-				#			 skills. Another click should assign that mentor.
-				#TODO: sort requests by created, #responses.
-				#TODO: sort mentors by tags match, #responded, rating
-				#TODO: color code mentors by Sponsor/Hacker/Volunteer
-				#TODO: mentor cards need tags, number responses.
-
-				self.response.write(template("mentor_dispatch.html"))
-
 class MentorSignupHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write(template("mentor_signup.html"))
@@ -115,6 +126,51 @@ class MentorSignupHandler(webapp2.RequestHandler):
 			self.response.write(template("mentor_signup.html", {"error": "There's an invalid or missing field on your form!"}))
 		self.response.write(template("mentor_dispatch.html"))
 
+class DispatchHandler(webapp2.RequestHandler):
+		def get(self):
+			self.response.write(template("mentor_dispatch.html"))
+
+		def post(self):
+			data = json.loads(self.request.body)
+			request = ndb.Key(urlsafe=data['request']).get()
+			mentor  = ndb.Key(urlsafe=data['mentor']).get()
+
+			response = MentorResponse()
+			response.dispatcher = users.get_current_user().email()
+			response.mentor = mentor.key
+			response.request = request.key
+			response.put()
+
+			mentor.responded.append(response.key)
+			mentor.assigned = True
+			request.responses.append(response.key)
+			request.status='assigned'
+
+			request.put()
+			mentor.put()
+
+			return self.response.write(json.dumps({'success' : True}))
+
+class ResponseFinishedHandler(webapp2.RequestHandler):
+	def post(self):
+		data = json.loads(self.request.body)
+
+		response = ndb.Key(urlsafe=data['id']).get()
+		mentor = response.mentor.get()
+		request = response.request.get()
+
+		if data.get('rating'):
+			response.rating = int(data.get('rating'))
+
+		request.status = data['status'] #could be completed or unassigned
+		response.finished = datetime.datetime.now()
+		mentor.assigned = False
+
+		response.put()
+		mentor.put()
+		request.put()
+		return self.response.write(json.dumps({'success' : True}))
+
 
 class GetRequestsHandler(webapp2.RequestHandler):
 	def get(self):
@@ -122,35 +178,32 @@ class GetRequestsHandler(webapp2.RequestHandler):
 		requests = map(formatRequest, MentorRequest.query(MentorRequest.status == 'unassigned').fetch())
 		return self.response.write(json.dumps({'requests' : requests}))
 
-def formatRequest(mentorRequest):
-	mr =  mentorRequest.asDict(MentorRequest._properties)
-	mr['created'] = pretty_date(mr['created'])
-	mr['id'] = mentorRequest.key.urlsafe()
-	mr['responses'] = len(mr['responses'])
-	return mr
+class GetAssignedHandler(webapp2.RequestHandler):
+	def get(self):
+		mentors = Mentor.query(Mentor.assigned == True).fetch()
+		mentors = map(formatMentor, mentors)
+
+		requests = MentorRequest.query(MentorRequest.status == 'assigned').fetch()
+
+		pairs =  [r.responses[-1] for r in requests if len(r.responses) > 0]
+		pairs = map(formatMentorResponse, pairs)
+
+		requests = map(formatRequest, requests)
+
+
+		self.response.write(json.dumps({'assigned_mentors' : mentors, 'assigned_requests' : requests, 'pairs' : pairs}))
+
 
 class ViewRequestHandler(webapp2.RequestHandler):
 	def get(self, id):
-		logging.info(id)
 		request = ndb.Key(urlsafe=id).get()
 
-		def formatter(m):
-			md = m.asDict(Mentor._properties)
-			md['responses'] = len(m.responded)
-			return md
-
-		mentors = map(formatter, findMentorsForRequest(request))
+		mentors = map(formatMentor, findMentorsForRequest(request))
 		return self.response.write(json.dumps({'request' : formatRequest(request), 'mentors' : mentors}))
-
-
-# These should sum to 1
-mweight_tags    = 0.6
-mweight_rating  = 0.25
-mweight_numdone = 0.15
 
 def findMentorsForRequest(request):
 	tags = [t.lower() for t in request.tags]
-	mentors = Mentor.query(Mentor.tags.IN(tags)).fetch()
+	mentors = Mentor.query(Mentor.assigned == False).fetch()
 	# Each mentor should be assessed based on:
 	# 1. # of tags matching that of request
 	# 2. # of previously completed tasks balanced with rating
@@ -158,16 +211,9 @@ def findMentorsForRequest(request):
 	#First sort by responded.
 	mentors.sort(key=lambda m: len(m.responded))
 	#Then sort by rating
-	mentors.sort(key=lambda m: m.computeAvg())
+	mentors.sort(key=lambda m: m.computeAvg(), reverse=True)
 	#Finally sort by relevance of tags
-	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]))
-	#https://wiki.python.org/moin/HowTo/Sorting
-
-
-
-	# tagmap = {m:len([t for t in tags if t.lower() in request.tags]) for m in all_mentors}
-	# appropriate_mentors = [(k,v) for (k,v) in tagmap.iteritems() if v > 0]
-	# appropriate_mentors.sort(lambda x: ((x[1]/len(request.tags) * mweight_tags) + (x[0].computeAvg()/maxRating * mweight_rating) + (1/(len(x[0].getResponded())+1) * mweight_numdone)), reverse=True)
+	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]), reverse=True)
 	return mentors
 
 def pretty_date(time=False):
@@ -176,12 +222,10 @@ def pretty_date(time=False):
 	pretty string like 'an hour ago', 'Yesterday', '3 months ago',
 	'just now', etc
 	"""
-	from datetime import datetime
-	logging.info(time)
-	now = datetime.now()
+	now = datetime.datetime.now()
 	if type(time) is int:
-		diff = now - datetime.fromtimestamp(time)
-	elif isinstance(time,datetime):
+		diff = now - datetime.datetime.fromtimestamp(time)
+	elif isinstance(time,datetime.datetime):
 		diff = now - time
 	elif not time:
 		diff = now - now
