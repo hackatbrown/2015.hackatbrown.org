@@ -4,25 +4,33 @@
 	
 	<p class='field'>
 		<label>What's the topic?</label>
-		<input type='text' name="tags" placeholder="Javascript, Illustrator, Android"/>
+		<input type='text' name="tags" placeholder="Javascript, Illustrator, Android" required/>
 	</p>
 	
 	<p class='field'>
 		<label>What's the issue?</label>
-		<input type='text' name="issue" placeholder="'undefined is not a function' error"/>
+		<input type='text' name="issue" placeholder="'undefined is not a function' error" required/>
 	</p>
 	
 	<p class='field'>
 		<label>Where can we find you?</label>
-		<input type='text' name="location" placeholder="Sayles Room 315"/>
+		<input type='text' name="location" placeholder="Sayles Room 315" required/>
 	</p>
 	
 	<p class='field'>
 		<label>What's your email?</label>
-		<input type='email' name="email" placeholder="jcarberry@brown.edu" />
+		<input type='email' name="email" placeholder="jcarberry@brown.edu" required/>
 	</p>
 	
 	<p>
 		<input type='submit' value='Send help!' class='ui button teal'/>
 	</p>
 </form>
+
+<script src='/static/js/H5F.js'></script>
+<script>
+H5F.setup(document.getElementById('help'), {
+	requiredClass: "required",
+	invalidClass: "invalid"
+});
+</script>
