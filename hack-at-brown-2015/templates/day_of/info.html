@@ -2,10 +2,20 @@
 <div class='optional-sidebar'>
 	{% include "day_of/help.html" %}
 </div>
-{% for message in messages %}
-<div>
-	{{ message.day_of_html | safe }}
-	<p class='date'>{{ message.added | day_of_date }}</p>
+{% for item in feed %}
+<div class="feed_item {{item.type}}">
+	{% if item.type == 'message' %}
+		{{ item.message.day_of_html | safe }}
+		<p class='date'>{{ item.message.added | day_of_date }}</p>
+	{% elif item.type == 'tweet' %}
+		<p>{{ item.tweet.text | linkify | safe }}</p>
+		{% if item.tweet.image_url %}
+		<p><img src='{{ item.tweet.image_url }}'/></p>
+		{% endif %}
+		<p class='date'>{{ item.tweet.date | day_of_date }}</p>
+	{% else %}
+
+	{% endif %}
 </div>
 {% endfor %}
 </div>

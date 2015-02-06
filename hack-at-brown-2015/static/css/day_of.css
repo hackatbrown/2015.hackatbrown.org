@@ -118,10 +118,6 @@ body:before {
 
 /* messages */
 
-#messages .date {
-	opacity: 0.7;
-}
-
 #messages {
 	padding-bottom: 30px;
 }
@@ -129,6 +125,25 @@ body:before {
 #messages img {
 	max-width: 100%;
 	height: auto;
+}
+
+#messages .feed_item {
+	margin-bottom: 2em;
+}
+
+#messages .feed_item p {
+	font-size: 1.25em;
+	font-weight: normal;
+}
+
+.feed_item p, .feed_item h1 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#messages .feed_item p.date {
+	font-size: 1em;
+	opacity: 0.7;
 }
 
 /* schedule */

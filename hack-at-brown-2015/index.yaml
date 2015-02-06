@@ -116,3 +116,16 @@ indexes:
   - name: show_in_day_of
   - name: added
     direction: desc
+
+- kind: Post
+  properties:
+  - name: feed
+  - name: id
+    direction: desc
+
+- kind: Post
+  properties:
+  - name: feed
+  - name: is_reply
+  - name: date
+    direction: desc
