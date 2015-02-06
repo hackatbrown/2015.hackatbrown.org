@@ -109,7 +109,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       return;
     }
 
-    if ($scope.hacker.status != "confirmed" || $scope.hacker.status != 'waitlisted') {
+    if (!($scope.hacker.status == "confirmed" || $scope.hacker.status == 'waitlisted')) {
       $scope.notify('Status Not Confirmed')
       return;
     }
