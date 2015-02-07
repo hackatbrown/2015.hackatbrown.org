@@ -136,10 +136,13 @@ class MoreInfoHandler(webapp2.RequestHandler):
 
 class AddRequiredInfoHandler(webapp2.RequestHandler):
     def post(self):
+        logging.info('hit')
         request = json.loads(self.request.body)
+        logging.info(request)
         id = request.get('id')
         phone_number = request.get('phone_number')
         if not id or not phone_number:
+            logging.info('no id')
             return self.response.write(json.dumps({'success' : False}))
 
         person = ndb.Key(urlsafe=id).get()
@@ -151,12 +154,17 @@ class AddRequiredInfoHandler(webapp2.RequestHandler):
                 person.phone_number = phone_number
             elif person.key.kind() == 'Volunteer':
                 person.phone = phone_number
+            elif person.key.kind() == 'Rep':
+                person.phone_number = phone_number
             else:
+                logging.info('hey')
                 return self.response.write(json.dumps({'success' : False}))
             person.put()
         except datastore_errors.BadValueError as err:
+            logging.info('bad value')
             return self.response.write(json.dumps({'success' : False}))
 
+        logging.info('worked')
         self.response.write(json.dumps({'success' : True}))
 
 class CreateNewPersonHandler(webapp2.RequestHandler):
