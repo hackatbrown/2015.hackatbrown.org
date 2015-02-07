@@ -205,7 +205,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       });
   }
 
-  $scope.requiredHandled = function() {
+  $scope.requiredHandled = function() {      
     if ($.isEmptyObject($scope.collectedInfo)) {
         $scope.requiredInfo = null;
         $scope.showStatus = true;
