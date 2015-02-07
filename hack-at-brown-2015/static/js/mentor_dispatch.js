@@ -12,11 +12,17 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   $scope.assignedPairs = [];
   $scope.assignedMentors = [];
 
+
   $scope.pair = {
     mentor : null,
     request : null,
     id : ''
   };
+
+
+  $scope.currentClass = 'js';
+  $scope.requestIndex  = -1;
+  $scope.mentorIndex = -1;
 
   $scope.poll = function() {
       $timeout(function() {
@@ -38,7 +44,9 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
       });
   }
 
-  $scope.viewRequest = function(request) {
+  $scope.viewRequest = function(request, index) {
+    $scope.requestIndex = index;
+    $scope.mentorIndex = -1;
     $http.get('/dashboard/mentor_dispatch/request/' + request.id).
       success(function(response) {
         $scope.pair.request = response.request;
@@ -49,7 +57,8 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
       });
   }
 
-  $scope.viewAssignedRequest = function(request) {
+  $scope.viewAssignedRequest = function(request, index) {
+      $scope.requestIndex = -1;
       $scope.pair.request = request;
       $scope.getMatch(request.id, false);
   }
@@ -80,9 +89,12 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
     $scope.pair.id = matchedPair.id;
   }
 
-  $scope.viewMentor = function(mentor) {
+  $scope.viewMentor = function(mentor, index) {
+    $scope.mentorIndex = index;
     $scope.pair.mentor = mentor;
     if (mentor.assigned) {
+      $scope.requestIndex = -1;
+      $scope.mentorIndex = -1;
       $scope.getMatch(mentor.id, true);
     }
   }

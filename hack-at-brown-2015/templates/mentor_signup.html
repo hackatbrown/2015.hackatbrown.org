@@ -72,7 +72,7 @@ form input, button {
 	height: 35px;
 }
 form input:focus {
-		box-shadow: inset 1px -50px 0 -1px #404040; 
+		box-shadow: inset 1px -50px 0 -1px #404040;
 		padding: 2px 6px;
 		color: white;
 }
@@ -139,7 +139,7 @@ form input[type=submit]:active, button:active {
 {% else %}
   <img id='logo' src='/static/img/logo.png'/>
   <h1>Mentor at Hack@Brown</h1>
-	
+
 	<p>
 		We're glad you're here to mentor our hackers!
 		Complete this form so we'll know who's available when students need help.
@@ -188,11 +188,14 @@ form input[type=submit]:active, button:active {
   	</div>
   </form>
   <script src='/static/js/H5F.js'></script>
+  <script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
+
   <script>
   H5F.setup(document.getElementById('signup'), {
   	requiredClass: "required",
   	invalidClass: "invalid"
   });
+  $("input[type=tel]").mask("(999) 999-9999");
   </script>
  {% endif %}
 {% endblock %}
