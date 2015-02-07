@@ -128,9 +128,9 @@ class MoreInfoHandler(webapp2.RequestHandler):
 
 
         if person.phone_number is None:
-            required.update({'Phone Number' : "Enter this hacker's phone number"})
+            required.update({'Phone Number' : ""})
 
-        defaultReminders = ['Remind this hacker about food or something.', 'Remind this hacker that travel receipts are due on 1.2.2015']
+        defaultReminders = ['Remind this hacker that travel receipts are due March 1, 2015.']
 
         self.response.write(json.dumps({'hacker': personDict, 'missingOptionalInfo' : missingOptional, 'requiredInfo' : required, 'reminders' : defaultReminders}))
 
