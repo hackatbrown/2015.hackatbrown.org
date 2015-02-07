@@ -11,9 +11,19 @@
 </style>
 
 {% if result %}
-
+<h1>We have a winner!</h1>
+<h2><a href='{{ url }}'>{{ name }}</a></h2>
 {% else %}
-
+<h1>#hackatbrown {{ service }} Raffle</h1>
+{% if text %}
+<p>{{ text }}</p>
+{% endif %}
+<p>
+<form method='POST'>
+	<input type='hidden' name='service' value='{{ service }}'/>
+	<input type='submit' value='Draw'/>
+</form>
+</p>
 {% endif %}
 
 {% endblock %}

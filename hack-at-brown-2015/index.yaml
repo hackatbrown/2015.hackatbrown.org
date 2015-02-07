@@ -125,6 +125,11 @@ indexes:
 - kind: Post
   properties:
   - name: feed
+  - name: date
+
+- kind: Post
+  properties:
+  - name: feed
   - name: id
     direction: desc
 

@@ -37,6 +37,7 @@ import rewriter
 import mentor
 import csv_import
 import social_import
+import raffle
 
 class IndexHandler(webapp2.RequestHandler):
 		def get(self):
@@ -110,6 +111,7 @@ app = webapp2.WSGIApplication([
 		('/goodbye', static_page_handler("goodbye.html")),
 		('/mentor', mentor.MentorSignupHandler),
 		('/__social_import', social_import.WorkHandler),
+		('/dashboard/raffle', raffle.RaffleHandler),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)
