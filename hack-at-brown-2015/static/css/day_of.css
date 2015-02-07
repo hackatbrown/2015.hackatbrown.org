@@ -126,6 +126,7 @@ form .required, form .invalid {
 
 #messages {
 	padding-bottom: 30px;
+	margin-top: 1em;
 }
 
 #messages img {
@@ -141,7 +142,7 @@ form .required, form .invalid {
 /*	font-size: 1.25em;*/
 /*	font-weight: normal;*/
 	font-size: 1.1em;
-	font-weight: 300;
+	font-weight: normal;
 }
 
 .feed_item p, .feed_item h1 {
