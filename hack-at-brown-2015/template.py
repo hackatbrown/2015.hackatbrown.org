@@ -6,7 +6,7 @@ import cgi
 
 def day_of_date(date):
 	""" a filter to convert dates into strings suitable for display on the day-of page"""
-	offset = datetime.timedelta(hours=19)
+	offset = datetime.timedelta(hours=-5)
 	return (date + offset).strftime('%A, %I:%M %p')
 
 JINJA_ENVIRONMENT = jinja2.Environment(
