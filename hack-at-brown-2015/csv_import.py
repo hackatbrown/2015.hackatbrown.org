@@ -80,7 +80,7 @@ def create_mentor(person):
         m.details = '?'
         m.put()
 
-    except E:
+    except datastore_errors.BadValueError as e:
         logging.info(person)
 
 
