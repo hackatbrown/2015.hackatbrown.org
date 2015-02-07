@@ -1,36 +1,38 @@
 <form action='/mentor_request?dayof=1' method='post' id='help' class='ui form'>
 	<h1>Need help?</h1>
 	<h3>We'll find an expert and send them to you.</h3>
-	
+
 	<p class='field'>
 		<label>What's the topic?</label>
 		<input type='text' name="tags" placeholder="Javascript, Illustrator, Android" required/>
 	</p>
-	
+
 	<p class='field'>
 		<label>What's the issue?</label>
 		<input type='text' name="issue" placeholder="'undefined is not a function' error" required/>
 	</p>
-	
+
 	<p class='field'>
 		<label>Where can we find you?</label>
 		<input type='text' name="location" placeholder="Main Hall Table 34" required/>
 	</p>
-	
+
 	<p class='field'>
 		<label>What's your phone number?</label>
-		<input type='tel' name="phone" placeholder="718 555 1234" required/>
+		<input type='tel' name="phone" placeholder="(123) 456-7890" required/>
 	</p>
-	
+
 	<p>
 		<input type='submit' value='Send help!' class='ui button teal'/>
 	</p>
 </form>
 
+<script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
 <script src='/static/js/H5F.js'></script>
 <script>
 H5F.setup(document.getElementById('help'), {
 	requiredClass: "required",
 	invalidClass: "invalid"
 });
+$("input[type=tel]").mask("(999) 999-9999");
 </script>

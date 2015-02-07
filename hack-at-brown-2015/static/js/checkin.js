@@ -102,19 +102,19 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.hacker = response.hacker;
       $scope.showStatus = true;
       if(!$scope.hacker.checked_in) {
-      
+
         $scope.missingOptionalInfo = (response.missingOptionalInfo.length > 0) ? response.missingOptionalInfo : null;
 
         $scope.requiredInfo = (Object.keys(response.requiredInfo).length > 0) ? response.requiredInfo : null;
 
         $scope.reminders = response.reminders;
-        
+
         $scope.showCheckin = !$scope.requiredInfo;
-      
+
         if($scope.requiredInfo) {
-          
+
           setTimeout(function() {
-            $("input[type=tel]").mask("9999999999");
+            $("input[type=tel]").mask("(999) 999-9999");
             $('#required-info input')[0].focus();
           }, 100);
         }
@@ -138,7 +138,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       console.log('id is null');
       return;
     }
-    
+
     if (!$scope.showCheckin) {
       $scope.notify("You must obtain the required info before you can check in.");
       return;
@@ -148,7 +148,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       //We need this so the enter event when selecting doesn't checkin people
       return;
     }
-    
+
     if ($scope.hacker.checked_in ) {
       $scope.notify("Already Checked In");
       return;
@@ -250,7 +250,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       });
   }
 
-  $scope.requiredHandled = function() {      
+  $scope.requiredHandled = function() {
 //    if ($.isEmptyObject($scope.collectedInfo)) {
 //        $scope.requiredInfo = null;
 ////        $scope.showStatus = true;
