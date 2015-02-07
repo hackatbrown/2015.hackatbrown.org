@@ -2,6 +2,8 @@ import webapp2
 from google.appengine.ext import ndb
 from google.appengine.api import memcache
 import twitter
+import instagram
+from datetime import datetime
 
 """
 this class imports social feeds into the datastore, for a couple use cases:
@@ -16,7 +18,9 @@ class Post(ndb.Model):
 	image_url = ndb.TextProperty()
 	date = ndb.DateTimeProperty()
 	id = ndb.IntegerProperty()
+	string_id = ndb.StringProperty()
 	is_reply = ndb.BooleanProperty(default=False)
+	instagram_link = ndb.StringProperty()
 
 class Feed(object):
 	def name(self):
@@ -24,6 +28,36 @@ class Feed(object):
 
 	def update(self):
 		pass
+
+
+class InstagramTagFeed(Feed):
+	def __init__(self, tag):
+		self.tag = tag
+
+	def name(self):
+		return 'instagram/tag/' + self.tag
+
+	def update(self):
+		objects = [self.new_post_from_json(item) for item in instagram.get_tagged_photos(self.tag, self.latest_string_id())]
+		objects = filter(lambda o: o != None, objects)
+		ndb.put_multi(objects)
+
+	def new_post_from_json(self, json):
+		string_id = json['id']
+		existing = Post.query(Post.string_id == string_id).fetch(limit=1)
+		if existing and len(existing):
+			return None # no new post
+		post = Post(
+			string_id=string_id, 
+			feed=self.name(), 
+			poster=json['user']['username'], 
+			instagram_link=json['link'],
+			date=datetime.utcfromtimestamp(int(json['created_time'])))
+		return post
+
+	def latest_string_id(self):
+		posts = Post.query(Post.feed == self.name()).order(-Post.string_id).fetch(limit=1)
+		return posts[0].string_id if posts else None
 
 class TwitterFeed(Feed):
 	def latest_id(self):
@@ -76,7 +110,7 @@ class TwitterSearchFeed(TwitterFeed):
 		return 'twitter/search/' + self.query
 
 
-feeds = [TwitterUserFeed("HackAtBrown"), TwitterSearchFeed('#hackatbrown')]
+feeds = [TwitterUserFeed("HackAtBrown"), TwitterSearchFeed('#hackatbrown'), InstagramTagFeed('hackatbrown')]
 
 class WorkHandler(webapp2.RequestHandler):
 	def get(self):

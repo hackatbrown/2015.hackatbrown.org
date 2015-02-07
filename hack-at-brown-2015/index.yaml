@@ -134,3 +134,9 @@ indexes:
   - name: is_reply
   - name: date
     direction: desc
+
+- kind: Post
+  properties:
+  - name: feed
+  - name: string_id
+    direction: desc
