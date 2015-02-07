@@ -1,6 +1,7 @@
 from google.appengine.ext import ndb
 from google.appengine.api import datastore_errors
 import logging
+import re
 
 def stringValidator(prop, value):
    cleanValue = value.strip()
@@ -11,13 +12,13 @@ def stringValidator(prop, value):
    return cleanValue
 
 def phoneValidator(prop, value):
-   if any(c.isalpha() for c in value):
-       raise datastore_errors.BadValueError(prop._name)
-   elif len(value) == 10:
-       return value
-   elif len(value) == 11 and value[0] == '1':
-       return value[1:] # remove +1 US country code
-   else:
+    pn = re.sub('[^\d]', '', value)
+
+    if len(pn) == 10:
+       return pn
+    elif len(pn) == 11 and pn[0] == '1':
+       return pn[1:] # remove +1 US country code
+    else:
        logging.info(value)
        raise datastore_errors.BadValueError(prop._name)
 
