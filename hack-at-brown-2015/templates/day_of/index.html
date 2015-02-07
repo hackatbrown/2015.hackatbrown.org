@@ -21,6 +21,7 @@ Hack@Brown 2015
 
 {% block content %}
 
+{% if not bigboard %}
 <div id='header'>
 	<div id='header-content'>
 		<img src='/static/img/logo.png'/>
@@ -35,6 +36,7 @@ Hack@Brown 2015
 		</div>
 	</div>
 </div>
+{% endif %}
 
 <div class='hud' id='mrc'>
 	Thanks! We'll send you a mentor ASAP.
@@ -62,5 +64,17 @@ Hack@Brown 2015
 		{{ tab_content | safe }}
 	</div>
 </div>
+
+{% if tab == 'info' %}
+<script>
+// auto-reload script
+var autoReloadTime = 30 * 1000 // 30 sec
+function autoReload() {
+	$("#tab-content").load("/info?ajax=1&dayof=1&bigboard=1");
+	setTimeout(autoReload, autoReloadTime);
+}
+setTimeout(autoReload, autoReloadTime);
+</script>
+{% endif %}
 
 {% endblock %}
