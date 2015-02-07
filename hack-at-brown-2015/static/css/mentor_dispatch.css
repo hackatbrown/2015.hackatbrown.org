@@ -1,0 +1,130 @@
+/* Mentor Dispatch CSS */
+
+label {
+  text-transform: uppercase;
+  color: #1b8eb9;
+  font-weight: 300;
+  font-size: 1em;
+}
+
+.list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+    
+.hi {
+  font-weight: 300;
+  text-transform: capitalize;
+}
+
+body {
+  font-weight: 300;
+}
+.col {
+  width: 20%;
+  height: 100%;
+}
+
+.requests {
+  float: left;
+  margin: 2px;
+}
+
+.mentors {
+  float:right;
+}
+
+.assigned-true {
+/*  background-color: red;
+*/}
+
+.assigned-false {
+/*  background-color: #f0f0f0;
+*/}
+
+.inner_container {
+  padding: 10px;
+}
+
+.list > .card {
+  display: block;
+  margin: 10px;
+  text-overflow: ellipsis;
+  height: auto;
+  padding: 10px;
+  background-color: #fafafa;
+  box-shadow: inset 1px -3px 0px -1px rgba(145, 143, 140, 0.3);
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: box-shadow 0.2s cubic-bezier(0.55, 0, 0.1, 1), padding 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.list > .card:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.list > .card.selected {
+  color: #ffffff;
+  box-shadow: inset 1px -100px 0px -1px #404040 !important;
+}
+
+.selected {
+  background-color: red;
+}
+
+.time {
+/*  background-color: blue;
+*/}
+
+.responses {
+/*  background-color: green;
+*/}
+
+.tags-container {
+  margin-top: 12px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 1px 5px;
+  padding-bottom: 2px;
+  background-color: #ef5d93;
+  color: #fff;
+  margin-right: 5px;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.info {
+  margin-bottom: 4%;
+  background-color: #fff;
+  font-size: 1.25em;
+  padding: 1px 5px;
+  padding-bottom: 4px;
+  box-shadow: inset 1px -3px 0px -1px rgba(145, 143, 140, 0.1);
+}
+
+.controls {
+  width: 200px;
+  margin: 10px auto;
+}
+
+form > div {
+  margin: 20px;
+  margin-left: 0px;
+}
+form > input {
+  margin: 20px;
+  background-color: red;
+}
