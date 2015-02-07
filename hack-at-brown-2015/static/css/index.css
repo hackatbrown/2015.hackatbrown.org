@@ -501,6 +501,11 @@ section .background > .right {
     max-height: 45px;
 }
 
+#google, #lyft {
+    margin-bottom: 0;
+    max-height: 55px;
+}
+
 #uber {
     max-height: 30px;
 }
@@ -510,7 +515,8 @@ section .background > .right {
 }
 
 #sailthru {
-    max-height: 38px;
+    margin-bottom: 10px;
+/*    max-height: 55px;*/
 }
 
 #wolfram {
