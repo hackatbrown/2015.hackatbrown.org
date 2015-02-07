@@ -1,0 +1,42 @@
+<style>
+#requests > div {
+	width: 250px;
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 2em;
+}
+.tags {
+	padding: 0;
+}
+.tags > li {
+	display: inline-block;
+	padding: 3px;
+	background-color: #f5f5f5;
+}
+.name, .location {
+	color: black;
+}
+.name {
+	font-weight: bold;
+}
+h3 {
+	padding: 10px;
+	display: inline-block;
+	background-color: #eee;
+}
+.date {
+	opacity: 0.5;
+}
+</style>
+
+<h1>Requests for Help</h1>
+<div id='requests'>
+ {% for request in requests %}
+	 <div>
+	 	<h3><span class='name'>{% if request.name %}{{ request.name }}{% else %}A Hacker{% endif %}</span> at <span class='location'>{{ request.location }}</span></h3>
+	 	<p class='issue'>{{ request.issue }}</p>
+	 	<ul class='tags'>{% for tag in request.tags %}<li>{{ tag }}</li>{% endfor %}</ul>
+	 	<p class='date'>{{ request.time | day_of_date }}</p>
+	 </div>
+ {% endfor %}
+</div>
