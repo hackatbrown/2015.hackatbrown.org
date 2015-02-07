@@ -214,7 +214,7 @@ def findMentorsForRequest(request):
 	#Then sort by rating
 	mentors.sort(key=lambda m: m.computeAvg(), reverse=True)
 	#Finally sort by relevance of tags
-	mentors.sort(key=lambda m: len([t for t in m.tags if t in request.tags]), reverse=True)
+	mentors.sort(key=lambda m: len([t for t in m.tags if t.lower() in request.tags]), reverse=True)
 	return mentors
 
 def pretty_date(time=False):
