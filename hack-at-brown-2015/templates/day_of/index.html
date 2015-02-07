@@ -68,7 +68,7 @@ Hack@Brown 2015
 {% if tab == 'info' %}
 <script>
 // auto-reload script
-var autoReloadTime = 30 * 1000 // 30 sec
+var autoReloadTime = 20 * 1000 // 30 sec
 function autoReload() {
 	$("#tab-content").load("/info?ajax=1&dayof=1&bigboard=1");
 	setTimeout(autoReload, autoReloadTime);
