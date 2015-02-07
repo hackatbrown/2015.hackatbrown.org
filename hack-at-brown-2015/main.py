@@ -93,6 +93,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/__db_depopulate/(\d+)', db_utils.DepopulateHandler),
 		('/dashboard/__cleanup', db_utils.CleanupHandler),
         ('/dashboard/csv', csv_export.CsvExport),
+        ('/dashboard/upload_csv', csv_import.ImportPageHandler),
         ('/dashboard/register', SecretIndexHandler),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
