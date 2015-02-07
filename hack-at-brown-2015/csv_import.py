@@ -61,7 +61,7 @@ def create_mentor(person):
 
     pn = re.sub('[^\d]', '', person['Phone Number'])
     if pn:
-        rep.phone_number = pn
+        m.phone = pn
 
     m.phone = pn
     m.email = person['Email Address']
