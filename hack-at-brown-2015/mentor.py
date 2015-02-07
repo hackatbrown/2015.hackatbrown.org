@@ -176,7 +176,7 @@ class ResponseFinishedHandler(webapp2.RequestHandler):
 class GetRequestsHandler(webapp2.RequestHandler):
 	def get(self):
 
-		requests = map(formatRequest, MentorRequest.query(MentorRequest.status == 'unassigned').fetch())
+		requests = map(formatRequest, MentorRequest.query(MentorRequest.status == 'unassigned').order(MentorRequest.created).fetch())
 		return self.response.write(json.dumps({'requests' : requests}))
 
 class GetAssignedHandler(webapp2.RequestHandler):

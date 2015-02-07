@@ -111,6 +111,11 @@ indexes:
   - name: year
   - name: admitted_email_sent_date
 
+- kind: MentorRequest
+  properties:
+  - name: status
+  - name: created
+
 - kind: Message
   properties:
   - name: show_in_day_of
