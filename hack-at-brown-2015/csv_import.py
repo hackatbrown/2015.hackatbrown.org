@@ -57,24 +57,31 @@ def create_volunteer(person):
     vol.put()
 
 def create_mentor(person):
-    m = mentor.Mentor()
 
-    m.email = person['Email Address']
+    try:
+        m = mentor.Mentor()
 
-    existing = models.Rep.query(models.Rep.email == m.email).fetch()
+        m.email = person['Email Address']
 
-    if not existing:
-        pn = re.sub('[^\d]', '', person['Phone Number'])
-    else:
-        pn = existing.phone_number
+        existing = models.Rep.query(models.Rep.email == m.email).fetch()
 
-    m.phone = pn
-    m.name = person['Name']
-    m.tags = person['Skills or Experience'].split(', ')
-    m.role = person['Role at Company']
-    m.availability = '?'
-    m.details = '?'
-    m.put()
+        if not existing:
+            pn = re.sub('[^\d]', '', person['Phone Number'])
+        else:
+            pn = existing.phone_number
+
+        if len(pn) == 10 or len(pn) == 11:
+            m.phone = pn
+
+        m.name = person['Name']
+        m.tags = person['Skills or Experience'].split(', ')
+        m.role = person['Role at Company']
+        m.availability = '?'
+        m.details = '?'
+        m.put()
+
+    except E:
+        logging.info(person)
 
 
 def create_rep(person):
