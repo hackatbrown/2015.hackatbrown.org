@@ -59,7 +59,9 @@ def create_volunteer(person):
 def create_mentor(person):
     m = mentor.Mentor()
 
-    existing = models.Rep.query(models.Rep.email = person['Email Address']).fetch()
+    m.email = person['Email Address']
+
+    existing = models.Rep.query(models.Rep.email == m.email).fetch()
 
     if not existing:
         pn = re.sub('[^\d]', '', person['Phone Number'])
@@ -67,7 +69,6 @@ def create_mentor(person):
         pn = existing.phone_number
 
     m.phone = pn
-    m.email = person['Email Address']
     m.name = person['Name']
     m.tags = person['Skills or Experience'].split(', ')
     m.role = person['Role at Company']
