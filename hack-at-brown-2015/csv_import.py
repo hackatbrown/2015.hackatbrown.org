@@ -3,6 +3,7 @@ import webapp2
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 import models
+import mentor
 import logging
 import re
 
@@ -14,8 +15,7 @@ class ImportPageHandler(blobstore_handlers.BlobstoreUploadHandler):
          <form action="%s" method="POST" enctype="multipart/form-data">
         Upload File:
         <select name="kind">
-        <option value="Rep">Rep</option>
-        <option value="Volunteer">Volunteer</option>
+        <option value="Mentor">Mentor</option>
         </select>
         <input type="file" name="file"> <br>
         <input type="submit" name="submit" value="Submit">
@@ -39,10 +39,8 @@ def process_csv(blob_info, kind):
     headers = reader.next()
     for row in reader:
         person = dict(zip(headers, row))
-        if kind == "Rep":
-            create_rep(person)
-        elif kind == "Volunteer":
-            create_volunteer(person)
+        if kind == "Mentor":
+            create_mentor(person)
 
 def create_volunteer(person):
     vol = models.Volunteer()
@@ -58,6 +56,21 @@ def create_volunteer(person):
     #TODO - role?
     vol.put()
 
+def create_mentor(person):
+    m = mentor.Mentor()
+
+    pn = re.sub('[^\d]', '', person['Phone Number'])
+    if pn:
+        rep.phone_number = pn
+
+    m.phone = pn
+    m.email = person['Email Address']
+    m.name = person['Name']
+    m.tags = person['Skills or Experience'].split(', ')
+    m.role = person['Role at Company']
+    m.availability = '?'
+    m.details = '?'
+    m.put()
 
 
 def create_rep(person):

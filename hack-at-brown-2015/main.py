@@ -96,6 +96,7 @@ app = webapp2.WSGIApplication([
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
+		('/dashboard/upload_csv', csv_import.ImportPageHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
 		('/dashboard/mentor_dispatch/request/(.+)', mentor.ViewRequestHandler),
