@@ -112,7 +112,11 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         $scope.showCheckin = !$scope.requiredInfo;
       
         if($scope.requiredInfo) {
-          setTimeout(function() {$('#required-info input')[0].focus();}, 100);
+          
+          setTimeout(function() {
+            $("input[type=tel]").mask("9999999999");
+            $('#required-info input')[0].focus();
+          }, 100);
         }
       }
       }).
