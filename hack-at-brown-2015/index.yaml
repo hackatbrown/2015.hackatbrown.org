@@ -125,6 +125,11 @@ indexes:
 - kind: Post
   properties:
   - name: feed
+  - name: date
+
+- kind: Post
+  properties:
+  - name: feed
   - name: id
     direction: desc
 
@@ -133,4 +138,10 @@ indexes:
   - name: feed
   - name: is_reply
   - name: date
+    direction: desc
+
+- kind: Post
+  properties:
+  - name: feed
+  - name: string_id
     direction: desc

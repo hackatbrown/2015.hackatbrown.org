@@ -1,7 +1,25 @@
 <div id='messages'>
+{% if bigboard %}
+<style>
+#messages {
+	margin-left: 100px !important;
+	margin-right: 100px !important;
+}
+#logo {
+	display: block;
+	width: 50px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+</style>
+<img id='logo' src='/static/img/logo.png'/>
+{% else %}
 <div class='optional-sidebar'>
 	{% include "day_of/help.html" %}
 </div>
+{% endif %}
+
 {% for item in feed %}
 <div class="feed_item {{item.type}}">
 	{% if item.type == 'message' %}
