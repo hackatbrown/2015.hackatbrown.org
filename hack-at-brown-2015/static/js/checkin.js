@@ -4,7 +4,7 @@ function onMessage(message) {
 }
 
 /* Angular JS */
-var checkinApp = angular.module('checkinApp', []).config(function($interpolateProvider){
+var checkinApp = angular.module('checkinApp', ['ngAnimate']).config(function($interpolateProvider){
         $interpolateProvider.startSymbol('%%').endSymbol('%%');
     }
 );
@@ -18,6 +18,29 @@ checkinApp.directive('shortcut', function() {
       $(document).on('keyup', function(e){
          scope.$apply(scope.keyPressed(e));
        });
+    }
+  };
+});
+
+checkinApp.animation('.slide-animation', function() {
+  return {
+    addClass: function(element, className, done) {
+      if(className == 'ng-hide') {
+        $(element).stop().show().slideToggle(200, 'swing', done);
+//        $(element).stop().hide().slideToggle(200, 'swing', done);
+      }
+    },
+    removeClass : function(element, className, done) {
+      if(className == 'ng-hide') {
+        $(element).stop().hide().slideToggle(200, 'swing', done);
+//        $(element).stop().show().slideToggle(200, 'swing', done);
+      }
+    },
+    leave: function(element, done) {
+      console.log('left');
+    },
+    enter: function(element, done) {
+      console.log('enered');
     }
   };
 });
@@ -55,11 +78,15 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       case 73: //'i'
         $scope.createPerson('Visitor');
         break;
+      case 83: //'s'
+        searchBar.focus();
+        break;
     }
   }
 
   $scope.requestMoreInfo = function() {
     $scope.clearNotifications();
+    $scope.newPerson = false;
     if ($scope.hackerID === "") {
       $scope.hacker = {};
       $scope.missingOptionalInfo = null;
@@ -73,12 +100,21 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $http.get('/checkin/info/' + $scope.hackerID).
       success(function(response) {
         $scope.hacker = response.hacker;
+      $scope.showStatus = true;
+      if(!$scope.hacker.checked_in) {
+      
         $scope.missingOptionalInfo = (response.missingOptionalInfo.length > 0) ? response.missingOptionalInfo : null;
 
         $scope.requiredInfo = (Object.keys(response.requiredInfo).length > 0) ? response.requiredInfo : null;
 
         $scope.reminders = response.reminders;
-        $scope.showStatus = !$scope.requiredInfo;
+        
+        $scope.showCheckin = !$scope.requiredInfo;
+      
+        if($scope.requiredInfo) {
+          setTimeout(function() {$('#required-info input')[0].focus();}, 100);
+        }
+      }
       }).
       error(function(error) {
         console.log(error);
@@ -98,8 +134,8 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       console.log('id is null');
       return;
     }
-
-    if ($scope.requiredInfo) {
+    
+    if (!$scope.showCheckin) {
       $scope.notify("You must obtain the required info before you can check in.");
       return;
     }
@@ -108,14 +144,14 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
       //We need this so the enter event when selecting doesn't checkin people
       return;
     }
-
-    if (!($scope.hacker.status == "confirmed" || $scope.hacker.status == 'waitlisted')) {
-      $scope.notify('Status Not Confirmed')
+    
+    if ($scope.hacker.checked_in ) {
+      $scope.notify("Already Checked In");
       return;
     }
 
-    if ($scope.hacker.checked_in) {
-      $scope.notify("Already Checked In");
+    if (!($scope.hacker.status == "confirmed" || $scope.hacker.status == 'waitlisted')) {
+      $scope.notify('Status Not Confirmed')
       return;
     }
 
@@ -130,10 +166,14 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         }
 
         $scope.hacker.checked_in = true;
+        $scope.reminders = false;
+        $scope.missingOptionalInfo = false;
+        $scope.requiredInfo = false;
+        $scope.showCheckin = false;
         $scope.hacker.status = 'checked in';
         $scope.total_checked_in = response.total_checked_in;
         $scope.session_checked_in++;
-        $scope.notify('Checked In!');
+      searchBar.focus();
       }).
       error(function(error) {
         console.log(error);
@@ -151,6 +191,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
     $scope.requiredInfo = null;
     $scope.reminders = null;
     $scope.showStatus = null;
+    $scope.showCheckin = null;
     $scope.hacker = {};
     $search[0].selectize.clear();
 
@@ -175,7 +216,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
     $scope.newPerson = {'kind' : kind, 'fields' : requiredFields};
 
-    $('#newPerson-email').focus();
+    setTimeout(function() {$('#newPerson-email').focus();}, 100);
   }
 
   $scope.cancelPerson = function() {
@@ -206,11 +247,12 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   }
 
   $scope.requiredHandled = function() {      
-    if ($.isEmptyObject($scope.collectedInfo)) {
-        $scope.requiredInfo = null;
-        $scope.showStatus = true;
-        return;
-    }
+//    if ($.isEmptyObject($scope.collectedInfo)) {
+//        $scope.requiredInfo = null;
+////        $scope.showStatus = true;
+//        $scope.showCheckin = true;
+//        return;
+//    }
 
     $scope.collectedInfo['id'] = $scope.hackerID;
     $http.post('/checkin/requiredInfo', $scope.collectedInfo).
@@ -218,6 +260,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
         if (response.success) {
           $scope.requiredInfo = null;
           $scope.showStatus = true;
+          $scope.showCheckin = true;
           $scope.notify('Saved!');
         } else {
           $scope.notify('Invalid Number');
@@ -229,5 +272,7 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
 
   }
 }]);
+
+
 
 

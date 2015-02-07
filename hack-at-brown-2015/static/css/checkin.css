@@ -1,3 +1,43 @@
+/*Chen's Bad CSS*/
+.admit_status.checked.in {
+  box-shadow: 0 -60px 0 2px #ef5d93 inset;
+  background: none;
+}
+
+.dimmed {
+  opacity: .2;
+}
+
+.dimmable {
+  transition: opacity .2s;
+}
+
+.reminder_container {
+  margin: 4em 0 !important;
+}
+
+.search_keyhint {
+  margin-top: -1em;
+  position: absolute;
+  top: 6em;
+}
+
+.search_keyhint .keycombo {
+  margin-left: 0;
+  margin-right: .25em;
+}
+span.keycombo {
+  font-size: 80%;
+  margin-left: .25em;
+  background-color: rgba(255, 255, 255, .2);
+  padding: .25em .5em;
+}
+
+.keyblack .keycombo {
+  color: #AAA;
+  background-color: rgba(0, 0, 0, .05);
+}
+
 /* Sam's Bad CSS */
 
 .notification {
@@ -10,11 +50,24 @@
 }
 
 h4 {
-  font-size: 1.3em;
+  font-size: 1.5rem;
+}
+
+.status_inline {
+  position: absolute;
+  right: 0;
+  z-index: 10;
 }
 
 .admit_status {
   margin-bottom: 0px;
+  margin-top: .35em;
+}
+
+@media screen and (max-width: 1280px) {
+  .admit_status {
+    margin-top: .15em;
+  }
 }
 
 .counter > div {
@@ -30,6 +83,7 @@ h4 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  align-items: center;
 }
 
 .confirmed.admit_status {
@@ -178,13 +232,6 @@ label {
 
 .inner_container {
   max-width: 1017.6px;
-}
-
-span.keycombo {
-    font-size: 80%;
-    margin-left: .25em;
-    background-color: rgba(255, 255, 255, .2);
-    padding: .25em .5em;
 }
 
 .next-section {
