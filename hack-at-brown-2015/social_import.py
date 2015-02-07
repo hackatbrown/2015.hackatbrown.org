@@ -33,8 +33,8 @@ class TwitterFeed(Feed):
 	def post_from_tweet(self, tweet):
 		# find existing:
 		existing = Post.query(Post.id == tweet.id).fetch(limit=1)
-		if existing:
-			return existing
+		if existing and len(existing):
+			return existing[0]
 		p = Post(id=tweet.id, 
 			feed=self.name(), 
 			date=tweet.created_at, 
@@ -60,12 +60,23 @@ class TwitterUserFeed(TwitterFeed):
 		self.user = user
 
 	def get_tweets(self):
-		return twitter.api.user_timeline(self.user, since_id=self.latest_id(), count=5)
+		return twitter.api.user_timeline(self.user, since_id=self.latest_id(), count=20)
 
 	def name(self):
 		return 'twitter/user/' + self.user
 
-feeds = [TwitterUserFeed("HackAtBrown")]
+class TwitterSearchFeed(TwitterFeed):
+	def __init__(self, query):
+		self.query = query
+
+	def get_tweets(self):
+		return twitter.api.search(self.query, since_id=self.latest_id(), count=100)
+
+	def name(self):
+		return 'twitter/search/' + self.query
+
+
+feeds = [TwitterUserFeed("HackAtBrown"), TwitterSearchFeed('#hackatbrown')]
 
 class WorkHandler(webapp2.RequestHandler):
 	def get(self):
