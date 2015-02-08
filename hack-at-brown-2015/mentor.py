@@ -258,4 +258,6 @@ def pretty_date(time=False):
 		return str(day_diff / 30) + " months ago"
 	return str(day_diff / 365) + " years ago"
 
-
+class MentorListHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.write(template("mentor_list.html", {"mentors": Mentor.query().fetch(limit=1000)}))

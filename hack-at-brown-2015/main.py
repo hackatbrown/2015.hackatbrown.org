@@ -118,6 +118,7 @@ app = webapp2.WSGIApplication([
 		('/mentor', mentor.MentorSignupHandler),
 		('/__social_import', social_import.WorkHandler),
 		('/dashboard/raffle', raffle.RaffleHandler),
+		('/dashboard/mentor_list', mentor.MentorListHandler),
 		('/logout', LogoutHandler),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
