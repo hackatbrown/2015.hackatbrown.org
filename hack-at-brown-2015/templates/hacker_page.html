@@ -330,19 +330,20 @@
 
                             <div class="field">
 	                            <div class="field">
-	                                <label for="major">Major</label>
-	                                <div class="ui icon input">
-	                                    <input id="major" class="tags-input" type="text" name="major" value="{% if hacker.major %}{{ hacker.major }}{% endif %}"/>
-	                                    <i class="icon"></i>
-	                                </div>
+                                    <label for="links">Links <span class="optional">(Optional)</span></label>
+                                    <div class="condor"></div>
+	                                
 	                            </div>
                             </div>
                         </div>
-                        <div class=" row">
-													
-                          <label for="links">Links <span class="optional">(Optional)</span></label>
-                          <div class="condor"></div>
-													
+                        <div class="row">						
+                            <div class="field">
+                              <label for="major">Major</label>
+                              <div class="ui icon input">
+                                  <input id="major" class="tags-input" type="text" name="major" value="{% if hacker.major %}{{ hacker.major }}{% endif %}"/>
+                                  <i class="icon"></i>
+                              </div>
+                            </div>					
                         </div>
                     </form>
                 </section>
@@ -616,7 +617,7 @@
       switchPanes(1);
     }
 
-    if (status == "accepted" || status == "confirmed") {
+    if (status == "accepted" || status == "confirmed" || status == "checked in") {
         if (location.hash === '#reimbursements') {
           setTabActive($("#reimbursements_top"));
           switchPanes(2);
@@ -834,7 +835,7 @@
     //Telephone masking
       $("input[type=tel]").mask("(999) 999-9999");
 
-    {% if status == "confirmed" %}
+    {% if status == "confirmed" or status == "checked in" %}
      //State Section
     var $state = $('#state');
     $state.val("{{ hacker.state }}");
