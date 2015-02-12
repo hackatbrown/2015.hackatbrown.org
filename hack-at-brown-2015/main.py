@@ -37,6 +37,8 @@ import rewriter
 import mentor
 import csv_import
 import social_import
+import raffle
+from google.appengine.api import users
 
 class IndexHandler(webapp2.RequestHandler):
 		def get(self):
@@ -61,6 +63,10 @@ def static_page_handler(html_file):
 		def get(self):
 			self.response.write(template(html_file))
 	return Handler
+
+class LogoutHandler(webapp2.RequestHandler):
+	def get(self):
+		self.redirect(users.create_logout_url('/'))
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
@@ -96,6 +102,7 @@ app = webapp2.WSGIApplication([
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
+		('/dashboard/upload_csv', csv_import.ImportPageHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
 		('/dashboard/mentor_dispatch/request/(.+)', mentor.ViewRequestHandler),
@@ -110,6 +117,9 @@ app = webapp2.WSGIApplication([
 		('/goodbye', static_page_handler("goodbye.html")),
 		('/mentor', mentor.MentorSignupHandler),
 		('/__social_import', social_import.WorkHandler),
+		('/dashboard/raffle', raffle.RaffleHandler),
+		('/dashboard/mentor_list', mentor.MentorListHandler),
+		('/logout', LogoutHandler),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)

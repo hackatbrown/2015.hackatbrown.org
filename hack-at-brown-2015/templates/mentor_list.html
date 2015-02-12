@@ -1,0 +1,40 @@
+{% extends "centered.html" %}
+
+{% block head %}
+{{ super() }}
+<title>Mentor at Hack@Brown</title>
+{% endblock %}
+
+{% block centered_content %}
+
+<style>
+.tag {
+	margin-right: 1em;
+	display: inline-block;
+}
+#mentors p, #mentors h4 {
+	margin: 0.2em;
+}
+#mentors > div {
+	margin: 20px;
+	vertical-align: top;
+	display: inline-block;
+	max-width: 200px;
+	text-align: left;
+}
+</style>
+
+<h1>Mentors</h1>
+<div id='mentors'>
+{% for mentor in mentors %}
+<div>
+	<h4>{{ mentor.name }}</h4>
+	<p>{{ mentor.role }}</p>
+	<p>{{ mentor.phone_number }} • {{ mentor.email }}</p>
+	<p>{% for tag in mentor.tags %} <span class='tag'>{{ tag }}</span> {% endfor %}</p>
+	<p><strong>Availability:</strong> {{ mentor.availability }}</p>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

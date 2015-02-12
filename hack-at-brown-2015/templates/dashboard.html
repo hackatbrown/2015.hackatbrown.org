@@ -92,6 +92,8 @@
         <div ng-click='lookupHacker()' class='button'>Lookup</div>
         {% if admin %}
         <a style="text-decoration:none" class='button' href="/dashboard/ranking">Go To Ranking Dashboard</a>
+        <a style="text-decoration:none" class='button' href="/dashboard/raffle?service=instagram">Go To Instagram Raffle</a>
+        <a style="text-decoration:none" class='button' href="/dashboard/raffle?service=twitter">Go To Twitter Raffle</a>
         {% endif %}
       </div>
       <div class="found" ng-repeat="hacker in lookupResult.found">

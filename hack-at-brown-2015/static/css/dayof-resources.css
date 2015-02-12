@@ -92,6 +92,10 @@
 	border-top-color: #2f4688;
 }
 
+#apis #lyft {
+	border-top-color: #ea0b8c;
+}
+
 
 
 
@@ -154,5 +158,9 @@
 
 #apis #facebook a:link, #apis #facebook a:visited {
 	color: #2f4688;
+}
+
+#apis #lyft a:link, #apis #lfyt a:visited {
+	color: #ea0b8c;
 }
 

@@ -46,6 +46,8 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
 
   $scope.viewRequest = function(request, index) {
     $scope.requestIndex = index;
+    $scope.assignedRequestIndex = -1;
+    $scope.assignedMentorIndex = -1;
     $scope.mentorIndex = -1;
     $http.get('/dashboard/mentor_dispatch/request/' + request.id).
       success(function(response) {
@@ -59,6 +61,9 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
 
   $scope.viewAssignedRequest = function(request, index) {
       $scope.requestIndex = -1;
+      $scope.assignedRequestIndex = index;
+      $scope.mentorIndex = -1;
+      $scope.assignedMentorIndex = index;
       $scope.pair.request = request;
       $scope.getMatch(request.id, false);
   }
@@ -92,9 +97,12 @@ dispatchApp.controller('Controller', ['$scope', '$http', '$timeout', function ($
   $scope.viewMentor = function(mentor, index) {
     $scope.mentorIndex = index;
     $scope.pair.mentor = mentor;
+    $scope.assignedMentorIndex = -1;
     if (mentor.assigned) {
       $scope.requestIndex = -1;
       $scope.mentorIndex = -1;
+      $scope.assignedMentorIndex = index;
+      $scope.assignedRequestIndex = index;
       $scope.getMatch(mentor.id, true);
     }
   }

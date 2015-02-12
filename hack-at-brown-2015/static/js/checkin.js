@@ -251,12 +251,12 @@ checkinApp.controller('Controller', ['$scope', '$http', function ($scope, $http)
   }
 
   $scope.requiredHandled = function() {
-//    if ($.isEmptyObject($scope.collectedInfo)) {
-//        $scope.requiredInfo = null;
-////        $scope.showStatus = true;
-//        $scope.showCheckin = true;
-//        return;
-//    }
+   if ($.isEmptyObject($scope.collectedInfo)) {
+       $scope.requiredInfo = null;
+       $scope.showStatus = true;
+       $scope.showCheckin = true;
+       return;
+   }
 
     $scope.collectedInfo['id'] = $scope.hackerID;
     $http.post('/checkin/requiredInfo', $scope.collectedInfo).

@@ -7,7 +7,7 @@
 {% block headcss %}
 {{ super() }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/css/selectize.min.css"/>
-<!--<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>-->
+<link rel="stylesheet" href="/static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
 
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
 <link rel="stylesheet" href="/static/css/hacker_page.css" />
@@ -248,6 +248,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">						
+                            <div class="field">
+                                <label for="major">Major(s)</label>
+                                <div class="ui icon input">
+                                    <input id="major" class="tags-input" type="text" name="major" value="{% if hacker.major %}{{ hacker.major }}{% endif %}"/>
+                                    <i class="icon"></i>
+                                </div>
+                            </div>					
+                        </div>
                         <div class="two fields row">
                             <div class="field">
                                 <label for="phone_number">Cell Number <span class="optional">(Optional)</span></label>
@@ -330,19 +339,11 @@
 
                             <div class="field">
 	                            <div class="field">
-	                                <label for="major">Major</label>
-	                                <div class="ui icon input">
-	                                    <input id="major" class="tags-input" type="text" name="major" value="{% if hacker.major %}{{ hacker.major }}{% endif %}"/>
-	                                    <i class="icon"></i>
-	                                </div>
+                                    <label for="links">Links <span class="optional">(Optional)</span></label>
+                                    <div class="condor"></div>
+	                                
 	                            </div>
                             </div>
-                        </div>
-                        <div class=" row">
-													
-                          <label for="links">Links <span class="optional">(Optional)</span></label>
-                          <div class="condor"></div>
-													
                         </div>
                     </form>
                 </section>
@@ -568,7 +569,7 @@
 <script type="text/javascript" src="/static/js/condor.js"></script>
 <script type="text/javascript" src='/static/js/H5F.js'></script>
 <!-- a polyfill that adds HTML5 form validation features to older browsers -->
-<!--<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>-->
+<script type="application/javascript" src="/static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.11.2/js/standalone/selectize.min.js"></script>
 <script type="text/javascript" src="/static/js/hacker_page.js"></script>
@@ -578,8 +579,6 @@
 
 <script type="text/javascript" src="/static/js/jquery.maskedinput.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.maskMoney.min.js"></script>
-
-<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script>
   var secret = "{{ hacker.secret }}";
@@ -616,7 +615,7 @@
       switchPanes(1);
     }
 
-    if (status == "accepted" || status == "confirmed") {
+    if (status == "accepted" || status == "confirmed" || status == "checked in") {
         if (location.hash === '#reimbursements') {
           setTabActive($("#reimbursements_top"));
           switchPanes(2);
@@ -688,8 +687,7 @@
     });
 
     //Dietary Restrictions Section
-    var rawDiet = ["Vegetarian", "Vegan", "Gluten Free", "Kosher", "Lactose Intolerant", "Nuts Allergy", "Treenuts Allergy", "Soy Allergy",
-"Shellfish Allergy", "Corn Allergy", "No Pork", "No Ham", "No Beef", "No Mutton", "Halal", "No Red Meat", "None"];
+      var rawDiet = {% include "data/dietary-restrictions.json" %};
     var dietaryRestrictionsData = [];
     $.each(rawDiet, function (key, val) {
         dietaryRestrictionsData.push({"diet" : val});
@@ -705,12 +703,14 @@
       options: dietaryRestrictionsData,
       onDropdownOpen: slideOut,
       onDropdownClose: slideIn,
-      create: function (input) {
-        return {
-          value: input,
-          text: input
-        }
-      }
+        create: true,
+        createOnBlur: true,
+//      create: function (input) {
+//        return {
+//          value: input,
+//          text: input
+//        }
+//      }
     });
 
     var dietaryRestrictions = $dietaryRestrictions[0].selectize;
@@ -796,17 +796,69 @@
 //    $(".schools").autocomplete({
 //      source: universities
 //    });
+      var schools = {% include "data/universities.json" %};
+
+      var $school = $('#school').selectize({
+          valueField: 'label',
+          labelField: 'label',
+          searchField: ['label'],
+          maxItems: 1,
+          persist: false,
+          hideSelected: true,
+          options: schools,
+          onDropdownOpen: slideOut,
+          onDropdownClose: slideIn,
+          create: true,
+          createOnBlur: true,
+//          create: function (input) {
+//              return {
+//                  label: input,
+//                  domain: ""
+//              }
+//          }
+      });
+
+      var school = $school[0].selectize;
+      var $schoolLabel = $school.parent().siblings("label");
+
+      $school.click(function() {
+          school.focus();
+      })
 		
 		// Major Section
-		var majors = {% include "majors.json" %};
-		$("#major").autocomplete({
-			source: majors,
-			select: function(event, ui) {
-				setTimeout(function() {
-					$("#major").change();
-				}, 0); // setTimeout() since `select` is fired before the field actually changes
-			}
-		})
+		var majors = {% include "data/majors.json" %};
+      
+      var majorsData = [];
+      $.each(majors, function (key, val) {
+          majorsData.push({"major" : val});
+      });
+
+      var $major = $('#major').selectize({
+          valueField: 'major',
+          labelField: 'major',
+          searchField: ['major'],
+          delimiter: ',',
+          persist: false,
+          hideSelected: true,
+          options: majorsData,
+          onDropdownOpen: slideOut,
+          onDropdownClose: slideIn,
+          create: true,
+          createOnBlur: true,
+//          create: function (input) {
+//              return {
+//                  value: input,
+//                  text: input
+//              }
+//          }
+      });
+
+      var major = $major[0].selectize;
+      var $majorLabel = $major.parent().siblings("label");
+
+      $major.click(function() {
+          major.focus();
+      })
 		
     //Links Section
 
@@ -834,7 +886,7 @@
     //Telephone masking
       $("input[type=tel]").mask("(999) 999-9999");
 
-    {% if status == "confirmed" %}
+    {% if status == "confirmed" or status == "checked in" %}
      //State Section
     var $state = $('#state');
     $state.val("{{ hacker.state }}");

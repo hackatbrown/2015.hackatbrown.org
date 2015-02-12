@@ -1,8 +1,8 @@
-/*! jQuery UI - v1.11.2 - 2014-12-19
+/*! jQuery UI - v1.11.2 - 2015-02-09
 * http://jqueryui.com
-* Includes: core.css, draggable.css, resizable.css, selectable.css, sortable.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, menu.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css, theme.css
+* Includes: core.css, draggable.css, resizable.css, selectable.css, sortable.css, autocomplete.css, button.css, datepicker.css, dialog.css, menu.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css, theme.css
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault='Brown'%2C%20Arial%2C%20Helvetica%2C%20sans-serif&fwDefault=normal&fsDefault=1em&cornerRadius=0px&bgColorHeader=%23E2E1DF&bgTextureHeader=flat&bgImgOpacityHeader=0&borderColorHeader=%23E2E1DF&fcHeader=%23404040&iconColorHeader=%23404040&bgColorContent=%23ffffff&bgTextureContent=flat&bgImgOpacityContent=0&borderColorContent=%23ffffff&fcContent=%23222222&iconColorContent=%23222222&bgColorDefault=%23EBEBEB&bgTextureDefault=flat&bgImgOpacityDefault=0&borderColorDefault=%23EBEBEB&fcDefault=%23404040&iconColorDefault=%23404040&bgColorHover=%23E2E1DF&bgTextureHover=flat&bgImgOpacityHover=0&borderColorHover=%23E2E1DF&fcHover=%23404040&iconColorHover=%23404040&bgColorActive=%231b8eb9&bgTextureActive=flat&bgImgOpacityActive=0&borderColorActive=%231b8eb9&fcActive=%23ffffff&iconColorActive=%23ffffff&bgColorHighlight=%2326a59f&bgTextureHighlight=flat&bgImgOpacityHighlight=0&borderColorHighlight=%2326a59f&fcHighlight=%23ffffff&iconColorHighlight=%23ffffff&bgColorError=%23EF5D93&bgTextureError=flat&bgImgOpacityError=0&borderColorError=%23EF5D93&fcError=%23ffffff&iconColorError=%23ffffff&bgColorOverlay=%23aaaaaa&bgTextureOverlay=flat&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=%23aaaaaa&bgTextureShadow=flat&bgImgOpacityShadow=0&opacityShadow=0&thicknessShadow=0&offsetTopShadow=0&offsetLeftShadow=0&cornerRadiusShadow=8px
-* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
+* Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
 
 /* Layout helpers
 ----------------------------------*/
@@ -172,32 +172,6 @@
 .ui-sortable-handle {
 	-ms-touch-action: none;
 	touch-action: none;
-}
-.ui-accordion .ui-accordion-header {
-	display: block;
-	cursor: pointer;
-	position: relative;
-	margin: 2px 0 0 0;
-	padding: .5em .5em .5em .7em;
-	min-height: 0; /* support: IE7 */
-	font-size: 100%;
-}
-.ui-accordion .ui-accordion-icons {
-	padding-left: 2.2em;
-}
-.ui-accordion .ui-accordion-icons .ui-accordion-icons {
-	padding-left: 2.2em;
-}
-.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
-	position: absolute;
-	left: .5em;
-	top: 50%;
-	margin-top: -8px;
-}
-.ui-accordion .ui-accordion-content {
-	padding: 1em 2.2em;
-	border-top: 0;
-	overflow: auto;
 }
 .ui-autocomplete {
 	position: absolute;

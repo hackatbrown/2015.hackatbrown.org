@@ -34,7 +34,7 @@ body:before {
 }
 
 #header-content {
-	min-width: 600px;
+	min-width: 750px;
 }
 
 #header img {
@@ -86,6 +86,9 @@ body:before {
 .optional-sidebar {
 	display: none;
 }
+label span {
+	opacity: 0.7;
+}
 @media screen and (min-width: 650px) {
 	.mobile-button {
 		display: none;
@@ -126,6 +129,7 @@ form .required, form .invalid {
 
 #messages {
 	padding-bottom: 30px;
+	margin-top: 1em;
 }
 
 #messages img {
@@ -141,7 +145,7 @@ form .required, form .invalid {
 /*	font-size: 1.25em;*/
 /*	font-weight: normal;*/
 	font-size: 1.1em;
-	font-weight: 300;
+	font-weight: normal;
 }
 
 .feed_item p, .feed_item h1 {

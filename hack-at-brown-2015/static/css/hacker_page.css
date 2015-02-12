@@ -1,5 +1,13 @@
 
 /*Shim*/
+.ui-widget-content {
+  background-image: none !important; 
+}
+
+.ui.form .field, .ui.form .fields .field {
+  margin: 0;
+}
+
 .ui.label {
   width: 1em !important;
   background: none !important;

@@ -7,125 +7,7 @@ Mentor Dispatch
 {% block headcss %}
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
-<style>
-
-label {
-  text-transform: uppercase;
-  color: #1b8eb9;
-  font-weight: 300;
-  font-size: .8em;
-}
-
-.list {
-  max-height: 400px;
-  overflow-y: scroll;
-}
-.hi {
-  font-weight: 300;
-  text-transform: capitalize;
-}
-
-body {
-  font-weight: 300;
-}
-.col {
-  width: 20%;
-  height: 100%;
-}
-
-.tag {
-  margin-right: 5px;
-}
-
-.list > .card:hover {
-  background-color: #f0f0f0;
-}
-.requests {
-  float: left;
-  margin: 2px;
-}
-
-.mentors {
-  float:right;
-}
-
-.assigned-true {
-/*  background-color: red;
-*/}
-
-.assigned-false {
-/*  background-color: #f0f0f0;
-*/}
-
-.inner_container {
-  padding: 10px;
-}
-
-.list > .card {
-  display: block;
-  border: 2px solid grey;
-  margin: 10px;
-  text-overflow: ellipsis;
-  height: 80px;
-  padding: 10px;
-  background-color: #fafafa;
-}
-
-
-.card.selected {
-  border: 5px solid red;
-}
-
-.selected {
-  background-color: red;
-}
-
-.time {
-/*  background-color: blue;
-*/}
-
-.responses {
-/*  background-color: green;
-*/}
-
-.tags-container {
-  margin: 3px;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.tag {
-  padding: 1px;
-  background-color: yellow;
-}
-
-.flex {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.controls {
-  width: 200px;
-  margin: 10px auto;
-}
-
-form > div {
-  margin: 20px;
-  margin-left: 0px;
-}
-form > input {
-  margin: 20px;
-  background-color: red;
-}
-
-
+<link rel='stylesheet' href='/static/css/mentor_dispatch.css' />
 </style>
 {% endblock %}
 
@@ -139,6 +21,7 @@ form > input {
 {% block content %}
 <div id="scope" ng-app="dispatchApp" ng-controller="Controller">
   <h2 class="hi">Mentor Dispatch</h2>
+    
   <div class="requests col" ng-init="getRequests()">
     <h2 class="hi">PENDING REQUESTS</h2>
     <div class="list" ng-init="getRequests()">
@@ -173,10 +56,11 @@ form > input {
       </div>
     </div>
   </div>
+    
   <div class="mentors col">
     <h2 class="hi">AVAILABLE MENTORS</h2>
     <div class="list">
-      <div class="card" ng-repeat="mentor in mentors" ng-click="viewMentor(mentor, $index)" ng-class="{'selected': $index==mentorIndex}">
+      <div class="card" ng-repeat="mentor in mentors" ng-click="viewMentor(mentor, $index)"  ng-class="{'selected': $index==mentorIndex}">
           <div class="metadata flex">
             <div class="rating">
               %%mentor.rating%%
@@ -193,7 +77,7 @@ form > input {
     </div>
     <h2 class="hi">PAIRED MENTORS</h2>
     <div class="list" ng-init="getAssignedMentors()">
-      <div class="card" ng-repeat="mentor in assignedMentors" ng-click="viewMentor(mentor)">
+      <div class="card" ng-repeat="mentor in assignedMentors" ng-click="viewMentor(mentor, $index)" ng-class="{'selected': $index==assignedMentorIndex}">
           <div class="metadata flex">
             <div class="rating">
               %%mentor.rating%%
@@ -207,27 +91,29 @@ form > input {
             <span class="tag %%tag%%" ng-repeat="tag in mentor.tags">%%tag%%</span>
           </div>
       </div>
-    </div>  </div>
+    </div>  
+  </div>
+    
   <div class="interactions flex">
     <div class="container">
       <div class="inner_container %%pair.request.status%%">
         <h1 class="hi">Request:</h1>
-        <div class="field flex">
+        <div class="field flex info">
         <label>Issue</label><p>%%pair.request.issue%%</p>
         </div>
-        <div class="field flex">
+        <div class="field flex info">
         <label>Email</label><p>%%pair.request.requester_email%%</p>
         </div>
-        <div class="field flex">
+        <div class="field flex info">
         <label>Created</label><p>%%pair.request.created%%</p>
         </div>
-        <div class="field flex">
+        <div class="field flex info">
         <label>Location</label><p>%%pair.request.location%%</p>
         </div>
-        <div class="field flex">
+        <div class="field flex info">
         <label>Responses</label><p>%%pair.request.responses%%</p>
         </div>
-        <div class="field flex">
+        <div class="field flex info">
         <label>Status</label><p>%%pair.request.status%%</p>
         </div>
         <br>
@@ -240,28 +126,28 @@ form > input {
     </div>
     <div class="inner_container  assigned-%%pair.mentor.assigned%%" >
       <h1 class="hi">Mentor:</h1>
-      <div class="field flex">
+      <div class="field flex info">
         <label>Assigned</label><p>%%pair.mentor.assigned%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Availability</label><p>%%pair.mentor.availability%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Details</label><p>%%pair.mentor.details%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Email</label><p>%%pair.mentor.email%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Name</label><p>%%pair.mentor.name%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Responded</label><p>%%pair.mentor.responded%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Role</label><p>%%pair.mentor.role%%</p>
       </div>
-      <div class="field flex">
+      <div class="field flex info">
       <label>Phone</label><p>%%pair.mentor.phone%%</p>
       </div>
       <h1 class="hi">Tags:</h1>
@@ -269,6 +155,7 @@ form > input {
         <span ng-repeat="tag in pair.mentor.tags" class="tag %%tag%%">%%tag%%</span>
       </div>
     </div>
+      
   </div>
       <div class="controls" ng-show='pair.mentor && pair.request'>
       <input type="submit" class="ui pink button" value="PAIR" ng-hide="pair.mentor.assigned" ng-click="sendPair()"/>
