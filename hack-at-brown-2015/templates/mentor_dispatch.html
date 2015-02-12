@@ -7,77 +7,7 @@ Mentor Dispatch
 {% block headcss %}
 {{ super() }}
 <link rel='stylesheet' href='/static/semantic-final/semantic.min.css' />
-<style>
-label {
-  text-transform: uppercase;
-  color: #1b8eb9;
-  font-weight: 300;
-  font-size: .8em;
-}
-
-.list {
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.col {
-  width: 20%;
-  height: 200%;
-}
-
-.requests {
-  float: left;
-  margin: 2px;
-}
-.center {
-/*  clear:both;
-  margin: 0px auto;
-*/}
-
-.mentors {
-  float:right;
-}
-
-.list > .card {
-  display: block;
-  background-color: red;
-  border: 2px solid black;
-  margin: 2px;
-  text-overflow: ellipsis;
-  height: 80px;
-}
-
-.time {
-  background-color: blue;
-}
-
-.responses {
-  background-color: green;
-}
-
-.tags-container {
-  margin: 3px;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.tag {
-  padding: 1px;
-  background-color: yellow;
-}
-
-.flex {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
+<link rel='stylesheet' href='/static/css/mentor_dispatch.css' />
 </style>
 {% endblock %}
 
@@ -87,77 +17,168 @@ label {
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
 <script type="text/javascript" src="/static/js/mentor_dispatch.js"></script>
 {% endblock %}
+{% block bodyclass %}trigrid{% endblock %}
 {% block content %}
 <div id="scope" ng-app="dispatchApp" ng-controller="Controller">
-  <h2>Mentor Dispatch</h2>
-  <div class="requests col">
-    <h2>REQUESTS</h2>
-    <div class="list">
-      <div class="card">
+  <h2 class="hi">Mentor Dispatch</h2>
+    
+  <div class="requests col" ng-init="getRequests()">
+    <h2 class="hi">PENDING REQUESTS</h2>
+    <div class="list" ng-init="getRequests()">
+      <div class="card" ng-repeat="request in requests" ng-click="viewRequest(request, $index)" ng-class="{'selected': $index==requestIndex}">
         <div class="metadata flex">
           <div class="time">
-            1 hour ago
+            %%request.created%%
           </div>
           <div class="responses number">
-            1 Responses
+            %%request.responses%% Responses
           </div>
         </div>
           <div class="tags-container small">
-            <span class="tag">Angular.JS</span>
-            <span class="tag">Web</span>
-            <span class="tag">Node</span>
-            <span class="tag">Javascript</span>
+            <span ng-repeat="tag in request.tags" class="tag %%tag%%">%%tag%%</span>
           </div>
       </div>
-      <div class="card">Request 2</div>
-      <div class="card">Request 3</div>
+    </div>
+    <h2 class="hi">PAIRED REQUESTS</h2>
+    <div class="list">
+      <div class="card" ng-repeat="request in assignedRequests" ng-click="viewAssignedRequest(request, $index)" ng-class="{'selected': $index==assignedRequestIndex}">
+        <div class="metadata flex">
+          <div class="time">
+            %%request.created%%
+          </div>
+          <div class="responses number">
+            %%request.responses%% Responses
+          </div>
+        </div>
+          <div class="tags-container small">
+            <span ng-repeat="tag in request.tags" class="tag %%tag%%">%%tag%%</span>
+          </div>
+      </div>
     </div>
   </div>
+    
   <div class="mentors col">
-    <h2>AVAILABLE MENTORS</h2>
+    <h2 class="hi">AVAILABLE MENTORS</h2>
     <div class="list">
-      <div class="card">
+      <div class="card" ng-repeat="mentor in mentors" ng-click="viewMentor(mentor, $index)"  ng-class="{'selected': $index==mentorIndex}">
           <div class="metadata flex">
             <div class="rating">
-              4.5
+              %%mentor.rating%%
             </div>
             <div class="responses number">
-              1 Responses
+              %%mentor.responded%% Responses
             </div>
           </div>
-          <div class="last-response flex">
-            #120 How do I do this...
-            <div class="time">
-            1 hour ago
-            </div>
-          </div>
+          %%mentor.name%%
           <div class="tags-container small">
-            <span class="tag">Angular.JS</span>
+            <span class="tag %%tag%%" ng-repeat="tag in mentor.tags">%%tag%%</span>
           </div>
       </div>
-      <div class="card">Mentor 2</div>
-      <div class="card">Mentor 3</div>
     </div>
+    <h2 class="hi">PAIRED MENTORS</h2>
+    <div class="list" ng-init="getAssignedMentors()">
+      <div class="card" ng-repeat="mentor in assignedMentors" ng-click="viewMentor(mentor, $index)" ng-class="{'selected': $index==assignedMentorIndex}">
+          <div class="metadata flex">
+            <div class="rating">
+              %%mentor.rating%%
+            </div>
+            <div class="responses number">
+              %%mentor.responded%% Responses
+            </div>
+          </div>
+          %%mentor.name%%
+          <div class="tags-container small">
+            <span class="tag %%tag%%" ng-repeat="tag in mentor.tags">%%tag%%</span>
+          </div>
+      </div>
+    </div>  
   </div>
-  <div class="container">
-    <div class="inner_container">
-      <h1>Issue:</h1>
-      <p>
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-
-    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-    The standard chunk of Lorem Ipsum us</p>
-      <h1>Tags:</h1>
-      <div class="tags-container large">
-        <span class="tag">Angular.JS</span>
-        <span class="tag">Node.JS</span>
-        <span class="tag">Meteor.JS</span>
+    
+  <div class="interactions flex">
+    <div class="container">
+      <div class="inner_container %%pair.request.status%%">
+        <h1 class="hi">Request:</h1>
+        <div class="field flex info">
+        <label>Issue</label><p>%%pair.request.issue%%</p>
+        </div>
+        <div class="field flex info">
+        <label>Email</label><p>%%pair.request.requester_email%%</p>
+        </div>
+        <div class="field flex info">
+        <label>Created</label><p>%%pair.request.created%%</p>
+        </div>
+        <div class="field flex info">
+        <label>Location</label><p>%%pair.request.location%%</p>
+        </div>
+        <div class="field flex info">
+        <label>Responses</label><p>%%pair.request.responses%%</p>
+        </div>
+        <div class="field flex info">
+        <label>Status</label><p>%%pair.request.status%%</p>
+        </div>
+        <br>
+        <br>
+        <h1 class="hi">Tags:</h1>
+        <div class="tags-container large">
+          <span ng-repeat="tag in pair.request.tags" class="tag %%tag%%">%%tag%%</span>
+        </div>
       </div>
     </div>
+    <div class="inner_container  assigned-%%pair.mentor.assigned%%" >
+      <h1 class="hi">Mentor:</h1>
+      <div class="field flex info">
+        <label>Assigned</label><p>%%pair.mentor.assigned%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Availability</label><p>%%pair.mentor.availability%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Details</label><p>%%pair.mentor.details%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Email</label><p>%%pair.mentor.email%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Name</label><p>%%pair.mentor.name%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Responded</label><p>%%pair.mentor.responded%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Role</label><p>%%pair.mentor.role%%</p>
+      </div>
+      <div class="field flex info">
+      <label>Phone</label><p>%%pair.mentor.phone%%</p>
+      </div>
+      <h1 class="hi">Tags:</h1>
+      <div class="tags-container large">
+        <span ng-repeat="tag in pair.mentor.tags" class="tag %%tag%%">%%tag%%</span>
+      </div>
+    </div>
+      
   </div>
+      <div class="controls" ng-show='pair.mentor && pair.request'>
+      <input type="submit" class="ui pink button" value="PAIR" ng-hide="pair.mentor.assigned" ng-click="sendPair()"/>
+      <form ng-show="pair.mentor.assigned" ng-submit='unpair()' ng-model='form'>
+      <div class="field">
+      <label>How did it go?</label>
+      <select name="status" ng-model="form.status" required>
+        <option value=""></option>
+        <option value="solved">Solved</option>
+        <option value="unassigned">Not Solved</option>
+      </select>
+      </div>
+      <div class="field">
+      <label>Rating: (Optional 5 is good)</label>
+      <select name="rating" ng-model="form.rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      </div>
+      <input class="ui pink button" type="submit" value="UNPAIR"/>
+    </div>
 </div>
 {% endblock %}

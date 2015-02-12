@@ -24,7 +24,7 @@ import datetime
 class Message(ndb.Model):
 	added = ndb.DateTimeProperty(auto_now_add=True)
 
-	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'accepted-highschool-freshmen','hardware-hackers', 'accepted', 'accepted-non-local'], default=None)
+	audience = ndb.StringProperty(choices=[None, 'registered', 'invited-friends', 'mailing-list-unregistered', 'waitlisted', 'accepted-highschool-freshmen','hardware-hackers', 'accepted', 'accepted-non-local', 'accepted-local', 'checked-in', 'rsvped-first-time', 'local-waitlisted'], default=None)
 
 	email_from_template = ndb.BooleanProperty(default=False)
 	email_subject = ndb.TextProperty()
@@ -76,6 +76,18 @@ class Message(ndb.Model):
 		elif self.audience == 'accepted-highschool-freshmen':
 			print "sending emails to accepted highschool and freshman hackers"
 			return Hacker.query(ndb.AND(Hacker.admitted_email_sent_date != None, ndb.OR(Hacker.year == 'highschool', Hacker.year == 'freshman')))
+		elif self.audience == 'local-waitlisted':
+			print "sending emails to local waitlisted hackers: "
+			return Hacker.query(Hacker.admitted_email_sent_date == None)
+		elif self.audience == 'rsvped-first-time':
+			print "sending emails to rsvped-first-time hackers"
+			return Hacker.query(ndb.AND(Hacker.rsvpd == True, Hacker.first_hackathon =='yes'))
+		elif self.audience == 'checked-in':
+			print 'sending emails to checked-in hackers: ' + str(Hacker.query(Hacker.checked_in == True).count())
+			return Hacker.query(Hacker.checked_in == True)
+		elif self.audience == 'accepted-local':
+			print "sending emails to accepted-local"
+			return Hacker.query(Hacker.admitted_email_sent_date != None)
 		elif self.audience == None:
 			return None
 		else:
@@ -153,10 +165,40 @@ class Message(ndb.Model):
 					return
 				if hacker.email and self.email_subject:
 					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:	
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'local-waitlisted':
+				hacker = entity
+				print hacker.school
+				if hacker.school != "Brown University" and hacker.school != "Rhode Island School of Design":
+					return
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				if hacker.phone_number and self.sms_text:
 					self.send_to_phone(hacker.phone_number)
 			elif self.audience == 'accepted-highschool-freshmen':
 				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'rsvped-first-time':
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'checked-in':
+				hacker = entity
+				if hacker.email and self.email_subject:
+					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
+				if hacker.phone_number and self.sms_text:
+					self.send_to_phone(hacker.phone_number)
+			elif self.audience == 'accepted-local':
+				hacker = entity
+				print hacker.school
+				if hacker.school != "Brown University" and hacker.school != "Rhode Island School of Design":
+					return
 				if hacker.email and self.email_subject:
 					self.send_to_email(hacker.email, {"hacker": hacker, "name":hacker.name.split(" ")[0]})
 				if hacker.phone_number and self.sms_text:

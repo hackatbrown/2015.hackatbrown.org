@@ -6,7 +6,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#			http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,10 +33,15 @@ import ranking2015
 import csv_export
 import day_of
 import partner
+import rewriter
 import mentor
+import csv_import
+import social_import
+import raffle
+from google.appengine.api import users
 
 class IndexHandler(webapp2.RequestHandler):
-    def get(self):
+		def get(self):
 			variables = {
 				"registration_status": config.registration_status()
 			}
@@ -45,7 +50,7 @@ class IndexHandler(webapp2.RequestHandler):
 			self.response.write(template("index.html", variables))
 
 class SecretIndexHandler(webapp2.RequestHandler):
-    def get(self):
+		def get(self):
 			variables = {
 				"registration_status": "registration_open"
 			}
@@ -54,14 +59,18 @@ class SecretIndexHandler(webapp2.RequestHandler):
 			self.response.write(template("index.html", variables))
 
 def static_page_handler(html_file):
-  class Handler(webapp2.RequestHandler):
-    def get(self):
-      self.response.write(template(html_file))
-  return Handler
+	class Handler(webapp2.RequestHandler):
+		def get(self):
+			self.response.write(template(html_file))
+	return Handler
+
+class LogoutHandler(webapp2.RequestHandler):
+	def get(self):
+		self.redirect(users.create_logout_url('/'))
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
-	    ('/partner', partner.PartnerPageHandler),
+	    ('/sponsor-dashboard', partner.PartnerPageHandler),
 	    ('/__partner_csv',partner.PartnerCSVDownload),
 		('/sign_up_for_updates', email_list.SignUpForUpdatesHandler),
 		('/register', registration.RegistrationHandler),
@@ -93,14 +102,25 @@ app = webapp2.WSGIApplication([
         ('/dashboard/csv', csv_export.CsvExport),
         ('/dashboard/register', SecretIndexHandler),
 		('/dashboard/volunteer_registration', volunteer_reg.VolunteerRegistrationHandler),
+		('/dashboard/upload_csv', csv_import.ImportPageHandler),
 		('/dashboard/volunteer_confirmation', volunteer_reg.VolunteerConfirmationHandler),
 		('/dashboard/mentor_dispatch', mentor.DispatchHandler),
-		('/dashboard/mentor_request', mentor.MentorRequestHandler),
+		('/dashboard/mentor_dispatch/request/(.+)', mentor.ViewRequestHandler),
+		('/dashboard/mentor_dispatch/get_requests', mentor.GetRequestsHandler),
+		('/dashboard/mentor_dispatch/unpair', mentor.ResponseFinishedHandler),
+		('/dashboard/mentor_dispatch/assigned', mentor.GetAssignedHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),
+		('/dayof/mentor_request', mentor.MentorRequestHandler),
 		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
-	    ('/goodbye', static_page_handler("goodbye.html")),
+		('/goodbye', static_page_handler("goodbye.html")),
+		('/mentor', mentor.MentorSignupHandler),
+		('/__social_import', social_import.WorkHandler),
+		('/dashboard/raffle', raffle.RaffleHandler),
+		('/dashboard/mentor_list', mentor.MentorListHandler),
+		('/logout', LogoutHandler),
 		('/(.+)', short_urls.Serve)
 ], debug=True)
 #app = m.WSGIMiddleware(app, memcache=memcache)
+app = rewriter.WSGIMiddleware(app) # rewrite at.hackatbrown.org/xyz -> hackatbrown.org/dayof/xyz (also hackatbrown.org/xyz?dayof -> hackatbrown.org/dayof/xyz)

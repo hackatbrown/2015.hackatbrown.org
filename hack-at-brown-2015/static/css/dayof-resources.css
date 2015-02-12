@@ -26,6 +26,8 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	font-size: 1.2em;
+	border-bottom: none;
+	text-transform: uppercase;
 }
 
 
@@ -47,7 +49,7 @@
 }
 
 #apis #tripadvisor {
-	border-top-color: #cfaa6e;
+	border-top-color: #509638;
 }
 
 #apis #tessel {
@@ -90,6 +92,10 @@
 	border-top-color: #2f4688;
 }
 
+#apis #lyft {
+	border-top-color: #ea0b8c;
+}
+
 
 
 
@@ -111,7 +117,7 @@
 }
 
 #apis #tripadvisor a:link, #apis #tripadvisor a:visited {
-	color: #cfaa6e;
+	color: #509638;
 }
 
 #apis #tessel a:link, #apis #tessel a:visited {
@@ -152,5 +158,9 @@
 
 #apis #facebook a:link, #apis #facebook a:visited {
 	color: #2f4688;
+}
+
+#apis #lyft a:link, #apis #lfyt a:visited {
+	color: #ea0b8c;
 }
 

@@ -2,4 +2,6 @@ cron:
 - description: do background work
   url: /__background_work
   schedule: every 8 hours
-
+- description: import social posts to datastore
+  url: /__social_import
+  schedule: every 1 minutes

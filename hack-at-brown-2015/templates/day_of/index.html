@@ -21,18 +21,26 @@ Hack@Brown 2015
 
 {% block content %}
 
+{% if not bigboard %}
 <div id='header'>
 	<div id='header-content'>
 		<img src='/static/img/logo.png'/>
 		<h2>Hack@Brown</h2>
 		<div id='tabs'>
-			<a href='/dayof/info' data-tab='info'>Info</a>
-			<a href='/dayof/help' data-tab='help' class='mobile-button'>Help</a>
-			<a href='/dayof/resources' data-tab='resources'>Resources</a>
-			<a href='/dayof/schedule' data-tab='schedule'>Schedule</a>
-			<a href='/dayof/mentors' data-tab='mentors'>Mentors</a>
+			<a href='/info?dayof=1' data-tab='info'>Info</a>
+			<a href='/help?dayof=1' data-tab='help' class='mobile-button'>Help</a>
+			<a href='/resources?dayof=1' data-tab='resources'>Resources</a>
+			<a href='/schedule?dayof=1' data-tab='schedule'>Schedule</a>
+			<!--<a href='/mentors?dayof=1' data-tab='mentors'>Mentors</a>-->
+			<a href='/awards?dayof=1' data-tab='awards'>Awards</a>
+			<a href='/requests?dayof=1' data-tab='requests'>Requests for Help</a>
 		</div>
 	</div>
+</div>
+{% endif %}
+
+<div class='hud' id='mrc'>
+	Thanks! We'll send you a mentor ASAP.
 </div>
 
 <div id='container' data-selected-tab='{{ tab }}'>
@@ -57,5 +65,17 @@ Hack@Brown 2015
 		{{ tab_content | safe }}
 	</div>
 </div>
+
+{% if tab == 'info' and bigboard %}
+<script>
+// auto-reload script
+var autoReloadTime = 20 * 1000 // 30 sec
+function autoReload() {
+	$("#tab-content").load("/info?ajax=1&dayof=1&bigboard=1");
+	setTimeout(autoReload, autoReloadTime);
+}
+setTimeout(autoReload, autoReloadTime);
+</script>
+{% endif %}
 
 {% endblock %}
