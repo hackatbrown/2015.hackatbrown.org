@@ -347,3 +347,9 @@ span.optional {
   padding-left:.65em !important;
   color: white !important;
 }
+
+/* Sponsor Dashboard */
+
+#send .field {
+  margin-bottom: 15px;
+}

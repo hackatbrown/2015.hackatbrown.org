@@ -29,8 +29,6 @@ Sponsor Dashboard - {{ super() }} 2015
                 <div class="inner_container">
                     <h1 class="hi" style="text-transform: none">Welcome to the Sponsor Dashboard</h1>
                     <p>Enter your username and password to download student info.</p>
-                    <p>Please note that phone numbers as well as more resumes (including those of the organizing team) will be added soon after the hackathon.</p>
-                    <p>Please refrain from mass-emailing students before the hackathon. You're free to contact them after the event.    </p>
                 </div>
             </section>
             <section class="panel condensed-bottom condensed-top">
@@ -41,7 +39,8 @@ Sponsor Dashboard - {{ super() }} 2015
                     <div class="field">
                         <label for="password">Password:</label><input type='password' id='password' name='password'> 
                     </div>
-                    <input type='submit' class="ui button" name="submit" value="Download">
+                    <input type='submit' id="csv-button" class="ui button" name="csv" value="Download CSV">
+                    <input type='submit' id="zip-button" class="ui button" name="zip" value="Download Resumes">
                 </form> 
             </section>
             <section class="panel hero">
