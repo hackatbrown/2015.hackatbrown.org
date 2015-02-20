@@ -362,7 +362,7 @@
                         <strong>Your reimbursement deadline has elapsed, so we can only reimburse you <span class="money">$30</span>.  Reciepts are due on 3.1.2015</strong></p>
                         {% else %}
                         <p>We can reimburse you up to <span class="money">${{hacker.rmax}}</span> in transit fees.</p>
-                        <p><strong>All reimbursement requests must be uploaded by {{deadlineFull}}.</strong></p>
+                        <p><strong>All reimbursement requests must be uploaded by 11:59 PM ET on {{deadlineFull}}.</strong></p>
                         {% endif %}
                         {% else %}
                         <p>You don't need any reimbursement to come, silly!</p>
@@ -529,6 +529,7 @@
                                 </div>
                             </div>
                         </form>
+                        <p>If you don't receive your check by April 15, please email us at hello@hackatbrown.org.</p>
                 </section>
                 {% endif %}
             </div>
