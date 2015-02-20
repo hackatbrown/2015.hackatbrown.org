@@ -39,6 +39,9 @@ import csv_import
 import social_import
 import raffle
 from google.appengine.api import users
+from google.appengine.ext import ndb
+import datetime
+
 
 class IndexHandler(webapp2.RequestHandler):
 		def get(self):
@@ -67,6 +70,16 @@ def static_page_handler(html_file):
 class LogoutHandler(webapp2.RequestHandler):
 	def get(self):
 		self.redirect(users.create_logout_url('/'))
+
+class ChangeDeadlineHandler(webapp2.RequestHandler):
+	def get(self):
+		hackers = registration.Hacker.query(registration.Hacker.checked_in == True).fetch()
+		for hacker in hackers:
+			hacker.deadline = datetime.datetime(2015, 3, 1)
+
+		ndb.put_multi(hackers)
+		self.response.write('done')
+
 
 app = webapp2.WSGIApplication([
 	    ('/', IndexHandler),
@@ -109,6 +122,7 @@ app = webapp2.WSGIApplication([
 		('/dashboard/mentor_dispatch/get_requests', mentor.GetRequestsHandler),
 		('/dashboard/mentor_dispatch/unpair', mentor.ResponseFinishedHandler),
 		('/dashboard/mentor_dispatch/assigned', mentor.GetAssignedHandler),
+	    ('/dashboard/change_deadline', ChangeDeadlineHandler),
 		('/__background_work', background_work.BackgroundWorkHandler), # called by a background job set up in cron.yaml
 		('/dayof', day_of.DayOfHandler),
 		('/dayof/mentor_request', mentor.MentorRequestHandler),
