@@ -8,7 +8,7 @@ class CsvExport(webapp2.RequestHandler):
     def get(self):
         if not onTeam(): return self.redirect('/')
 
-        keys = list(set(list(hacker_keys) + list(personal_info_keys) + list(non_required_keys) + ['status', 'admit_priority', 'rsvpd', 'checked_in', 'has_resume']))
+        keys = list(set(list(hacker_keys) + list(personal_info_keys) + list(non_required_keys) + ['status', 'admit_priority', 'rsvpd', 'checked_in', 'has_resume', 'secret']))
         if (not self.request.get('include_personally_identifiable_info')) or not isAdmin():
             for key in personal_info_keys:
                 keys.remove(key)
