@@ -101,6 +101,8 @@ class Hacker(ndb.Model):
 				d['has_resume'] = False if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==	None) else True
 			if 'resume' in include_keys:
 				d['resume'] = "None" if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==	 None) else "http://hackatbrown.org/__serve/" + str(self.resume)
+			if 'secret' in include_keys:
+				d['secret'] = "http://hackatbrown.org/secret/" + str(self.secret)
 			return d
 
 	@classmethod
