@@ -9,6 +9,11 @@
 	<meta property="og:description" content="An exciting announcement from Hack@Brown.">
 	<meta property="og:image" content="http://hackatbrown.org/static/kims/og2.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	
+	<meta name="apple-mobile-web-app-title" content="Kimchi"/>
+	<link rel="apple-touch-icon" href="/static/kims/icon.png"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	
 	<style>
 	h1, h2, h3, h4 {
 		font-family: 'Brown';
@@ -161,5 +166,92 @@
 			</div>
 		</div>
 	</div>
+	
+	<!--BEGIN KIMCHI APP-->
+	<style>
+	#kimchi {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+	#kimchi img {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+	}
+	#kimchi h1, #kimchi h2 {
+		font-family: "Cochin-BoldItalic";
+		color: red;
+		text-transform: none;
+		margin: 5px;
+	}
+	#kimchi h1 {
+		font-size: 3em;
+	}
+	
+	#button {
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		top: 50%;
+		margin-top: -50px;
+		left: 50%;
+		margin-left: -50px;
+		z-index: 10;
+		background-size: contain;
+	}
+	#button.up {
+		background-image: url(/static/kims/button.png);
+	}
+	#button.down {
+		background-image: url(/static/kims/buttonDown.png);
+	}
+	</style>
+	<div id='kimchi' style='display: none'>
+		<h2>klick for</h2>
+		<h1>kimchi</h1>
+		
+		<div id='button' class='up'></div>
+		<img src='/static/kims/buttonDown.png' style='display: none'/>
+		
+		<img src='/static/kims/mascot.png'/>
+	</div>
+	<script>
+	if (window.navigator.standalone) {
+		var sections = document.querySelectorAll('.section');
+		for (var i=0; i<sections.length; i++) {
+			sections[i].style.display = 'none';
+		}
+		document.getElementById('kimchi').style.display = 'block'
+		
+		document.body.addEventListener('touchmove', function(event) {
+		       event.preventDefault();
+		    }, false);
+		
+	}
+	
+	var button = document.getElementById('button');
+	button.addEventListener('touchstart', function(e) {
+		e.preventDefault()
+		button.className = 'down';
+	})
+	button.addEventListener('touchend', function(e) {
+		e.preventDefault()
+		button.className = 'up';
+		order();
+	})
+	
+	function order() {
+		navigator.geolocation.getCurrentPosition(function() {
+			alert("Kool! Your kimchi will kome kuickly!");
+		});
+	}
+	</script>
 </body>
 </html>
