@@ -22,7 +22,7 @@ import models
 
 memcache_expiry = 10 * 60
 hacker_keys = ['name', 'school', 'year', 'email', 'shirt_size', 'shirt_gen', 'dietary_restrictions', 'teammates', 'hardware_hack', 'links', 'first_hackathon']
-non_required_keys = ['phone_number', 'major', 'rmax', 'rtotal']
+non_required_keys = ['phone_number', 'major', 'rmax', 'rtotal', 'receipt_urls']
 personal_info_keys = ['name', 'email', 'teammates', 'links', 'phone_number']
 
 class Hacker(ndb.Model):
@@ -78,7 +78,7 @@ class Hacker(ndb.Model):
 
 	rmax = ndb.IntegerProperty(default = 0)
 	rtotal = ndb.IntegerProperty(default = 0)
-
+	
 	def computeStatus(self):
 			if self is None:
 					return "not found"
@@ -103,6 +103,9 @@ class Hacker(ndb.Model):
 				d['resume'] = "None" if (not hasattr(self, 'resume') or self.resume == {} or self.resume ==	 None) else "http://hackatbrown.org/__serve/" + str(self.resume)
 			if 'secret' in include_keys:
 				d['secret'] = "http://hackatbrown.org/secret/" + str(self.secret)
+			if 'receipt_urls' in include_keys:
+				receipt_keys = self.receipts if self.receipts else []
+				d['receipt_urls'] = ' '.join(["http://hackatbrown.org/__serve/" + str(receipt) for receipt in receipt_keys])
 			return d
 
 	@classmethod
