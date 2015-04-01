@@ -129,6 +129,7 @@ app = webapp2.WSGIApplication([
 		('/dayof/([a-z]+)', day_of.DayOfHandler),
 		('/create_short_url', short_urls.Create),
 		('/goodbye', static_page_handler("goodbye.html")),
+		('/mamakims', static_page_handler("mamakims.html")),
 		('/mentor', mentor.MentorSignupHandler),
 		('/__social_import', social_import.WorkHandler),
 		('/dashboard/raffle', raffle.RaffleHandler),

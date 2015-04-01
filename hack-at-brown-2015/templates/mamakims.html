@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hack@Brown + Mama Kim's</title>
+	<link rel='stylesheet' href='/static/font/Brown/stylesheet.css'>
+	<style>
+	h1, h2, h3, h4 {
+		font-family: 'Brown';
+		font-weight: normal;
+		text-transform: uppercase;
+	}
+	/*body:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 200px;
+		z-index: -1;
+		content: "";
+		background-image: linear-gradient(rgba(255,255,255,0), white), url("/static/img/svgtriangles/trigrid-tile-5pct.svg");
+		background-size: 100%, 107.2px 120px;
+		background-position: center top;
+	}*/
+		
+		html, body {
+			height: 100%;
+			margin: 0;
+			
+			font-family: "Brown";
+		}
+		
+		.section {
+			height: 100%;
+			width: 100%;
+			display: table;
+		}
+		
+		.section > div {
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+		}
+		
+		.section > div > div {
+			max-width: 800px;
+			padding: 20px;
+			margin: auto;
+		}
+		
+		.green {
+			background-color: #5cc1c3;
+			color: white;
+		}
+		
+		.red {
+			background-color: #ee5d94;
+			color: white;
+		}
+		
+		.hex {
+			background-image: linear-gradient(rgba(255,255,255,0), white), url("/static/img/svgtriangles/trigrid-tile-5pct.svg");
+			background-size: 100%, 107.2px 120px;
+			background-position: center top;
+		}
+		
+		img {
+			max-width: 100%;
+		}
+		
+		.shadowed {
+			width: 500px;
+			border: 3px solid white;
+			box-shadow: 0px 2px 3px gray;
+		}
+		
+		.apps {
+			width: 500px;
+		}
+		
+		.disclaimer {
+			font-size: small;
+			opacity: 0.5;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class='section green'>
+		<div>
+			<div>
+				<p>
+					<img style='width: 500px' src='/static/kims/plus.png'/>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class='section hex'>
+		<div>
+			<div>
+				<h1>Dreams.</h1>
+				<p>
+					Hack@Brown is about achieving dreams. As we come into our third year, we had to ask ourselves:
+				</p>
+				<h2>What are our dreams?</h2>
+				<p>
+					And we realized something. It isn't about teaching students computer science. It's not about bringing together designers, developers and students of the humanities together in harmonious collaboration in pursuit of greater good through technology. It's about something that's fundamental to Brown CS, very near and dear to our hearts.
+				</p>
+				<h2>It's about food.</h2>
+				<p>Today, we're re-aligning our organization with our true fundamental vision:</p>
+				<h2>food deserves to be free</h2>
+				<p>It's about Andy Van Dam's original dream for the CIT: an East Asian food restaurant, for every student, for every class.</p>
+			</div>
+		</div>
+	</div>
+	<div class='section red'>
+		<div>
+			<div>
+				<img style='width: 500px' src='/static/kims/herald.png'/>
+				<h1>We're acquiring Mama Kim's.</h1>
+				<h3>And we're building some great things with it.</h3>
+			</div>
+		</div>
+	</div>
+	<div class='section hex'>
+		<div>
+			<div>
+				<img class='shadowed' src='/static/kims/kims.png' />
+				<p class='disclaimer'>(Artist rendering)</p>
+				<h1>Mama Kim's has a new home.</h1>
+			</div>
+		</div>
+	</div>
+	<div class='section red'>
+		<div>
+			<div>
+				<h1>Say goodbye to Push for Pizza.</h1>
+					<img class='apps' src='/static/kims/apps.png'/>
+					<h3>Say hello to our brand-new suite of on-demand Korean cuisine apps.</h3>
+					<p><img src='/static/kims/appstore.svg'/></p>
+			</div>
+		</div>
+	</div>
+	<div class='section green'>
+		<div>
+			<div>
+				<h1>Introducing the CIT meal plan.</h1>
+					<img class='shadowed' src='/static/kims/mealplans.png'/>
+				<p>No flex points, no meal credits, unlimited Mama Kim's, Kabob and Curry and pizza. For $17.00 a year. Please don't skip the tech talks.</p>
+			</div>
+		</div>
+	</div>
+	<div class='section hex'>
+		<div>
+			<div>
+				<h1>Coming Fall 2015.</h1>
+		
+				<div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) return;
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=280031018856571&version=v2.3";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));</script>
+		
+				<div class="fb-like" data-href="https://hackatbrown.org/mamakims" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
