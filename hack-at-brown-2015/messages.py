@@ -17,7 +17,6 @@ import re
 from google.appengine.api import taskqueue
 from registration import Hacker
 from email_list import EmailListEntry
-import sms
 from config import isAdmin
 import datetime
 
@@ -52,6 +51,7 @@ class Message(ndb.Model):
 		send_email(html, subject, emails)
 
 	def send_to_phone(self, phone):
+		import sms
 		# actual work of sms'ing
 		print "Sending SMS '{0}' to {1}".format(self.sms_text, phone)
 		sms.send(phone, self.sms_text)
