@@ -1,1 +1,1 @@
-this = "stub!"
+../private/twitter.py

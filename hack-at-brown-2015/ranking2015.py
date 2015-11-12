@@ -1,1 +1,1 @@
-RankingHandler = None
+../private/ranking2015.py

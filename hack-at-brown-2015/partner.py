@@ -1,3 +1,1 @@
-PartnerPageHandler = None
-PartnerCSVDownload = None
-this = "stub!"
+../private/partner.py

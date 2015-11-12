@@ -1,1 +1,1 @@
-members = []
+../private/team.py
